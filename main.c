@@ -12,4 +12,5 @@ int main()
 		str = get_next_line(fd);
 		printf("main %s\n", str);
 	}
+	system("leaks a.out | grep 'leaks'");
 }

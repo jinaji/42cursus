@@ -6,7 +6,7 @@
 /*   By: jinkim2 <jinkim2@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/14 12:30:14 by jinkim2           #+#    #+#             */
-/*   Updated: 2022/05/20 17:21:04 by jinkim2          ###   ########seoul.kr  */
+/*   Updated: 2022/05/20 21:08:54 by jinkim2          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,8 @@ char	*ft_strndup(char *buff, int idx)
 	char	*new;
 
 	i = 0;
+	if (!buff)
+		return (0);
 	new = (char *)malloc(sizeof(char) * idx + 1);
 	if (!new)
 		return (0);

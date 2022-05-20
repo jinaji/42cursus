@@ -6,7 +6,7 @@
 /*   By: jinkim2 <jinkim2@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/14 12:30:07 by jinkim2           #+#    #+#             */
-/*   Updated: 2022/05/20 20:30:55 by jinkim2          ###   ########seoul.kr  */
+/*   Updated: 2022/05/20 21:58:30 by jinkim2          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,18 +39,19 @@ t_list	*get_node(t_list **lst, int fd)
 	return (*lst);
 }
 
-char	*get_return(char *str)
+char	*get_return(char **str)
 {
 	char	*tmp;
 	int		idx;
 
-	if (!str)
+	if (!*str)
 		return (0);
-	idx = get_index(str);
-	printf("get return idx %d\n", idx);
+	idx = get_index(*str);
 	if (idx == -1)
-		return (str);
-	tmp = ft_strndup(str, idx);
+		tmp = ft_strndup(*str, ft_strlen(*str));
+	else
+		tmp = ft_strndup(*str, idx);
+	*str = delete_static(*str);
 	if (*tmp == 0)
 	{
 		free (tmp);
@@ -63,10 +64,10 @@ void	free_all(t_list **lst)
 {
 	t_list	*tmp;
 
-	tmp = (*lst)->next;
-	free ((*lst)->str);
-	free (*lst);
-	*lst = tmp;
+	tmp = (*lst);
+	(*lst) = tmp->next;
+	free (tmp->str);
+	free (tmp);
 }
 
 int	make_line(t_list **lst, int fd, char *buff, char **tmp)
@@ -80,7 +81,7 @@ int	make_line(t_list **lst, int fd, char *buff, char **tmp)
 		{
 			if (read_size == 0)
 			{
-				*tmp = get_return((*lst)->str);
+				*tmp = get_return(&((*lst)->str));
 				free_all(lst); // ???
 				return (1);
 			}
@@ -117,8 +118,7 @@ char	*get_next_line(int fd)
 		return (0);
 	if (get_index(lst->str) != -1)
 	{
-		tmp = get_return(lst->str);
-		lst->str = delete_static(lst->str);
+		tmp = get_return(&(lst->str));
 		return (tmp);
 	}
 	return (0);

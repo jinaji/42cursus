@@ -6,7 +6,7 @@
 /*   By: jinkim2 <jinkim2@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/14 12:29:40 by jinkim2           #+#    #+#             */
-/*   Updated: 2022/05/20 18:46:29 by jinkim2          ###   ########seoul.kr  */
+/*   Updated: 2022/05/20 21:03:13 by jinkim2          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ char	*ft_strjoin(char *str, char *buff);
 
 t_list	*get_node(t_list **lst, int fd);
 int		make_line(t_list **lst, int fd, char *buff, char **tmp);
-char	*get_return(char *str);
+char	*get_return(char **str);
 char	*get_next_line(int fd);
 
 #endif
