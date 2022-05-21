@@ -6,7 +6,7 @@
 /*   By: jinkim2 <jinkim2@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/14 12:30:07 by jinkim2           #+#    #+#             */
-/*   Updated: 2022/05/20 21:58:30 by jinkim2          ###   ########seoul.kr  */
+/*   Updated: 2022/05/21 17:02:23 by jinkim2          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ int	make_line(t_list **lst, int fd, char *buff, char **tmp)
 			return (0);
 		}
 	buff[read_size] = '\0';
-	(*lst)->str = ft_strjoin((*lst)->str, buff);
+	(*lst)->str = ft_strjoin((*lst)->str, buff); // 이거때문에 **로 넘겨야함 ... 
 	}
 	return (-1);
 }
@@ -111,7 +111,7 @@ char	*get_next_line(int fd)
 		(lst)->next = 0;
 	}
 	lst = get_node(&lst, fd);
-	flag = make_line(&lst, fd, buff, &tmp);
+	flag = make_line(&lst, fd, buff, &tmp); // 여기서 leak ... 
 	if (flag == 1)
 		return (tmp);
 	else if (flag == 0)

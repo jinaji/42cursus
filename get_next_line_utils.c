@@ -6,7 +6,7 @@
 /*   By: jinkim2 <jinkim2@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/14 12:30:14 by jinkim2           #+#    #+#             */
-/*   Updated: 2022/05/20 21:08:54 by jinkim2          ###   ########seoul.kr  */
+/*   Updated: 2022/05/21 15:35:26 by jinkim2          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,7 @@ char	*delete_static(char *buff)
 	while (buff[i])
 		new[j++] = buff[i++];
 	new[j] = '\0';
+	free (buff);
 	return (new);
 }
 
@@ -110,5 +111,6 @@ char	*ft_strjoin(char *str, char *buff)
 	while (buff[j])
 		new[i++] = buff[j++];
 	new[i] = '\0';
+	free (str);
 	return (new);
 }
