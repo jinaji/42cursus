@@ -6,7 +6,7 @@
 /*   By: jinkim2 <jinkim2@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/14 12:30:07 by jinkim2           #+#    #+#             */
-/*   Updated: 2022/05/21 17:02:23 by jinkim2          ###   ########seoul.kr  */
+/*   Updated: 2022/05/22 00:19:07 by jinkim2          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ t_list	*get_node(t_list **lst, int fd)
 {
 	t_list	*new;
 
+	*lst = get_node(lst, fd);
 	while ((*lst)->next)
 	{
 		if ((*lst)->fd == fd)
@@ -66,8 +67,8 @@ void	free_all(t_list **lst)
 
 	tmp = (*lst);
 	(*lst) = tmp->next;
-	free (tmp->str);
-	free (tmp);
+	free (tmp->str); // 개행으로 안 끝나면 여기서 오류남
+	free (tmp); // 노드 하나 완전 프리시키고싶음 여기서 ... 근데 그러면 다 읽은 다음에 lst 어디서 프리하지 ???
 }
 
 int	make_line(t_list **lst, int fd, char *buff, char **tmp)
@@ -82,14 +83,14 @@ int	make_line(t_list **lst, int fd, char *buff, char **tmp)
 			if (read_size == 0)
 			{
 				*tmp = get_return(&((*lst)->str));
-				free_all(lst); // ???
+				free_all(lst);
 				return (1);
 			}
 			free_all (lst);
 			return (0);
 		}
 	buff[read_size] = '\0';
-	(*lst)->str = ft_strjoin((*lst)->str, buff); // 이거때문에 **로 넘겨야함 ... 
+	(*lst)->str = ft_strjoin((*lst)->str, buff);
 	}
 	return (-1);
 }
@@ -110,8 +111,7 @@ char	*get_next_line(int fd)
 			return (0);
 		(lst)->next = 0;
 	}
-	lst = get_node(&lst, fd);
-	flag = make_line(&lst, fd, buff, &tmp); // 여기서 leak ... 
+	flag = make_line(&lst, fd, buff, &tmp);
 	if (flag == 1)
 		return (tmp);
 	else if (flag == 0)
