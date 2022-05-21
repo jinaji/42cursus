@@ -6,7 +6,7 @@
 /*   By: jinkim2 <jinkim2@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/14 12:30:07 by jinkim2           #+#    #+#             */
-/*   Updated: 2022/05/22 00:19:07 by jinkim2          ###   ########seoul.kr  */
+/*   Updated: 2022/05/22 00:21:22 by jinkim2          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ t_list	*get_node(t_list **lst, int fd)
 {
 	t_list	*new;
 
-	*lst = get_node(lst, fd);
 	while ((*lst)->next)
 	{
 		if ((*lst)->fd == fd)
@@ -75,6 +74,7 @@ int	make_line(t_list **lst, int fd, char *buff, char **tmp)
 {
 	int	read_size;
 
+	*lst = get_node(lst, fd);
 	while (get_index((*lst)->str) == -1)
 	{
 		read_size = read(fd, buff, BUFFER_SIZE);
