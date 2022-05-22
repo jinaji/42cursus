@@ -22,9 +22,7 @@ int main()
 		free(s2);
 		s2 = get_next_line(fd2);
 		s1 = get_next_line(fd1);
-		printf("main %s\n", s1);
-		printf("main %s\n", s2);
 		// free(s3);
 	}
-	// system("leaks a.out | grep 'LEAK'");
+	 system("leaks a.out | grep 'LEAK'");
 }

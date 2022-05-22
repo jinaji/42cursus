@@ -6,7 +6,7 @@
 /*   By: jinkim2 <jinkim2@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/14 12:29:40 by jinkim2           #+#    #+#             */
-/*   Updated: 2022/05/21 15:36:51 by jinkim2          ###   ########seoul.kr  */
+/*   Updated: 2022/05/22 21:46:01 by jinkim2          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define GET_NEXT_LINE_H
 
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 15
+#  define BUFFER_SIZE 42
 # endif
 
 # include <stdlib.h>
@@ -33,8 +33,9 @@ char	*delete_static(char *buff);
 char	*ft_strjoin(char *str, char *buff);
 
 t_list	*get_node(t_list **lst, int fd);
-int		make_line(t_list **lst, int fd, char *buff, char **tmp);
 char	*get_return(char **str);
+void	free_all(t_list **lst, int fd);
+int		make_line(t_list **lst, int fd, char *buff, char **tmp);
 char	*get_next_line(int fd);
 
 #endif

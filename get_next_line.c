@@ -6,37 +6,19 @@
 /*   By: jinkim2 <jinkim2@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/14 12:30:07 by jinkim2           #+#    #+#             */
-/*   Updated: 2022/05/22 13:11:07 by jinkim2          ###   ########seoul.kr  */
+/*   Updated: 2022/05/22 21:44:20 by jinkim2          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
-#include <stdlib.h>
 #include "get_next_line.h"
 
 t_list	*get_node(t_list **lst, int fd)
 {
 	t_list	*new;
 
-	// while ((*lst)->next)
-	// {
-	// 	if ((*lst)->fd == fd)
-	// 		return (*lst);
-	// 	*lst = (*lst)->next;
-	// }
 	while (*lst && (*lst)->fd != fd)
 		lst = &((*lst)->next);
-	// if ((*lst)->next == 0 && (*lst)->fd != fd)
-	// {
-	// 	new = (t_list *)malloc(sizeof(t_list));
-	// 	if (!new)
-	// 		return (0);
-	// 	new->fd = fd;
-	// 	new->next = 0;
-	// 	new->str = 0;
-	// 	(*lst)->next = new;
-	// 	return (new);
-	// }
 	if (*lst)
 		return (*lst);
 	new = (t_list *)malloc(sizeof(t_list));
@@ -47,7 +29,6 @@ t_list	*get_node(t_list **lst, int fd)
 	new->str = 0;
 	*lst = new;
 	return (new);
-	// return (*lst);
 }
 
 char	*get_return(char **str)
@@ -88,17 +69,18 @@ void	free_all(t_list **lst, int fd)
 
 int	make_line(t_list **lst, int fd, char *buff, char **tmp)
 {
-	int	read_size;
+	int		read_size;
+	t_list	*curr;
 
-	*lst = get_node(lst, fd);
-	while (get_index((*lst)->str) == -1)
+	curr = get_node(lst, fd);
+	while (get_index(curr->str) == -1)
 	{
 		read_size = read(fd, buff, BUFFER_SIZE);
 		if (read_size == -1 || read_size == 0)
 		{
 			if (read_size == 0)
 			{
-				*tmp = get_return(&((*lst)->str));
+				*tmp = get_return(&(curr->str));
 				free_all (lst, fd);
 				return (1);
 			}
@@ -106,7 +88,7 @@ int	make_line(t_list **lst, int fd, char *buff, char **tmp)
 			return (0);
 		}
 	buff[read_size] = '\0';
-	(*lst)->str = ft_strjoin((*lst)->str, buff);
+	curr->str = ft_strjoin(curr->str, buff);
 	}
 	return (-1);
 }
@@ -120,24 +102,15 @@ char	*get_next_line(int fd)
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (0);
-	// if (!(lst))
-	// {
-	// 	lst = (t_list *)malloc(sizeof(t_list));
-	// 	if (!(lst))
-	// 		return (0);
-	// 	(lst)->next = 0;
-	// }
 	flag = make_line(&lst, fd, buff, &tmp);
 	if (flag == 1)
 		return (tmp);
 	else if (flag == 0)
 		return (0);
-	if (get_index(lst->str) != -1)
+	if (get_index(get_node(&lst, fd)->str) != -1)
 	{
-		tmp = get_return(&(lst->str));
+		tmp = get_return(&(get_node(&lst, fd)->str));
 		return (tmp);
 	}
-	return (0); // return 전에 다 free 들어가야되나 ??? 그럴듯 ... 
+	return (0);
 }
-
-//leak이 지금 ... 맨 처음 make line 들어가면서 나고 메인에서 호출한 거 한 번 종료될 때 남 ... <- 이건 헤드 프리 안 돼서 그런게 아닐까 ???
