@@ -6,7 +6,11 @@
 /*   By: jinkim2 <jinkim2@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/14 12:30:07 by jinkim2           #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2022/05/22 21:44:38 by jinkim2          ###   ########seoul.kr  */
+=======
+/*   Updated: 2022/05/22 21:36:02 by jinkim2          ###   ########seoul.kr  */
+>>>>>>> f7010aa (done)
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +65,7 @@ void	free_all(t_list **lst, int fd)
 	if (*lst)
 	{
 		tmp = (*lst);
-		(*lst) = tmp->next;
+		(*lst) = (*lst)->next;
 		free (tmp->str);
 		free (tmp);
 	}

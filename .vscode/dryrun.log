@@ -1,4 +1,5 @@
 make --dry-run --always-make --keep-going --print-directory
+<<<<<<< HEAD
 make: Entering directory `/Users/jinkim2/get_next_line/gnl_final'
 cc -Wall -Werror -Wextra -fsanitize=address -c main.c -o main.o
  
@@ -6,4 +7,12 @@ cc -Wall -Werror -Wextra -fsanitize=address -c get_next_line_bonus.c -o get_next
 cc -Wall -Werror -Wextra -fsanitize=address -c get_next_line_utils_bonus.c -o get_next_line_utils_bonus.o
 cc -Wall -Werror -Wextra -fsanitize=address main.o get_next_line_bonus.o get_next_line_utils_bonus.o -o test.out
 make: Leaving directory `/Users/jinkim2/get_next_line/gnl_final'
+=======
+make: Entering directory `/Users/jinkim2/get_next_line'
+cc -Wall -Werror -Wextra -fsanitize=address -c main.c -o main.o
+cc -Wall -Werror -Wextra -fsanitize=address -c get_next_line_bonus.c -o get_next_line_bonus.o
+cc -Wall -Werror -Wextra -fsanitize=address -c get_next_line_utils_bonus.c -o get_next_line_utils_bonus.o
+cc -Wall -Werror -Wextra -fsanitize=address main.o get_next_line_bonus.o get_next_line_utils_bonus.o -o test.out
+make: Leaving directory `/Users/jinkim2/get_next_line'
+>>>>>>> f7010aa (done)
  

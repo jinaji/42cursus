@@ -6,10 +6,15 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # PARTICULAR PURPOSE.
 
 # This program built for i386-apple-darwin11.3.0
+<<<<<<< HEAD
  
 
 # Make data base, printed on Sun May 22 15:59:17 2022
  
+=======
+
+# Make data base, printed on Sun May 22 21:12:32 2022
+>>>>>>> f7010aa (done)
 
 # Variables
 
@@ -17,6 +22,8 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 <D = $(patsubst %/,%,$(dir $<))
 # automatic
 ?F = $(notdir $?)
+# environment
+VSCODE_LOG_NATIVE = false
 # automatic
 ?D = $(patsubst %/,%,$(dir $?))
 # automatic
@@ -37,42 +44,72 @@ CFLAGS = -Wall -Werror -Wextra -fsanitize=address
 MAKEFILE_LIST :=  Makefile
 # makefile (from `Makefile', line 36)
 .PHONY = all clean fclean re
+<<<<<<< HEAD
 # environment
 VSCODE_NODE_CACHED_DATA_DIR = 
+=======
+>>>>>>> f7010aa (done)
 # environment
-VERBOSE_LOGGING = true
+VSCODE_VERBOSE_LOGGING = true
+# makefile (from `Makefile', line 17)
+OBJS = ${SRCS:.c=.o}
 # environment
+<<<<<<< HEAD
 VSCODE_LOGS = /Users/jinkim2/Library/Application Support/Code/logs/20220522T153455
 # makefile (from `Makefile', line 17)
 OBJS = ${SRCS:.c=.o}
 # environment
 VSCODE_IPC_HOOK_EXTHOST = /var/folders/zz/zyxvpxvq6csfxvn_n000cqsm0035yd/T/vscode-ipc-9d7f65ee-633b-49ae-a860-be4218663201.sock
+=======
+VSCODE_IPC_HOOK_EXTHOST = /var/folders/zz/zyxvpxvq6csfxvn_n000cqsm0035yd/T/vscode-ipc-c42e9c46-7cbb-4a79-8204-5c3d5ea44782.sock
+# environment
+VSCODE_CWD = /
+>>>>>>> f7010aa (done)
 # environment
 PATH = /usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/munki
 # environment
 LSCOLORS = Gxfxcxdxbxegedabagacad
 # environment
+<<<<<<< HEAD
 LaunchInstanceID = 3F3ECF83-B3E0-4E46-8596-E50E70CBD560
 # environment
+=======
+>>>>>>> f7010aa (done)
 VSCODE_LOG_STACK = false
 # environment
 ELECTRON_RUN_AS_NODE = 1
 # default
 .FEATURES := target-specific order-only second-expansion else-if archives jobserver check-symlink
 # environment
+<<<<<<< HEAD
 SSH_AUTH_SOCK = /private/tmp/com.apple.launchd.KqUCV4QONs/Listeners
 # automatic
 %F = $(notdir $%)
 # environment
 PWD = /Users/jinkim2/get_next_line/gnl_final
+=======
+SSH_AUTH_SOCK = /private/tmp/com.apple.launchd.15rZB2LndB/Listeners
+# automatic
+%F = $(notdir $%)
+# environment
+VSCODE_PIPE_LOGGING = true
+# environment
+PWD = /Users/jinkim2/get_next_line
+>>>>>>> f7010aa (done)
+# environment
+ORIGINAL_XDG_CURRENT_DESKTOP = undefined
+# environment
+VSCODE_AMD_ENTRYPOINT = vs/workbench/api/node/extensionHostProcess
 # environment
 HOME = /Users/jinkim2
 # default
 MAKEFILEPATH := /Applications/Xcode.app/Contents/Developer/Makefiles
 # environment
+VSCODE_CODE_CACHE_PATH = /Users/jinkim2/Library/Application Support/Code/CachedData/8dfae7a5cd50421d10cd99cb873990460525a898
+# environment
 LOGNAME = jinkim2
 # environment
-APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = true
+APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = 1
 # environment
 ZSH = /Users/jinkim2/.oh-my-zsh
 # environment
@@ -92,20 +129,22 @@ SHLVL = 1
 # default
 MAKE_VERSION := 3.81
 # environment
-AMD_ENTRYPOINT = vs/workbench/services/extensions/node/extensionHostProcess
-# environment
 USER = jinkim2
 # makefile
 .DEFAULT_GOAL := all
 # makefile (from `Makefile', line 18)
 NAME = test.out
+<<<<<<< HEAD
 # environment
 PIPE_LOGGING = true
+=======
+>>>>>>> f7010aa (done)
 # environment
 LESS = -R
 # automatic
 %D = $(patsubst %/,%,$(dir $%))
 # default
+ 
 MAKE_COMMAND := /Applications/Xcode.app/Contents/Developer/usr/bin/make
 # default
 .VARIABLES := 
@@ -114,7 +153,7 @@ TMPDIR = /var/folders/zz/zyxvpxvq6csfxvn_n000cqsm0035yd/T/
 # automatic
 *F = $(notdir $*)
 # environment
-VSCODE_IPC_HOOK = /Users/jinkim2/Library/Application Support/Code/1.39.2-main.sock
+VSCODE_IPC_HOOK = /Users/jinkim2/Library/Application Support/Code/1.66.1-main.sock
 # makefile
 MAKEFLAGS = Rrqp
 # environment
@@ -124,15 +163,17 @@ MFLAGS = -Rrqp
 # environment
 MAIL = jinkim2@student.42seoul.kr
 # environment
+<<<<<<< HEAD
 XPC_SERVICE_NAME = com.apple.xpc.launchd.oneshot.0x1000000a.Electron
+=======
+XPC_SERVICE_NAME = com.microsoft.VSCode.2380
+>>>>>>> f7010aa (done)
 # automatic
 +D = $(patsubst %/,%,$(dir $+))
 # automatic
 +F = $(notdir $+)
 # environment
 __CF_USER_TEXT_ENCODING = 0x197CD:0x3:0x33
-# environment
-COMMAND_MODE = unix2003
 # default
 MAKEFILES := 
 # automatic
@@ -141,8 +182,11 @@ MAKEFILES :=
 PAGER = less
 # environment
 LC_ALL = C
+<<<<<<< HEAD
 # environment
 SECURITYSESSIONID = 1870b
+=======
+>>>>>>> f7010aa (done)
 # automatic
 ^F = $(notdir $^)
 # default
@@ -154,9 +198,15 @@ MAKELEVEL := 0
 # environment
 LANG = C
 # environment
+<<<<<<< HEAD
 VSCODE_PID = 95231
 # variable set hash-table stats:
 # Load=71/1024=7%, Rehash=0, Collisions=4/99=4%
+=======
+VSCODE_PID = 11416
+# variable set hash-table stats:
+# Load=70/1024=7%, Rehash=0, Collisions=3/98=3%
+>>>>>>> f7010aa (done)
 
 # Pattern-specific Variable Values
 
@@ -164,7 +214,11 @@ VSCODE_PID = 95231
 
 # Directories
 
+<<<<<<< HEAD
 # . (device 16777225, inode 2515389): 22 files, no impossibilities.
+=======
+# . (device 16777225, inode 2484784): 22 files, no impossibilities.
+>>>>>>> f7010aa (done)
 
 # 22 files, no impossibilities in 1 directories.
 
@@ -191,7 +245,11 @@ all: test.out
 # Not a target:
 main.c:
 #  Implicit rule search has been done.
+<<<<<<< HEAD
 #  Last modified 2022-05-22 15:59:03
+=======
+#  Last modified 2022-05-22 15:54:33
+>>>>>>> f7010aa (done)
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -207,7 +265,11 @@ main.c:
 get_next_line_utils_bonus.o: get_next_line_utils_bonus.c
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: `get_next_line_utils_bonus'
+<<<<<<< HEAD
 #  Last modified 2022-05-22 15:59:03
+=======
+#  Last modified 2022-05-22 15:56:19
+>>>>>>> f7010aa (done)
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -219,7 +281,11 @@ get_next_line_utils_bonus.o: get_next_line_utils_bonus.c
 # Not a target:
 Makefile:
 #  Implicit rule search has been done.
+<<<<<<< HEAD
 #  Last modified 2022-05-22 15:59:03
+=======
+#  Last modified 2022-05-22 15:34:52
+>>>>>>> f7010aa (done)
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -242,7 +308,11 @@ fclean: clean
 # Not a target:
 get_next_line_utils_bonus.c:
 #  Implicit rule search has been done.
+<<<<<<< HEAD
 #  Last modified 2022-05-22 15:59:03
+=======
+#  Last modified 2022-05-22 15:34:52
+>>>>>>> f7010aa (done)
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -250,7 +320,11 @@ get_next_line_utils_bonus.c:
 
 test.out: main.o get_next_line_bonus.o get_next_line_utils_bonus.o
 #  Implicit rule search has not been done.
+<<<<<<< HEAD
 #  Last modified 2022-05-22 15:59:03
+=======
+#  Last modified 2022-05-22 15:56:19
+>>>>>>> f7010aa (done)
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -262,6 +336,7 @@ test.out: main.o get_next_line_bonus.o get_next_line_utils_bonus.o
 get_next_line_bonus.o: get_next_line_bonus.c
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: `get_next_line_bonus'
+<<<<<<< HEAD
 #  Last modified 2022-05-22 15:59:03
 #  File has been updated.
 #  Successfully updated.
@@ -302,6 +377,48 @@ get_next_line_bonus.c:
 #  Last modified 2022-05-22 15:59:03
 #  File has been updated.
 #  Successfully updated.
+=======
+#  Last modified 2022-05-22 15:56:19
+#  File has been updated.
+#  Successfully updated.
+# variable set hash-table stats:
+# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
+#  commands to execute (from `Makefile', line 26):
+	$(CC) $(CFLAGS) -c $< -o $@
+	
+
+re: fclean all
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+clean:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  commands to execute (from `Makefile', line 29):
+	rm -f $(OBJS)
+	
+
+main.o: main.c
+#  Implicit rule search has been done.
+#  Implicit/static pattern stem: `main'
+#  Last modified 2022-05-22 15:56:19
+#  File has been updated.
+#  Successfully updated.
+# variable set hash-table stats:
+# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
+#  commands to execute (from `Makefile', line 26):
+	$(CC) $(CFLAGS) -c $< -o $@
+	
+
+# Not a target:
+get_next_line_bonus.c:
+#  Implicit rule search has been done.
+#  Last modified 2022-05-22 15:54:05
+#  File has been updated.
+#  Successfully updated.
+>>>>>>> f7010aa (done)
 # variable set hash-table stats:
 # Load=0/32=0%, Rehash=0, Collisions=0/0=0%
 
@@ -318,6 +435,10 @@ get_next_line_bonus.c:
 # strcache size: total = 4096 / max = 4096 / min = 4096 / avg = 4096
 # strcache free: total = 4087 / max = 4087 / min = 4087 / avg = 4087
 
+<<<<<<< HEAD
 # Finished Make data base on Sun May 22 15:59:17 2022
+=======
+# Finished Make data base on Sun May 22 21:12:32 2022
+>>>>>>> f7010aa (done)
 
  

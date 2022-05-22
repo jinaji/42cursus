@@ -20,8 +20,11 @@ int main()
 		// printf("main %s\n", s3);
 		free(s1);
 		free(s2);
-		s2 = get_next_line(fd2);
 		s1 = get_next_line(fd1);
+<<<<<<< HEAD
+=======
+		s2 = get_next_line(fd2);
+>>>>>>> f7010aa (done)
 		// free(s3);
 	}
 	 system("leaks a.out | grep 'LEAK'");
