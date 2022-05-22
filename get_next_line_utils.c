@@ -6,12 +6,15 @@
 /*   By: jinkim2 <jinkim2@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/14 12:30:14 by jinkim2           #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2022/05/22 21:44:57 by jinkim2          ###   ########seoul.kr  */
+=======
+/*   Updated: 2022/05/22 21:39:44 by jinkim2          ###   ########seoul.kr  */
+>>>>>>> 517b373 (done)
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-#include <unistd.h>
 
 size_t	ft_strlen(char *str)
 {
