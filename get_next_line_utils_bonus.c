@@ -6,12 +6,11 @@
 /*   By: jinkim2 <jinkim2@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/14 12:30:14 by jinkim2           #+#    #+#             */
-/*   Updated: 2022/05/22 13:02:38 by jinkim2          ###   ########seoul.kr  */
+/*   Updated: 2022/05/24 15:28:23 by jinkim2          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line_bonus.h"
-#include <unistd.h>
 
 size_t	ft_strlen(char *str)
 {
@@ -61,28 +60,28 @@ char	*ft_strndup(char *buff, int idx)
 	return (new);
 }
 
-char	*delete_static(char *buff)
+char	*delete_static(char *str)
 {
 	int		i;
 	int		j;
 	int		len;
 	char	*new;
 
-	if (!buff)
+	if (!str)
 		return (0);
-	if (get_index(buff) == -1)
-		return (buff);
-	i = get_index(buff) - 1;
+	if (get_index(str) == -1)
+		return (str);
+	i = get_index(str) - 1;
 	j = 0;
-	len = ft_strlen(buff) - i;
+	len = ft_strlen(str) - i;
 	new = (char *)malloc(sizeof(char) * (len + 1));
 	if (!new)
 		return (0);
 	i += 1;
-	while (buff[i])
-		new[j++] = buff[i++];
+	while (str[i])
+		new[j++] = str[i++];
 	new[j] = '\0';
-	free (buff);
+	free (str);
 	return (new);
 }
 

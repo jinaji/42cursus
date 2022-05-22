@@ -8,6 +8,8 @@
 /*   Created: 2022/05/14 12:29:40 by jinkim2           #+#    #+#             */
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
 /*   Updated: 2022/05/22 21:45:49 by jinkim2          ###   ########seoul.kr  */
 =======
 /*   Updated: 2022/05/22 21:36:03 by jinkim2          ###   ########seoul.kr  */
@@ -15,17 +17,23 @@
 =======
 /*   Updated: 2022/05/23 13:54:49 by jinkim2          ###   ########seoul.kr  */
 >>>>>>> 929b455 (realdone)
+=======
+/*   Updated: 2022/05/23 00:09:08 by jinkim2          ###   ########seoul.kr  */
+>>>>>>> 0ac63f4 (donedonedone)
+=======
+/*   Updated: 2022/05/24 17:18:25 by jinkim2          ###   ########seoul.kr  */
+>>>>>>> 0e8a025 (TTT)
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GET_NEXT_LINE_BONUS_H
 # define GET_NEXT_LINE_BONUS_H
 
+# include <stdlib.h>
+
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 42
 # endif
-
-# include <stdlib.h>
 
 typedef struct s_list
 {
@@ -37,7 +45,7 @@ typedef struct s_list
 size_t	ft_strlen(char *str);
 int		get_index(char *str);
 char	*ft_strndup(char *buff, int idx);
-char	*delete_static(char *buff);
+char	*delete_static(char *str);
 char	*ft_strjoin(char *str, char *buff);
 
 t_list	*get_node(t_list **lst, int fd);

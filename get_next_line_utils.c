@@ -8,6 +8,8 @@
 /*   Created: 2022/05/14 12:30:14 by jinkim2           #+#    #+#             */
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
 /*   Updated: 2022/05/22 21:44:57 by jinkim2          ###   ########seoul.kr  */
 =======
 /*   Updated: 2022/05/22 21:39:44 by jinkim2          ###   ########seoul.kr  */
@@ -15,6 +17,12 @@
 =======
 /*   Updated: 2022/05/23 13:56:33 by jinkim2          ###   ########seoul.kr  */
 >>>>>>> 929b455 (realdone)
+=======
+/*   Updated: 2022/05/23 00:15:54 by jinkim2          ###   ########seoul.kr  */
+>>>>>>> 0ac63f4 (donedonedone)
+=======
+/*   Updated: 2022/05/25 21:27:51 by jinkim2          ###   ########.fr       */
+>>>>>>> 0e8a025 (TTT)
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,28 +76,28 @@ char	*ft_strndup(char *buff, int idx)
 	return (new);
 }
 
-char	*delete_static(char *buff)
+char	*delete_static(char *str)
 {
 	int		i;
 	int		j;
 	int		len;
 	char	*new;
 
-	if (!buff)
+	if (!str)
 		return (0);
-	if (get_index(buff) == -1)
-		return (buff);
-	i = get_index(buff) - 1;
+	if (get_index(str) == -1)
+		return (str);
+	i = get_index(str) - 1;
 	j = 0;
-	len = ft_strlen(buff) - i;
+	len = ft_strlen(str) - i;
 	new = (char *)malloc(sizeof(char) * (len + 1));
 	if (!new)
 		return (0);
 	i += 1;
-	while (buff[i])
-		new[j++] = buff[i++];
+	while (str[i])
+		new[j++] = str[i++];
 	new[j] = '\0';
-	free (buff);
+	free (str);
 	return (new);
 }
 
