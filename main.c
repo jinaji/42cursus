@@ -4,13 +4,27 @@
 
 int main()
 {
-	int fd = open("test", O_RDONLY);
-	char	*str = "1";
+	int fd1 = open("test", O_RDONLY);
+	int fd2 = open("test", O_RDONLY);
+	// int fd3 = open("test", O_RDONLY);
 
-	while (str)
+	char *s1 = get_next_line(fd1);
+	char *s2 = get_next_line(fd2);
+	// char *s3 = get_next_line(fd3);
+
+	while (s1)
 	{
-		str = get_next_line(fd);
-		printf("main %s\n", str);
+		// s3 = get_next_line(fd3);
+		printf("main %s\n", s1);
+		printf("main %s\n", s2);
+		// printf("main %s\n", s3);
+		free(s1);
+		free(s2);
+		s2 = get_next_line(fd2);
+		s1 = get_next_line(fd1);
+		printf("main %s\n", s1);
+		printf("main %s\n", s2);
+		// free(s3);
 	}
-	system("leaks a.out | grep 'LEAK'");
+	// system("leaks a.out | grep 'LEAK'");
 }
