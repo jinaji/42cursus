@@ -7,10 +7,14 @@
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/14 12:30:07 by jinkim2           #+#    #+#             */
 <<<<<<< HEAD
+<<<<<<< HEAD
 /*   Updated: 2022/05/22 21:44:38 by jinkim2          ###   ########seoul.kr  */
 =======
 /*   Updated: 2022/05/22 21:36:02 by jinkim2          ###   ########seoul.kr  */
 >>>>>>> f7010aa (done)
+=======
+/*   Updated: 2022/05/23 13:56:05 by jinkim2          ###   ########seoul.kr  */
+>>>>>>> 929b455 (realdone)
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +104,7 @@ int	make_line(t_list **lst, int fd, char *buff, char **tmp)
 char	*get_next_line(int fd)
 {
 	static t_list	*lst;
+	t_list			*curr;
 	char			*tmp;
 	char			buff[BUFFER_SIZE + 1];
 	int				flag;
@@ -111,9 +116,10 @@ char	*get_next_line(int fd)
 		return (tmp);
 	else if (flag == 0)
 		return (0);
-	if (get_index(get_node(&lst, fd)->str) != -1)
+	curr = lst;
+	if (get_index(get_node(&curr, fd)->str) != -1)
 	{
-		tmp = get_return(&(get_node(&lst, fd)->str));
+		tmp = get_return(&(get_node(&curr, fd)->str));
 		return (tmp);
 	}
 	return (0);

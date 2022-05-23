@@ -21,10 +21,11 @@ int main()
 		free(s1);
 		free(s2);
 		s1 = get_next_line(fd1);
-<<<<<<< HEAD
-=======
 		s2 = get_next_line(fd2);
+<<<<<<< HEAD
 >>>>>>> f7010aa (done)
+=======
+>>>>>>> 929b455 (realdone)
 		// free(s3);
 	}
 	 system("leaks a.out | grep 'LEAK'");
