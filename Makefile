@@ -6,12 +6,12 @@
 #    By: jinkim2 <jinkim2@student.42seoul.kr>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/13 18:18:55 by jinkim2           #+#    #+#              #
-#    Updated: 2022/06/05 01:24:58 by jinkim2          ###   ########seoul.kr   #
+#    Updated: 2022/06/05 01:37:34 by jinkim2          ###   ########seoul.kr   #
 #                                                                              #
 # **************************************************************************** #
 
 CC = gcc
-CFLAGS = -Wall -Werror -Wextra -I $(HD_DIR)
+CFLAGS = -Wall -Werror -Wextra
 SRCS = 	deque.c		\
 		push.c		\
 		rotate.c	\
@@ -19,12 +19,12 @@ SRCS = 	deque.c		\
 		sort.c		\
 		swap.c
 OBJS = ${SRCS:.c=.o}
-HD_DIR = libft
+LIBFT_DIR = /libft
 NAME = push_swap
 
 all: $(NAME) 
 
-$(NAME): $(OBJS)
+$(NAME): $(OBJS) 
 	ar crs $(NAME) $^
 
 clean:
