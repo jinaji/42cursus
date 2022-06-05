@@ -5,28 +5,11 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: jinkim2 <jinkim2@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/14 12:30:07 by jinkim2           #+#    #+#             */
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-/*   Updated: 2022/05/22 21:44:38 by jinkim2          ###   ########seoul.kr  */
-=======
-/*   Updated: 2022/05/22 21:36:02 by jinkim2          ###   ########seoul.kr  */
->>>>>>> f7010aa (done)
-=======
-/*   Updated: 2022/05/23 13:56:05 by jinkim2          ###   ########seoul.kr  */
->>>>>>> 929b455 (realdone)
-=======
-/*   Updated: 2022/05/23 00:15:51 by jinkim2          ###   ########seoul.kr  */
->>>>>>> 0ac63f4 (donedonedone)
-=======
-/*   Updated: 2022/05/25 16:25:41 by jinkim2          ###   ########seoul.kr  */
->>>>>>> 0e8a025 (TTT)
+/*   Created: 2022/06/05 22:39:57 by jinkim2           #+#    #+#             */
+/*   Updated: 2022/06/05 22:40:09 by jinkim2          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
 #include "get_next_line_bonus.h"
 
 t_list	*get_node(t_list **lst, int fd)

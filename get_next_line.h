@@ -6,23 +6,7 @@
 /*   By: jinkim2 <jinkim2@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/14 12:29:40 by jinkim2           #+#    #+#             */
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-/*   Updated: 2022/05/22 21:46:01 by jinkim2          ###   ########seoul.kr  */
-=======
-/*   Updated: 2022/05/22 21:38:31 by jinkim2          ###   ########seoul.kr  */
->>>>>>> 517b373 (done)
-=======
-/*   Updated: 2022/05/23 13:55:04 by jinkim2          ###   ########seoul.kr  */
->>>>>>> 929b455 (realdone)
-=======
-/*   Updated: 2022/05/23 00:09:10 by jinkim2          ###   ########seoul.kr  */
->>>>>>> 0ac63f4 (donedonedone)
-=======
-/*   Updated: 2022/05/24 17:18:30 by jinkim2          ###   ########seoul.kr  */
->>>>>>> 0e8a025 (TTT)
+/*   Updated: 2022/06/05 22:41:17 by jinkim2          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
