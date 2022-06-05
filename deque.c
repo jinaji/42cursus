@@ -6,42 +6,11 @@
 /*   By: jinkim2 <jinkim2@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/05 01:42:41 by jinkim2           #+#    #+#             */
-/*   Updated: 2022/06/05 15:36:57 by jinkim2          ###   ########seoul.kr  */
+/*   Updated: 2022/06/05 19:33:02 by jinkim2          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
-
-int	is_deq_empty(t_deque *deq)
-{
-	if (!deq)
-		return (1);
-	return (0);
-}
-
-t_deque	*deq_init(t_deque **deq)
-{
-	(*deq) = (t_deque *)malloc(sizeof(t_deque));
-	if (!(*deq))
-		return (0);
-	(*deq)->count = 0;
-	(*deq)->front = 0;
-	(*deq)->rear = 0;
-	return (*deq);
-}
-
-void	free_deque(t_deque **deq)
-{
-	t_node	*tmp;
-
-	tmp = (*deq)->front;
-	while (tmp)
-	{
-		free (tmp);
-		tmp = tmp->next;
-	}
-	free (*deq);
-}
 
 void	insert_deq_front(t_deque **deq, t_node *new)
 {
@@ -54,7 +23,7 @@ void	insert_deq_front(t_deque **deq, t_node *new)
 	}
 	else
 	{
-		new = (*deq)->front->prev;
+		(*deq)->front->prev = new;
 		new->next = (*deq)->front;
 		(*deq)->front = new;
 	}
@@ -72,7 +41,7 @@ void	insert_deq_rear(t_deque **deq, t_node *new)
 	}
 	else
 	{
-		new = (*deq)->rear->next;
+		(*deq)->rear->next = new;
 		new->prev = (*deq)->rear;
 		(*deq)->rear = new;
 	}
@@ -91,7 +60,7 @@ t_node	*delete_deq_front(t_deque **deq)
 	if ((*deq)->count == 1)
 		(*deq)->rear = 0;
 	else
-		tmp->next->prev = 0;
+		(*deq)->front->prev = 0;
 	(*deq)->count--;
 	return (tmp);
 }
