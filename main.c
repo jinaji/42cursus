@@ -6,7 +6,7 @@
 /*   By: jinkim2 <jinkim2@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 18:38:36 by jinkim2           #+#    #+#             */
-/*   Updated: 2022/06/05 01:27:52 by jinkim2          ###   ########seoul.kr  */
+/*   Updated: 2022/06/05 15:57:04 by jinkim2          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,6 +123,35 @@ char	*ft_str_join(int ac, char **av)
 	return (tmp);
 }
 
+int	ft_atoll(char *str)
+{
+	int		i;
+	int		s;
+	long	r;
+
+	i = 0;
+	s = 1;
+	r = 0;
+	while ((str[i] >= 9 && 13 >= str[i]) || str[i] == 32)
+		i++;
+	if (str[i] == '+' || str[i] == '-')
+	{
+		if (str[i] == '-')
+			s *= -1;
+		if (str[i + 1] == '+' || str[i + 1] == '-')
+			return (0);
+		i++;
+	}
+	while ('9' >= str[i] && str[i] >= '0')
+	{
+		r = (r * 10) + (str[i] - 48) * s;
+		i++;
+	}
+	if (-2147483648 > r || r > 2147483647)
+		ft_error();
+	return (r);
+}
+
 int	argument_check(int ac, char **av, t_deque **deq_a)
 {
 	int		i;
@@ -137,7 +166,7 @@ int	argument_check(int ac, char **av, t_deque **deq_a)
 	while (ac > i)
 	{
 		is_str_digit(splited_av[i]);
-		value = ft_atoi(splited_av[i]);
+		value = ft_atoll(splited_av[i]);
 		add_new_node(value, deq_a);
 		free (splited_av[i]);
 		i++;
