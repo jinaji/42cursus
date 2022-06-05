@@ -6,11 +6,12 @@
 /*   By: jinkim2 <jinkim2@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/05 19:52:52 by jinkim2           #+#    #+#             */
-/*   Updated: 2022/06/05 19:54:32 by jinkim2          ###   ########seoul.kr  */
+/*   Updated: 2022/06/05 22:27:19 by jinkim2          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
+#include "libft/libft.h"
 
 void	is_str_digit(char *str)
 {
