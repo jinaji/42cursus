@@ -6,7 +6,7 @@
 /*   By: jinkim2 <jinkim2@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/05 19:33:44 by jinkim2           #+#    #+#             */
-/*   Updated: 2022/06/05 19:59:41 by jinkim2          ###   ########seoul.kr  */
+/*   Updated: 2022/06/06 22:10:31 by jinkim2          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,21 +52,8 @@ int	get_a_command(int idx, t_deque **deq_a)
 	return (count);
 }
 
-int	get_rr_count(int i, int j)
-{
-	int	ret;
-
-	ret = i - j;
-	if (ret < 0)
-		ret *= -1;
-	return (ret);
-}
-
 int	compare_count(int comm_a, int comm_b, int cnt_a, int cnt_b)
 {
-	int	comm;
-	int	cnt;
-
 	if (comm_a < 0)
 		comm_a *= -1;
 	if (comm_b < 0)
@@ -75,9 +62,7 @@ int	compare_count(int comm_a, int comm_b, int cnt_a, int cnt_b)
 		cnt_a *= -1;
 	if (cnt_b < 0)
 		cnt_b *= -1;
-	comm = get_rr_count(comm_a, comm_b);
-	cnt = get_rr_count(cnt_a, cnt_b);
-	if ((comm_a + comm_b - comm) > (cnt_a + cnt_b - cnt))
+	if ((comm_a + comm_b) > (cnt_a + cnt_b))
 		return (1);
 	else
 		return (0);

@@ -6,7 +6,7 @@
 /*   By: jinkim2 <jinkim2@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 18:38:38 by jinkim2           #+#    #+#             */
-/*   Updated: 2022/06/05 19:59:16 by jinkim2          ###   ########seoul.kr  */
+/*   Updated: 2022/06/06 22:10:31 by jinkim2          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ void	sort_with_pivot(t_deque **deq_a, t_deque **deq_b)
 	int	i;
 
 	pivot1 = ((*deq_a)->count) / 3;
-	pivot2 = pivot1 * 2;
-	count = (*deq_a)->count;
+	pivot2 = (((*deq_a)->count) * 2) / 3;
+	count = (*deq_a)->count - 3;
 	while (count)
 	{
 		i = 1;
@@ -78,6 +78,8 @@ void	sort_init(t_deque **deq_a, t_deque **deq_b)
 	int	comm_b;
 
 	sort_with_pivot(deq_a, deq_b);
+	while ((*deq_a)->count > 3)
+		push_b(deq_a, deq_b);
 	sort_three(deq_a, deq_b);
 	while ((*deq_b)->count)
 	{
