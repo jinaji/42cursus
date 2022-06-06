@@ -6,7 +6,7 @@
 /*   By: jinkim2 <jinkim2@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 18:38:54 by jinkim2           #+#    #+#             */
-/*   Updated: 2022/06/05 19:58:30 by jinkim2          ###   ########seoul.kr  */
+/*   Updated: 2022/06/06 16:02:46 by jinkim2          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include <unistd.h>
 # include <stdlib.h>
+# include <stdio.h>
 
 typedef struct s_node{
 	int				idx;
