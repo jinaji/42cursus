@@ -6,7 +6,7 @@
 /*   By: jinkim2 <jinkim2@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/05 19:41:11 by jinkim2           #+#    #+#             */
-/*   Updated: 2022/06/06 16:03:29 by jinkim2          ###   ########seoul.kr  */
+/*   Updated: 2022/06/07 15:45:23 by jinkim2          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	get_three_sort(t_deque **deq_a, int flag)
 	if (flag == 5)
 	{
 		swap_a(deq_a);
-		rrotate_a(deq_a, &i);
+		rotate_a(deq_a, &i);
 	}
 }
 

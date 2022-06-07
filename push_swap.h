@@ -6,7 +6,7 @@
 /*   By: jinkim2 <jinkim2@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 18:38:54 by jinkim2           #+#    #+#             */
-/*   Updated: 2022/06/07 01:18:47 by jinkim2          ###   ########seoul.kr  */
+/*   Updated: 2022/06/07 21:48:10 by jinkim2          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,8 +87,6 @@ void	sort_three(t_deque **deq_a, t_deque **deq_b);
 
 // sort_utils
 int		is_sorted(t_deque **deq);
-int		get_min_idx(t_deque **deq_a, int *min_idx);
-int		get_max_idx(t_deque **deq_a, int *max_idx);
 int		get_a_command(int idx, t_deque **deq_a);
 int		compare_count(int comm_a, int comm_b, int cnt_a, int cnt_b);
 void	count_command(t_deque **deq_a, t_deque **deq_b, int *com_a, int *com_b);

@@ -6,7 +6,7 @@
 /*   By: jinkim2 <jinkim2@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 18:38:38 by jinkim2           #+#    #+#             */
-/*   Updated: 2022/06/07 00:56:22 by jinkim2          ###   ########seoul.kr  */
+/*   Updated: 2022/06/07 21:52:05 by jinkim2          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int	get_first_index(t_deque **deq_a)
 	curr = (*deq_a)->front;
 	while (curr)
 	{
-		if (curr->idx == 1)
+		if (curr->idx == 0)
 			break ;
 		curr = curr->next;
 		count++;
@@ -59,16 +59,23 @@ int	get_first_index(t_deque **deq_a)
 
 void	sort_last(t_deque **deq_a)
 {
-	int	min_location;
+	int	first_idx;
 
 	if (is_sorted(deq_a))
 		return ;
-	min_location = get_first_index(deq_a);
-	while (min_location)
+	first_idx = get_first_index(deq_a);
+	while (first_idx)
 	{
 		if (is_sorted(deq_a))
 			return ;
-		rotate_a(deq_a, &min_location);
+		rotate_a(deq_a, &first_idx);
+	}
+	t_node *curr = (*deq_a)->front;
+	printf ("sort last\n");
+	while (curr)
+	{
+		printf("%d\n", curr->val);
+		curr = curr->next;
 	}
 }	
 
@@ -86,10 +93,18 @@ void	sort_init(t_deque **deq_a, t_deque **deq_b)
 		comm_a = 0;
 		comm_b = 0;
 		count_command(deq_a, deq_b, &comm_a, &comm_b);
+		printf("%d %d\n", comm_a, comm_b);
 		rotate_all(deq_a, deq_b, &comm_a, &comm_b);
 		rotate_a(deq_a, &comm_a);
 		rotate_b(deq_b, &comm_b);
 		push_a(deq_a, deq_b);
+	}
+	printf("befort last\n");
+	t_node *curr = (*deq_a)->front;
+	while (curr)
+	{
+		printf("%d\n", curr->val);
+		curr = curr->next;
 	}
 	sort_last(deq_a);
 }

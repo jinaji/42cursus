@@ -6,7 +6,7 @@
 /*   By: jinkim2 <jinkim2@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 18:38:42 by jinkim2           #+#    #+#             */
-/*   Updated: 2022/06/06 23:21:17 by jinkim2          ###   ########seoul.kr  */
+/*   Updated: 2022/06/07 15:31:38 by jinkim2          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ void	rotate_a(t_deque **deq_a, int *comm_a)
 {
 	t_node	*tmp;
 
+	if ((*deq_a)->count == 1)
+		return ;
 	while (*comm_a)
 	{
 		if (*comm_a < 0)
@@ -34,6 +36,8 @@ void	rotate_b(t_deque **deq_b, int *comm_b)
 {
 	t_node	*tmp;
 
+	if ((*deq_b)->count == 1)
+		return ;
 	while (*comm_b)
 	{
 		if (*comm_b < 0)

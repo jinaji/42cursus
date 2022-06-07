@@ -10,7 +10,7 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 make: *** No rule to make target `argu_check.o', needed by `push_swap'.  Stop.
 
 
-# Make data base, printed on Mon Jun  6 22:00:50 2022
+# Make data base, printed on Tue Jun  7 19:22:17 2022
 
 # Variables
 
@@ -45,15 +45,13 @@ VSCODE_VERBOSE_LOGGING = true
 # makefile (from `Makefile', line 27)
 OBJS = ${SRCS:.c=.o}
 # environment
-VSCODE_IPC_HOOK_EXTHOST = /var/folders/zz/zyxvpxvq6csfxvn_n000cqsm0035yd/T/vscode-ipc-accef069-bfd1-478e-a6d2-bac4fceb666f.sock
+VSCODE_IPC_HOOK_EXTHOST = /var/folders/zz/zyxvpxvq6csfxvn_n000cqsm0035yd/T/vscode-ipc-1cfe41b9-ed5a-4beb-af88-36d69729c79c.sock
 # environment
 VSCODE_CWD = /
 # environment
 PATH = /usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/munki
 # environment
 LSCOLORS = Gxfxcxdxbxegedabagacad
-# environment
-LaunchInstanceID = 541DA186-FC49-4262-ABA9-99E6D153D5B1
 # environment
 VSCODE_LOG_STACK = false
 # environment
@@ -63,7 +61,7 @@ ELECTRON_RUN_AS_NODE = 1
 # makefile (from `Makefile', line 28)
 LIBFT_DIR = libft/
 # environment
-SSH_AUTH_SOCK = /private/tmp/com.apple.launchd.w8lOpH6Aek/Listeners
+SSH_AUTH_SOCK = /private/tmp/com.apple.launchd.qLUctOnS4G/Listeners
 # automatic
 %F = $(notdir $%)
 # environment
@@ -134,16 +132,15 @@ MFLAGS = -Rrqp
 *D = $(patsubst %/,%,$(dir $*))
 # environment
 MAIL = jinkim2@student.42seoul.kr
+ 
 # environment
-XPC_SERVICE_NAME = com.apple.xpc.launchd.oneshot.0x10000002.Electron
+XPC_SERVICE_NAME = com.microsoft.VSCode.2484
 # automatic
 +D = $(patsubst %/,%,$(dir $+))
 # automatic
 +F = $(notdir $+)
 # environment
 __CF_USER_TEXT_ENCODING = 0x197CD:0x3:0x33
-# environment
-COMMAND_MODE = unix2003
 # default
 MAKEFILES := 
 # automatic
@@ -152,8 +149,6 @@ MAKEFILES :=
 PAGER = less
 # environment
 LC_ALL = C
-# environment
-SECURITYSESSIONID = 186a6
 # automatic
 ^F = $(notdir $^)
 # default
@@ -165,9 +160,9 @@ MAKELEVEL := 0
 # environment
 LANG = C
 # environment
-VSCODE_PID = 2640
+VSCODE_PID = 10943
 # variable set hash-table stats:
-# Load=76/1024=7%, Rehash=0, Collisions=3/104=3%
+# Load=73/1024=7%, Rehash=0, Collisions=3/101=3%
 
 # Pattern-specific Variable Values
 
@@ -175,9 +170,9 @@ VSCODE_PID = 2640
 
 # Directories
 
-# . (device 16777225, inode 2653389): 22 files, no impossibilities.
+# . (device 16777225, inode 2653389): 23 files, no impossibilities.
 
-# 22 files, no impossibilities in 1 directories.
+# 23 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
@@ -232,7 +227,6 @@ Makefile:
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
- 
 # Load=0/32=0%, Rehash=0, Collisions=0/0=0%
 
 # Not a target:
@@ -292,7 +286,7 @@ clean:
 
 push_swap: argu_check.o deque_utils.o deque.o push.o rotate.o rrotate.o sort_three.o sort_utils.o sort.o swap.o main.o argu_check.o
 #  Implicit rule search has not been done.
-#  Last modified 2022-06-06 20:38:20
+#  Last modified 2022-06-07 16:29:23
 #  File has not been updated.
 # variable set hash-table stats:
 # Load=0/32=0%, Rehash=0, Collisions=0/0=0%
@@ -339,6 +333,6 @@ sort_utils.o:
 # strcache size: total = 4096 / max = 4096 / min = 4096 / avg = 4096
 # strcache free: total = 4087 / max = 4087 / min = 4087 / avg = 4087
 
-# Finished Make data base on Mon Jun  6 22:00:50 2022
+# Finished Make data base on Tue Jun  7 19:22:17 2022
 
  
