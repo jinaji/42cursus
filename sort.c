@@ -6,7 +6,7 @@
 /*   By: jinkim2 <jinkim2@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 18:38:38 by jinkim2           #+#    #+#             */
-/*   Updated: 2022/06/06 22:10:31 by jinkim2          ###   ########seoul.kr  */
+/*   Updated: 2022/06/07 00:56:22 by jinkim2          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	sort_with_pivot(t_deque **deq_a, t_deque **deq_b)
 	}
 }
 
-int	get_min_location(t_deque **deq_a)
+int	get_first_index(t_deque **deq_a)
 {
 	int		count;
 	t_node	*curr;
@@ -63,7 +63,7 @@ void	sort_last(t_deque **deq_a)
 
 	if (is_sorted(deq_a))
 		return ;
-	min_location = get_min_location(deq_a);
+	min_location = get_first_index(deq_a);
 	while (min_location)
 	{
 		if (is_sorted(deq_a))
