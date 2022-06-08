@@ -6,7 +6,7 @@
 /*   By: jinkim2 <jinkim2@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/05 19:52:52 by jinkim2           #+#    #+#             */
-/*   Updated: 2022/06/05 22:27:19 by jinkim2          ###   ########seoul.kr  */
+/*   Updated: 2022/06/08 18:28:20 by jinkim2          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,14 +111,18 @@ int	ft_atoll(char *str)
 int	argument_check(int ac, char **av, t_deque **deq_a)
 {
 	int		i;
+	int		cnt;
 	int		value;
 	char	*tmp;
 	char	**splited_av;
 
 	i = 0;
+	cnt = 0;
 	tmp = ft_str_join(ac, av);
 	splited_av = ft_split(tmp, ' ');
-	while (ac - 1 > i)
+	while (splited_av[cnt])
+		cnt++;
+	while (cnt > i)
 	{
 		is_str_digit(splited_av[i]);
 		value = ft_atoll(splited_av[i]);

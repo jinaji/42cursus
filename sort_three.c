@@ -6,7 +6,7 @@
 /*   By: jinkim2 <jinkim2@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/05 19:41:11 by jinkim2           #+#    #+#             */
-/*   Updated: 2022/06/07 15:45:23 by jinkim2          ###   ########seoul.kr  */
+/*   Updated: 2022/06/08 17:59:08 by jinkim2          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,8 @@ void	sort_three(t_deque **deq_a, t_deque **deq_b)
 	int		val3;
 	int		flag;
 
-	if (is_sorted(deq_a))
-		return ;
+//	if (is_sorted(deq_a))
+//		return ;
 	count = (*deq_a)->count;
 	while (count > 4)
 	{
