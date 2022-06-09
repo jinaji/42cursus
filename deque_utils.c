@@ -6,7 +6,7 @@
 /*   By: jinkim2 <jinkim2@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/05 19:31:37 by jinkim2           #+#    #+#             */
-/*   Updated: 2022/06/05 19:31:57 by jinkim2          ###   ########seoul.kr  */
+/*   Updated: 2022/06/09 23:10:25 by jinkim2          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,4 +40,5 @@ void	free_deque(t_deque **deq)
 		tmp = tmp->next;
 	}
 	free (*deq);
+	exit (1);
 }

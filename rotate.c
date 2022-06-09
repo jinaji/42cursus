@@ -6,7 +6,7 @@
 /*   By: jinkim2 <jinkim2@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 18:38:42 by jinkim2           #+#    #+#             */
-/*   Updated: 2022/06/07 15:31:38 by jinkim2          ###   ########seoul.kr  */
+/*   Updated: 2022/06/09 23:04:03 by jinkim2          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ void	rotate_all(t_deque **deq_a, t_deque **deq_b, int *comm_a, int *comm_b)
 		insert_deq_rear(deq_b, tmp);
 		*comm_a -= 1;
 		*comm_b -= 1;
-		write (1, "rra\n", 4);
+		write (1, "rr\n", 3);
 	}
 	while (*comm_a && *comm_b && *comm_a < 0 && *comm_b < 0)
 		rrotate_all(deq_a, deq_b, comm_a, comm_b);

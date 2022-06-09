@@ -6,7 +6,7 @@
 /*   By: jinkim2 <jinkim2@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 18:38:36 by jinkim2           #+#    #+#             */
-/*   Updated: 2022/06/08 21:42:06 by jinkim2          ###   ########seoul.kr  */
+/*   Updated: 2022/06/10 00:34:15 by jinkim2          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	add_new_node(int val, t_deque **deq)
 
 	new = (t_node *)malloc(sizeof(t_node));
 	if (!new)
-		exit(1); //??
+		free_deque(deq);
 	ft_memset(new, 0, sizeof(t_node));
 	new->val = val;
 	if ((*deq)->count == 0)
@@ -63,12 +63,6 @@ void	indexing_argument(t_deque **deq_a)
 		}
 		curr = curr->next;
 	}
-	t_node *curr2 = (*deq_a)->front;
-	while (curr2)
-	{
-		printf("%d %d\n", curr2->idx, curr2->val);
-		curr2 = curr2->next;
-	}
 }
 
 int	main(int ac, char **av)
@@ -80,7 +74,7 @@ int	main(int ac, char **av)
 		return (0);
 	deq_init(&deq_a);
 	argument_check(ac, av, &deq_a);
-//	if (is_sorted(&deq_a))
-//		return (0);
+	if (is_sorted(&deq_a))
+		return (0);
 	get_sort(&deq_a, &deq_b);
 }

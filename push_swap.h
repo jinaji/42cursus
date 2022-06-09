@@ -6,7 +6,7 @@
 /*   By: jinkim2 <jinkim2@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 18:38:54 by jinkim2           #+#    #+#             */
-/*   Updated: 2022/06/07 21:48:10 by jinkim2          ###   ########seoul.kr  */
+/*   Updated: 2022/06/09 17:23:01 by jinkim2          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ int		main(int ac, char **av);
 // sort
 void	sort_with_pivot(t_deque **deq_a, t_deque **deq_b);
 int		get_first_index(t_deque **deq_a);
-void	sort_last(t_deque **deq_a);
 void	sort_init(t_deque **deq_a, t_deque **deq_b);
 void	get_sort(t_deque **deq_a, t_deque **deq_b);
 
