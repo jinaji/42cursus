@@ -7,6 +7,8 @@
 		"chrono": "c",
 		"set": "c",
 		"unordered_map": "c",
-		"random": "c"
+		"random": "c",
+		"unistd.h": "c",
+		"stdio.h": "c"
 	}
 }
