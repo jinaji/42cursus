@@ -6,12 +6,13 @@
 #    By: jinkim2 <jinkim2@student.42seoul.kr>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/13 18:18:55 by jinkim2           #+#    #+#              #
-#    Updated: 2022/06/10 02:06:52 by jinkim2          ###   ########seoul.kr   #
+#    Updated: 2022/06/10 17:26:22 by jinkim2          ###   ########seoul.kr   #
 #                                                                              #
 # **************************************************************************** #
 
 CC = gcc
 CFLAGS = -Wall -Werror -Wextra
+
 SRCS = 	argu_check.c	\
 		count_command.c	\
 		deque_utils.c	\
@@ -26,14 +27,17 @@ SRCS = 	argu_check.c	\
 		main.c			\
 		argu_check.c
 OBJS = ${SRCS:.c=.o}
+
 BONUS = checker
 BONUS_SRCS = 	get_next_line.c			\
 				get_next_line_utils.c	\
 				checker.c
 BONUS_OBJS = ${BONUS_SRCS:.c=.o}
+
 LIBFT_DIR = libft/
 LIBFT = libft.a
 NAME = push_swap
+
 
 all: $(NAME) 
 
@@ -45,8 +49,7 @@ $(NAME): $(OBJS)
 lldb: 
 	gcc -g *.c libft/*.c 
 
-bonus: $(BONUS)
-	make -C $(LIBFT_DIR)
+bonus: $(NAME) $(BONUS_OBJS) 
 	gcc -o $(BONUS) $^ -Llibft -lft
 	make clean
 

@@ -6,23 +6,11 @@
 /*   By: jinkim2 <jinkim2@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/14 12:30:14 by jinkim2           #+#    #+#             */
-/*   Updated: 2022/06/10 16:37:05 by jinkim2          ###   ########seoul.kr  */
+/*   Updated: 2022/06/10 16:52:49 by jinkim2          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap_bonus.h"
-
-size_t	ft_strlen(char *str)
-{
-	int	i;
-
-	i = 0;
-	if (!str)
-		return (0);
-	while (str[i])
-		i++;
-	return (i);
-}
 
 int	get_index(char	*str)
 {
@@ -85,7 +73,7 @@ char	*delete_static(char *str)
 	return (new);
 }
 
-char	*ft_strjoin(char *str, char *buff)
+char	*gnl_strjoin(char *str, char *buff)
 {
 	int		i;
 	int		j;

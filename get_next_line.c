@@ -6,22 +6,22 @@
 /*   By: jinkim2 <jinkim2@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/14 12:30:07 by jinkim2           #+#    #+#             */
-/*   Updated: 2022/06/10 16:30:29 by jinkim2          ###   ########seoul.kr  */
+/*   Updated: 2022/06/10 17:00:32 by jinkim2          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
 #include "push_swap_bonus.h"
 
-t_list	*get_node(t_list **lst, int fd)
+t_node_	*get_node(t_node_ **lst, int fd)
 {
-	t_list	*new;
+	t_node_	*new;
 
 	while (*lst && (*lst)->fd != fd)
 		lst = &((*lst)->next);
 	if (*lst)
 		return (*lst);
-	new = (t_list *)malloc(sizeof(t_list));
+	new = (t_node_ *)malloc(sizeof(t_node_));
 	if (!new)
 		return (0);
 	new->fd = fd;
@@ -52,9 +52,9 @@ char	*get_return(char **str)
 	return (tmp);
 }
 
-void	free_all(t_list **lst, int fd)
+void	free_all(t_node_ **lst, int fd)
 {
-	t_list	*tmp;
+	t_node_	*tmp;
 
 	while (*lst && (*lst)->fd != fd)
 		lst = &((*lst)->next);
@@ -67,10 +67,10 @@ void	free_all(t_list **lst, int fd)
 	}
 }
 
-int	make_line(t_list **lst, int fd, char *buff, char **tmp)
+int	make_line(t_node_ **lst, int fd, char *buff, char **tmp)
 {
 	int		read_size;
-	t_list	*curr;
+	t_node_	*curr;
 
 	curr = get_node(lst, fd);
 	while (get_index(curr->str) == -1)
@@ -88,15 +88,15 @@ int	make_line(t_list **lst, int fd, char *buff, char **tmp)
 			return (0);
 		}
 	buff[read_size] = '\0';
-	curr->str = ft_strjoin(curr->str, buff);
+	curr->str = gnl_strjoin(curr->str, buff);
 	}
 	return (-1);
 }
 
 char	*get_next_line(int fd)
 {
-	static t_list	*lst;
-	t_list			*curr;
+	static t_node_	*lst;
+	t_node_			*curr;
 	char			*tmp;
 	char			buff[BUFFER_SIZE + 1];
 	int				flag;
