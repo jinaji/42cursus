@@ -11,6 +11,7 @@
 		"unistd.h": "c",
 		"stdio.h": "c",
 		"push_swap_bonus.h": "c",
-		"push_swap.h": "c"
+		"push_swap.h": "c",
+		"libft.h": "c"
 	}
 }

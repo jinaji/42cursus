@@ -6,7 +6,7 @@
 /*   By: jinkim2 <jinkim2@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 16:28:12 by jinkim2           #+#    #+#             */
-/*   Updated: 2022/06/11 14:32:17 by jinkim2          ###   ########seoul.kr  */
+/*   Updated: 2022/06/11 16:47:40 by jinkim2          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include "libft/libft.h"
+# include <stdio.h>
 
 typedef struct s_node_{
 	int					fd;
@@ -40,13 +41,22 @@ typedef struct s_deque{
 #  define BUFFER_SIZE 42
 # endif
 
+// argu_check_bonus
+void		is_str_digit(char *str);
+int			get_all_len(char **av);
+char		*ft_str_join(int ad, char **av);
+int			ft_atol(char *str);
+int			argument_check(int ad, char **av, t_deque **deq_a);
+
 // checker
 void		ft_error(void);
+void		add_new_node(int val, t_deque **deq);
+void		indexing_argument(t_deque **deq_a);
 void		swap(t_deque **deq_a, t_deque **deq_b, char *comm);
 void		push(t_deque **deq_a, t_deque **deq_b, char *comm);
 void		rrotate(t_deque **deq_a, t_deque **deq_b, char *comm);
 void		rotate(t_deque **deq_a, t_deque **deq_b, char *comm);
-void		compare_and_do_sort(t_deque **deq_a, t_deque **deq_b, char **comm);
+void		compare_and_do_sort(t_deque **deq_a, t_deque **deq_b);
 int			get_all_len(char **av);
 char		*ft_str_join(int ad, char **av);
 void		split_command(t_deque **deq_a, t_deque **deq_b, int ac, char **av);
@@ -76,6 +86,13 @@ void		b_rotate_all(t_deque **deq_a, t_deque **deq_b, int *a, int *b);
 void		b_rrotate_a(t_deque **deq_a, int *comm_a);
 void		b_rrotate_b(t_deque **deq_b, int *comm_b);
 void		b_rrotate_all(t_deque **deq_a, t_deque **deq_b, int *a, int *b);
+
+// sort_bonus
+void		sort_with_pivot(t_deque **deq_a, t_deque **deq_b);
+int			get_first_index(t_deque **deq_a);
+void		sort_last(t_deque **deq_a);
+void		sort_init(t_deque **deq_a, t_deque **deq_b);
+void		get_sort(t_deque **deq_a, t_deque **deq_b);
 
 // sort_utils_bonus
 int			is_sorted(t_deque **deq);

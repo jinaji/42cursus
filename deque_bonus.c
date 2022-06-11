@@ -6,7 +6,7 @@
 /*   By: jinkim2 <jinkim2@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/11 14:07:36 by jinkim2           #+#    #+#             */
-/*   Updated: 2022/06/11 14:07:40 by jinkim2          ###   ########seoul.kr  */
+/*   Updated: 2022/06/11 17:03:55 by jinkim2          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	insert_deq_front(t_deque **deq, t_node *new)
 {
-	if (!(*deq))
+	if (!(*deq) || !new)
 		return ;
 	if ((*deq)->count == 0)
 	{
@@ -32,7 +32,7 @@ void	insert_deq_front(t_deque **deq, t_node *new)
 
 void	insert_deq_rear(t_deque **deq, t_node *new)
 {
-	if (!(*deq))
+	if (!(*deq) || !new)
 		return ;
 	if ((*deq)->count == 0)
 	{

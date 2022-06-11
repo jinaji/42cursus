@@ -1,17 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   argu_check.c                                       :+:      :+:    :+:   */
+/*   argu_check_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jinkim2 <jinkim2@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/05 19:52:52 by jinkim2           #+#    #+#             */
-/*   Updated: 2022/06/11 15:20:09 by jinkim2          ###   ########seoul.kr  */
+/*   Created: 2022/06/11 15:13:35 by jinkim2           #+#    #+#             */
+/*   Updated: 2022/06/11 15:20:04 by jinkim2          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
-#include "libft/libft.h"
+#include "push_swap_bonus.h"
 
 void	is_str_digit(char *str)
 {

@@ -6,7 +6,7 @@
 /*   By: jinkim2 <jinkim2@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 18:38:54 by jinkim2           #+#    #+#             */
-/*   Updated: 2022/06/10 16:47:48 by jinkim2          ###   ########seoul.kr  */
+/*   Updated: 2022/06/11 15:18:47 by jinkim2          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ typedef struct s_deque{
 void	is_str_digit(char *str);
 int		get_all_len(char **av);
 char	*ft_str_join(int ac, char **av);
-int		ft_atoll(char *str);
+int		ft_atol(char *str);
 int		argument_check(int ac, char **av, t_deque **deq_a);
 
 // count_command

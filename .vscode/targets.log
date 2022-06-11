@@ -10,13 +10,14 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 make: *** No rule to make target `argu_check.o', needed by `push_swap'.  Stop.
 
 
-# Make data base, printed on Sat Jun 11 14:40:09 2022
+# Make data base, printed on Sat Jun 11 17:13:18 2022
 
 # Variables
 
 # automatic
 <D = $(patsubst %/,%,$(dir $<))
 # automatic
+ 
 ?F = $(notdir $?)
 # environment
 VSCODE_LOG_NATIVE = false
@@ -26,7 +27,7 @@ VSCODE_LOG_NATIVE = false
 @D = $(patsubst %/,%,$(dir $@))
 # automatic
 @F = $(notdir $@)
-# makefile (from `Makefile', line 42)
+# makefile (from `Makefile', line 46)
 BONUS_OBJS = ${BONUS_SRCS:.c=.o}
 # makefile
 CURDIR := /Users/jinkim2/42cursus/push_swap
@@ -37,19 +38,19 @@ VSCODE_NLS_CONFIG = {"locale":"en-us","availableLanguages":{},"_languagePackSupp
 # environment
 _ = /usr/bin/make
 # makefile (from `Makefile', line 14)
-CFLAGS = -g -Wall -Werror -Wextra
+CFLAGS = -Wall -Werror -Wextra
 # makefile (from `Makefile', line 1)
 MAKEFILE_LIST :=  Makefile
-# makefile (from `Makefile', line 74)
+# makefile (from `Makefile', line 78)
 .PHONY = all clean fclean re
 # environment
 VSCODE_VERBOSE_LOGGING = true
-# makefile (from `Makefile', line 31)
+# makefile (from `Makefile', line 32)
 BONUS = checker
-# makefile (from `Makefile', line 29)
+# makefile (from `Makefile', line 30)
 OBJS = ${SRCS:.c=.o}
 # environment
-VSCODE_IPC_HOOK_EXTHOST = /var/folders/zz/zyxvpxvq6csfxvn_n000cqsm0035yd/T/vscode-ipc-f1bbd4a4-e8a6-4f15-a076-fac000cf2cf1.sock
+VSCODE_IPC_HOOK_EXTHOST = /var/folders/zz/zyxvpxvq6csfxvn_n000cqsm0035yd/T/vscode-ipc-b6f906bc-9976-4874-ab4e-e542420c310c.sock
 # environment
 VSCODE_CWD = /
 # environment
@@ -62,14 +63,14 @@ VSCODE_LOG_STACK = false
 ELECTRON_RUN_AS_NODE = 1
 # default
 .FEATURES := target-specific order-only second-expansion else-if archives jobserver check-symlink
-# makefile (from `Makefile', line 44)
+# makefile (from `Makefile', line 48)
 LIBFT_DIR = libft/
 # environment
 SSH_AUTH_SOCK = /private/tmp/com.apple.launchd.11S5c6d8zR/Listeners
 # automatic
 %F = $(notdir $%)
-# makefile (from `Makefile', line 32)
-BONUS_SRCS = get_next_line.c get_next_line_utils.c deque_bonus.c deque_utils_bonus.c push_bonus.c rotate_bonus.c rrotate_bonus.c sort_utils_bonus.c swap_bonus.c checker.c
+# makefile (from `Makefile', line 33)
+BONUS_SRCS = get_next_line.c get_next_line_utils.c deque_bonus.c deque_utils_bonus.c push_bonus.c rotate_bonus.c rrotate_bonus.c sort_utils_bonus.c swap_bonus.c argu_check_bonus.c do_command_bonus.c push_swap_bonus.c
 # environment
 VSCODE_PIPE_LOGGING = true
 # environment
@@ -83,7 +84,7 @@ HOME = /Users/jinkim2
 # default
 MAKEFILEPATH := /Applications/Xcode.app/Contents/Developer/Makefiles
 # environment
-VSCODE_CODE_CACHE_PATH = /Users/jinkim2/Library/Application Support/Code/CachedData/c3511e6c69bb39013c4a4b7b9566ec1ca73fc4d5
+VSCODE_CODE_CACHE_PATH = /Users/jinkim2/Library/Application Support/Code/CachedData/4af164ea3a06f701fe3e89a2bcbb421d2026b68f
 # environment
 LOGNAME = jinkim2
 # environment
@@ -101,10 +102,10 @@ MAKE = $(MAKE_COMMAND)
 # default
 MAKECMDGOALS := all
 # makefile (from `Makefile', line 16)
-SRCS = argu_check.c count_command.c deque_utils.c deque.c push.c rotate.c rrotate.c sort_three.c sort_utils.c sort.c swap.c main.c argu_check.c
+SRCS = argu_check.c count_command.c deque_utils.c deque.c push.c rotate.c rrotate.c sort_three.c sort_utils.c sort.c swap.c argu_check.c push_swap.c		
 # environment
 SHLVL = 1
-# makefile (from `Makefile', line 45)
+# makefile (from `Makefile', line 49)
 LIBFT = libft.a
 # makefile (from `Makefile', line 13)
 CC = gcc
@@ -114,7 +115,7 @@ MAKE_VERSION := 3.81
 USER = jinkim2
 # makefile
 .DEFAULT_GOAL := all
-# makefile (from `Makefile', line 46)
+# makefile (from `Makefile', line 50)
 NAME = push_swap
 # environment
 LESS = -R
@@ -129,7 +130,7 @@ TMPDIR = /var/folders/zz/zyxvpxvq6csfxvn_n000cqsm0035yd/T/
 # automatic
 *F = $(notdir $*)
 # environment
-VSCODE_IPC_HOOK = /Users/jinkim2/Library/Application Support/Code/1.67.2-main.sock
+VSCODE_IPC_HOOK = /Users/jinkim2/Library/Application Support/Code/1.68.0-main.sock
 # makefile
 MAKEFLAGS = Rrqp
 # environment
@@ -139,7 +140,7 @@ MFLAGS = -Rrqp
 # environment
 MAIL = jinkim2@student.42seoul.kr
 # environment
-XPC_SERVICE_NAME = com.microsoft.VSCode.4816
+XPC_SERVICE_NAME = com.microsoft.VSCode.4872
 # automatic
 +D = $(patsubst %/,%,$(dir $+))
 # automatic
@@ -165,7 +166,7 @@ MAKELEVEL := 0
 # environment
 LANG = C
 # environment
-VSCODE_PID = 96244
+VSCODE_PID = 9612
 # variable set hash-table stats:
 # Load=76/1024=7%, Rehash=0, Collisions=5/106=5%
 
@@ -175,16 +176,15 @@ VSCODE_PID = 96244
 
 # Directories
 
-# . (device 16777225, inode 2653389): 36 files, no impossibilities.
+# . (device 16777225, inode 2653389): 38 files, no impossibilities.
 
-# 36 files, no impossibilities in 1 directories.
+# 38 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
 # No implicit rules.
 
 # Files
- 
 
 all: push_swap
 #  Command-line target.
@@ -198,12 +198,12 @@ lldb:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
-#  commands to execute (from `Makefile', line 57):
-	gcc -g $(BONUS_SRCS) libft/*.c 
+#  commands to execute (from `Makefile', line 61):
+	gcc -g $(BONUS_SRCS) libft/*.c
 	
 
 # Not a target:
-rotate.o:
+argu_check_bonus.o:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
@@ -229,7 +229,7 @@ push.o:
 # Not a target:
 Makefile:
 #  Implicit rule search has been done.
-#  Last modified 2022-06-11 14:39:08
+#  Last modified 2022-06-11 17:12:41
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -253,11 +253,17 @@ rrotate_bonus.o:
 #  Modification time never checked.
 #  File has not been updated.
 
-bonus: get_next_line.o get_next_line_utils.o deque_bonus.o deque_utils_bonus.o push_bonus.o rotate_bonus.o rrotate_bonus.o sort_utils_bonus.o swap_bonus.o checker.o
+# Not a target:
+push_swap_bonus.o:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
-#  commands to execute (from `Makefile', line 60):
+
+bonus: get_next_line.o get_next_line_utils.o deque_bonus.o deque_utils_bonus.o push_bonus.o rotate_bonus.o rrotate_bonus.o sort_utils_bonus.o swap_bonus.o argu_check_bonus.o do_command_bonus.o push_swap_bonus.o
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  commands to execute (from `Makefile', line 64):
 	make -C $(LIBFT_DIR)
 	gcc -o $(BONUS) $^ -Llibft -lft
 	make clean
@@ -267,7 +273,7 @@ fclean: clean
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
-#  commands to execute (from `Makefile', line 69):
+#  commands to execute (from `Makefile', line 73):
 	rm -f $(NAME) $(BONUS)
 	make fclean -C $(LIBFT_DIR)
 	
@@ -279,6 +285,12 @@ argu_check.o:
 #  File has not been updated.
 # variable set hash-table stats:
 # Load=0/32=0%, Rehash=0, Collisions=0/0=0%
+
+# Not a target:
+do_command_bonus.o:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
 
 # Not a target:
 swap_bonus.o:
@@ -305,18 +317,13 @@ deque.o:
 #  File has not been updated.
 
 # Not a target:
-checker.o:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
-# Not a target:
 rrotate.o:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
 
 re: fclean all
+ 
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
@@ -325,7 +332,7 @@ clean:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
-#  commands to execute (from `Makefile', line 65):
+#  commands to execute (from `Makefile', line 69):
 	rm -f $(OBJS) $(BONUS_OBJS)
 	make clean -C $(LIBFT_DIR)
 	
@@ -336,26 +343,32 @@ sort_utils_bonus.o:
 #  Modification time never checked.
 #  File has not been updated.
 
-push_swap: argu_check.o count_command.o deque_utils.o deque.o push.o rotate.o rrotate.o sort_three.o sort_utils.o sort.o swap.o main.o argu_check.o
+# Not a target:
+push_swap.o:
 #  Implicit rule search has not been done.
-#  File does not exist.
+#  Modification time never checked.
+#  File has not been updated.
+
+push_swap: argu_check.o count_command.o deque_utils.o deque.o push.o rotate.o rrotate.o sort_three.o sort_utils.o sort.o swap.o argu_check.o push_swap.o
+#  Implicit rule search has not been done.
+#  Last modified 2022-06-11 17:12:58
 #  File has not been updated.
 # variable set hash-table stats:
 # Load=0/32=0%, Rehash=0, Collisions=0/0=0%
-#  commands to execute (from `Makefile', line 52):
+#  commands to execute (from `Makefile', line 56):
 	make -C $(LIBFT_DIR)
 	gcc -o $(NAME) $^ -Llibft -lft
 	make clean
 	
 
 # Not a target:
-swap.o:
+rotate.o:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
 
 # Not a target:
-main.o:
+swap.o:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
@@ -403,7 +416,7 @@ push_bonus.o:
 #  File has not been updated.
 
 # files hash-table stats:
-# Load=32/1024=3%, Rehash=0, Collisions=2/72=3%
+# Load=34/1024=3%, Rehash=0, Collisions=4/76=5%
 # VPATH Search Paths
 
 # No `vpath' search paths.
@@ -415,6 +428,6 @@ push_bonus.o:
 # strcache size: total = 4096 / max = 4096 / min = 4096 / avg = 4096
 # strcache free: total = 4087 / max = 4087 / min = 4087 / avg = 4087
 
-# Finished Make data base on Sat Jun 11 14:40:09 2022
+# Finished Make data base on Sat Jun 11 17:13:18 2022
 
  
