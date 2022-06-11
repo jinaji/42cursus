@@ -9,6 +9,8 @@
 		"unordered_map": "c",
 		"random": "c",
 		"unistd.h": "c",
-		"stdio.h": "c"
+		"stdio.h": "c",
+		"push_swap_bonus.h": "c",
+		"push_swap.h": "c"
 	}
 }

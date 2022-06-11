@@ -1,19 +1,21 @@
-make --dry-run --always-make --keep-going --print-directory
+make --dry-run --keep-going --print-directory
 make: Entering directory `/Users/jinkim2/42cursus/push_swap'
-gcc -Wall -Werror -Wextra   -c -o argu_check.o argu_check.c
+gcc -g -Wall -Werror -Wextra   -c -o argu_check.o argu_check.c
  
-gcc -Wall -Werror -Wextra   -c -o deque_utils.o deque_utils.c
-gcc -Wall -Werror -Wextra   -c -o deque.o deque.c
-gcc -Wall -Werror -Wextra   -c -o push.o push.c
-gcc -Wall -Werror -Wextra   -c -o rotate.o rotate.c
-gcc -Wall -Werror -Wextra   -c -o rrotate.o rrotate.c
-gcc -Wall -Werror -Wextra   -c -o sort_three.o sort_three.c
-gcc -Wall -Werror -Wextra   -c -o sort_utils.o sort_utils.c
-gcc -Wall -Werror -Wextra   -c -o sort.o sort.c
-gcc -Wall -Werror -Wextra   -c -o swap.o swap.c
-gcc -Wall -Werror -Wextra   -c -o main.o main.c
+gcc -g -Wall -Werror -Wextra   -c -o count_command.o count_command.c
+gcc -g -Wall -Werror -Wextra   -c -o deque_utils.o deque_utils.c
+gcc -g -Wall -Werror -Wextra   -c -o deque.o deque.c
+gcc -g -Wall -Werror -Wextra   -c -o push.o push.c
+ 
+gcc -g -Wall -Werror -Wextra   -c -o rotate.o rotate.c
+gcc -g -Wall -Werror -Wextra   -c -o rrotate.o rrotate.c
+gcc -g -Wall -Werror -Wextra   -c -o sort_three.o sort_three.c
+gcc -g -Wall -Werror -Wextra   -c -o sort_utils.o sort_utils.c
+gcc -g -Wall -Werror -Wextra   -c -o sort.o sort.c
+gcc -g -Wall -Werror -Wextra   -c -o swap.o swap.c
+gcc -g -Wall -Werror -Wextra   -c -o main.o main.c
 make -C libft/
-gcc -o push_swap argu_check.o deque_utils.o deque.o push.o rotate.o rrotate.o sort_three.o sort_utils.o sort.o swap.o main.o -Llibft -lft
+gcc -o push_swap argu_check.o count_command.o deque_utils.o deque.o push.o rotate.o rrotate.o sort_three.o sort_utils.o sort.o swap.o main.o -Llibft -lft
 make clean
 make: Leaving directory `/Users/jinkim2/42cursus/push_swap'
  

@@ -6,12 +6,12 @@
 #    By: jinkim2 <jinkim2@student.42seoul.kr>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/13 18:18:55 by jinkim2           #+#    #+#              #
-#    Updated: 2022/06/10 17:27:47 by jinkim2          ###   ########seoul.kr   #
+#    Updated: 2022/06/11 14:41:31 by jinkim2          ###   ########seoul.kr   #
 #                                                                              #
 # **************************************************************************** #
 
 CC = gcc
-CFLAGS = -Wall -Werror -Wextra
+CFLAGS = -g -Wall -Werror -Wextra
 
 SRCS = 	argu_check.c	\
 		count_command.c	\
@@ -31,6 +31,13 @@ OBJS = ${SRCS:.c=.o}
 BONUS = checker
 BONUS_SRCS = 	get_next_line.c			\
 				get_next_line_utils.c	\
+				deque_bonus.c			\
+				deque_utils_bonus.c		\
+				push_bonus.c			\
+				rotate_bonus.c			\
+				rrotate_bonus.c			\
+				sort_utils_bonus.c		\
+				swap_bonus.c			\
 				checker.c
 BONUS_OBJS = ${BONUS_SRCS:.c=.o}
 
@@ -47,18 +54,19 @@ $(NAME): $(OBJS)
 	make clean
 
 lldb: 
-	gcc -g *.c libft/*.c 
+	gcc -g -o $(BONUS )$(BONUS_SRCS) libft/*.c 
 
-bonus: $(OBJS) $(BONUS_OBJS) 
+bonus: $(BONUS_OBJS)
+	make -C $(LIBFT_DIR)
 	gcc -o $(BONUS) $^ -Llibft -lft
 	make clean
 
 clean:
-	rm -f $(OBJS)
+	rm -f $(OBJS) $(BONUS_OBJS)
 	make clean -C $(LIBFT_DIR)
 
 fclean: clean
-	rm -f $(NAME)
+	rm -f $(NAME) $(BONUS)
 	make fclean -C $(LIBFT_DIR)
 
 re : fclean all
