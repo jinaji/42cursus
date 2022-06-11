@@ -6,7 +6,7 @@
 #    By: jinkim2 <jinkim2@student.42seoul.kr>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/13 18:18:55 by jinkim2           #+#    #+#              #
-#    Updated: 2022/06/10 17:26:22 by jinkim2          ###   ########seoul.kr   #
+#    Updated: 2022/06/10 17:27:47 by jinkim2          ###   ########seoul.kr   #
 #                                                                              #
 # **************************************************************************** #
 
@@ -49,7 +49,7 @@ $(NAME): $(OBJS)
 lldb: 
 	gcc -g *.c libft/*.c 
 
-bonus: $(NAME) $(BONUS_OBJS) 
+bonus: $(OBJS) $(BONUS_OBJS) 
 	gcc -o $(BONUS) $^ -Llibft -lft
 	make clean
 
