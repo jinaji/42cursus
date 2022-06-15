@@ -6,7 +6,7 @@
 /*   By: jinkim2 <jinkim2@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 18:38:42 by jinkim2           #+#    #+#             */
-/*   Updated: 2022/06/09 23:04:03 by jinkim2          ###   ########seoul.kr  */
+/*   Updated: 2022/06/16 01:12:02 by jinkim2          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,4 +68,8 @@ void	rotate_all(t_deque **deq_a, t_deque **deq_b, int *comm_a, int *comm_b)
 	}
 	while (*comm_a && *comm_b && *comm_a < 0 && *comm_b < 0)
 		rrotate_all(deq_a, deq_b, comm_a, comm_b);
+	if (*comm_a)
+		rotate_a(deq_a, comm_a);
+	if (*comm_b)
+		rotate_b(deq_b, comm_b);
 }

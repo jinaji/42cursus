@@ -6,7 +6,7 @@
 /*   By: jinkim2 <jinkim2@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/11 15:37:17 by jinkim2           #+#    #+#             */
-/*   Updated: 2022/06/11 15:37:25 by jinkim2          ###   ########seoul.kr  */
+/*   Updated: 2022/06/16 01:19:52 by jinkim2          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,9 +82,7 @@ void	sort_init(t_deque **deq_a, t_deque **deq_b)
 		comm_a = 0;
 		comm_b = 0;
 		count_command(deq_a, deq_b, &comm_a, &comm_b);
-		rotate_all(deq_a, deq_b, &comm_a, &comm_b);
-		rotate_a(deq_a, &comm_a);
-		rotate_b(deq_b, &comm_b);
+		b_rotate_all(deq_a, deq_b, &comm_a, &comm_b);
 		push_a(deq_a, deq_b);
 	}
 	sort_last(deq_a);
