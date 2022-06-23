@@ -1,0 +1,9 @@
+make --dry-run --always-make --keep-going --print-directory
+make: Entering directory `/Users/jinkim2/42cursus/pipex'
+gcc -g -Wall -Werror -Wextra   -c -o *.o pipex.c
+make -C libft/
+ 
+gcc -o pipex *.o -Llibft -lft
+make clean
+make: Leaving directory `/Users/jinkim2/42cursus/pipex'
+ 

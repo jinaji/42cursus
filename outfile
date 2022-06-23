@@ -1,0 +1,9 @@
+Makefile
+a.out
+a.out.dSYM
+infile
+libft
+outfile
+pipex
+pipex.c
+pipex.h
