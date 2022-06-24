@@ -6,7 +6,7 @@
 /*   By: jinkim2 <jinkim2@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 14:18:00 by jinkim2           #+#    #+#             */
-/*   Updated: 2022/06/23 19:33:05 by jinkim2          ###   ########seoul.kr  */
+/*   Updated: 2022/06/24 17:41:11 by jinkim2          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@ typedef struct s_argv{
 	char	**path;
 	char	*infile;
 	char	*outfile;
-	char	**cmd;
-	char	**cmd_op;
+	char	***cmd;
+	int		cmd_cnt;
 	int		inf_fd;
 	int		out_fd;
 }				t_argv;

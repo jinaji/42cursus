@@ -6,7 +6,7 @@
 #    By: jinkim2 <jinkim2@student.42seoul.kr>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/13 18:18:55 by jinkim2           #+#    #+#              #
-#    Updated: 2022/06/23 14:54:47 by jinkim2          ###   ########seoul.kr   #
+#    Updated: 2022/06/24 17:48:42 by jinkim2          ###   ########seoul.kr   #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,7 +30,7 @@ $(NAME): $(OBJS)
 	make clean
 
 lldb: 
-	gcc -g *.c libft/*.c
+	gcc -g pipex.c libft/*.c
 
 bonus: $(BONUS_OBJS)
 	make -C $(LIBFT_DIR)
