@@ -6,11 +6,11 @@
 #    By: jinkim2 <jinkim2@student.42seoul.kr>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/15 18:15:33 by jinkim2           #+#    #+#              #
-#    Updated: 2022/04/07 15:41:25 by jinkim2          ###   ########seoul.kr   #
+#    Updated: 2022/06/25 21:00:47 by jinkim2          ###   ########seoul.kr   #
 #                                                                              #
 # **************************************************************************** #
 
-CC = gcc
+CC = cc
 CFLAGS = -Wall -Werror -Wextra
 SRCS = 	ft_isalpha.c \
 		ft_isdigit.c \

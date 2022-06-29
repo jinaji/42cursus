@@ -6,7 +6,7 @@
 /*   By: jinkim2 <jinkim2@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 14:18:02 by jinkim2           #+#    #+#             */
-/*   Updated: 2022/06/25 02:55:55 by jinkim2          ###   ########seoul.kr  */
+/*   Updated: 2022/06/29 21:54:59 by jinkim2          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ void	split_cmd(t_argv **arg, char **av, int ac)
 	int		i;
 
 	i = 0;
-
 	while (ac - 3 > i)
 	{
 		tmp = ft_split(av[i + 2], ' ');
@@ -65,12 +64,16 @@ void	get_cmd_path(t_argv **arg)
 	char	*tmp;
 	int		i;
 	int		j;
+	int		err_check;
 
 	i = 0;
 	j = 0;
+	err_check = 0;
+	while ((*arg)->path[err_check])
+		err_check++;
 	while ((*arg)->path[i] && j < (*arg)->cmd_cnt)
 	{
-		tmp = ft_strjoin((*arg)->path[i], "/");
+		tmp = ft_strjoin((*arg)->path[i], "/"); // leak
 		tmp = ft_strjoin(tmp, (*arg)->cmd[j][0]);
 		if (access(tmp, F_OK) == 0)
 		{
@@ -80,6 +83,8 @@ void	get_cmd_path(t_argv **arg)
 		}
 		i++;
 	}
+	if (i + 1 == err_check)
+		ft_error("command not found");
 	free (tmp);
 }
 
@@ -99,7 +104,7 @@ void	arg_init(t_argv **arg, int ac, char **av, char **envp)
 {
 	*arg = (t_argv *)malloc(sizeof(t_argv));
 	if (!arg)
-		ft_error ("err");
+		ft_error ("malloc err");
 	ft_memset(*arg, 0, sizeof(t_argv));
 	(*arg)->cmd_cnt = ac - 3;
 	(*arg)->cmd = (char ***)malloc(sizeof(char **) * ((*arg)->cmd_cnt) + 1);
@@ -145,7 +150,7 @@ void	first_cmd_exec(t_argv **arg, char **envp, int fd[2])
 	dup2((*arg)->inf_fd, STDIN_FILENO); // ???
 	dup2(fd[1], STDOUT_FILENO); // 이거 지우니까 inf 출력되고 cmd2 넘어가서 거기거 기록됨
 	close(fd[1]);
-	execve(path, (*arg)->cmd[0], envp);
+	execve(path, (*arg)->cmd[0], envp); // path 없는경로 들어가도댐 
 	// 이거 출력되면 안되는 것 같은데 출력됨 !!! 헐 고쳤다
 }
 
@@ -173,7 +178,8 @@ void	second_cmd_exec(t_argv **arg, char **envp, int fd[2])
 	execve(path, (*arg)->cmd[1], envp);
 }
 
-void	execute_cmd(t_argv **arg, char **av, char **envp)
+
+void	execute_cmd(t_argv **arg, char **envp)
 {
 	pid_t	pid;
 	int		ret;
@@ -192,7 +198,6 @@ void	execute_cmd(t_argv **arg, char **av, char **envp)
 		waitpid(pid, &ret, 0);
 		second_cmd_exec(arg, envp, fd);
 	}
-	(void)av;
 }
 
 int	main(int ac, char **av, char **envp)
@@ -202,5 +207,5 @@ int	main(int ac, char **av, char **envp)
 	if (ac != 5)
 		ft_error("wrong format");
 	arg_init(&arg, ac, av, envp);
-	execute_cmd(&arg, av, envp);
+	execute_cmd(&arg, envp);
 }

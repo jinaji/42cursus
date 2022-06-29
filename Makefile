@@ -6,14 +6,14 @@
 #    By: jinkim2 <jinkim2@student.42seoul.kr>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/13 18:18:55 by jinkim2           #+#    #+#              #
-#    Updated: 2022/06/24 17:48:42 by jinkim2          ###   ########seoul.kr   #
+#    Updated: 2022/06/29 21:26:53 by jinkim2          ###   ########seoul.kr   #
 #                                                                              #
 # **************************************************************************** #
 
-CC = gcc
+CC = cc
 CFLAGS = -g -Wall -Werror -Wextra
 
-SRCS = 	*.c
+SRCS = 	pipex.c
 		
 OBJS = ${SRCS:.c=.o}
 
@@ -26,15 +26,15 @@ all: $(NAME)
 
 $(NAME): $(OBJS)
 	make -C $(LIBFT_DIR)
-	gcc -o $(NAME) $^ -Llibft -lft
+	cc -o $(NAME) $^ -Llibft -lft
 	make clean
 
 lldb: 
-	gcc -g pipex.c libft/*.c
+	cc -g pipexx.c libft/*.c
 
 bonus: $(BONUS_OBJS)
 	make -C $(LIBFT_DIR)
-	gcc -o $(BONUS) $^ -Llibft -lft
+	cc -o $(BONUS) $^ -Llibft -lft
 	make clean
 
 clean:
