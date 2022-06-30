@@ -6,14 +6,14 @@
 #    By: jinkim2 <jinkim2@student.42seoul.kr>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/13 18:18:55 by jinkim2           #+#    #+#              #
-#    Updated: 2022/06/29 21:26:53 by jinkim2          ###   ########seoul.kr   #
+#    Updated: 2022/06/30 15:14:35 by jinkim2          ###   ########seoul.kr   #
 #                                                                              #
 # **************************************************************************** #
 
 CC = cc
 CFLAGS = -g -Wall -Werror -Wextra
 
-SRCS = 	pipex.c
+SRCS = 	pipexx.c
 		
 OBJS = ${SRCS:.c=.o}
 

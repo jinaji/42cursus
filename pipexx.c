@@ -6,7 +6,7 @@
 /*   By: jinkim2 <jinkim2@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/29 19:35:29 by jinkim2           #+#    #+#             */
-/*   Updated: 2022/06/29 21:22:20 by jinkim2          ###   ########seoul.kr  */
+/*   Updated: 2022/07/01 01:49:33 by jinkim2          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,19 @@ void	free_tmp(char **tmp)
 	free (tmp);
 }
 
+int	dp_cnt(char *str)
+{
+	char	**tmp;
+	int		i;
+
+	i = 0;
+	tmp = ft_split(str, ' ');
+	while (tmp[i])
+		i++;
+	free_tmp(tmp);
+	return (i);
+}
+
 void	split_cmd(t_argv *arg, char **av, int ac)
 {
 	char	**tmp;
@@ -40,18 +53,19 @@ void	split_cmd(t_argv *arg, char **av, int ac)
 	i = 0;
 	while (ac - 3 > i)
 	{
-		j = 0;
+		j = 1;
 		tmp = ft_split(av[i + 2], ' ');
-		arg->cmd[i] = (char **)malloc(sizeof(char *) * (ac - 2));
+		arg->cmd[i] = (char **)malloc(sizeof(char *) * (dp_cnt(av[i + 2]) + 1));
 		if (!(arg->cmd[i]))
 			ft_error("malloc error");
-		if (tmp[i])
-			arg->cmd[i][0] = ft_strdup(tmp[i]);
-		while (tmp[j + 1])
+		if (tmp[0])
+			arg->cmd[i][0] = ft_strdup(tmp[0]);
+		while (tmp[j])
 		{
-			arg->cmd[i][j + 1] = ft_strdup(tmp[j + 1]);
+			arg->cmd[i][j] = ft_strdup(tmp[j]);
 			j++;
 		}
+		arg->cmd[i][j] = 0;
 		free_tmp(tmp);
 		i++;
 	}
@@ -92,14 +106,14 @@ void	get_cmd_path(t_argv *arg)
 		tmp = ft_strjoin(tmp, arg->cmd[j][0]);
 		if (access(tmp, F_OK) == 0)
 		{
-			arg->cmd[j][0] = ft_strdup(tmp);
+			arg->cmd_path[j] = ft_strdup(tmp);
 			j++;
 			i = -1;
 		}
-		if (i + 1 == err_check)
-			ft_error ("anjdla");
 		i++;
 	}
+	if (i == err_check + 1)
+		ft_error ("command not found");
 	free (tmp);
 }
 
@@ -108,7 +122,7 @@ void	check_valid(t_argv *arg)
 	arg->inf_fd = open(arg->infile, O_RDONLY);
 	if (arg->inf_fd == -1)
 		ft_error("infile open error");
-	arg->out_fd = open(arg->outfile, O_RDWR | O_CREAT | O_TRUNC, 00700);
+	arg->out_fd = open(arg->outfile, O_RDWR | O_CREAT | O_TRUNC, 0644);
 	if (arg->out_fd == -1)
 		ft_error("outfile open error");
 	get_cmd_path(arg);
@@ -121,107 +135,107 @@ void	arg_init(t_argv *arg, int ac, char **av, char **envp)
 	arg->cmd = (char ***)malloc(sizeof(char **) * (ac - 2));
 	if (!(arg->cmd))
 		ft_error("malloc error");
+	arg->cmd_path = (char **)malloc(sizeof(char *) * (ac - 2));
 	arg->infile = ft_strdup(av[1]);
 	arg->outfile = ft_strdup(av[ac - 1]);
+	arg->envp = envp;
 	split_cmd(arg, av, ac);
 	get_path(arg, envp);
 	check_valid(arg);
 }
 
-char	*get_cmd(char *cmd)
+void	first_cmd_exec(t_argv *arg, int fd[2])
 {
-	char	*tmp;
-	int		last;
-	int		len;
-	int		i;
-
-	i = 0;
-	len = ft_strlen(cmd);
-	last = len - 1;
-	while (cmd[last] != '/')
-		last--;
-	len -= last;
-	tmp = (char *)malloc(sizeof(char) * len + 1);
-	if (!tmp)
-		ft_error("malloc error");
-	last += 1;
-	while (cmd[last])
-		tmp[i++] = cmd[last++];
-	return (tmp);
-}
-
-void	first_cmd_exec(t_argv *arg, char **envp, int fd[2])
-{
-	char	*path;
-
-	path = ft_strdup(arg->cmd[0][0]);
-	if (ft_strchr((arg->cmd[0][0]), '/'))
-		arg->cmd[0][0] = get_cmd(arg->cmd[0][0]);
-	close(fd[0]);
+	printf("first\n");
+	close(fd[READ]);
 	dup2(arg->inf_fd, STDIN_FILENO);
-	dup2(fd[1], STDOUT_FILENO);
-	close(fd[1]);
-	arg->curr_cmd += 1;
-	execve(path, arg->cmd[0], envp);
+	dup2(fd[WRITE], STDOUT_FILENO);
+	close(fd[WRITE]);
+	execve(arg->cmd_path[0], arg->cmd[0], arg->envp);
 }
 
-void	middle_cmd_exec(t_argv *arg, char **envp, int fd[2])
+void	middle_cmd_exec(t_argv *arg, int fd[2], int fd2[2], int i)
 {
-	char	*path;
-	int		i;
-
-	i = arg->curr_cmd;
-	path = ft_strdup(arg->cmd[i][0]);
-	if (ft_strchr(arg->cmd[i][0], '/'))
-		arg->cmd[i][0] = get_cmd(arg->cmd[i][0]);
-	dup2(fd[0], STDIN_FILENO);
-	close(fd[0]);
-	dup2(fd[1], STDOUT_FILENO);
-	close(fd[1]);
-	arg->curr_cmd += 1;
-	execve(path, arg->cmd[i], envp);
+	printf("middle %d\n", i);
+	// printf("%s\n", arg->cmd_path[i]);
+	// for (int k = 0; arg->cmd[i][k]; k++)
+	// 	printf("%s\n", arg->cmd[i][k]);
+	if (i % 2) // a read b write
+	{
+		close(fd[WRITE]);
+		close(fd2[READ]);
+		dup2(fd[READ], STDIN_FILENO);
+		close(fd[READ]);
+		dup2(fd2[WRITE], STDOUT_FILENO);
+		close(fd2[WRITE]);
+	}
+	else
+	{
+		close(fd[READ]);
+		close(fd2[WRITE]);
+		dup2(fd2[READ], STDIN_FILENO);
+		close(fd2[READ]);
+		dup2(fd[WRITE], STDOUT_FILENO);
+		close(fd[WRITE]);
+	}
+	execve(arg->cmd_path[i], arg->cmd[i], arg->envp);
 }
 
-void	last_cmd_exec(t_argv *arg, char **envp, int fd[2])
+void	last_cmd_exec(t_argv *arg, int fd[2], int fd2[2], int i)
 {
-	char	*path;
-	int		i;
-
-	if (arg->cmd_cnt != arg->curr_cmd)
+	printf ("last %d \n", i);
+	if (arg->cmd_cnt != i + 1)
 		ft_error ("command count error");
-	i = arg->curr_cmd;
-	path = ft_strdup(arg->cmd[i][0]);
-	if (ft_strchr(arg->cmd[i][0], '/'))
-		arg->cmd[i][0] = get_cmd(arg->cmd[i][0]);
-	close(fd[1]);
-	dup2(arg->out_fd, STDOUT_FILENO);
-	dup2(fd[0], STDIN_FILENO);
-	close(fd[0]);
-	execve(path, arg->cmd[i], envp);
+	if (i % 2)
+	{
+		close(fd[WRITE]);
+		close(fd2[READ]);
+		close(fd2[WRITE]);
+		dup2(arg->out_fd, STDOUT_FILENO);
+		dup2(fd[READ], STDIN_FILENO);
+		close(fd[READ]);
+	}
+	else
+	{
+		close(fd[READ]);
+		close(fd[WRITE]);
+		close(fd2[WRITE]);
+		dup2(arg->out_fd, STDOUT_FILENO);
+		dup2(fd[READ], STDIN_FILENO);
+		close(fd[READ]);
+	}
+	execve(arg->cmd_path[i], arg->cmd[i], arg->envp);
 }
 
-void	execute_cmd(t_argv *arg, char **envp)
+void	execute_cmd(t_argv *arg)
 {
-	pid_t	pid;
-	int		ret;
+	pid_t	pid;	
+	int		status;
 	int		fd[2];
+	int		fd2[2];
+	int		i;
 
-	if (pipe(fd) == -1)
+	i = 1;
+	if (pipe(fd) == -1 || pipe(fd2) == -1)
 		ft_error ("pipe error");
 	pid = fork();
 	if (pid == 0)
-		first_cmd_exec(arg, envp, fd);
+		first_cmd_exec(arg, fd);
 	else
 	{
-		waitpid(pid, &ret, 0);
-		while (arg->cmd_cnt > 1)
+		waitpid(pid, &status, 0);
+		while (arg->cmd_cnt - 1 > i)
 		{
 			pid = fork();
 			if (pid == 0)
-				middle_cmd_exec(arg, envp, fd);
-			arg->cmd_cnt--;
+				middle_cmd_exec(arg, fd, fd2, i);
+			else
+			{
+				waitpid(pid, &status, 0);
+				i++;
+			}
 		}
-		last_cmd_exec(arg, envp, fd);
+		last_cmd_exec(arg, fd, fd2, i);
 	}
 }
 
@@ -232,5 +246,5 @@ int	main(int ac, char **av, char **envp)
 	if (ac < 5)
 		ft_error("wrong format");
 	arg_init(&arg, ac, av, envp);
-	execute_cmd(&arg, envp);
+	execute_cmd(&arg);
 }
