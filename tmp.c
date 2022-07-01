@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipexx.c                                           :+:      :+:    :+:   */
+/*   tmp.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jinkim2 <jinkim2@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/29 19:35:29 by jinkim2           #+#    #+#             */
-/*   Updated: 2022/07/02 00:46:33 by jinkim2          ###   ########seoul.kr  */
+/*   Updated: 2022/07/01 23:11:49 by jinkim2          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	split_cmd(t_argv *arg, char **av, int ac)
 	int		j;
 
 	i = 0;
-	if (arg->h_flag)
+	if (arg->heredoc_flag)
 		i = 1;
 	while (ac - 3 > i)
 	{
@@ -100,7 +100,7 @@ void	get_cmd_path(t_argv *arg)
 	err_check = 0;
 	while (arg->path[err_check])
 		err_check++;
-	if (arg->h_flag)
+	if (arg->heredoc_flag)
 		j = 1;
 	while (arg->path[i] && j < arg->cmd_cnt)
 	{
@@ -137,9 +137,9 @@ int	ft_strcmp(char *str, char *str2)
 
 void	check_valid(t_argv *arg)
 {
-	if (arg->h_flag)
+	if (arg->heredoc_flag)
 	{
-		arg->inf_fd = open("tmp", O_RDWR | O_CREAT | O_TRUNC, 0644);
+		arg->inf_fd = open("tmp", O_RDONLY | O_CREAT | O_TRUNC, 0644);
 		arg->out_fd = open(arg->outfile, O_RDWR | O_CREAT | O_APPEND, 0644);
 	}
 	else
@@ -167,67 +167,27 @@ void	arg_init(t_argv *arg, int ac, char **av, char **envp)
 	arg->envp = envp;
 	if (ft_strcmp(arg->infile, "here_doc"))
 	{
-		arg->h_flag = 1;
-		arg->limiter = ft_strjoin(av[2], "\n");
+		arg->heredoc_flag = 1;
+		arg->limiter = ft_strdup(av[2]);
 	}
 	split_cmd(arg, av, ac);
 	get_path(arg, envp);
 	check_valid(arg);
-	// printf("%s\n", arg->cmd[0][0]);
-	// printf("%s\n", arg->cmd_path[0]);
-	// printf("%s\n", arg->cmd[1][0]);
-	// printf("%s\n", arg->cmd_path[1]);
-}
-
-void	make_tmp_file(t_argv *arg)
-{
-	char	*tmp;
-
-	tmp = get_next_line(0);
-	while (!ft_strcmp(tmp, arg->limiter))
-	{
-		write (arg->inf_fd, tmp, ft_strlen(tmp));
-		tmp = get_next_line(0);
-	}
-	close (arg->inf_fd);
-	arg->inf_fd = open ("tmp", O_RDONLY);
-	if (arg->inf_fd == -1)
-		ft_error ("tmp open error");
-	dup2(arg->inf_fd, STDIN_FILENO);
-	close (arg->inf_fd);
 }
 
 void	first_cmd_exec(t_argv *arg, int fd[2])
 {
-	int	i;
-
-	i = 0;
-	if (arg->h_flag)
-		i = 1;
-	printf("first\n");
-	
-	// char	buff[1000];
-	// for (int i = 0; buff[i]; i++)
-	// 	buff[i] = 0;
-	// read (arg->inf_fd, buff, 1000);
-	// printf("%s\n", buff); 여기서 읽힘 이걸 가지고 cmd 1 실행해야함 !!
-	
-	// printf("%s\n", arg->cmd[i][0]);
-	// printf("%s\n", arg->cmd_path[i]);
-	// printf("%s\n", arg->cmd[i + 1][0]);
-	// printf("%s\n", arg->cmd_path[i + 1]);
-
+	// printf("first\n");
 	close(fd[READ]);
-	// printf("%d\n", arg->inf_fd);
-	// dup2(arg->inf_fd, STDIN_FILENO);
+	dup2(arg->inf_fd, STDIN_FILENO);
 	dup2(fd[WRITE], STDOUT_FILENO);
 	close(fd[WRITE]);
-	execve(arg->cmd_path[i], arg->cmd[i], arg->envp);
+	execve(arg->cmd_path[0], arg->cmd[0], arg->envp);
 }
 
 void	middle_cmd_exec(t_argv *arg, int fd[2], int fd2[2], int i)
 {
-	printf("middle %d\n", i);
+	// printf("middle %d\n", i);
 	// printf("%s\n", arg->cmd_path[i]);
 	// for (int k = 0; arg->cmd[i][k]; k++)
 	// 	printf("%s\n", arg->cmd[i][k]);
@@ -254,24 +214,13 @@ void	middle_cmd_exec(t_argv *arg, int fd[2], int fd2[2], int i)
 
 void	last_cmd_exec(t_argv *arg, int fd[2], int fd2[2], int i)
 {
-	printf ("last %d \n", i);
-	// printf("%s\n", arg->cmd_path[i]);
-	// for (int k = 0; arg->cmd[i][k]; k++)
-	// 	printf("%s\n", arg->cmd[i][k]);
-	// printf("i %d cmd cnt %d\n", i, arg->cmd_cnt);
-	// char	buff[1000];
-	// for (int i = 0; buff[i]; i++)
-	// 	buff[i] = 0;
-	// read (fd[WRITE], buff, 1000);
-	// printf("%s\n", buff);
-	int	h_i;
-
-	h_i = i;
-	if (arg->h_flag)
-		h_i += 1;
+	// printf ("last %d \n", i);
+	printf("%s\n", arg->cmd_path[i]);
+	for (int k = 0; arg->cmd[i][k]; k++)
+		printf("%s\n", arg->cmd[i][k]);
 	if (arg->cmd_cnt != i + 1)
 		ft_error ("command count error");
-	if (h_i % 2)
+	if (i % 2)
 	{
 		close(fd2[READ]);
 		dup2(fd[READ], STDIN_FILENO);
@@ -287,25 +236,6 @@ void	last_cmd_exec(t_argv *arg, int fd[2], int fd2[2], int i)
 	execve(arg->cmd_path[i], arg->cmd[i], arg->envp);
 }
 
-void	excute_cmds(t_argv *arg, int fd[2], int fd2[2], int *i)
-{
-	pid_t	pid;
-	int		status;
-
-	if (*i % 2)
-		close(fd[WRITE]);
-	else
-		close(fd2[WRITE]);
-	pid = fork();
-	if (pid == 0)
-		middle_cmd_exec(arg, fd, fd2, *i);
-	else
-	{
-		waitpid(pid, &status, 0);
-		*i += 1;
-	}
-}
-
 void	execute_cmd(t_argv *arg)
 {
 	pid_t	pid;	
@@ -317,55 +247,60 @@ void	execute_cmd(t_argv *arg)
 	i = 1;
 	if (pipe(fd) == -1 || pipe(fd2) == -1)
 		ft_error ("pipe error");
-	if (arg->h_flag)
-	{
-		make_tmp_file(arg);
-		i += 1;
-	}
 	pid = fork();
 	if (pid == 0)
-	{
-		// if (arg->h_flag)
-		// 	make_tmp_file(arg);
 		first_cmd_exec(arg, fd);
-	}
 	else
 	{
 		waitpid(pid, &status, 0);
 		while (arg->cmd_cnt - 1 > i)
-			excute_cmds(arg, fd, fd2, &i);
+		{
+			if (i % 2)
+				close(fd[WRITE]);
+			else
+				close(fd2[WRITE]);
+			pid = fork();
+			if (pid == 0)
+				middle_cmd_exec(arg, fd, fd2, i);
+			else
+			{
+				waitpid(pid, &status, 0);
+				i++;
+			}
+		}
 		close (fd[WRITE]);
 		close (fd2[WRITE]);
 		last_cmd_exec(arg, fd, fd2, i);
 	}
 }
 
-// void	h_execute_cmd(t_argv *arg)
-// {
-// 	pid_t	pid;
-// 	char	*tmp;
-// 	int		status;
-// 	int		fd[2];
+void	h_execute_cmd(t_argv *arg)
+{
+	pid_t	pid;
+	char	*tmp;
+	int		status;
+	int		fd[2];
+	int		fd2[2];
 
-// 	pipe(fd);
-// 	tmp = get_next_line(0);
-// 	while (!(ft_strcmp(tmp, arg->limiter)))
-// 	{
-// 		write (fd[WRITE], tmp, ft_strlen(tmp));
-// 		tmp = get_next_line(0);
-// 	}
-// 	dup2(arg->inf_fd, STDIN_FILENO);
-// 	pid = fork();
-// 	if (pid == 0)
-// 	{
-// 		close(fd[WRITE]);
-// 		first_cmd_exec(arg, fd);
-// 	}
-// 	else
-// 	{
-// 		waitpid(pid, &status, 0);
-// 	}
-// }
+	pipe(fd);
+	tmp = get_next_line(0);
+	while (!(ft_strcmp(tmp, arg->limiter)))
+	{
+		write (fd[WRITE], tmp, ft_strlen(tmp));
+		tmp = get_next_line(0);
+	}
+	dup2(arg->inf_fd, STDIN_FILENO);
+	pid = fork();
+	if (pid == 0)
+	{
+		close(fd[WRITE]);
+		first_cmd_exec(arg, fd);
+	}
+	else
+	{
+		waitpid(pid, &status, 0);
+	}
+}
 
 int	main(int ac, char **av, char **envp)
 {
@@ -374,7 +309,7 @@ int	main(int ac, char **av, char **envp)
 	if (ac < 5)
 		ft_error("wrong format");
 	arg_init(&arg, ac, av, envp);
-	// if (arg.h_flag)
-	// 	h_execute_cmd(&arg);
+	if (arg.heredoc_flag)
+		h_execute_cmd(&arg);
 	execute_cmd(&arg);
 }

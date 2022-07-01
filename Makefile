@@ -6,14 +6,14 @@
 #    By: jinkim2 <jinkim2@student.42seoul.kr>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/13 18:18:55 by jinkim2           #+#    #+#              #
-#    Updated: 2022/06/30 15:14:35 by jinkim2          ###   ########seoul.kr   #
+#    Updated: 2022/07/01 20:42:27 by jinkim2          ###   ########seoul.kr   #
 #                                                                              #
 # **************************************************************************** #
 
 CC = cc
 CFLAGS = -g -Wall -Werror -Wextra
 
-SRCS = 	pipexx.c
+SRCS = 	pipexx.c get_next_line.c get_next_line_utils.c
 		
 OBJS = ${SRCS:.c=.o}
 
@@ -30,7 +30,7 @@ $(NAME): $(OBJS)
 	make clean
 
 lldb: 
-	cc -g pipexx.c libft/*.c
+	cc -g pipexx.c libft/*.c get_next_line.c get_next_line_utils.c
 
 bonus: $(BONUS_OBJS)
 	make -C $(LIBFT_DIR)
