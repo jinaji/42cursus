@@ -6,7 +6,7 @@
 /*   By: jinkim2 <jinkim2@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/29 19:35:29 by jinkim2           #+#    #+#             */
-/*   Updated: 2022/07/02 00:46:33 by jinkim2          ###   ########seoul.kr  */
+/*   Updated: 2022/07/02 01:44:38 by jinkim2          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -219,7 +219,7 @@ void	first_cmd_exec(t_argv *arg, int fd[2])
 
 	close(fd[READ]);
 	// printf("%d\n", arg->inf_fd);
-	// dup2(arg->inf_fd, STDIN_FILENO);
+	dup2(arg->inf_fd, STDIN_FILENO);
 	dup2(fd[WRITE], STDOUT_FILENO);
 	close(fd[WRITE]);
 	execve(arg->cmd_path[i], arg->cmd[i], arg->envp);
@@ -331,11 +331,13 @@ void	execute_cmd(t_argv *arg)
 	}
 	else
 	{
+		printf("??\n");
 		waitpid(pid, &status, 0);
 		while (arg->cmd_cnt - 1 > i)
 			excute_cmds(arg, fd, fd2, &i);
 		close (fd[WRITE]);
 		close (fd2[WRITE]);
+		printf("??\n");
 		last_cmd_exec(arg, fd, fd2, i);
 	}
 }
@@ -374,6 +376,8 @@ int	main(int ac, char **av, char **envp)
 	if (ac < 5)
 		ft_error("wrong format");
 	arg_init(&arg, ac, av, envp);
+	if (arg.h_flag && ac < 6)
+		ft_error("wrong format");
 	// if (arg.h_flag)
 	// 	h_execute_cmd(&arg);
 	execute_cmd(&arg);
