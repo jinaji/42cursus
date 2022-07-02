@@ -1,9 +1,11 @@
-make --dry-run --keep-going --print-directory
+make --dry-run --always-make --keep-going --print-directory
 make: Entering directory `/Users/jinkim2/42cursus/pipex'
-cc -g -Wall -Werror -Wextra   -c -o pipex.o pipex.c
+cc -g -Wall -Werror -Wextra   -c -o pipexx.o pipexx.c
  
+cc -g -Wall -Werror -Wextra   -c -o get_next_line.o get_next_line.c
+cc -g -Wall -Werror -Wextra   -c -o get_next_line_utils.o get_next_line_utils.c
 make -C libft/
-cc -o pipex pipex.o -Llibft -lft
+cc -o pipex pipexx.o get_next_line.o get_next_line_utils.o -Llibft -lft
 make clean
 make: Leaving directory `/Users/jinkim2/42cursus/pipex'
  

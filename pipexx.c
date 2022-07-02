@@ -6,7 +6,7 @@
 /*   By: jinkim2 <jinkim2@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/29 19:35:29 by jinkim2           #+#    #+#             */
-/*   Updated: 2022/07/02 01:44:38 by jinkim2          ###   ########seoul.kr  */
+/*   Updated: 2022/07/02 20:02:14 by jinkim2          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,35 +88,51 @@ void	get_path(t_argv *arg, char **envp)
 	free (tmp);
 }
 
+char	*join_path(char *path, char *cmd)
+{
+	char	*tmp;
+	char	*tmp2;
+
+	tmp = ft_strjoin(path, "/");
+	tmp2= ft_strjoin(tmp, cmd);
+	free (tmp);
+	return (tmp2);
+}
+
+void	command_not_fount(t_argv *arg)
+{
+	perror("command not found");
+	arg->no_cmd = 0;
+}
+
 void	get_cmd_path(t_argv *arg)
 {
 	char	*tmp;
 	int		i;
 	int		j;
-	int		err_check;
 
-	i = 0;
 	j = 0;
-	err_check = 0;
-	while (arg->path[err_check])
-		err_check++;
 	if (arg->h_flag)
 		j = 1;
-	while (arg->path[i] && j < arg->cmd_cnt)
+	while (j < arg->cmd_cnt)
 	{
-		tmp = ft_strjoin(arg->path[i], "/");
-		tmp = ft_strjoin(tmp, arg->cmd[j][0]); // 위 tmp leak
-		if (access(tmp, F_OK) == 0)
+		i = 0;
+		arg->no_cmd = 0;
+		while (arg->path[i])
 		{
-			arg->cmd_path[j] = ft_strdup(tmp);
-			j++;
-			i = -1;
+			tmp = join_path(arg->path[i], arg->cmd[j][0]);
+			if (access(tmp, F_OK) == 0)
+			{
+				arg->cmd_path[j] = ft_strdup(tmp);
+				arg->no_cmd = 1;
+			}
+			i++;
+			free (tmp);
 		}
-		i++;
+		if (!arg->no_cmd)
+			command_not_fount(arg);
+		j++;
 	}
-	if (i == err_check + 1)
-		ft_error ("command not found");
-	free (tmp);
 }
 
 int	ft_strcmp(char *str, char *str2)
@@ -212,8 +228,8 @@ void	first_cmd_exec(t_argv *arg, int fd[2])
 	// read (arg->inf_fd, buff, 1000);
 	// printf("%s\n", buff); 여기서 읽힘 이걸 가지고 cmd 1 실행해야함 !!
 	
-	// printf("%s\n", arg->cmd[i][0]);
-	// printf("%s\n", arg->cmd_path[i]);
+	printf("%s\n", arg->cmd[i][0]);
+	printf("%s\n", arg->cmd_path[i]);
 	// printf("%s\n", arg->cmd[i + 1][0]);
 	// printf("%s\n", arg->cmd_path[i + 1]);
 
@@ -228,10 +244,15 @@ void	first_cmd_exec(t_argv *arg, int fd[2])
 void	middle_cmd_exec(t_argv *arg, int fd[2], int fd2[2], int i)
 {
 	printf("middle %d\n", i);
-	// printf("%s\n", arg->cmd_path[i]);
-	// for (int k = 0; arg->cmd[i][k]; k++)
-	// 	printf("%s\n", arg->cmd[i][k]);
-	if (i % 2) // a read b write
+	int	h_i;
+	printf("%s\n", arg->cmd_path[i]);
+	for (int k = 0; arg->cmd[i][k]; k++)
+		printf("%s\n", arg->cmd[i][k]);
+	h_i = i;
+	if (arg->h_flag)
+		h_i += 1;
+	printf ("%d\n", h_i);
+	if (h_i % 2) // a read b write
 	{
 		close(fd[WRITE]);
 		close(fd2[READ]);
@@ -242,8 +263,8 @@ void	middle_cmd_exec(t_argv *arg, int fd[2], int fd2[2], int i)
 	}
 	else
 	{
-		close(fd[READ]);
 		close(fd2[WRITE]);
+		close(fd[READ]);
 		dup2(fd2[READ], STDIN_FILENO);
 		close(fd2[READ]);
 		dup2(fd[WRITE], STDOUT_FILENO);
@@ -255,9 +276,9 @@ void	middle_cmd_exec(t_argv *arg, int fd[2], int fd2[2], int i)
 void	last_cmd_exec(t_argv *arg, int fd[2], int fd2[2], int i)
 {
 	printf ("last %d \n", i);
-	// printf("%s\n", arg->cmd_path[i]);
-	// for (int k = 0; arg->cmd[i][k]; k++)
-	// 	printf("%s\n", arg->cmd[i][k]);
+	printf("path %s\n", arg->cmd_path[i]);
+	for (int k = 0; arg->cmd[i][k]; k++)
+		printf("%s\n", arg->cmd[i][k]);
 	// printf("i %d cmd cnt %d\n", i, arg->cmd_cnt);
 	// char	buff[1000];
 	// for (int i = 0; buff[i]; i++)
@@ -267,10 +288,11 @@ void	last_cmd_exec(t_argv *arg, int fd[2], int fd2[2], int i)
 	int	h_i;
 
 	h_i = i;
+	// printf ("c i h %d %d %d \n", arg->cmd_cnt, i, h_i);
+	// if (arg->cmd[i + 1])
+	// 	ft_error("command count error");
 	if (arg->h_flag)
 		h_i += 1;
-	if (arg->cmd_cnt != i + 1)
-		ft_error ("command count error");
 	if (h_i % 2)
 	{
 		close(fd2[READ]);
@@ -320,8 +342,10 @@ void	execute_cmd(t_argv *arg)
 	if (arg->h_flag)
 	{
 		make_tmp_file(arg);
+		arg->cmd_cnt -= 1;
 		i += 1;
 	}
+	printf ("%d %d\n", arg->cmd_cnt, i);
 	pid = fork();
 	if (pid == 0)
 	{
@@ -331,13 +355,11 @@ void	execute_cmd(t_argv *arg)
 	}
 	else
 	{
-		printf("??\n");
 		waitpid(pid, &status, 0);
 		while (arg->cmd_cnt - 1 > i)
 			excute_cmds(arg, fd, fd2, &i);
 		close (fd[WRITE]);
 		close (fd2[WRITE]);
-		printf("??\n");
 		last_cmd_exec(arg, fd, fd2, i);
 	}
 }

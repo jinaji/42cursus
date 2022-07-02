@@ -6,7 +6,7 @@
 /*   By: jinkim2 <jinkim2@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/29 19:35:50 by jinkim2           #+#    #+#             */
-/*   Updated: 2022/07/01 21:37:37 by jinkim2          ###   ########seoul.kr  */
+/*   Updated: 2022/07/02 17:05:18 by jinkim2          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@
 # include <stdio.h>
 # include <fcntl.h>
 # include "libft/libft.h"
+# include <string.h>
+# include <errno.h>
 
 # define READ 0
 # define WRITE 1
@@ -42,6 +44,7 @@ typedef struct s_argv{
 	int		cmd_cnt;
 	int		h_flag;
 	char	*limiter;
+	int		no_cmd;
 }				t_argv;
 
 
