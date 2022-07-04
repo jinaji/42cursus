@@ -6,7 +6,7 @@
 /*   By: jinkim2 <jinkim2@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/29 19:35:29 by jinkim2           #+#    #+#             */
-/*   Updated: 2022/07/02 20:02:14 by jinkim2          ###   ########seoul.kr  */
+/*   Updated: 2022/07/04 16:37:33 by jinkim2          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,31 +44,41 @@ int	dp_cnt(char *str)
 	return (i);
 }
 
+void	split_cmd_op(t_argv *arg, char **tmp, int i, int j)
+{
+	while (tmp[j])
+	{
+		arg->cmd[i][j] = ft_strdup(tmp[j]);
+		j++;
+	}
+	arg->cmd[i][j] = 0;
+	printf("%s\n", arg->cmd[i][j]);
+}
+
 void	split_cmd(t_argv *arg, char **av, int ac)
 {
 	char	**tmp;
+	int		h;
 	int		i;
 	int		j;
 
-	i = 0;
+	h = 0;
+	i = h;
 	if (arg->h_flag)
-		i = 1;
-	while (ac - 3 > i)
+		h = 1;
+	while (ac - 3 > h)
 	{
 		j = 0;
-		tmp = ft_split(av[i + 2], ' ');
-		arg->cmd[i] = (char **)malloc(sizeof(char *) * (dp_cnt(av[i + 2]) + 1));
+		tmp = ft_split(av[h + 2], ' ');
+		arg->cmd[i] = (char **)malloc(sizeof(char *) * (dp_cnt(av[h + 2]) + 1));
 		if (!(arg->cmd[i]))
 			ft_error("malloc error");
-		while (tmp[j])
-		{
-			arg->cmd[i][j] = ft_strdup(tmp[j]);
-			j++;
-		}
-		arg->cmd[i][j] = 0;
+		split_cmd_op(arg, tmp, i, j);
 		free_tmp(tmp);
 		i++;
+		h++;
 	}
+	arg->cmd[i] = 0;
 }
 
 void	get_path(t_argv *arg, char **envp)
@@ -99,7 +109,7 @@ char	*join_path(char *path, char *cmd)
 	return (tmp2);
 }
 
-void	command_not_fount(t_argv *arg)
+void	command_not_found(t_argv *arg)
 {
 	perror("command not found");
 	arg->no_cmd = 0;
@@ -112,15 +122,16 @@ void	get_cmd_path(t_argv *arg)
 	int		j;
 
 	j = 0;
-	if (arg->h_flag)
-		j = 1;
+	// if (arg->h_flag)
+	// 	j = 1;
+	printf ("cmd cnt %d\n", arg->cmd_cnt);
 	while (j < arg->cmd_cnt)
 	{
 		i = 0;
 		arg->no_cmd = 0;
 		while (arg->path[i])
 		{
-			tmp = join_path(arg->path[i], arg->cmd[j][0]);
+			tmp = join_path(arg->path[i], arg->cmd[j][0]); // segfault with j
 			if (access(tmp, F_OK) == 0)
 			{
 				arg->cmd_path[j] = ft_strdup(tmp);
@@ -130,7 +141,7 @@ void	get_cmd_path(t_argv *arg)
 			free (tmp);
 		}
 		if (!arg->no_cmd)
-			command_not_fount(arg);
+			command_not_found(arg);
 		j++;
 	}
 }
@@ -185,6 +196,7 @@ void	arg_init(t_argv *arg, int ac, char **av, char **envp)
 	{
 		arg->h_flag = 1;
 		arg->limiter = ft_strjoin(av[2], "\n");
+		arg->cmd_cnt -= 1;
 	}
 	split_cmd(arg, av, ac);
 	get_path(arg, envp);
@@ -218,8 +230,8 @@ void	first_cmd_exec(t_argv *arg, int fd[2])
 	int	i;
 
 	i = 0;
-	if (arg->h_flag)
-		i = 1;
+	// if (arg->h_flag)
+	// 	i = 1;
 	printf("first\n");
 	
 	// char	buff[1000];
@@ -249,8 +261,8 @@ void	middle_cmd_exec(t_argv *arg, int fd[2], int fd2[2], int i)
 	for (int k = 0; arg->cmd[i][k]; k++)
 		printf("%s\n", arg->cmd[i][k]);
 	h_i = i;
-	if (arg->h_flag)
-		h_i += 1;
+	// if (arg->h_flag)
+	// 	h_i += 1;
 	printf ("%d\n", h_i);
 	if (h_i % 2) // a read b write
 	{
@@ -291,8 +303,8 @@ void	last_cmd_exec(t_argv *arg, int fd[2], int fd2[2], int i)
 	// printf ("c i h %d %d %d \n", arg->cmd_cnt, i, h_i);
 	// if (arg->cmd[i + 1])
 	// 	ft_error("command count error");
-	if (arg->h_flag)
-		h_i += 1;
+	// if (arg->h_flag)
+	// 	h_i += 1;
 	if (h_i % 2)
 	{
 		close(fd2[READ]);
@@ -340,12 +352,8 @@ void	execute_cmd(t_argv *arg)
 	if (pipe(fd) == -1 || pipe(fd2) == -1)
 		ft_error ("pipe error");
 	if (arg->h_flag)
-	{
 		make_tmp_file(arg);
-		arg->cmd_cnt -= 1;
-		i += 1;
-	}
-	printf ("%d %d\n", arg->cmd_cnt, i);
+	printf ("i : %d \n", i);
 	pid = fork();
 	if (pid == 0)
 	{
