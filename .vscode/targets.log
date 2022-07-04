@@ -10,7 +10,7 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 make: *** No rule to make target `pipexx.o', needed by `pipex'.  Stop.
 
 
-# Make data base, printed on Mon Jul  4 16:24:46 2022
+# Make data base, printed on Mon Jul  4 18:55:58 2022
 
 # Variables
 
@@ -26,6 +26,7 @@ VSCODE_LOG_NATIVE = false
 @D = $(patsubst %/,%,$(dir $@))
 # automatic
 @F = $(notdir $@)
+ 
 # makefile
 CURDIR := /Users/jinkim2/42cursus/pipex
 # makefile
@@ -45,7 +46,7 @@ VSCODE_VERBOSE_LOGGING = true
 # makefile (from `Makefile', line 18)
 OBJS = ${SRCS:.c=.o}
 # environment
-VSCODE_IPC_HOOK_EXTHOST = /var/folders/zz/zyxvpxvq6csfxvn_n000cqsm0035yd/T/vscode-ipc-6ef8323a-fb0d-42a3-8f73-6bf3cb2156a0.sock
+VSCODE_IPC_HOOK_EXTHOST = /var/folders/zz/zyxvpxvq6csfxvn_n000cqsm0035yd/T/vscode-ipc-7fc56a6d-70eb-4ed1-b2e8-71e68b016387.sock
 # environment
 VSCODE_CWD = /
 # environment
@@ -53,7 +54,7 @@ PATH = /usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/munki
 # environment
 LSCOLORS = Gxfxcxdxbxegedabagacad
 # environment
-LaunchInstanceID = 7B83979D-370B-415A-8297-9621DFF78476
+LaunchInstanceID = 5B103142-0640-4626-B4A7-30D6FD32B3F1
 # environment
 VSCODE_LOG_STACK = false
 # environment
@@ -63,7 +64,7 @@ ELECTRON_RUN_AS_NODE = 1
 # makefile (from `Makefile', line 20)
 LIBFT_DIR = libft/
 # environment
-SSH_AUTH_SOCK = /private/tmp/com.apple.launchd.CL27Gs4nYX/Listeners
+SSH_AUTH_SOCK = /private/tmp/com.apple.launchd.dJbEQTEvUS/Listeners
 # automatic
 %F = $(notdir $%)
 # environment
@@ -165,7 +166,7 @@ MAKELEVEL := 0
 # environment
 LANG = C
 # environment
-VSCODE_PID = 2792
+VSCODE_PID = 6989
 # variable set hash-table stats:
 # Load=76/1024=7%, Rehash=0, Collisions=3/105=3%
 
@@ -175,9 +176,9 @@ VSCODE_PID = 2792
 
 # Directories
 
-# . (device 16777225, inode 2883201): 20 files, no impossibilities.
+# . (device 16777225, inode 2883201): 18 files, no impossibilities.
 
-# 20 files, no impossibilities in 1 directories.
+# 18 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
@@ -197,7 +198,6 @@ lldb:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
- 
 #  commands to execute (from `Makefile', line 33):
 	cc -g pipexx.c libft/*.c get_next_line.c get_next_line_utils.c
 	
@@ -278,7 +278,7 @@ pipexx.o:
 
 pipex: pipexx.o get_next_line.o get_next_line_utils.o
 #  Implicit rule search has not been done.
-#  Last modified 2022-07-04 15:10:45
+#  Last modified 2022-07-04 16:42:05
 #  File has not been updated.
 # variable set hash-table stats:
 # Load=0/32=0%, Rehash=0, Collisions=0/0=0%
@@ -301,6 +301,6 @@ pipex: pipexx.o get_next_line.o get_next_line_utils.o
 # strcache size: total = 4096 / max = 4096 / min = 4096 / avg = 4096
 # strcache free: total = 4087 / max = 4087 / min = 4087 / avg = 4087
 
-# Finished Make data base on Mon Jul  4 16:24:46 2022
+# Finished Make data base on Mon Jul  4 18:55:58 2022
 
  
