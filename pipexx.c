@@ -6,7 +6,7 @@
 /*   By: jinkim2 <jinkim2@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/29 19:35:29 by jinkim2           #+#    #+#             */
-/*   Updated: 2022/07/04 21:36:29 by jinkim2          ###   ########seoul.kr  */
+/*   Updated: 2022/07/06 21:40:20 by jinkim2          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -217,106 +217,124 @@ void	make_tmp_file(t_argv *arg)
 	close (arg->inf_fd);
 }
 
-void	first_cmd_exec(t_argv *arg, int fd[2])
+void	first_cmd_exec(t_argv *arg, int **fd, int i)
 {
 	printf ("%s first\n", arg->cmd[0][0]);
-	int	i;
-
-	i = 0;
-	close(fd[READ]);
+	close(fd[i][READ]);
 	dup2(arg->inf_fd, STDIN_FILENO);
-	dup2(fd[WRITE], STDOUT_FILENO);
-	 close(fd[WRITE]);
+	dup2(fd[i][WRITE], STDOUT_FILENO);
+	close(fd[i][WRITE]);
 	execve(arg->cmd_path[i], arg->cmd[i], arg->envp);
 }
 
-void	middle_cmd_exec(t_argv *arg, int fd[2], int fd2[2], int i)
+void	middle_cmd_exec(t_argv *arg, int **fd, int i)
 {
+	int	j;
+
+	j = i - 1;
 	printf ("%d %s middle\n", i, arg->cmd[i][0]);
-	if (i % 2) // a read b write
-	{
-		close(fd[WRITE]);
-		close(fd2[READ]);
-		dup2(fd[READ], STDIN_FILENO);
-		close(fd[READ]);
-		dup2(fd2[WRITE], STDOUT_FILENO);
-		// close(fd2[WRITE]);
-	}
-	else
-	{
-		close(fd2[WRITE]);
-		close(fd[READ]);
-		dup2(fd2[READ], STDIN_FILENO);
-		close(fd2[READ]);
-		dup2(fd[WRITE], STDOUT_FILENO);
-		// close(fd[WRITE]);
-	}
+	// if (i % 2) // a read b write
+	// {
+	// 	close(fd[WRITE]);
+	// 	// close(fd2[READ]);
+	// 	dup2(fd[READ], STDIN_FILENO);
+	// 	close(fd[READ]);
+	// 	// dup2(fd2[WRITE], STDOUT_FILENO);
+	// 	printf ("odd %d %s middle\n", i, arg->cmd[i][0]);
+	// 	// close(fd2[WRITE]);
+	// }
+	// else
+	// {
+	// 	// close(fd2[WRITE]);
+	// 	close(fd[READ]);
+	// 	// dup2(fd2[READ], STDIN_FILENO);
+	// 	// close(fd2[READ]);
+	// 	dup2(fd[WRITE], STDOUT_FILENO);
+	// 	printf ("even %d %s middle\n", i, arg->cmd[i][0]);
+	// 	// close(fd[WRITE]);
+	// }
+	close(fd[j][WRITE]);
+	dup2(fd[j][READ], STDIN_FILENO);
+	close(fd[j][READ]);
+	dup2(fd[i][WRITE], STDOUT_FILENO);
+	close(fd[i][WRITE]);
 	execve(arg->cmd_path[i], arg->cmd[i], arg->envp);
 }
 
-void	last_cmd_exec(t_argv *arg, int fd[2], int fd2[2], int i)
+void	last_cmd_exec(t_argv *arg, int **fd, int i)
 {
 	printf ("%d %s last\n", i, arg->cmd[i][0]);
-	if (i % 2)
-	{
-		close(fd2[READ]);
-		dup2(fd[READ], STDIN_FILENO);
-		close(fd[READ]);
-	}
-	else
-	{
-		close(fd[READ]);
-		dup2(fd2[READ], STDIN_FILENO);
-		close(fd2[READ]);
-	}
+	// if (i % 2)
+	// {
+	// 	// close(fd2[READ]);
+	// 	dup2(fd[READ], STDIN_FILENO);
+	// 	close(fd[READ]);
+	// }
+	// else
+	// {
+	// 	close(fd[READ]);
+	// 	// dup2(fd2[READ], STDIN_FILENO);
+	// 	// close(fd2[READ]);
+	// }
+	int	j;
+
+	j = i - 1;
+	close(fd[j][WRITE]);
+	dup2(fd[j][READ], STDIN_FILENO);
+	close(fd[j][READ]);
 	dup2 (arg->out_fd, STDOUT_FILENO);
-	printf("%d\n", arg->out_fd);
+	// printf("%d\n", arg->out_fd);
 	execve(arg->cmd_path[i], arg->cmd[i], arg->envp);
 }
 
-void	excute_cmds(t_argv *arg, int fd[2], int fd2[2], int *i)
+void	execute_cmds(t_argv *arg, int **fd, int i)
 {
-	pid_t	pid;
-	int		status;
-
-	if (*i % 2)
-		close(fd[WRITE]);
+	// if (*i % 2)
+	// 	close(fd[WRITE]);
+	// else
+	// 	close(fd2[WRITE]);
+	if (i == 0)
+		first_cmd_exec(arg, fd, i);
+	if (arg->cmd_cnt - 1 > i)
+		middle_cmd_exec(arg, fd, i);
 	else
-		close(fd2[WRITE]);
-	pid = fork();
-	if (pid == 0)
-		middle_cmd_exec(arg, fd, fd2, *i);
-	else
-	{
-		waitpid(pid, &status, 0);
-		*i += 1;
-	}
+		last_cmd_exec(arg, fd, i);
 }
 
 void	execute_cmd(t_argv *arg)
 {
 	pid_t	pid;	
 	int		status;
-	int		fd[2];
-	int		fd2[2];
+	int		**fd;
 	int		i;
 
-	i = 1;
-	if (pipe(fd) == -1 || pipe(fd2) == -1)
-		ft_error ("pipe error");
+	i = 0;
+	fd = (int **)malloc(sizeof(int *) * arg->cmd_cnt - 1);
+	while (arg->cmd_cnt > i)
+	{
+		fd[i] = (int *)malloc(sizeof(int) * 2);
+		i++;
+	}
+	printf ("%d\n", i);
 	if (arg->h_flag)
 		make_tmp_file(arg);
-	pid = fork();
-	if (pid == 0)
-		first_cmd_exec(arg, fd);
-	else
+	i = 0;
+	while (arg->cmd_cnt  > i)
 	{
-		waitpid(pid, &status, WNOHANG);
-		while (arg->cmd_cnt - 1 > i)
-			excute_cmds(arg, fd, fd2, &i);
-		close (fd[WRITE]);
-		close (fd2[WRITE]);
-		last_cmd_exec(arg, fd, fd2, i);
+		printf("%d %d\n", arg->cmd_cnt - 1, i);
+		if (pipe(fd[i]) == -1)
+			ft_error("pipe error");
+		pid = fork();
+		if (pid == 0)
+			execute_cmds(arg, fd, i);
+		else
+		{
+			waitpid(pid, &status, WNOHANG);
+			// execute_cmds(arg, fd, i);
+			// last_cmd_exec(arg, fd, i);
+			close(fd[i][WRITE]);
+		}
+		i++;
 	}
 }
 
