@@ -6,7 +6,7 @@
 /*   By: jinkim2 <jinkim2@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/29 19:35:29 by jinkim2           #+#    #+#             */
-/*   Updated: 2022/07/06 21:40:20 by jinkim2          ###   ########seoul.kr  */
+/*   Updated: 2022/07/08 15:32:58 by jinkim2          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,22 @@ void	free_tmp(char **tmp)
 	free (tmp);
 }
 
+int	ft_strcmp(char *str, char *str2)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] != str2[i])
+			return (0);
+		i++;
+	}
+	if (str2[i])
+		return (0);
+	return (1);
+}
+
 int	dp_cnt(char *str)
 {
 	char	**tmp;
@@ -41,15 +57,53 @@ int	dp_cnt(char *str)
 	while (tmp[i])
 		i++;
 	free_tmp(tmp);
+	i += 1;
 	return (i);
 }
 
-void	split_cmd_op(t_argv *arg, char **tmp, int i, int j)
+char	*q_ft_strdup(char *str)
 {
-	while (tmp[j])
+	int		i;
+	int		j;
+	int		len;
+	char	*tmp;
+
+	i = 0;
+	j = 0;
+	len = ft_strlen(str);
+	tmp = (char *)malloc(sizeof(char) * (len + 1));
+	if (!tmp)
+		ft_error("malloc error");
+	while (str[i])
 	{
-		arg->cmd[i][j] = ft_strdup(tmp[j]);
+		if (str[i] == '\'')
+			i++;
+		tmp[j] = str[i];
 		j++;
+		i++;
+	}
+	tmp[j] = 0;
+	return (tmp);
+}
+
+void	split_cmd_op(t_argv *arg, char *cmd, char **tmp, int i)
+{
+	int	j;
+
+	j = 0;
+	if (ft_strcmp(tmp[0], "awk") || ft_strcmp(tmp[0], "sed"))
+	{
+		arg->cmd[i][0] = ft_strdup(tmp[0]);
+		arg->cmd[i][1] = q_ft_strdup(cmd + 4);
+		j = 2;
+	}
+	else
+	{
+		while (tmp[j])
+		{
+			arg->cmd[i][j] = ft_strdup(tmp[j]);
+			j++;
+		}
 	}
 	arg->cmd[i][j] = 0;
 }
@@ -59,7 +113,6 @@ void	split_cmd(t_argv *arg, char **av, int ac)
 	char	**tmp;
 	int		h;
 	int		i;
-	int		j;
 
 	h = 0;
 	i = h;
@@ -67,12 +120,14 @@ void	split_cmd(t_argv *arg, char **av, int ac)
 		h = 1;
 	while (ac - 3 > h)
 	{
-		j = 0;
 		tmp = ft_split(av[h + 2], ' ');
-		arg->cmd[i] = (char **)malloc(sizeof(char *) * (dp_cnt(av[h + 2]) + 1));
+		if (ft_strcmp(tmp[0], "awk") || ft_strcmp(tmp[0], "sed"))
+			arg->cmd[i] = (char **)malloc(sizeof(char *) * 3);
+		else
+			arg->cmd[i] = (char **)malloc(sizeof(char *) * (dp_cnt(av[h + 2])));
 		if (!(arg->cmd[i]))
 			ft_error("malloc error");
-		split_cmd_op(arg, tmp, i, j);
+		split_cmd_op(arg, av[h + 2], tmp, i);
 		free_tmp(tmp);
 		i++;
 		h++;
@@ -142,22 +197,6 @@ void	get_cmd_path(t_argv *arg)
 	}
 }
 
-int	ft_strcmp(char *str, char *str2)
-{
-	int	i;
-
-	i = 0;
-	while (str[i])
-	{
-		if (str[i] != str2[i])
-			return (0);
-		i++;
-	}
-	if (str2[i])
-		return (0);
-	return (1);
-}
-
 void	check_valid(t_argv *arg)
 {
 	if (arg->h_flag)
@@ -219,7 +258,7 @@ void	make_tmp_file(t_argv *arg)
 
 void	first_cmd_exec(t_argv *arg, int **fd, int i)
 {
-	printf ("%s first\n", arg->cmd[0][0]);
+	// printf ("%s first\n", arg->cmd[0][0]);
 	close(fd[i][READ]);
 	dup2(arg->inf_fd, STDIN_FILENO);
 	dup2(fd[i][WRITE], STDOUT_FILENO);
@@ -232,7 +271,7 @@ void	middle_cmd_exec(t_argv *arg, int **fd, int i)
 	int	j;
 
 	j = i - 1;
-	printf ("%d %s middle\n", i, arg->cmd[i][0]);
+	// printf ("%d %s middle\n", i, arg->cmd[i][0]);
 	// if (i % 2) // a read b write
 	// {
 	// 	close(fd[WRITE]);
@@ -263,7 +302,7 @@ void	middle_cmd_exec(t_argv *arg, int **fd, int i)
 
 void	last_cmd_exec(t_argv *arg, int **fd, int i)
 {
-	printf ("%d %s last\n", i, arg->cmd[i][0]);
+	// printf ("%d %s last\n", i, arg->cmd[i][0]);
 	// if (i % 2)
 	// {
 	// 	// close(fd2[READ]);
@@ -284,6 +323,8 @@ void	last_cmd_exec(t_argv *arg, int **fd, int i)
 	close(fd[j][READ]);
 	dup2 (arg->out_fd, STDOUT_FILENO);
 	// printf("%d\n", arg->out_fd);
+	if (arg->h_flag)
+		unlink("tmp");
 	execve(arg->cmd_path[i], arg->cmd[i], arg->envp);
 }
 
@@ -315,13 +356,13 @@ void	execute_cmd(t_argv *arg)
 		fd[i] = (int *)malloc(sizeof(int) * 2);
 		i++;
 	}
-	printf ("%d\n", i);
+	// printf ("%d\n", i);
 	if (arg->h_flag)
 		make_tmp_file(arg);
 	i = 0;
 	while (arg->cmd_cnt  > i)
 	{
-		printf("%d %d\n", arg->cmd_cnt - 1, i);
+		// printf("%d %d\n", arg->cmd_cnt - 1, i);
 		if (pipe(fd[i]) == -1)
 			ft_error("pipe error");
 		pid = fork();

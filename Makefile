@@ -6,7 +6,7 @@
 #    By: jinkim2 <jinkim2@student.42seoul.kr>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/13 18:18:55 by jinkim2           #+#    #+#              #
-#    Updated: 2022/07/01 20:42:27 by jinkim2          ###   ########seoul.kr   #
+#    Updated: 2022/07/08 14:32:00 by jinkim2          ###   ########seoul.kr   #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,6 @@ all: $(NAME)
 $(NAME): $(OBJS)
 	make -C $(LIBFT_DIR)
 	cc -o $(NAME) $^ -Llibft -lft
-	make clean
 
 lldb: 
 	cc -g pipexx.c libft/*.c get_next_line.c get_next_line_utils.c
@@ -35,7 +34,6 @@ lldb:
 bonus: $(BONUS_OBJS)
 	make -C $(LIBFT_DIR)
 	cc -o $(BONUS) $^ -Llibft -lft
-	make clean
 
 clean:
 	rm -f $(OBJS) $(BONUS_OBJS)
