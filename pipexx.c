@@ -6,16 +6,17 @@
 /*   By: jinkim2 <jinkim2@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/29 19:35:29 by jinkim2           #+#    #+#             */
-/*   Updated: 2022/07/08 15:32:58 by jinkim2          ###   ########seoul.kr  */
+/*   Updated: 2022/07/09 20:10:51 by jinkim2          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipexx.h"
 
-void	ft_error(char *str)
+void	ft_error(char *str, int i)
 {
 	perror(str);
-	exit (1);
+	if (i)
+		exit (1);
 }
 
 void	free_tmp(char **tmp)
@@ -73,7 +74,7 @@ char	*q_ft_strdup(char *str)
 	len = ft_strlen(str);
 	tmp = (char *)malloc(sizeof(char) * (len + 1));
 	if (!tmp)
-		ft_error("malloc error");
+		ft_error("malloc error", 1);
 	while (str[i])
 	{
 		if (str[i] == '\'')
@@ -126,7 +127,7 @@ void	split_cmd(t_argv *arg, char **av, int ac)
 		else
 			arg->cmd[i] = (char **)malloc(sizeof(char *) * (dp_cnt(av[h + 2])));
 		if (!(arg->cmd[i]))
-			ft_error("malloc error");
+			ft_error("malloc error", 1);
 		split_cmd_op(arg, av[h + 2], tmp, i);
 		free_tmp(tmp);
 		i++;
@@ -197,32 +198,13 @@ void	get_cmd_path(t_argv *arg)
 	}
 }
 
-void	check_valid(t_argv *arg)
-{
-	if (arg->h_flag)
-	{
-		arg->inf_fd = open("tmp", O_RDWR | O_CREAT | O_TRUNC, 0644);
-		arg->out_fd = open(arg->outfile, O_RDWR | O_CREAT | O_APPEND, 0644);
-	}
-	else
-	{
-		arg->inf_fd = open(arg->infile, O_RDONLY);
-		arg->out_fd = open(arg->outfile, O_RDWR | O_CREAT | O_TRUNC, 0644);
-	}
-	if (arg->inf_fd == -1)
-		ft_error ("infile open error");
-	if (arg->out_fd == -1)
-		ft_error("outfile open error");
-	get_cmd_path(arg);
-}
-
 void	arg_init(t_argv *arg, int ac, char **av, char **envp)
 {
 	ft_memset(arg, 0, sizeof(t_argv));
 	arg->cmd_cnt = ac - 3;
 	arg->cmd = (char ***)malloc(sizeof(char **) * (ac - 2));
 	if (!(arg->cmd))
-		ft_error("malloc error");
+		ft_error("malloc error", 1);
 	arg->cmd_path = (char **)malloc(sizeof(char *) * (ac - 2));
 	arg->infile = ft_strdup(av[1]);
 	arg->outfile = ft_strdup(av[ac - 1]);
@@ -235,7 +217,7 @@ void	arg_init(t_argv *arg, int ac, char **av, char **envp)
 	}
 	split_cmd(arg, av, ac);
 	get_path(arg, envp);
-	check_valid(arg);
+	get_cmd_path(arg);
 }
 
 void	make_tmp_file(t_argv *arg)
@@ -251,7 +233,7 @@ void	make_tmp_file(t_argv *arg)
 	close (arg->inf_fd);
 	arg->inf_fd = open ("tmp", O_RDONLY);
 	if (arg->inf_fd == -1)
-		ft_error ("tmp open error");
+		ft_error ("tmp open error", 1);
 	dup2(arg->inf_fd, STDIN_FILENO);
 	close (arg->inf_fd);
 }
@@ -259,6 +241,12 @@ void	make_tmp_file(t_argv *arg)
 void	first_cmd_exec(t_argv *arg, int **fd, int i)
 {
 	// printf ("%s first\n", arg->cmd[0][0]);
+	if (arg->h_flag)
+		arg->inf_fd = open("tmp", O_RDWR | O_CREAT | O_TRUNC, 0644);
+	else
+		arg->inf_fd = open(arg->infile, O_RDONLY);
+	if (arg->inf_fd < 0)
+		ft_error("infile open error", 0);
 	close(fd[i][READ]);
 	dup2(arg->inf_fd, STDIN_FILENO);
 	dup2(fd[i][WRITE], STDOUT_FILENO);
@@ -318,6 +306,12 @@ void	last_cmd_exec(t_argv *arg, int **fd, int i)
 	int	j;
 
 	j = i - 1;
+	if (arg->h_flag)
+		arg->out_fd = open(arg->outfile, O_RDWR | O_CREAT | O_APPEND, 0644);
+	else
+		arg->out_fd = open(arg->outfile, O_RDWR | O_CREAT | O_TRUNC, 0644);
+	if (arg->out_fd < 0)
+		ft_error("outfile open error", 0);
 	close(fd[j][WRITE]);
 	dup2(fd[j][READ], STDIN_FILENO);
 	close(fd[j][READ]);
@@ -360,23 +354,29 @@ void	execute_cmd(t_argv *arg)
 	if (arg->h_flag)
 		make_tmp_file(arg);
 	i = 0;
-	while (arg->cmd_cnt  > i)
+	while (arg->cmd_cnt > i)
 	{
-		// printf("%d %d\n", arg->cmd_cnt - 1, i);
+		printf("%d %d\n", arg->cmd_cnt - 1, i);
 		if (pipe(fd[i]) == -1)
-			ft_error("pipe error");
+			ft_error("pipe error", 1);
 		pid = fork();
 		if (pid == 0)
-			execute_cmds(arg, fd, i);
-		else
-		{
-			waitpid(pid, &status, WNOHANG);
-			// execute_cmds(arg, fd, i);
-			// last_cmd_exec(arg, fd, i);
-			close(fd[i][WRITE]);
-		}
+			break;
+				close(fd[i][WRITE]);
 		i++;
 	}
+		// else
+		// {
+			execute_cmds(arg, fd, i);
+			waitpid(pid, &status, 0);
+			int j = 0;
+			while (j++ < arg->cmd_cnt)
+			{
+				waitpid(0, &status, 0);
+			}
+			// execute_cmds(arg, fd, i);
+			// last_cmd_exec(arg, fd, i);
+			///waitpid(pid, &status, 0); // 병렬이뭔데 
 }
 
 int	main(int ac, char **av, char **envp)
@@ -384,11 +384,10 @@ int	main(int ac, char **av, char **envp)
 	t_argv	arg;
 
 	if (ac < 5)
-		ft_error("wrong format");
+		ft_error("wrong format", 1);
 	arg_init(&arg, ac, av, envp);
 	if (arg.h_flag && ac < 6)
-		ft_error("wrong format");
+		ft_error("wrong format", 1);
 	execute_cmd(&arg);
+	printf("hi");
 }
-
-// 오픈에러나도 종종료료안안됨됨

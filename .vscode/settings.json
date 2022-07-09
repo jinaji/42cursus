@@ -2,6 +2,7 @@
 	"makefile.extensionOutputFolder": "./.vscode",
 	"files.associations": {
 		"stdio.h": "c",
-		"locale": "c"
+		"locale": "c",
+		"complex": "c"
 	}
 }
