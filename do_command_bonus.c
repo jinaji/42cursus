@@ -6,7 +6,7 @@
 /*   By: jinkim2 <jinkim2@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/11 17:11:58 by jinkim2           #+#    #+#             */
-/*   Updated: 2022/06/11 17:12:21 by jinkim2          ###   ########seoul.kr  */
+/*   Updated: 2022/07/12 03:02:11 by jinkim2          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,8 @@ void	compare_and_do_sort(t_deque **deq_a, t_deque **deq_b)
 			push(deq_a, deq_b, comm);
 		else if (*comm == 'r')
 			rotate(deq_a, deq_b, comm);
+		else if (*comm == '\0')
+			break ;
 		else
 			ft_error();
 		comm = get_next_line(0);

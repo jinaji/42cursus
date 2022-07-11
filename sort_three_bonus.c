@@ -6,7 +6,7 @@
 /*   By: jinkim2 <jinkim2@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/11 15:37:55 by jinkim2           #+#    #+#             */
-/*   Updated: 2022/06/11 15:38:04 by jinkim2          ###   ########seoul.kr  */
+/*   Updated: 2022/07/07 15:16:25 by jinkim2          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,19 +35,19 @@ void	get_three_sort(t_deque **deq_a, int flag)
 	i = 1;
 	if (flag == 1)
 	{
-		swap_a(deq_a);
-		rrotate_a(deq_a, &i);
+		b_swap_a(deq_a);
+		b_rrotate_a(deq_a, &i);
 	}
 	if (flag == 2)
-		rotate_a(deq_a, &i);
+		b_rotate_a(deq_a, &i);
 	if (flag == 3)
-		rrotate_a(deq_a, &i);
+		b_rrotate_a(deq_a, &i);
 	if (flag == 4)
-		swap_a(deq_a);
+		b_swap_a(deq_a);
 	if (flag == 5)
 	{
-		swap_a(deq_a);
-		rotate_a(deq_a, &i);
+		b_swap_a(deq_a);
+		b_rotate_a(deq_a, &i);
 	}
 }
 
@@ -64,7 +64,7 @@ void	sort_three(t_deque **deq_a, t_deque **deq_b)
 	count = (*deq_a)->count;
 	while (count > 4)
 	{
-		push_a(deq_a, deq_b);
+		b_push_a(deq_a, deq_b);
 		count--;
 	}
 	val1 = ((*deq_a)->front)->val;

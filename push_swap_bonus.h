@@ -6,7 +6,7 @@
 /*   By: jinkim2 <jinkim2@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 16:28:12 by jinkim2           #+#    #+#             */
-/*   Updated: 2022/06/11 16:47:40 by jinkim2          ###   ########seoul.kr  */
+/*   Updated: 2022/07/07 19:26:55 by jinkim2          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,12 @@ char		*ft_str_join(int ad, char **av);
 void		split_command(t_deque **deq_a, t_deque **deq_b, int ac, char **av);
 int			main(int ad, char **av);
 
+// count command bonus
+int			count_a_command(t_deque **deq_a, int idx);
+int			get_a_command(int idx, t_deque **deq_a);
+int			compare_count(int comm_a, int comm_b, int cnt_a, int cnt_b);
+void		count_command(t_deque **deq_a, t_deque **deq_b, int *com_a, int *com_b);
+
 // deque_bonus
 void		insert_deq_front(t_deque **deq, t_node *new);
 void		insert_deq_rear(t_deque **deq, t_node *new);
@@ -96,6 +102,15 @@ void		get_sort(t_deque **deq_a, t_deque **deq_b);
 
 // sort_utils_bonus
 int			is_sorted(t_deque **deq);
+int			get_min_idx(t_deque **deq_a);
+int			get_max_idx(t_deque **deq_a);
+int			get_min_location(t_deque **deq_a, int min_idx);
+int			get_max_location(t_deque **deq_a, int max_idx);
+
+// sort_three_bonus
+int			get_case_three(int val1, int val2, int val3);
+void		get_three_sort(t_deque **deq_a, int flag);
+void		sort_three(t_deque **deq_a, t_deque **deq_b);
 
 // swap_bonus
 void		b_swap_a(t_deque **deq_a);

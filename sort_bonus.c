@@ -6,7 +6,7 @@
 /*   By: jinkim2 <jinkim2@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/11 15:37:17 by jinkim2           #+#    #+#             */
-/*   Updated: 2022/06/16 01:19:52 by jinkim2          ###   ########seoul.kr  */
+/*   Updated: 2022/07/12 02:52:46 by jinkim2          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,13 @@ void	sort_with_pivot(t_deque **deq_a, t_deque **deq_b)
 		i = 1;
 		if ((*deq_a)->front->idx < pivot1)
 		{
-			push_b(deq_a, deq_b);
-			rotate_b(deq_b, &i);
+			b_push_b(deq_a, deq_b);
+			b_rotate_b(deq_b, &i);
 		}
 		else if ((*deq_a)->front->idx < pivot2)
-			push_b(deq_a, deq_b);
+			b_push_b(deq_a, deq_b);
 		else
-			rotate_a(deq_a, &i);
+			b_rotate_a(deq_a, &i);
 		count--;
 	}
 }
@@ -65,7 +65,7 @@ void	sort_last(t_deque **deq_a)
 		return ;
 	first_idx = get_first_index(deq_a);
 	while (first_idx)
-		rotate_a(deq_a, &first_idx);
+		b_rotate_a(deq_a, &first_idx);
 }
 
 void	sort_init(t_deque **deq_a, t_deque **deq_b)
@@ -75,7 +75,7 @@ void	sort_init(t_deque **deq_a, t_deque **deq_b)
 
 	sort_with_pivot(deq_a, deq_b);
 	while ((*deq_a)->count > 3)
-		push_b(deq_a, deq_b);
+		b_push_b(deq_a, deq_b);
 	sort_three(deq_a, deq_b);
 	while ((*deq_b)->count)
 	{
@@ -83,7 +83,7 @@ void	sort_init(t_deque **deq_a, t_deque **deq_b)
 		comm_b = 0;
 		count_command(deq_a, deq_b, &comm_a, &comm_b);
 		b_rotate_all(deq_a, deq_b, &comm_a, &comm_b);
-		push_a(deq_a, deq_b);
+		b_push_a(deq_a, deq_b);
 	}
 	sort_last(deq_a);
 }
@@ -93,11 +93,14 @@ void	get_sort(t_deque **deq_a, t_deque **deq_b)
 	if ((*deq_a)->count == 2)
 	{
 		if ((*deq_a)->front->idx > (*deq_a)->front->next->idx)
-			swap_a(deq_a);
+			b_swap_a(deq_a);
 	}
-	deq_init(deq_b);
-	if ((*deq_a)->count == 3)
-		sort_three(deq_a, deq_b);
 	else
-		sort_init (deq_a, deq_b);
+	{
+		deq_init(deq_b);
+		if ((*deq_a)->count == 3)
+			sort_three(deq_a, deq_b);
+		else
+			sort_init (deq_a, deq_b);
+	}
 }

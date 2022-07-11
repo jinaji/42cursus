@@ -6,7 +6,7 @@
 /*   By: jinkim2 <jinkim2@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/11 14:27:12 by jinkim2           #+#    #+#             */
-/*   Updated: 2022/06/11 14:31:44 by jinkim2          ###   ########seoul.kr  */
+/*   Updated: 2022/07/07 19:25:29 by jinkim2          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,4 +29,74 @@ int	is_sorted(t_deque **deq)
 		tmp2 = tmp2->next;
 	}
 	return (1);
+}
+
+int	get_min_idx(t_deque **deq_a)
+{
+	int		min_idx;
+	t_node	*curr;
+
+	curr = (*deq_a)->front;
+	min_idx = curr->idx;
+	while (curr)
+	{
+		if (curr->idx < min_idx)
+			min_idx = curr->idx;
+		curr = curr->next;
+	}
+	return (min_idx);
+}
+
+int	get_max_idx(t_deque **deq_a)
+{
+	int		max_idx;
+	t_node	*curr;
+
+	curr = (*deq_a)->front;
+	max_idx = curr->idx;
+	while (curr)
+	{
+		if (curr->idx > max_idx)
+			max_idx = curr->idx;
+		curr = curr->next;
+	}
+	return (max_idx);
+}
+
+int	get_min_location(t_deque **deq_a, int min_idx)
+{
+	t_node	*curr;
+	int		cnt;
+
+	cnt = 0;
+	curr = (*deq_a)->front;
+	while (curr)
+	{
+		if (curr->idx == min_idx)
+			break ;
+		cnt++;
+		curr = curr->next;
+	}
+	if (cnt >= (((*deq_a)->count + 1) / 2))
+		cnt = ((*deq_a)->count - cnt) * -1;
+	return (cnt);
+}
+
+int	get_max_location(t_deque **deq_a, int max_idx)
+{
+	t_node	*curr;
+	int		cnt;
+
+	cnt = 1;
+	curr = (*deq_a)->front;
+	while (curr)
+	{
+		if (curr->idx == max_idx)
+			break ;
+		cnt++;
+		curr = curr->next;
+	}
+	if (cnt >= (((*deq_a)->count + 1) / 2))
+		cnt = ((*deq_a)->count - cnt) * -1;
+	return (cnt);
 }

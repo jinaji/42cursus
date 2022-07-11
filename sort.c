@@ -6,7 +6,7 @@
 /*   By: jinkim2 <jinkim2@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 18:38:38 by jinkim2           #+#    #+#             */
-/*   Updated: 2022/06/16 01:12:10 by jinkim2          ###   ########seoul.kr  */
+/*   Updated: 2022/07/12 02:27:50 by jinkim2          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,9 +95,12 @@ void	get_sort(t_deque **deq_a, t_deque **deq_b)
 		if ((*deq_a)->front->idx > (*deq_a)->front->next->idx)
 			swap_a(deq_a);
 	}
-	deq_init(deq_b);
-	if ((*deq_a)->count == 3)
-		sort_three(deq_a, deq_b);
 	else
-		sort_init (deq_a, deq_b);
+	{
+		deq_init(deq_b);
+		if ((*deq_a)->count == 3)
+			sort_three(deq_a, deq_b);
+		else
+			sort_init (deq_a, deq_b);
+	}
 }
