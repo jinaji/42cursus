@@ -6,12 +6,13 @@
 /*   By: jinkim2 <jinkim2@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 20:04:32 by jinkim2           #+#    #+#             */
-/*   Updated: 2022/06/08 18:24:47 by jinkim2          ###   ########seoul.kr  */
+/*   Updated: 2022/07/12 20:20:23 by jinkim2          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include "libft.h"
+#include <stdio.h>
 
 static int	word_count(char const *str, char c)
 {
@@ -43,13 +44,13 @@ static	void	malloc_err(char **arr, int idx)
 	arr = 0;
 }
 
-static char	*strndup(const char *s1, int i, int j, int len)
+static char	*ft_strndup(char const *s1, int i, int j, int len)
 {
 	int		idx;
 	char	*arr;
 
 	idx = 0;
-	arr = (char *)malloc((sizeof(char) * len) + 1);
+	arr = (char *)malloc(sizeof(char) * (len + 1));
 	if (!arr)
 		return (0);
 	while (i > j)
@@ -62,23 +63,25 @@ static char	*strndup(const char *s1, int i, int j, int len)
 	return (arr);
 }
 
-static	char	**fill(char **arr, char const *s, char c)
+static	char	**fill(char **arr, char const *s, char c, int cnt)
 {
 	int	i;
 	int	j;
 	int	idx;
+	int	len;
 
 	i = 0;
 	idx = 0;
-	while (s[i] && idx < word_count(s, c))
+	len = ft_strlen(s);
+	while (s[i] && (idx < cnt))
 	{
 		while (s[i] && s[i] == c)
 			i++;
 		j = i;
-		while (s[i] && s[i] != c)
+		while ((s[i] && s[i] != c) && (i < len))
 			i++;
-		arr[idx] = strndup(s, i, j, (i - j));
-		if (!arr)
+		arr[idx] = ft_strndup(s, i, j, (i - j));
+		if (!arr[idx])
 		{
 			malloc_err(arr, idx);
 			return (0);
@@ -100,5 +103,5 @@ char	**ft_split(char const *s, char c)
 	arr = (char **)malloc(sizeof(char *) * (cnt + 1));
 	if (!arr)
 		return (0);
-	return (fill(arr, s, c));
+	return (fill(arr, s, c, cnt));
 }

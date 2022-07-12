@@ -6,7 +6,7 @@
 /*   By: jinkim2 <jinkim2@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/05 19:52:52 by jinkim2           #+#    #+#             */
-/*   Updated: 2022/06/11 15:20:09 by jinkim2          ###   ########seoul.kr  */
+/*   Updated: 2022/07/12 20:39:36 by jinkim2          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ void	is_str_digit(char *str)
 			ft_error();
 		i++;
 	}
+	if (!ft_isdigit(str[i]))
+		ft_error();
 	return ;
 }
 
@@ -38,16 +40,22 @@ int	get_all_len(char **av)
 {
 	int	i;
 	int	j;
+	int	size;
 
 	i = 1;
 	j = 0;
+	size = 0;
 	while (av[i])
 	{
+		j = 0;
 		while (av[i][j])
+		{
 			j++;
+			size++;
+		}	
 		i++;
 	}
-	return (j);
+	return (size);
 }
 
 char	*ft_str_join(int ac, char **av)
@@ -70,12 +78,10 @@ char	*ft_str_join(int ac, char **av)
 		while (av[idx][i])
 			tmp[j++] = av[idx][i++];
 		if (idx != ac - 1)
-		{
-			tmp[j] = ' ';
-			j++;
-		}
+			tmp[j++] = ' ';
 		idx++;
 	}
+	tmp[j] = 0;
 	return (tmp);
 }
 
@@ -120,6 +126,7 @@ int	argument_check(int ac, char **av, t_deque **deq_a)
 	cnt = 0;
 	tmp = ft_str_join(ac, av);
 	splited_av = ft_split(tmp, ' ');
+	free (tmp);
 	while (splited_av[cnt])
 		cnt++;
 	while (cnt > i)

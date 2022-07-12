@@ -6,7 +6,7 @@
 /*   By: jinkim2 <jinkim2@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/11 15:13:35 by jinkim2           #+#    #+#             */
-/*   Updated: 2022/06/11 15:20:04 by jinkim2          ###   ########seoul.kr  */
+/*   Updated: 2022/07/12 20:39:34 by jinkim2          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ void	is_str_digit(char *str)
 			ft_error();
 		i++;
 	}
+	if (!ft_isdigit(str[i]))
+		ft_error();
 	return ;
 }
 
@@ -37,16 +39,22 @@ int	get_all_len(char **av)
 {
 	int	i;
 	int	j;
+	int	size;
 
 	i = 1;
 	j = 0;
+	size = 0;
 	while (av[i])
 	{
+		j = 0;
 		while (av[i][j])
+		{
 			j++;
+			size++;
+		}	
 		i++;
 	}
-	return (j);
+	return (size);
 }
 
 char	*ft_str_join(int ac, char **av)
@@ -119,6 +127,7 @@ int	argument_check(int ac, char **av, t_deque **deq_a)
 	cnt = 0;
 	tmp = ft_str_join(ac, av);
 	splited_av = ft_split(tmp, ' ');
+	free (tmp);
 	while (splited_av[cnt])
 		cnt++;
 	while (cnt > i)

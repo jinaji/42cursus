@@ -6,7 +6,7 @@
 #    By: jinkim2 <jinkim2@student.42seoul.kr>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/13 18:18:55 by jinkim2           #+#    #+#              #
-#    Updated: 2022/07/12 02:59:05 by jinkim2          ###   ########seoul.kr   #
+#    Updated: 2022/07/12 20:33:53 by jinkim2          ###   ########seoul.kr   #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,8 +27,6 @@ SRCS = 	argu_check.c	\
 		push_swap.c		
 		
 OBJS = ${SRCS:.c=.o}
-
-NAME_BONUS = checker
 
 SRCS_BONUS = 	get_next_line.c			\
 				get_next_line_utils.c	\
@@ -52,13 +50,7 @@ LIBFT_DIR = libft/
 LIBFT = libft.a
 
 NAME = push_swap
-
-# ifdef BONUS_CHECK
-# 	BONUS = $(OBJS) $(OBJS_BONUS)
-# else
-# 	BONUS = $(OBJS)
-# endif
-
+NAME_BONUS = checker
 
 all: $(NAME) 
 
@@ -66,15 +58,14 @@ $(NAME): $(OBJS)
 	make -C $(LIBFT_DIR)
 	cc -o $(NAME) $^ -Llibft -lft
 
-lldb: 
-	gcc -g $(SRCS_BONUS) libft/*.c
-
 bonus: $(NAME_BONUS)
 
 $(NAME_BONUS): $(OBJS_BONUS)
 	make -C $(LIBFT_DIR)
 	cc -o $(NAME_BONUS) $^ -Llibft -lft
-# BONUS_CHECK=1
+
+lldb: 
+	cc -g $(SRCS) $(LIBFT_DIR)/*.c
 
 clean:
 	rm -f $(OBJS) $(OBJS_BONUS)
