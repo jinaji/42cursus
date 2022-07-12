@@ -6,7 +6,7 @@
 /*   By: jinkim2 <jinkim2@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/05 19:52:52 by jinkim2           #+#    #+#             */
-/*   Updated: 2022/07/12 20:39:36 by jinkim2          ###   ########seoul.kr  */
+/*   Updated: 2022/07/12 20:53:27 by jinkim2          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,18 +20,15 @@ void	is_str_digit(char *str)
 	i = 0;
 	if (!str)
 		exit (1);
+	while (str[i] == '-' || str[i] == '+')
+		i++;
 	while (str[i])
 	{
-		if (str[i] == '-' || str[i] == '+')
-		{
-			i++;
-			continue ;
-		}
 		if (!ft_isdigit(str[i]))
 			ft_error();
 		i++;
 	}
-	if (!ft_isdigit(str[i]))
+	if (str[i - 1] == '-' || str[i - 1] == '+')
 		ft_error();
 	return ;
 }

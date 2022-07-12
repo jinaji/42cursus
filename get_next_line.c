@@ -6,7 +6,7 @@
 /*   By: jinkim2 <jinkim2@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/14 12:30:07 by jinkim2           #+#    #+#             */
-/*   Updated: 2022/06/11 17:08:35 by jinkim2          ###   ########seoul.kr  */
+/*   Updated: 2022/07/12 20:56:19 by jinkim2          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,8 +87,8 @@ int	make_line(t_node_ **lst, int fd, char *buff, char **tmp)
 			free_all (lst, fd);
 			return (0);
 		}
-	buff[read_size] = '\0';
-	curr->str = gnl_strjoin(curr->str, buff);
+		buff[read_size] = '\0';
+		curr->str = gnl_strjoin(curr->str, buff);
 	}
 	return (-1);
 }
