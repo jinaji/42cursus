@@ -6,7 +6,7 @@
 /*   By: jinkim2 <jinkim2@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/29 19:35:29 by jinkim2           #+#    #+#             */
-/*   Updated: 2022/07/09 20:10:51 by jinkim2          ###   ########seoul.kr  */
+/*   Updated: 2022/07/13 16:14:27 by jinkim2          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -224,6 +224,7 @@ void	make_tmp_file(t_argv *arg)
 {
 	char	*tmp;
 
+	arg->inf_fd = open(".tmp", O_RDWR | O_CREAT | O_TRUNC, 0644);
 	tmp = get_next_line(0);
 	while (!ft_strcmp(tmp, arg->limiter))
 	{
@@ -231,7 +232,7 @@ void	make_tmp_file(t_argv *arg)
 		tmp = get_next_line(0);
 	}
 	close (arg->inf_fd);
-	arg->inf_fd = open ("tmp", O_RDONLY);
+	arg->inf_fd = open (".tmp", O_RDONLY);
 	if (arg->inf_fd == -1)
 		ft_error ("tmp open error", 1);
 	dup2(arg->inf_fd, STDIN_FILENO);
@@ -240,9 +241,8 @@ void	make_tmp_file(t_argv *arg)
 
 void	first_cmd_exec(t_argv *arg, int **fd, int i)
 {
-	// printf ("%s first\n", arg->cmd[0][0]);
 	if (arg->h_flag)
-		arg->inf_fd = open("tmp", O_RDWR | O_CREAT | O_TRUNC, 0644);
+		make_tmp_file(arg);
 	else
 		arg->inf_fd = open(arg->infile, O_RDONLY);
 	if (arg->inf_fd < 0)
@@ -259,27 +259,6 @@ void	middle_cmd_exec(t_argv *arg, int **fd, int i)
 	int	j;
 
 	j = i - 1;
-	// printf ("%d %s middle\n", i, arg->cmd[i][0]);
-	// if (i % 2) // a read b write
-	// {
-	// 	close(fd[WRITE]);
-	// 	// close(fd2[READ]);
-	// 	dup2(fd[READ], STDIN_FILENO);
-	// 	close(fd[READ]);
-	// 	// dup2(fd2[WRITE], STDOUT_FILENO);
-	// 	printf ("odd %d %s middle\n", i, arg->cmd[i][0]);
-	// 	// close(fd2[WRITE]);
-	// }
-	// else
-	// {
-	// 	// close(fd2[WRITE]);
-	// 	close(fd[READ]);
-	// 	// dup2(fd2[READ], STDIN_FILENO);
-	// 	// close(fd2[READ]);
-	// 	dup2(fd[WRITE], STDOUT_FILENO);
-	// 	printf ("even %d %s middle\n", i, arg->cmd[i][0]);
-	// 	// close(fd[WRITE]);
-	// }
 	close(fd[j][WRITE]);
 	dup2(fd[j][READ], STDIN_FILENO);
 	close(fd[j][READ]);
@@ -316,24 +295,37 @@ void	last_cmd_exec(t_argv *arg, int **fd, int i)
 	dup2(fd[j][READ], STDIN_FILENO);
 	close(fd[j][READ]);
 	dup2 (arg->out_fd, STDOUT_FILENO);
-	// printf("%d\n", arg->out_fd);
-	if (arg->h_flag)
-		unlink("tmp");
+	// if (arg->h_flag)
+	// 	unlink(".tmp");
 	execve(arg->cmd_path[i], arg->cmd[i], arg->envp);
 }
 
 void	execute_cmds(t_argv *arg, int **fd, int i)
 {
-	// if (*i % 2)
-	// 	close(fd[WRITE]);
-	// else
-	// 	close(fd2[WRITE]);
 	if (i == 0)
 		first_cmd_exec(arg, fd, i);
 	if (arg->cmd_cnt - 1 > i)
 		middle_cmd_exec(arg, fd, i);
 	else
 		last_cmd_exec(arg, fd, i);
+}
+
+int	**fd_init(int **fd, int cmd_cnt)
+{
+	int	i;
+
+	i = 0;
+	fd = (int **)malloc(sizeof(int *) * (cmd_cnt - 1));
+	if (!fd)
+		ft_error("malloc error", 1);
+	while (cmd_cnt > i)
+	{
+		fd[i] = (int *)malloc(sizeof(int) * 2);
+		if (!fd[i])
+			ft_error("malloc error", 1);
+		i++;
+	}
+	return (fd);
 }
 
 void	execute_cmd(t_argv *arg)
@@ -344,39 +336,32 @@ void	execute_cmd(t_argv *arg)
 	int		i;
 
 	i = 0;
-	fd = (int **)malloc(sizeof(int *) * arg->cmd_cnt - 1);
+	fd = 0;
+	fd = fd_init(fd, arg->cmd_cnt);
+	// fd = (int **)malloc(sizeof(int *) * arg->cmd_cnt - 1);
+	// while (arg->cmd_cnt > i)
+	// {
+	// 	fd[i] = (int *)malloc(sizeof(int) * 2);
+	// 	i++;
+	// }
+	// i = 0;
 	while (arg->cmd_cnt > i)
 	{
-		fd[i] = (int *)malloc(sizeof(int) * 2);
-		i++;
-	}
-	// printf ("%d\n", i);
-	if (arg->h_flag)
-		make_tmp_file(arg);
-	i = 0;
-	while (arg->cmd_cnt > i)
-	{
-		printf("%d %d\n", arg->cmd_cnt - 1, i);
 		if (pipe(fd[i]) == -1)
 			ft_error("pipe error", 1);
 		pid = fork();
 		if (pid == 0)
-			break;
-				close(fd[i][WRITE]);
+			break ;
+		close(fd[i][WRITE]);
 		i++;
 	}
-		// else
-		// {
-			execute_cmds(arg, fd, i);
-			waitpid(pid, &status, 0);
-			int j = 0;
-			while (j++ < arg->cmd_cnt)
-			{
-				waitpid(0, &status, 0);
-			}
-			// execute_cmds(arg, fd, i);
-			// last_cmd_exec(arg, fd, i);
-			///waitpid(pid, &status, 0); // 병렬이뭔데 
+	execute_cmds(arg, fd, i);
+	waitpid(pid, &status, 0);
+	i = 0;
+	if (arg->h_flag)
+		unlink(".tmp");
+	while (i++ < arg->cmd_cnt)
+		waitpid(0, &status, 0);
 }
 
 int	main(int ac, char **av, char **envp)
@@ -389,5 +374,4 @@ int	main(int ac, char **av, char **envp)
 	if (arg.h_flag && ac < 6)
 		ft_error("wrong format", 1);
 	execute_cmd(&arg);
-	printf("hi");
 }
