@@ -6,11 +6,11 @@
 /*   By: jinkim2 <jinkim2@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/14 12:30:14 by jinkim2           #+#    #+#             */
-/*   Updated: 2022/07/01 14:51:49 by jinkim2          ###   ########seoul.kr  */
+/*   Updated: 2022/07/14 20:45:27 by jinkim2          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipexx.h"
+#include "pipex_bonus.h"
 
 int	get_index(char	*str)
 {

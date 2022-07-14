@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex.c                                            :+:      :+:    :+:   */
+/*   pipex_bonus.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jinkim2 <jinkim2@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/29 19:35:29 by jinkim2           #+#    #+#             */
-/*   Updated: 2022/07/14 20:31:17 by jinkim2          ###   ########seoul.kr  */
+/*   Created: 2022/07/14 20:21:32 by jinkim2           #+#    #+#             */
+/*   Updated: 2022/07/14 20:49:41 by jinkim2          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "pipex_bonus.h"
 
 void	ft_error(char *str, int i)
 {
@@ -19,7 +19,7 @@ void	ft_error(char *str, int i)
 		exit (1);
 }
 
-static void	arg_init(t_argv *arg, int ac, char **av, char **envp)
+void	arg_init(t_argv *arg, int ac, char **av, char **envp)
 {
 	ft_memset(arg, 0, sizeof(t_argv));
 	arg->cmd_cnt = ac - 3;
@@ -41,11 +41,29 @@ static void	arg_init(t_argv *arg, int ac, char **av, char **envp)
 	get_cmd_path(arg);
 }
 
+void	make_tmp_file(t_argv *arg)
+{
+	int		fd;
+	char	*tmp;
+
+	fd = open(".tmp", O_RDWR | O_CREAT | O_TRUNC, 0644);
+	tmp = get_next_line(0);
+	while (!ft_strcmp(tmp, arg->limiter))
+	{
+		write (fd, tmp, ft_strlen(tmp));
+		tmp = get_next_line(0);
+	}
+	close (fd);
+	arg->inf_fd = open (".tmp", O_RDONLY);
+	if (arg->inf_fd == -1)
+		ft_error ("tmp open error", 1);
+}
+
 int	main(int ac, char **av, char **envp)
 {
 	t_argv	arg;
 
-	if (ac != 5)
+	if (ac < 5)
 		ft_error("wrong format", 1);
 	arg_init(&arg, ac, av, envp);
 	if (arg.h_flag && ac < 6)

@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipexx.h                                           :+:      :+:    :+:   */
+/*   pipex_bonus.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jinkim2 <jinkim2@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/29 19:35:50 by jinkim2           #+#    #+#             */
-/*   Updated: 2022/07/02 17:05:18 by jinkim2          ###   ########seoul.kr  */
+/*   Updated: 2022/07/14 20:49:07 by jinkim2          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PIPEXX_H
-# define PIPEXX_H
+#ifndef PIPEX_BONUS_H
+# define PIPEX_BONUS_H
 
 # include <unistd.h>
 # include <stdlib.h>
@@ -27,9 +27,9 @@
 # define BUFFER_SIZE 4096
 
 typedef struct s_node_{
-	int					fd;
-	char				*str;
-	struct s_node_		*next;
+	char			*str;
+	int				fd;
+	struct s_node_	*next;
 }				t_node_;
 
 typedef struct s_argv{
@@ -47,6 +47,27 @@ typedef struct s_argv{
 	int		no_cmd;
 }				t_argv;
 
+void	get_cmd_path(t_argv *arg);
+void	split_cmd(t_argv *arg, char **av, int ac);
+
+int		execute_cmd(t_argv *arg);
+
+void	get_path(t_argv *arg, char **envp);
+char	*join_path(char *path, char *cmd);
+
+void	ft_error(char *str, int i);
+
+char	*q_ft_strdup(char *str);
+void	free_tmp(char **tmp);
+int		ft_strcmp(char *str, char *str2);
+int		**fd_init(int **fd, int cmd_cnt);
+
+void	make_tmp_file(t_argv *arg);
+
+int		get_index(char *str);
+char	*ft_strndup(char *buff, int idx);
+char	*delete_static(char *str);
+char	*gnl_strjoin(char *str, char *buff);
 
 t_node_	*get_node(t_node_ **lst, int fd);
 char	*get_return(char **str);
@@ -54,17 +75,4 @@ void	free_all(t_node_ **lst, int fd);
 int		make_line(t_node_ **lst, int fd, char *buff, char **tmp);
 char	*get_next_line(int fd);
 
-int		get_index(char *str);
-char	*ft_strndup(char *buff, int idx);
-char	*delete_static(char *str);
-char	*gnl_strjoin(char *str, char *buff);
-
 #endif
-
-/*
-open, close, read, write,
-malloc, free, perror,
-strerror, access, dup, dup2,
-execve, exit, fork, pipe,
-unlink, wait, waitpid
-*/

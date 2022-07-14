@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: jinkim2 <jinkim2@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/23 14:18:00 by jinkim2           #+#    #+#             */
-/*   Updated: 2022/06/24 17:41:11 by jinkim2          ###   ########seoul.kr  */
+/*   Created: 2022/06/29 19:35:50 by jinkim2           #+#    #+#             */
+/*   Updated: 2022/07/14 20:34:01 by jinkim2          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,23 +19,41 @@
 # include <stdio.h>
 # include <fcntl.h>
 # include "libft/libft.h"
+# include <string.h>
+# include <errno.h>
+
+# define READ 0
+# define WRITE 1
+# define BUFFER_SIZE 4096
 
 typedef struct s_argv{
 	char	**path;
 	char	*infile;
 	char	*outfile;
-	char	***cmd;
-	int		cmd_cnt;
+	char	**envp;
 	int		inf_fd;
 	int		out_fd;
+	char	***cmd;
+	char	**cmd_path;
+	int		cmd_cnt;
+	int		h_flag;
+	char	*limiter;
+	int		no_cmd;
 }				t_argv;
 
-#endif
+void	get_cmd_path(t_argv *arg);
+void	split_cmd(t_argv *arg, char **av, int ac);
 
-/*
-open, close, read, write,
-malloc, free, perror,
-strerror, access, dup, dup2,
-execve, exit, fork, pipe,
-unlink, wait, waitpid
-*/
+int		execute_cmd(t_argv *arg);
+
+void	get_path(t_argv *arg, char **envp);
+char	*join_path(char *path, char *cmd);
+
+void	ft_error(char *str, int i);
+
+char	*q_ft_strdup(char *str);
+void	free_tmp(char **tmp);
+int		ft_strcmp(char *str, char *str2);
+int		**fd_init(int **fd, int cmd_cnt);
+
+#endif
