@@ -6,7 +6,7 @@
 /*   By: jinkim2 <jinkim2@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 20:14:21 by jinkim2           #+#    #+#             */
-/*   Updated: 2022/07/14 21:27:26 by jinkim2          ###   ########seoul.kr  */
+/*   Updated: 2022/07/17 21:46:16 by jinkim2          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,13 +86,10 @@ int	execute_cmd(t_argv *arg)
 		close(fd[i][WRITE]);
 		i++;
 	}
-	execute_cmds(arg, fd, i, pid);
 	waitpid(pid, &status, 0);
-	int k = 0;
-	while (k < arg->cmd_cnt -1)
-	{
-		wait(0);
-		k++;
-	}
+	execute_cmds(arg, fd, i, pid);
+	close_fd(fd, &i);
+	while (i++ < arg->cmd_cnt - 1)
+		wait(&status);
 	return (status >> 8 & 0x000000ff);
 }

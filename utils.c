@@ -6,7 +6,7 @@
 /*   By: jinkim2 <jinkim2@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 20:18:50 by jinkim2           #+#    #+#             */
-/*   Updated: 2022/07/14 20:22:30 by jinkim2          ###   ########seoul.kr  */
+/*   Updated: 2022/07/17 21:34:38 by jinkim2          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,4 +82,10 @@ int	**fd_init(int **fd, int cmd_cnt)
 		i++;
 	}
 	return (fd);
+}
+
+void	close_fd(int **fd, int *i)
+{
+	while ((*i)--)
+		close(fd[*i][READ]);
 }

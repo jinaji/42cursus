@@ -6,7 +6,7 @@
 /*   By: jinkim2 <jinkim2@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/29 19:35:50 by jinkim2           #+#    #+#             */
-/*   Updated: 2022/07/14 20:34:01 by jinkim2          ###   ########seoul.kr  */
+/*   Updated: 2022/07/17 21:30:12 by jinkim2          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,5 +55,6 @@ char	*q_ft_strdup(char *str);
 void	free_tmp(char **tmp);
 int		ft_strcmp(char *str, char *str2);
 int		**fd_init(int **fd, int cmd_cnt);
+void	close_fd(int **fd, int *i);
 
 #endif

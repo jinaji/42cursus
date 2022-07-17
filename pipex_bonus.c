@@ -6,7 +6,7 @@
 /*   By: jinkim2 <jinkim2@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 20:21:32 by jinkim2           #+#    #+#             */
-/*   Updated: 2022/07/14 20:49:41 by jinkim2          ###   ########seoul.kr  */
+/*   Updated: 2022/07/17 21:53:17 by jinkim2          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,12 @@ void	make_tmp_file(t_argv *arg)
 	arg->inf_fd = open (".tmp", O_RDONLY);
 	if (arg->inf_fd == -1)
 		ft_error ("tmp open error", 1);
+}
+
+void	unlink_tmp(int h_flag)
+{
+	if (h_flag)
+		unlink(".tmp");
 }
 
 int	main(int ac, char **av, char **envp)
