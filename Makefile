@@ -6,7 +6,7 @@
 #    By: jinkim2 <jinkim2@student.42seoul.kr>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/13 18:18:55 by jinkim2           #+#    #+#              #
-#    Updated: 2022/07/17 21:57:14 by jinkim2          ###   ########seoul.kr   #
+#    Updated: 2022/07/17 23:50:51 by jinkim2          ###   ########seoul.kr   #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,12 +21,12 @@ SRCS = 	command.c	\
 		
 OBJS =	$(SRCS:.c=.o)
 
-SRCS_BONUS =	command.c				\
+SRCS_BONUS =	command.c			\
 				execute_bonus.c			\
 				get_next_line.c			\
 				get_next_line_utils.c	\
-				path.c					\
-				utils.c					\
+				path.c			\
+				utils.c			\
 				pipex_bonus.c
 
 OBJS_BONUS = $(SRCS_BONUS:.c=.o)
@@ -37,13 +37,24 @@ LIBFT = libft.a
 NAME = pipex
 NAME_BONUS = pipex
 
+ifdef BONUS_CHECK
+	OBJ_FILES = $(OBJS_BONUS)
+else
+	OBJ_FILES = $(OBJS)
+endif
+
 all: $(NAME) 
 
-$(NAME): $(OBJS)
+$(NAME): $(OBJ_FILES)
+	rm -f $(NAME_BONUS)
 	make -C $(LIBFT_DIR)
 	cc -o $(NAME) $^ -Llibft -lft
 
-bonus: $(OBJS_BONUS)
+bonus:
+	rm -f $(NAME)
+	make BONUS_CHECK=1 $(NAME_BONUS)
+
+$(NAME_BONUS): $(OBJ_FILES)
 	make -C $(LIBFT_DIR)
 	cc -o $(NAME_BONUS) $^ -Llibft -lft
 
@@ -52,7 +63,7 @@ clean:
 	make clean -C $(LIBFT_DIR)
 
 fclean: clean
-	rm -f $(NAME) $(BONUS)
+	rm -f $(NAME) $(NAME_BONUS)
 	make fclean -C $(LIBFT_DIR)
 
 re : fclean all
