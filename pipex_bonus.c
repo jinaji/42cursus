@@ -6,7 +6,7 @@
 /*   By: jinkim2 <jinkim2@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 20:21:32 by jinkim2           #+#    #+#             */
-/*   Updated: 2022/07/17 23:25:46 by jinkim2          ###   ########seoul.kr  */
+/*   Updated: 2022/07/18 21:23:40 by jinkim2          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ void	arg_init(t_argv *arg, int ac, char **av, char **envp)
 		arg->h_flag = 1;
 		arg->limiter = ft_strjoin(av[2], "\n");
 		arg->cmd_cnt -= 1;
+		make_tmp_file(arg);
 	}
 	split_cmd(arg, av, ac);
 	get_path(arg, envp);

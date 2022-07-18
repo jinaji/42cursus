@@ -6,7 +6,7 @@
 /*   By: jinkim2 <jinkim2@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 20:40:47 by jinkim2           #+#    #+#             */
-/*   Updated: 2022/07/17 23:26:06 by jinkim2          ###   ########seoul.kr  */
+/*   Updated: 2022/07/18 21:24:44 by jinkim2          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,7 @@
 
 static void	first_cmd_exec(t_argv *arg, int **fd, int i)
 {
-	if (arg->h_flag)
-		make_tmp_file(arg);
-	else
+	if (arg->h_flag == 0)
 		arg->inf_fd = open(arg->infile, O_RDONLY);
 	if (arg->inf_fd < 0)
 		ft_error("infile open error", 1);

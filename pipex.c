@@ -6,7 +6,7 @@
 /*   By: jinkim2 <jinkim2@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/29 19:35:29 by jinkim2           #+#    #+#             */
-/*   Updated: 2022/07/17 22:23:57 by jinkim2          ###   ########seoul.kr  */
+/*   Updated: 2022/07/18 21:17:04 by jinkim2          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,6 @@ static void	arg_init(t_argv *arg, int ac, char **av, char **envp)
 	arg->infile = ft_strdup(av[1]);
 	arg->outfile = ft_strdup(av[ac - 1]);
 	arg->envp = envp;
-	if (ft_strcmp(arg->infile, "here_doc"))
-	{
-		arg->h_flag = 1;
-		arg->limiter = ft_strjoin(av[2], "\n");
-		arg->cmd_cnt -= 1;
-	}
 	split_cmd(arg, av, ac);
 	get_path(arg, envp);
 	get_cmd_path(arg);
@@ -48,7 +42,5 @@ int	main(int ac, char **av, char **envp)
 	if (ac != 5)
 		ft_error("wrong format", 1);
 	arg_init(&arg, ac, av, envp);
-	if (arg.h_flag && ac < 6)
-		ft_error("wrong format", 1);
 	return (execute_cmd(&arg));
 }

@@ -6,7 +6,7 @@
 #    By: jinkim2 <jinkim2@student.42seoul.kr>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/13 18:18:55 by jinkim2           #+#    #+#              #
-#    Updated: 2022/07/17 23:50:51 by jinkim2          ###   ########seoul.kr   #
+#    Updated: 2022/07/18 21:30:10 by jinkim2          ###   ########seoul.kr   #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,12 +21,12 @@ SRCS = 	command.c	\
 		
 OBJS =	$(SRCS:.c=.o)
 
-SRCS_BONUS =	command.c			\
+SRCS_BONUS =	command.c				\
 				execute_bonus.c			\
 				get_next_line.c			\
 				get_next_line_utils.c	\
-				path.c			\
-				utils.c			\
+				path.c					\
+				utils.c					\
 				pipex_bonus.c
 
 OBJS_BONUS = $(SRCS_BONUS:.c=.o)
@@ -35,28 +35,24 @@ LIBFT_DIR = libft/
 LIBFT = libft.a
 
 NAME = pipex
-NAME_BONUS = pipex
 
-ifdef BONUS_CHECK
+ifdef B_C
 	OBJ_FILES = $(OBJS_BONUS)
 else
 	OBJ_FILES = $(OBJS)
 endif
 
-all: $(NAME) 
+all: $(NAME)
 
 $(NAME): $(OBJ_FILES)
-	rm -f $(NAME_BONUS)
 	make -C $(LIBFT_DIR)
 	cc -o $(NAME) $^ -Llibft -lft
 
 bonus:
-	rm -f $(NAME)
-	make BONUS_CHECK=1 $(NAME_BONUS)
+	make B_C=1 
 
-$(NAME_BONUS): $(OBJ_FILES)
-	make -C $(LIBFT_DIR)
-	cc -o $(NAME_BONUS) $^ -Llibft -lft
+lldb:
+	cc -g $(OBJS_BONUS) libft/*.c
 
 clean:
 	rm -f $(OBJS) $(OBJS_BONUS)
@@ -68,4 +64,4 @@ fclean: clean
 
 re : fclean all
 
-.PHONY = all clean fclean re
+.PHONY = all clean fclean bonus re
