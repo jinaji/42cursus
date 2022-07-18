@@ -1,0 +1,7 @@
+make --dry-run --always-make --keep-going --print-directory
+make: Entering directory `/Users/jinkim2/42cursus/so_long'
+cc -Wall -Werror -Wextra -o so_long.o -c so_long.c
+make -C ./mlx
+cc -o so_long so_long.o -L./mlx -lmlx -framework OpenGL -framework AppKit
+make: Leaving directory `/Users/jinkim2/42cursus/so_long'
+ 
