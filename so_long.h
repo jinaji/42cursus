@@ -6,7 +6,7 @@
 /*   By: jinkim2 <jinkim2@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/18 17:29:17 by jinkim2           #+#    #+#             */
-/*   Updated: 2022/07/18 20:54:09 by jinkim2          ###   ########seoul.kr  */
+/*   Updated: 2022/07/19 01:23:58 by jinkim2          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <string.h>
-# include <mlx.h>
+# include "mlx/mlx.h"
 
 // # define W_KEY
 

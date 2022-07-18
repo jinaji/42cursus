@@ -32,39 +32,43 @@ void	image(void *mlx, void *win)
 	int	img_width;
 	int	img_height;
 
-	void	*img = mlx_xpm_file_to_image(mlx, "./image/sheet.xpm", &img_width, &img_height);
-	void	*img2 = mlx_xpm_file_to_image(mlx, "./image/stone.xpm", &img_width, &img_height);
+	void	*img = mlx_xpm_file_to_image(mlx, "./image/tile.xpm", &img_width, &img_height);
+	void	*img2 = mlx_xpm_file_to_image(mlx, "./image/collect.xpm", &img_width, &img_height);
 	void	*img3 = mlx_xpm_file_to_image(mlx, "./image/key.xpm", &img_width, &img_height);
-	void	*img4 = mlx_xpm_file_to_image(mlx, "./image/chest.xpm", &img_width, &img_height);
+	void	*img4 = mlx_xpm_file_to_image(mlx, "./image/wall.xpm", &img_width, &img_height);
 	void	*img5 = mlx_xpm_file_to_image(mlx, "./image/character.xpm", &img_width, &img_height);
 	mlx_put_image_to_window(mlx, win, img, 0, 0);
-	mlx_put_image_to_window(mlx, win, img2, 32, 0);
-	mlx_put_image_to_window(mlx, win, img3, 64, 0);
-	mlx_put_image_to_window(mlx, win, img4, 96, 0);
-	mlx_put_image_to_window(mlx, win, img5, 128, 0);
+	mlx_put_image_to_window(mlx, win, img2, 64, 0);
+	mlx_put_image_to_window(mlx, win, img3, 128, 0);
+	mlx_put_image_to_window(mlx, win, img4, 192, 0);
+	mlx_put_image_to_window(mlx, win, img5, 256, 0);
 }
 
-void	read_map(char *filename, t_sl *st)
-{
-	int		fd;
-	char	*str;
+// void	read_map(char *filename, t_sl *st)
+// {
+// 	int		fd;
+// 	char	*str;
 
-	fd = open(filename, O_RDONLY);
-	str = get_next_line(fd);
-}
+// 	fd = open(filename, O_RDONLY);
+// 	str = get_next_line(fd);
+// }
 
 int	main(int ac, char **av)
 {
 	void	*mlx;
 	void	*win;
 	t_sl	st;
-	t_key	loca;
+	// t_key	loca;
 
-	if (ac != 2)
-		ft_error("wrong format");
+	(void)st;
+	(void)ac;
+	(void)av;
+	// if (ac != 2)
+	// 	ft_error("wrong format");
 	mlx = mlx_init();
 	win = mlx_new_window(mlx, 500, 500, "so_long");
-	read_map(av[1], &st);
-	mlx_hook(win, 03, 0, &press_key, &loca);
+	// read_map(av[1], &st);
+	image(mlx, win);
+	// mlx_hook(win, 03, 0, &press_key, &loca);
 	mlx_loop(mlx);
 }

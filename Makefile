@@ -11,7 +11,7 @@ MLX_FLAGS = -L./mlx -lmlx -framework OpenGL -framework AppKit
 
 NAME = so_long
 
-all: $(NAME)
+all:  $(NAME)
 
 $(NAME): $(OBJS)
 	make -C $(MLX_DIR)
