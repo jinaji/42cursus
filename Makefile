@@ -6,7 +6,7 @@
 #    By: jinkim2 <jinkim2@student.42seoul.kr>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/13 18:18:55 by jinkim2           #+#    #+#              #
-#    Updated: 2022/07/19 01:13:51 by jinkim2          ###   ########seoul.kr   #
+#    Updated: 2022/07/19 12:10:10 by jinkim2          ###   ########seoul.kr   #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,13 +46,10 @@ all: $(NAME)
 
 $(NAME): $(OBJ_FILES)
 	make -C $(LIBFT_DIR)
-	cc -o $(NAME) $^ -Llibft -lft
+	$(CC) $(CFLAGS) -o $(NAME) $^ -Llibft -lft
 
 bonus:
 	make B_C=1 
-
-lldb:
-	cc -g -o $(OBJS) libft/*.c
 
 clean:
 	rm -f $(OBJS) $(OBJS_BONUS)
