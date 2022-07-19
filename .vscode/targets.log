@@ -8,7 +8,7 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # This program built for i386-apple-darwin11.3.0
  
 
-# Make data base, printed on Mon Jul 18 19:29:12 2022
+# Make data base, printed on Tue Jul 19 19:59:28 2022
 
 # Variables
 
@@ -39,14 +39,14 @@ CFLAGS = -Wall -Werror -Wextra
 MLX_DIR = ./mlx
 # makefile (from `Makefile', line 1)
 MAKEFILE_LIST :=  Makefile
-# makefile (from `Makefile', line 31)
+# makefile (from `Makefile', line 34)
 .PHONY = all clean fclean re bonus
 # environment
 VSCODE_VERBOSE_LOGGING = true
 # makefile (from `Makefile', line 7)
 OBJS = ${SRCS:.c=.o}
 # environment
-VSCODE_IPC_HOOK_EXTHOST = /var/folders/zz/zyxvpxvq6csfxvn_n000cqsm0035yd/T/vscode-ipc-cc72336b-9ad6-4dc5-9cd5-4cb0f96c33fb.sock
+VSCODE_IPC_HOOK_EXTHOST = /var/folders/zz/zyxvpxvq6csfxvn_n000cqsm0035yd/T/vscode-ipc-aeeee134-bbc6-4122-b6aa-3360de15a17c.sock
 # environment
 VSCODE_CWD = /
 # environment
@@ -54,15 +54,17 @@ PATH = /usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/munki
 # environment
 LSCOLORS = Gxfxcxdxbxegedabagacad
 # environment
-LaunchInstanceID = 50F05B02-7E63-4202-B5D0-80E7FE630670
+LaunchInstanceID = A3882479-53D8-405B-BDFD-F4AF42BF809C
 # environment
 VSCODE_LOG_STACK = false
 # environment
 ELECTRON_RUN_AS_NODE = 1
 # default
 .FEATURES := target-specific order-only second-expansion else-if archives jobserver check-symlink
+# makefile (from `Makefile', line 12)
+LIBFT_DIR = ./libft
 # environment
-SSH_AUTH_SOCK = /private/tmp/com.apple.launchd.VQFnYZb0mI/Listeners
+SSH_AUTH_SOCK = /private/tmp/com.apple.launchd.HcaG5cipPy/Listeners
 # automatic
 %F = $(notdir $%)
 # environment
@@ -96,7 +98,7 @@ MAKE = $(MAKE_COMMAND)
 # default
 MAKECMDGOALS := all
 # makefile (from `Makefile', line 5)
-SRCS = so_long.c
+SRCS = so_long.c get_next_line.c get_next_line_utils.c
 # environment
 SHLVL = 1
 # makefile (from `Makefile', line 2)
@@ -107,7 +109,7 @@ MAKE_VERSION := 3.81
 USER = jinkim2
 # makefile
 .DEFAULT_GOAL := all
-# makefile (from `Makefile', line 12)
+# makefile (from `Makefile', line 14)
 NAME = so_long
 # environment
 LESS = -R
@@ -161,12 +163,13 @@ SUFFIXES :=
 .INCLUDE_DIRS = /usr/local/include
 # environment
 MAKELEVEL := 0
+ 
 # environment
 LANG = C
 # environment
-VSCODE_PID = 5005
+VSCODE_PID = 1853
 # variable set hash-table stats:
-# Load=76/1024=7%, Rehash=0, Collisions=4/104=4%
+# Load=77/1024=8%, Rehash=0, Collisions=4/105=4%
 
 # Pattern-specific Variable Values
 
@@ -174,9 +177,9 @@ VSCODE_PID = 5005
 
 # Directories
 
-# . (device 16777225, inode 2982409): 9 files, no impossibilities.
+# . (device 16777225, inode 2982409): 17 files, no impossibilities.
 
-# 9 files, no impossibilities in 1 directories.
+# 17 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
@@ -202,7 +205,7 @@ all: so_long
 # Not a target:
 Makefile:
 #  Implicit rule search has been done.
-#  Last modified 2022-07-18 14:53:42
+#  Last modified 2022-07-19 19:53:32
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -212,7 +215,7 @@ Makefile:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
-#  commands to execute (from `Makefile', line 21):
+#  commands to execute (from `Makefile', line 24):
 	$(CC) $(CFLAGS) -o $@ -c $?
 	
 
@@ -220,9 +223,18 @@ fclean: clean
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
-#  commands to execute (from `Makefile', line 27):
+#  commands to execute (from `Makefile', line 30):
 	rm -f $(NAME) $(NAME_BONUS)
 	
+
+# Not a target:
+get_next_line_utils.o:
+#  Implicit rule search has been done.
+#  Last modified 2022-07-19 19:44:39
+#  File has been updated.
+#  Successfully updated.
+# variable set hash-table stats:
+# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
 
 # Not a target:
 .DEFAULT:
@@ -239,33 +251,43 @@ clean:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
-#  commands to execute (from `Makefile', line 24):
+#  commands to execute (from `Makefile', line 27):
 	rm -f $(OBJS) $(OBJS_BONUS)
 	
 
-so_long: so_long.o
+so_long: so_long.o get_next_line.o get_next_line_utils.o
 #  Implicit rule search has not been done.
-#  Last modified 2022-07-18 15:51:19
+#  Last modified 2022-07-19 19:44:39
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
 # Load=0/32=0%, Rehash=0, Collisions=0/0=0%
-#  commands to execute (from `Makefile', line 17):
+#  commands to execute (from `Makefile', line 19):
 	make -C $(MLX_DIR)
-	cc -o $(NAME) $^ $(MLX_FLAGS)
+	make -C $(LIBFT_DIR)
+	cc -o $(NAME) $^ $(MLX_FLAGS) -Llibft -lft
 	
 
 # Not a target:
 so_long.o:
 #  Implicit rule search has been done.
-#  Last modified 2022-07-18 15:51:19
+#  Last modified 2022-07-19 19:44:39
+#  File has been updated.
+#  Successfully updated.
+# variable set hash-table stats:
+# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
+
+# Not a target:
+get_next_line.o:
+#  Implicit rule search has been done.
+#  Last modified 2022-07-19 19:44:39
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
 # Load=0/32=0%, Rehash=0, Collisions=0/0=0%
 
 # files hash-table stats:
-# Load=10/1024=1%, Rehash=0, Collisions=0/28=0%
+# Load=12/1024=1%, Rehash=0, Collisions=0/32=0%
 # VPATH Search Paths
 
 # No `vpath' search paths.
@@ -277,6 +299,6 @@ so_long.o:
 # strcache size: total = 4096 / max = 4096 / min = 4096 / avg = 4096
 # strcache free: total = 4087 / max = 4087 / min = 4087 / avg = 4087
 
-# Finished Make data base on Mon Jul 18 19:29:12 2022
+# Finished Make data base on Tue Jul 19 19:59:28 2022
 
  

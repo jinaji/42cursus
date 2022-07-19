@@ -53,22 +53,70 @@ void	image(void *mlx, void *win)
 // 	str = get_next_line(fd);
 // }
 
+char	*make_map(t_sl *info, int fd)
+{
+	char	*save;
+	char	*temp;
+
+	save = ft_strdup("");
+	temp = get_next_line(fd);
+	if (!temp || ft_strncmp(temp, "\n", 1))
+		ft_error ("map error");
+	info->width = ft_strlen(temp);
+	info->height = 1;
+	while (temp)
+	{
+		save = ft_strjoin(save, temp);
+		free (temp);
+		temp = get_next_line(fd);
+		if ((ft_strlen(temp)) != info->width)
+			ft_error("map error");
+		info->height++;
+	}
+	free (temp);
+	return (save);
+}
+
+char	**is_valid_map(char *map, t_sl *info)
+{
+	char	**tmp;
+	char	*save;
+	int		fd;
+
+	fd = open(map, O_RDONLY);
+	if (fd == -1)
+		ft_error ("map open error");
+	save = make_map(info, fd);
+	tmp = ft_split(save, '\n');
+	free (save);
+	return (tmp);
+}
+
+void	parse_arg(t_sl *info, char *map)
+{
+	ft_memset(info, 0, sizeof(t_sl));
+	info->map.map = is_valid_map(map, info);	
+}
+
+void	init_mlx(t_sl *info)
+{
+	info->mlx = mlx_init();
+	info->win = mlx_new_window(info->mlx, info->width, info->height, "so long");
+}
+
 int	main(int ac, char **av)
 {
-	void	*mlx;
-	void	*win;
-	t_sl	st;
+	t_sl	info;
 	// t_key	loca;
 
-	(void)st;
 	(void)ac;
 	(void)av;
 	// if (ac != 2)
 	// 	ft_error("wrong format");
-	mlx = mlx_init();
-	win = mlx_new_window(mlx, 500, 500, "so_long");
+	parse_arg(&info, av[1]);
+	mlx_init(&info);
 	// read_map(av[1], &st);
-	image(mlx, win);
+	image(info.mlx, info.win);
 	// mlx_hook(win, 03, 0, &press_key, &loca);
-	mlx_loop(mlx);
+	mlx_loop(info.mlx);
 }
