@@ -6,7 +6,7 @@
 /*   By: jinkim2 <jinkim2@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/18 17:29:17 by jinkim2           #+#    #+#             */
-/*   Updated: 2022/07/19 19:39:01 by jinkim2          ###   ########seoul.kr  */
+/*   Updated: 2022/07/21 19:49:49 by jinkim2          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,11 @@
 # include "mlx/mlx.h"
 # include "libft/libft.h"
 
-// # define W_KEY
+# define W_KEY	13
+# define A_KEY	0
+# define S_KEY	1
+# define D_KEY	2
+# define ESC_KEY	53
 
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 42
@@ -47,20 +51,26 @@ char	*get_next_line(int fd);
 
 typedef struct s_image{
 	void	*character;
-	void	*chest;
+	void	*collect;
 	void	*key;
-	void	*sheet;
-	void	*stone;
+	void	*tile;
+	void	*wall;
+	int		width;
+	int		height;
+	int		size;
 }				t_image;
 
 typedef struct s_key{
 	int	x;
 	int	y;
+	int	move;
 }				t_key;
 
 typedef struct s_map{
 	char	**map;
 	int		coll;
+	int		pos;
+	int		exit;
 }				t_map;
 
 typedef struct s_sl{
@@ -69,8 +79,8 @@ typedef struct s_sl{
 	t_map	map;
 	t_key	loca;
 	t_image	img;
-	size_t		width;
-	size_t		height;
+	int		width;
+	int		height;
 }				t_sl;
 
 #endif

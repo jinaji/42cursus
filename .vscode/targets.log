@@ -8,7 +8,7 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # This program built for i386-apple-darwin11.3.0
  
 
-# Make data base, printed on Tue Jul 19 19:59:28 2022
+# Make data base, printed on Thu Jul 21 21:58:31 2022
 
 # Variables
 
@@ -39,14 +39,14 @@ CFLAGS = -Wall -Werror -Wextra
 MLX_DIR = ./mlx
 # makefile (from `Makefile', line 1)
 MAKEFILE_LIST :=  Makefile
-# makefile (from `Makefile', line 34)
+# makefile (from `Makefile', line 42)
 .PHONY = all clean fclean re bonus
 # environment
 VSCODE_VERBOSE_LOGGING = true
 # makefile (from `Makefile', line 7)
 OBJS = ${SRCS:.c=.o}
 # environment
-VSCODE_IPC_HOOK_EXTHOST = /var/folders/zz/zyxvpxvq6csfxvn_n000cqsm0035yd/T/vscode-ipc-aeeee134-bbc6-4122-b6aa-3360de15a17c.sock
+VSCODE_IPC_HOOK_EXTHOST = /var/folders/zz/zyxvpxvq6csfxvn_n000cqsm0035yd/T/vscode-ipc-3341863a-cfd7-4d3a-bfd1-e87e288c849c.sock
 # environment
 VSCODE_CWD = /
 # environment
@@ -54,7 +54,7 @@ PATH = /usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/munki
 # environment
 LSCOLORS = Gxfxcxdxbxegedabagacad
 # environment
-LaunchInstanceID = A3882479-53D8-405B-BDFD-F4AF42BF809C
+LaunchInstanceID = EF0ADBE3-249B-4055-B0DA-6BE2AB17D329
 # environment
 VSCODE_LOG_STACK = false
 # environment
@@ -64,7 +64,7 @@ ELECTRON_RUN_AS_NODE = 1
 # makefile (from `Makefile', line 12)
 LIBFT_DIR = ./libft
 # environment
-SSH_AUTH_SOCK = /private/tmp/com.apple.launchd.HcaG5cipPy/Listeners
+SSH_AUTH_SOCK = /private/tmp/com.apple.launchd.IcjtvVrPPo/Listeners
 # automatic
 %F = $(notdir $%)
 # environment
@@ -98,7 +98,7 @@ MAKE = $(MAKE_COMMAND)
 # default
 MAKECMDGOALS := all
 # makefile (from `Makefile', line 5)
-SRCS = so_long.c get_next_line.c get_next_line_utils.c
+SRCS = parse.c get_next_line.c get_next_line_utils.c
 # environment
 SHLVL = 1
 # makefile (from `Makefile', line 2)
@@ -134,7 +134,7 @@ MFLAGS = -Rrqp
 # environment
 MAIL = jinkim2@student.42seoul.kr
 # environment
-XPC_SERVICE_NAME = com.apple.xpc.launchd.oneshot.0x10000004.Electron
+XPC_SERVICE_NAME = com.apple.xpc.launchd.oneshot.0x10000001.Electron
 # automatic
 +D = $(patsubst %/,%,$(dir $+))
 # automatic
@@ -154,7 +154,7 @@ PAGER = less
 # environment
 LC_ALL = C
 # environment
-SECURITYSESSIONID = 186a6
+SECURITYSESSIONID = 186a5
 # automatic
 ^F = $(notdir $^)
 # default
@@ -163,11 +163,10 @@ SUFFIXES :=
 .INCLUDE_DIRS = /usr/local/include
 # environment
 MAKELEVEL := 0
- 
 # environment
 LANG = C
 # environment
-VSCODE_PID = 1853
+VSCODE_PID = 4157
 # variable set hash-table stats:
 # Load=77/1024=8%, Rehash=0, Collisions=4/105=4%
 
@@ -177,9 +176,9 @@ VSCODE_PID = 1853
 
 # Directories
 
-# . (device 16777225, inode 2982409): 17 files, no impossibilities.
+# . (device 16777225, inode 2982409): 21 files, no impossibilities.
 
-# 17 files, no impossibilities in 1 directories.
+# 21 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
@@ -196,6 +195,30 @@ all: so_long
 # variable set hash-table stats:
 # Load=0/32=0%, Rehash=0, Collisions=0/0=0%
 
+s: parse.c get_next_line.c get_next_line_utils.c
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  commands to execute (from `Makefile', line 24):
+	make -C $(LIBFT_DIR)
+	cc -g $^ libft/*.c
+	
+
+# Not a target:
+parse.o:
+#  Implicit rule search has been done.
+#  Last modified 2022-07-21 19:49:52
+#  File has been updated.
+#  Successfully updated.
+# variable set hash-table stats:
+# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
+
+# Not a target:
+get_next_line.c:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
 # Not a target:
 .SUFFIXES:
 #  Implicit rule search has not been done.
@@ -205,17 +228,25 @@ all: so_long
 # Not a target:
 Makefile:
 #  Implicit rule search has been done.
-#  Last modified 2022-07-19 19:53:32
+#  Last modified 2022-07-21 14:41:41
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
 # Load=0/32=0%, Rehash=0, Collisions=0/0=0%
 
+debug:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  commands to execute (from `Makefile', line 28):
+	cc -g -o $(NAME) $(SRCS) $(MLX_FLAGS) -Llibft -lft
+	
+
 .c.o:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
-#  commands to execute (from `Makefile', line 24):
+#  commands to execute (from `Makefile', line 32):
 	$(CC) $(CFLAGS) -o $@ -c $?
 	
 
@@ -223,14 +254,20 @@ fclean: clean
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
-#  commands to execute (from `Makefile', line 30):
+#  commands to execute (from `Makefile', line 38):
 	rm -f $(NAME) $(NAME_BONUS)
 	
 
 # Not a target:
+parse.c:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+# Not a target:
 get_next_line_utils.o:
 #  Implicit rule search has been done.
-#  Last modified 2022-07-19 19:44:39
+#  Last modified 2022-07-21 13:21:06
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -251,13 +288,13 @@ clean:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
-#  commands to execute (from `Makefile', line 27):
+#  commands to execute (from `Makefile', line 35):
 	rm -f $(OBJS) $(OBJS_BONUS)
 	
 
-so_long: so_long.o get_next_line.o get_next_line_utils.o
+so_long: parse.o get_next_line.o get_next_line_utils.o
 #  Implicit rule search has not been done.
-#  Last modified 2022-07-19 19:44:39
+#  Last modified 2022-07-21 19:56:20
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -265,29 +302,26 @@ so_long: so_long.o get_next_line.o get_next_line_utils.o
 #  commands to execute (from `Makefile', line 19):
 	make -C $(MLX_DIR)
 	make -C $(LIBFT_DIR)
-	cc -o $(NAME) $^ $(MLX_FLAGS) -Llibft -lft
+	cc -g -o $(NAME) $^ $(MLX_FLAGS) -Llibft -lft
 	
 
 # Not a target:
-so_long.o:
-#  Implicit rule search has been done.
-#  Last modified 2022-07-19 19:44:39
-#  File has been updated.
-#  Successfully updated.
-# variable set hash-table stats:
-# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
+get_next_line_utils.c:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
 
 # Not a target:
 get_next_line.o:
 #  Implicit rule search has been done.
-#  Last modified 2022-07-19 19:44:39
+#  Last modified 2022-07-21 13:21:06
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
 # Load=0/32=0%, Rehash=0, Collisions=0/0=0%
 
 # files hash-table stats:
-# Load=12/1024=1%, Rehash=0, Collisions=0/32=0%
+# Load=17/1024=2%, Rehash=0, Collisions=0/40=0%
 # VPATH Search Paths
 
 # No `vpath' search paths.
@@ -299,6 +333,6 @@ get_next_line.o:
 # strcache size: total = 4096 / max = 4096 / min = 4096 / avg = 4096
 # strcache free: total = 4087 / max = 4087 / min = 4087 / avg = 4087
 
-# Finished Make data base on Tue Jul 19 19:59:28 2022
+# Finished Make data base on Thu Jul 21 21:58:31 2022
 
  

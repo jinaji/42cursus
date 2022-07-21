@@ -100,8 +100,8 @@ void	parse_arg(t_sl *info, char *map)
 
 void	init_mlx(t_sl *info)
 {
-	info->mlx = mlx_init();
-	info->win = mlx_new_window(info->mlx, info->width, info->height, "so long");
+	// info->mlx = mlx_init();
+	// info->win = mlx_new_window(info->mlx, info->width, info->height, "so long");
 }
 
 int	main(int ac, char **av)
@@ -114,9 +114,9 @@ int	main(int ac, char **av)
 	// if (ac != 2)
 	// 	ft_error("wrong format");
 	parse_arg(&info, av[1]);
-	mlx_init(&info);
+	// mlx_init(&info);
 	// read_map(av[1], &st);
-	image(info.mlx, info.win);
+	// image(info.mlx, info.win);
 	// mlx_hook(win, 03, 0, &press_key, &loca);
-	mlx_loop(info.mlx);
+	// mlx_loop(info.mlx);
 }

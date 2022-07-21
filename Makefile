@@ -2,7 +2,7 @@
 CC = cc
 CFLAGS = -Wall -Werror -Wextra
 
-SRCS = 	so_long.c get_next_line.c get_next_line_utils.c
+SRCS = 	parse.c get_next_line.c get_next_line_utils.c
 		
 OBJS = ${SRCS:.c=.o}
 
@@ -18,7 +18,15 @@ all:  $(NAME)
 $(NAME): $(OBJS)
 	make -C $(MLX_DIR)
 	make -C $(LIBFT_DIR)
-	cc -o $(NAME) $^ $(MLX_FLAGS) -Llibft -lft
+	cc -g -o $(NAME) $^ $(MLX_FLAGS) -Llibft -lft
+
+s: parse.c get_next_line.c get_next_line_utils.c
+	make -C $(LIBFT_DIR)
+	cc -g $^ libft/*.c
+
+debug : 
+	cc -g -o $(NAME) $(SRCS) $(MLX_FLAGS) -Llibft -lft
+
 
 .c.o:
 	$(CC) $(CFLAGS) -o $@ -c $?

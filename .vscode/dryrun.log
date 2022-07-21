@@ -1,9 +1,11 @@
-make --dry-run --keep-going --print-directory
+make --dry-run --always-make --keep-going --print-directory
 make: Entering directory `/Users/jinkim2/42cursus/so_long'
-cc -Wall -Werror -Wextra -o so_long.o -c so_long.c
+cc -Wall -Werror -Wextra -o parse.o -c parse.c
+cc -Wall -Werror -Wextra -o get_next_line.o -c 
  
+cc -Wall -Werror -Wextra -o get_next_line_utils.o -c 
 make -C ./mlx
 make -C ./libft
-cc -o so_long so_long.o get_next_line.o get_next_line_utils.o -L./mlx -lmlx -framework OpenGL -framework AppKit -Llibft -lft
+cc -g -o so_long parse.o get_next_line.o get_next_line_utils.o -L./mlx -lmlx -framework OpenGL -framework AppKit -Llibft -lft
 make: Leaving directory `/Users/jinkim2/42cursus/so_long'
  
