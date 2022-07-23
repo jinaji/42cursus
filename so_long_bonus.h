@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   so_long.h                                          :+:      :+:    :+:   */
+/*   so_long_bonus.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jinkim2 <jinkim2@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/18 17:29:17 by jinkim2           #+#    #+#             */
-/*   Updated: 2022/07/23 18:32:32 by jinkim2          ###   ########seoul.kr  */
+/*   Updated: 2022/07/23 18:49:02 by jinkim2          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SO_LONG_H
-# define SO_LONG_H
+#ifndef SO_LONG_BONUS_H
+# define SO_LONG_BONUS_H
 
 # include <unistd.h>
 # include <fcntl.h>
@@ -50,7 +50,8 @@ int		make_line(t_gnl **lst, int fd, char *buff, char **tmp);
 char	*get_next_line(int fd);
 
 typedef struct s_image{
-	void	*cha;
+	void	*cha1;
+	void	*cha2;
 	void	*col;
 	void	*key;
 	void	*tile;
