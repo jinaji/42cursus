@@ -6,7 +6,7 @@
 /*   By: jinkim2 <jinkim2@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/29 14:49:57 by jinkim2           #+#    #+#             */
-/*   Updated: 2022/04/07 15:47:15 by jinkim2          ###   ########seoul.kr  */
+/*   Updated: 2022/07/25 13:37:54 by jinkim2          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,5 +22,6 @@ t_list	*ft_lstnew(void *content)
 		return (0);
 	new->content = content;
 	new->next = 0;
+	new->prev = 0;
 	return (new);
 }

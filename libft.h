@@ -6,7 +6,7 @@
 /*   By: jinkim2 <jinkim2@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 20:46:35 by jinkim2           #+#    #+#             */
-/*   Updated: 2022/04/07 15:45:00 by jinkim2          ###   ########seoul.kr  */
+/*   Updated: 2022/07/25 13:37:32 by jinkim2          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ typedef struct s_list
 {
 	void			*content;
 	struct s_list	*next;
+	struct s_list	*prev;
 }	t_list;
 
 int		ft_isalpha(int c);

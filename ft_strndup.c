@@ -1,25 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstadd_front.c                                  :+:      :+:    :+:   */
+/*   ft_strndup.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jinkim2 <jinkim2@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/29 14:50:50 by jinkim2           #+#    #+#             */
-/*   Updated: 2022/07/25 13:41:37 by jinkim2          ###   ########seoul.kr  */
+/*   Created: 2022/03/14 14:05:21 by jinkim2           #+#    #+#             */
+/*   Updated: 2022/07/25 14:08:38 by jinkim2          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdlib.h>
 #include "libft.h"
 
-void	ft_lstadd_front(t_list **lst, t_list *new)
+char	*ft_strndup(const char *s1, int n)
 {
-	if (*lst == 0)
-		*lst = new;
-	else
+	int		i;
+	int		len;
+	char	*arr;
+
+	i = 0;
+	len = ft_strlen(s1);
+	if (n > len)
+		return (0);
+	arr = (char *)malloc(sizeof(char) * (n + 1));
+	if (!arr)
+		return (0);
+	while (n > i)
 	{
-		new->next = *lst;
-		(*lst)->prev = new;
-		*lst = new;
+		arr[i] = s1[i];
+		i++;
 	}
+	arr[i] = '\0';
+	return (arr);
 }
