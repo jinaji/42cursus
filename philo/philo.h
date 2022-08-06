@@ -6,7 +6,7 @@
 /*   By: jinkim2 <jinkim2@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/03 15:38:28 by jinkim2           #+#    #+#             */
-/*   Updated: 2022/08/05 21:24:32 by jinkim2          ###   ########seoul.kr  */
+/*   Updated: 2022/08/06 16:04:59 by jinkim2          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,24 +27,26 @@
 typedef struct s_philo{
 	int				id;
 	int				state;
+	int				eat_count;
 	int				ttd;
 	int				tte;
 	int				tts;
 	int				tme;
 	int				pnum;
-	long			s_time;
-	long			c_time;
+	ssize_t			s_time;
+	ssize_t			last_eat;
 	pthread_mutex_t	r_pork;
 	pthread_mutex_t	l_pork;
+	pthread_mutex_t write;
 }				t_philo;
 
 typedef struct s_argv{
-	int		pnum;
-	int		ttd;
-	int		tte;
-	int		tts;
-	int		tme;
-	t_philo	*ph;
+	int				pnum;
+	int				ttd;
+	int				tte;
+	int				tts;
+	int				tme;
+	t_philo			*ph;
 }				t_argv;
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: jinkim2 <jinkim2@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/03 15:38:21 by jinkim2           #+#    #+#             */
-/*   Updated: 2022/08/05 21:35:38 by jinkim2          ###   ########seoul.kr  */
+/*   Updated: 2022/08/07 00:24:28 by jinkim2          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,23 @@ int	right(int i, int pnum)
 	return ((i + 1) % pnum);
 }
 
+ssize_t	get_time()
+{
+	struct timeval	time;
+	ssize_t			usec;
+
+	gettimeofday(&time, 0);
+	usec = time.tv_sec * 1000 + time.tv_usec / 1000;
+	return (usec);
+}
+
 void	philo_init(t_argv *ag, t_philo *ph, int i, pthread_mutex_t *pork)
 {
+	int	r;
+	int	l;
+
+	r = right(i, (ph->pnum));
+	l = left(i, ph->pnum);
 	ph->id = i;
 	ph->state = 2;
 	ph->ttd = ag->ttd;
@@ -60,45 +75,99 @@ void	philo_init(t_argv *ag, t_philo *ph, int i, pthread_mutex_t *pork)
 	if (ag->tme)
 		ph->tme = ag->tme;
 	ph->pnum = ag->pnum;
-	ph->r_pork = pork[right(i, ph->pnum)];
-	ph->l_pork = pork[left(i, ph->pnum)];
+	ph->r_pork = pork[r];
+	// ph->r_pork = pork[right(i, ph->pnum)];
+	// ph->l_pork = pork[left(i, ph->pnum)];
+	ph->l_pork = pork[l];
+	ph->s_time = get_time();
 }
 
-long	get_time(t_philo *ph)
+int	check_die(t_philo *ph)
 {
-	struct timeval	st_time;
-	struct timeval	en_time;
-	long			diff_sec;
+	ssize_t	time;
 
-	ph->s_time = gettimeofday(&st_time, 0);
-	usleep(5000);
-	ph->c_time = gettimeofday(&en_time, 0);
-	diff_sec = en_time.tv_usec - st_time.tv_usec;
-	return (diff_sec % 1000);
+	time = get_time();
+	if (ph->eat_count == 0 && (time - ph->s_time) > ph->ttd)
+	{
+		pthread_mutex_lock(&ph->write);
+		printf("%ld %d died\n", (time - ph->s_time), ph->id);
+		pthread_mutex_unlock(&ph->write);
+		usleep(100);
+		return (1);
+	}
+	else if (ph->eat_count != 0 && (time - ph->last_eat) > ph->ttd)
+	{
+		pthread_mutex_lock(&ph->write);
+		printf("%ld %d died\n", (time - ph->s_time), ph->id);
+		pthread_mutex_unlock(&ph->write);
+		usleep(100);
+		return (1);
+	}
+	return (0);
+}
+
+int	think(t_philo *ph)
+{
+	pthread_mutex_lock(&ph->write);
+	if (check_die(ph))
+		return (1);
+	printf("%ld %d is sleeping\n", (get_time() - ph->s_time), ph->id);
+	pthread_mutex_unlock(&ph->write);
+	usleep(ph->tts * 1000);
+	pthread_mutex_lock(&ph->write);
+	if (check_die(ph))
+		return (1);
+	printf("%ld %d is thinking\n", (get_time() - ph->s_time), ph->id);
+	pthread_mutex_unlock(&ph->write);
+	return (0);
+}
+
+int	eat(t_philo *ph)
+{
+	pthread_mutex_lock(&ph->r_pork);
+	pthread_mutex_lock(&ph->write);
+	if (check_die(ph))
+		return (1);
+	printf("%ld %d has taken a fork\n", (get_time() - ph->s_time), ph->id);
+	pthread_mutex_unlock(&ph->write);
+	pthread_mutex_lock(&ph->l_pork);
+	pthread_mutex_lock(&ph->write);
+	if (check_die(ph))
+		return (1);
+	ph->last_eat = get_time();
+	printf("%ld %d has taken a fork\n", (ph->last_eat - ph->s_time), ph->id);
+	printf("%ld %d is eating\n", (ph->last_eat - ph->s_time), ph->id);
+	pthread_mutex_unlock(&ph->write);
+	ph->eat_count++;
+	usleep (ph->tte * 1000);
+	pthread_mutex_unlock(&ph->r_pork);
+	pthread_mutex_unlock(&ph->l_pork);
+	return (0);
 }
 
 void	*philo(void	*param)
 {
-	printf("philo\n");
 	t_philo	*ph;
 
 	ph = (t_philo *)param;
 	while (1)
-		printf("%ld %d \n", ph->c_time, ph->id);
+	{
+		if (eat(ph) || think(ph))
+			return (0);
+	}
 	return (0);
 }
 
 void	argv_init(t_argv *ag, int ac, char **av)
 {
 	pthread_mutex_t	*pork;
-	struct timeval	s_time;
 	int				i;
 
 	i = 0;
+	memset(ag, 0, sizeof(t_argv));
 	ag->pnum = ft_atoi(av[1]);
 	ag->ph = (t_philo *)malloc(sizeof(t_philo) * (ag->pnum));
-	gettimeofday(&s_time, 0);
-	ag->ph->s_time = s_time.tv_usec;
+	ag->ph->s_time = get_time();
 	if (!ag->ph)
 		return ;
 	ag->ttd = ft_atoi(av[2]);
@@ -136,5 +205,9 @@ int	main(int ac, char **av)
 	}
 	pthread_join(phi[0], 0);
 	pthread_join(phi[1], 0);
+	pthread_join(phi[2], 0);
+	// join 안하면 안 도는데 머임 이거 
+	// 포크 드는 순서도 정해줘야됨 ... 
+	// 글고 옆에서 죽든말든 걍 밥먹음 
 	return (0);
 }

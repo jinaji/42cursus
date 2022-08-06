@@ -7,15 +7,15 @@ OBJS = $(SRCS:.c=.o)
 NAME = philo
 
 all: $(NAME)
-	$(CC) $(CFLAGS) -o $(NAME) $(OBJS)
 
 $(NAME): $(OBJS)
+	$(CC) $(CFLAGS) -o $(NAME) $(OBJS)
 
 debug:
 	cc -g $(CFLAGS) $(OBJS)
 
 clean:
-	rm -r $(OBJS)
+	rm -rf $(OBJS)
 
 fclean: clean
 	rm -rf $(NAME)
