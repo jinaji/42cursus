@@ -6,7 +6,7 @@
 /*   By: jinkim2 <jinkim2@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/03 15:38:21 by jinkim2           #+#    #+#             */
-/*   Updated: 2022/08/07 00:24:28 by jinkim2          ###   ########seoul.kr  */
+/*   Updated: 2022/08/07 17:05:50 by jinkim2          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,6 @@ void	philo_init(t_argv *ag, t_philo *ph, int i, pthread_mutex_t *pork)
 	int	r;
 	int	l;
 
-	r = right(i, (ph->pnum));
-	l = left(i, ph->pnum);
 	ph->id = i;
 	ph->state = 2;
 	ph->ttd = ag->ttd;
@@ -75,10 +73,13 @@ void	philo_init(t_argv *ag, t_philo *ph, int i, pthread_mutex_t *pork)
 	if (ag->tme)
 		ph->tme = ag->tme;
 	ph->pnum = ag->pnum;
-	ph->r_pork = pork[r];
+	r = right(i, (ph->pnum));
+	l = left(i, (ph->pnum));
+	ph->r_pork = &pork[r];
+	ph->l_pork = &pork[l];
+	printf("%d r: %d l: %d\n", ph->id, r, l);
 	// ph->r_pork = pork[right(i, ph->pnum)];
 	// ph->l_pork = pork[left(i, ph->pnum)];
-	ph->l_pork = pork[l];
 	ph->s_time = get_time();
 }
 
@@ -119,18 +120,21 @@ int	think(t_philo *ph)
 		return (1);
 	printf("%ld %d is thinking\n", (get_time() - ph->s_time), ph->id);
 	pthread_mutex_unlock(&ph->write);
+	usleep (100);
 	return (0);
 }
 
 int	eat(t_philo *ph)
 {
-	pthread_mutex_lock(&ph->r_pork);
+	pthread_mutex_lock(ph->r_pork);
+	// printf("r %p\n", &ph->r_pork);
+	// printf("l %p\n", &ph->l_pork);
 	pthread_mutex_lock(&ph->write);
 	if (check_die(ph))
 		return (1);
 	printf("%ld %d has taken a fork\n", (get_time() - ph->s_time), ph->id);
 	pthread_mutex_unlock(&ph->write);
-	pthread_mutex_lock(&ph->l_pork);
+	pthread_mutex_lock(ph->l_pork);
 	pthread_mutex_lock(&ph->write);
 	if (check_die(ph))
 		return (1);
@@ -140,8 +144,8 @@ int	eat(t_philo *ph)
 	pthread_mutex_unlock(&ph->write);
 	ph->eat_count++;
 	usleep (ph->tte * 1000);
-	pthread_mutex_unlock(&ph->r_pork);
-	pthread_mutex_unlock(&ph->l_pork);
+	pthread_mutex_unlock(ph->r_pork);
+	pthread_mutex_unlock(ph->l_pork);
 	return (0);
 }
 
@@ -176,6 +180,7 @@ void	argv_init(t_argv *ag, int ac, char **av)
 	if (ac == 6)
 		ag->tme = ft_atoi(av[5]);
 	pork = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t) * ag->pnum);
+	pthread_mutex_init(pork, 0);
 	if (!pork)
 		return ;
 	while (i < ag->pnum)

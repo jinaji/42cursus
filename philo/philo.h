@@ -6,7 +6,7 @@
 /*   By: jinkim2 <jinkim2@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/03 15:38:28 by jinkim2           #+#    #+#             */
-/*   Updated: 2022/08/06 16:04:59 by jinkim2          ###   ########seoul.kr  */
+/*   Updated: 2022/08/07 17:05:34 by jinkim2          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,8 @@ typedef struct s_philo{
 	int				pnum;
 	ssize_t			s_time;
 	ssize_t			last_eat;
-	pthread_mutex_t	r_pork;
-	pthread_mutex_t	l_pork;
+	pthread_mutex_t	*r_pork;
+	pthread_mutex_t	*l_pork;
 	pthread_mutex_t write;
 }				t_philo;
 
