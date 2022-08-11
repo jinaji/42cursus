@@ -1,5 +1,5 @@
 CC = cc
-CFLAGS = -Wall -Werror -Wextra -pthread
+CFLAGS = -Wall -Werror -Wextra -pthread -g3
 
 SRCS = main.c
 OBJS = $(SRCS:.c=.o)
@@ -12,7 +12,7 @@ $(NAME): $(OBJS)
 	$(CC) $(CFLAGS) -o $(NAME) $(OBJS)
 
 debug:
-	cc -g $(CFLAGS) $(OBJS)
+	cc $(CFLAGS) $(OBJS)
 
 clean:
 	rm -rf $(OBJS)
