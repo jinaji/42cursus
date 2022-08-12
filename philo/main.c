@@ -6,7 +6,7 @@
 /*   By: jinkim2 <jinkim2@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/03 15:38:21 by jinkim2           #+#    #+#             */
-/*   Updated: 2022/08/11 20:31:02 by jinkim2          ###   ########seoul.kr  */
+/*   Updated: 2022/08/12 17:53:05 by jinkim2          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,16 +40,6 @@ int	ft_atoi(const char *str)
 	return (s * r);
 }
 
-int	left(int i, int pnum)
-{
-	return ((i + pnum - 1) % pnum);
-}
-
-int	right(int i, int pnum)
-{
-	return ((i % pnum) + 1);
-}
-
 ssize_t	get_time(void)
 {
 	struct timeval	time;
@@ -58,6 +48,25 @@ ssize_t	get_time(void)
 	gettimeofday(&time, 0);
 	usec = time.tv_sec * 1000 + time.tv_usec / 1000;
 	return (usec);
+}
+
+void	ft_sleep(ssize_t time)
+{
+	ssize_t	in_time;
+
+	in_time = get_time();
+	while (get_time() - in_time < time)
+		usleep (100);
+}
+
+int	left(int i, int pnum)
+{
+	return ((i + pnum - 1) % pnum);
+}
+
+int	right(int i, int pnum)
+{
+	return ((i % pnum) + 1);
 }
 
 void	philo_init(t_argv *ag, t_philo *ph, int i, pthread_mutex_t *pork)
@@ -79,13 +88,14 @@ void	philo_init(t_argv *ag, t_philo *ph, int i, pthread_mutex_t *pork)
 	ph->l_pork = &pork[l];
 	printf("id %d r %d l %d\n", ph->id, r, l);
 	ph->s_time = get_time();
-	pthread_mutex_init(ph->write, 0);
+	// pthread_mutex_init(ph->write, 0);
 }
 
 int	check_die(t_philo *ph)
 {
 	if (ph->eat_count == 0 && (get_time() - ph->s_time) > ph->ttd)
 	{
+		pthread_mutex_lock(ph->write);
 		printf("%ld %d died\n", (get_time() - ph->s_time), ph->id);
 		usleep(100);
 		pthread_mutex_unlock(ph->write);
@@ -93,6 +103,7 @@ int	check_die(t_philo *ph)
 	}
 	else if (ph->eat_count != 0 && (get_time() - ph->last_eat) > ph->ttd)
 	{
+		pthread_mutex_lock(ph->write);
 		printf("%ld %d died\n", (get_time() - ph->s_time), ph->id);
 		usleep(100);
 		pthread_mutex_unlock(ph->write);
@@ -104,14 +115,15 @@ int	check_die(t_philo *ph)
 int	think(t_philo *ph)
 {
 	pthread_mutex_lock(ph->write);
-	if (check_die(ph))
-		return (1);
+	// if (check_die(ph))
+	// 	return (1);
 	printf("%ld %d is sleeping\n", (get_time() - ph->s_time), ph->id);
 	pthread_mutex_unlock(ph->write);
-	usleep(ph->tts * 1000);
+	ft_sleep(ph->tts);
+	// usleep(ph->tts * 1000);
 	pthread_mutex_lock(ph->write);
-	if (check_die(ph))
-		return (1);
+	// if (check_die(ph))
+	// 	return (1);
 	printf("%ld %d is thinking\n", (get_time() - ph->s_time), ph->id);
 	pthread_mutex_unlock(ph->write);
 	usleep (100);
@@ -124,22 +136,23 @@ int	odd_eat(t_philo *ph)
 	// printf("r %p\n", &ph->r_pork);
 	// printf("l %p\n", &ph->l_pork);
 	pthread_mutex_lock(ph->write);
-	if (check_die(ph))
-		return (1);
+	// if (check_die(ph))
+	// 	return (1);
 	printf("%ld %d has taken a right fork\n", (get_time() - ph->s_time), ph->id);
 	pthread_mutex_unlock(ph->write);
 	pthread_mutex_lock(ph->l_pork);
-	printf("%ld %d has taken a left fork\n", (ph->last_eat - ph->s_time), ph->id);
+	printf("%ld %d has taken a left fork\n", (get_time() - ph->s_time), ph->id);
 	ph->last_eat = get_time();
 	pthread_mutex_lock(ph->write);
-	if (check_die(ph))
-		return (1);
+	// if (check_die(ph))
+	// 	return (1);
 	printf("%ld %d is eating\n", (ph->last_eat - ph->s_time), ph->id);
 	pthread_mutex_unlock(ph->write);
 	ph->eat_count++;
 	// while(gettimeofday(end_time) > ph->tte)
 	// 	usleep(500); usleep ㅂㅏ로 때때리리는  것것보보다  이이게  나나을을듯  -키팍
-	usleep (ph->tte * 1000);
+	ft_sleep(ph->tte);
+	// usleep (ph->tte * 1000);
 	pthread_mutex_unlock(ph->r_pork);
 	pthread_mutex_unlock(ph->l_pork);
 	return (0);
@@ -149,9 +162,12 @@ int	hold_lpork(t_philo *ph)
 {
 	pthread_mutex_lock(ph->l_pork);
 	pthread_mutex_lock(ph->write);
-	if (check_die(ph))
-		return (1);
-	printf("%ld %d has taken a left fork\n", (get_time() - ph->s_time), ph->id);
+	// if (check_die(ph))
+	// 	return (1);
+	if (ph->eat_count)
+		printf("%ld %d has taken a left fork\n", (get_time() - ph->last_eat), ph->id);
+	else
+		printf("%ld %d has taken a left fork\n", (get_time() - ph->s_time), ph->id);
 	pthread_mutex_unlock(ph->write);
 	return (0);
 }
@@ -159,11 +175,14 @@ int	hold_lpork(t_philo *ph)
 int	hold_rpork(t_philo *ph)
 {
 	pthread_mutex_lock(ph->r_pork);
-	ph->last_eat = get_time();
+	// ph->last_eat = get_time();
 	pthread_mutex_lock(ph->write);
-	if (check_die(ph))
-		return (1);
-	printf("%ld %d has taken a right fork\n", (get_time() - ph->s_time), ph->id);
+	// if (check_die(ph))
+	// 	return (1);
+	if (ph->eat_count)
+		printf("%ld %d has taken a right fork\n", (get_time() - ph->last_eat), ph->id);
+	else
+		printf("%ld %d has taken a right fork\n", (get_time() - ph->s_time), ph->id);
 	pthread_mutex_unlock(ph->write);
 	return (0);
 }
@@ -174,23 +193,16 @@ void	put_porks(t_philo *ph)
 	pthread_mutex_unlock(ph->r_pork);
 }
 
-void	ft_sleep(int time)
-{
-	ssize_t	wait_time;
-
-	wait_time = get_time();
-	while (wait_time > time)
-		usleep(100);
-}
-
 int	even_eat(t_philo *ph)
 {
-	if (hold_lpork(ph) || hold_rpork(ph))
+	if (hold_rpork(ph) || hold_lpork(ph))
 		return (1);
+	ph->last_eat = get_time();
 	printf("%ld %d is eating\n", (ph->last_eat - ph->s_time), ph->id);
 	// pthread_mutex_unlock(ph->write);
 	ph->eat_count++;
-	ft_sleep(ph->tte);
+	// ft_sleep(ph->tte * 1000);
+	ft_sleep (ph->tte);
 	put_porks(ph);
 	return (0);
 }
@@ -204,12 +216,12 @@ void	*philo(void	*param)
 	{
 		if (ph->id % 2)
 		{
-			if (even_eat(ph) || think(ph))
+			if (odd_eat(ph) || think(ph))
 				return (0);
 		}
 		else
 		{
-			if (odd_eat(ph) || think(ph))
+			if (even_eat(ph) || think(ph))
 				return (0);
 		}
 	}
@@ -223,7 +235,7 @@ void	pork_mutex_init(pthread_mutex_t *pork, int pnum)
 	i = 0;
 	while (i < pnum)
 	{
-		pthread_mutex_init(&pork[i], 0);
+		pthread_mutex_init(pork + i, 0);
 		i++;
 	}
 }
@@ -251,7 +263,7 @@ void	argv_init(t_argv *ag, int ac, char **av)
 	pork_mutex_init(pork, ag->pnum);
 	while (i < ag->pnum)
 	{
-		ag->ph[i].write = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t));
+		// ag->ph[i].write = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t));
 		philo_init(ag, &(ag->ph[i]), i, pork);
 		i++;
 	}
@@ -264,7 +276,7 @@ int	view_philos(t_philo *ph)
 	i = 0;
 	while (ph)
 	{
-		if (check_die(ph))
+		if (check_die(ph + i))
 			return (1);
 		i++;
 	}
@@ -287,6 +299,7 @@ int	main(int ac, char **av)
 	while (i < ag.pnum)
 	{
 		pthread_create(&phi[i], 0, philo, (void *)&ag.ph[i]);
+		usleep(100);
 		i++;
 	}
 	// pthread_join(phi[0], 0);
@@ -298,6 +311,8 @@ int	main(int ac, char **av)
 	pthread_detach(phi[1]);
 	pthread_detach(phi[2]);
 	pthread_detach(phi[3]);
+
+	usleep(100);
 	while (1)
 	{
 		if (view_philos(ag.ph))
