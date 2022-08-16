@@ -1,26 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_env.c                                           :+:      :+:    :+:   */
+/*   ft_memmove.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jinkim2 <jinkim2@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/08/16 11:17:49 by jinkim2           #+#    #+#             */
-/*   Updated: 2022/08/16 20:05:53 by jinkim2          ###   ########seoul.kr  */
+/*   Created: 2022/03/10 17:32:35 by jinkim2           #+#    #+#             */
+/*   Updated: 2022/04/06 18:06:48 by jinkim2          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "builtin.h"
+#include "libft.h"
 
-int	main(int ac, char **av, char **envp)
+void	*ft_memmove(void *dst, const void *src, size_t len)
 {
-	t_key	tmp;
-	int		i;
+	size_t			i;
+	unsigned char	*dest;
+	unsigned char	*source;
 
 	i = 0;
-	while (envp[i])
+	dest = (unsigned char *)dst;
+	source = (unsigned char *)src;
+	if (dst < src)
 	{
-		printf("%s\n", envp[i]); // envp 관리하는거 불불러러다다가  printf 찍음될듯여
-		i++;
+		while (len > i)
+		{
+			dest[i] = source[i];
+			i++;
+		}
 	}
+	if (dst > src)
+	{
+		while (len > i)
+		{
+			dest[len - 1] = source[len - 1];
+			len--;
+		}
+	}
+	return (dst);
 }

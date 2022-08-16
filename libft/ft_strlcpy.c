@@ -1,26 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_env.c                                           :+:      :+:    :+:   */
+/*   ft_strlcpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jinkim2 <jinkim2@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/08/16 11:17:49 by jinkim2           #+#    #+#             */
-/*   Updated: 2022/08/16 20:05:53 by jinkim2          ###   ########seoul.kr  */
+/*   Created: 2022/03/10 14:33:02 by jinkim2           #+#    #+#             */
+/*   Updated: 2022/04/07 16:16:13 by jinkim2          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "builtin.h"
+#include "libft.h"
 
-int	main(int ac, char **av, char **envp)
+size_t	ft_strlcpy(char *dst, char const *src, size_t dstsize)
 {
-	t_key	tmp;
-	int		i;
+	size_t	i;
 
 	i = 0;
-	while (envp[i])
+	if (dstsize == 0)
+		return (ft_strlen(src));
+	while (src[i] && dstsize - 1 > i)
 	{
-		printf("%s\n", envp[i]); // envp 관리하는거 불불러러다다가  printf 찍음될듯여
+		dst[i] = src[i];
 		i++;
 	}
+	dst[i] = '\0';
+	while (src[i])
+		i++;
+	return (i);
 }

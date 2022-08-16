@@ -1,26 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_env.c                                           :+:      :+:    :+:   */
+/*   ft_memset.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jinkim2 <jinkim2@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/08/16 11:17:49 by jinkim2           #+#    #+#             */
-/*   Updated: 2022/08/16 20:05:53 by jinkim2          ###   ########seoul.kr  */
+/*   Created: 2022/03/10 16:15:57 by jinkim2           #+#    #+#             */
+/*   Updated: 2022/03/23 14:43:44 by jinkim2          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "builtin.h"
+#include "libft.h"
 
-int	main(int ac, char **av, char **envp)
+void	*ft_memset(void *b, int c, size_t len)
 {
-	t_key	tmp;
-	int		i;
+	size_t			i;
+	unsigned char	value;
+	unsigned char	*str;
 
 	i = 0;
-	while (envp[i])
-	{
-		printf("%s\n", envp[i]); // envp 관리하는거 불불러러다다가  printf 찍음될듯여
-		i++;
-	}
+	str = (unsigned char *)b;
+	value = (unsigned char)c;
+	while (len > i)
+		str[i++] = value;
+	return (str);
 }

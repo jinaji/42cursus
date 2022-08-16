@@ -1,11 +1,20 @@
-#include <unistd.h>
-#include <stdio.h>
-#include <sys/param.h>
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_pwd.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jinkim2 <jinkim2@student.42seoul.kr>       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/08/16 11:17:17 by jinkim2           #+#    #+#             */
+/*   Updated: 2022/08/16 11:17:30 by jinkim2          ###   ########seoul.kr  */
+/*                                                                            */
+/* ************************************************************************** */
 
-int main()
+#include "builtin.h"
+
+int	main(void)
 {
 	char	buf[1024];
 
 	printf("%s\n", getcwd(buf, 1024));
-
 }

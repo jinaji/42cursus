@@ -1,26 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_env.c                                           :+:      :+:    :+:   */
+/*   ft_lstdelone.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jinkim2 <jinkim2@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/08/16 11:17:49 by jinkim2           #+#    #+#             */
-/*   Updated: 2022/08/16 20:05:53 by jinkim2          ###   ########seoul.kr  */
+/*   Created: 2022/03/29 14:48:52 by jinkim2           #+#    #+#             */
+/*   Updated: 2022/04/01 16:54:56 by jinkim2          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "builtin.h"
+#include "libft.h"
+#include <stdlib.h>
 
-int	main(int ac, char **av, char **envp)
+void	ft_lstdelone(t_list *lst, void (*del)(void *))
 {
-	t_key	tmp;
-	int		i;
-
-	i = 0;
-	while (envp[i])
-	{
-		printf("%s\n", envp[i]); // envp 관리하는거 불불러러다다가  printf 찍음될듯여
-		i++;
-	}
+	del(lst->content);
+	free(lst);
 }

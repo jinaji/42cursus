@@ -1,26 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_env.c                                           :+:      :+:    :+:   */
+/*   ft_lstadd_front.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jinkim2 <jinkim2@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/08/16 11:17:49 by jinkim2           #+#    #+#             */
-/*   Updated: 2022/08/16 20:05:53 by jinkim2          ###   ########seoul.kr  */
+/*   Created: 2022/03/29 14:50:50 by jinkim2           #+#    #+#             */
+/*   Updated: 2022/07/25 13:41:37 by jinkim2          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "builtin.h"
+#include "libft.h"
 
-int	main(int ac, char **av, char **envp)
+void	ft_lstadd_front(t_list **lst, t_list *new)
 {
-	t_key	tmp;
-	int		i;
-
-	i = 0;
-	while (envp[i])
+	if (*lst == 0)
+		*lst = new;
+	else
 	{
-		printf("%s\n", envp[i]); // envp 관리하는거 불불러러다다가  printf 찍음될듯여
-		i++;
+		new->next = *lst;
+		(*lst)->prev = new;
+		*lst = new;
 	}
 }

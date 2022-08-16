@@ -1,26 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_env.c                                           :+:      :+:    :+:   */
+/*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jinkim2 <jinkim2@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/08/16 11:17:49 by jinkim2           #+#    #+#             */
-/*   Updated: 2022/08/16 20:05:53 by jinkim2          ###   ########seoul.kr  */
+/*   Created: 2022/03/14 14:05:21 by jinkim2           #+#    #+#             */
+/*   Updated: 2022/04/01 17:34:11 by jinkim2          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "builtin.h"
+#include <stdlib.h>
+#include "libft.h"
 
-int	main(int ac, char **av, char **envp)
+char	*ft_strdup(const char *s1)
 {
-	t_key	tmp;
 	int		i;
+	int		len;
+	char	*arr;
 
 	i = 0;
-	while (envp[i])
+	len = ft_strlen(s1);
+	arr = (char *)malloc((sizeof(char) * len) + 1);
+	if (!arr)
+		return (0);
+	while (s1[i])
 	{
-		printf("%s\n", envp[i]); // envp 관리하는거 불불러러다다가  printf 찍음될듯여
+		arr[i] = s1[i];
 		i++;
 	}
+	arr[i] = '\0';
+	return (arr);
 }

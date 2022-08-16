@@ -1,26 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_env.c                                           :+:      :+:    :+:   */
+/*   builtin.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jinkim2 <jinkim2@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/08/16 11:17:49 by jinkim2           #+#    #+#             */
-/*   Updated: 2022/08/16 20:05:53 by jinkim2          ###   ########seoul.kr  */
+/*   Created: 2022/08/16 10:51:35 by jinkim2           #+#    #+#             */
+/*   Updated: 2022/08/16 14:20:46 by jinkim2          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "builtin.h"
+#ifndef BUILTIN_H
+# define BUILTIN_H
 
-int	main(int ac, char **av, char **envp)
-{
-	t_key	tmp;
-	int		i;
+# include <stdio.h>
+# include <stdlib.h>
+# include <unistd.h>
+# include "libft/libft.h"
+# include <sys/param.h>
 
-	i = 0;
-	while (envp[i])
-	{
-		printf("%s\n", envp[i]); // envp 관리하는거 불불러러다다가  printf 찍음될듯여
-		i++;
-	}
-}
+typedef struct s_key{
+	char	*key;
+	char	*value;
+	t_key	*next;
+}				t_key;
+
+# define FALSE 0
+# define TRUE 1
+
+#endif

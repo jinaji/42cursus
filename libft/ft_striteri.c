@@ -1,26 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_env.c                                           :+:      :+:    :+:   */
+/*   ft_striteri.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jinkim2 <jinkim2@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/08/16 11:17:49 by jinkim2           #+#    #+#             */
-/*   Updated: 2022/08/16 20:05:53 by jinkim2          ###   ########seoul.kr  */
+/*   Created: 2022/03/19 17:55:08 by jinkim2           #+#    #+#             */
+/*   Updated: 2022/04/01 18:42:52 by jinkim2          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "builtin.h"
+#include "libft.h"
 
-int	main(int ac, char **av, char **envp)
+void	ft_striteri(char *s, void (*f)(unsigned int, char*))
 {
-	t_key	tmp;
-	int		i;
+	unsigned int	i;
+	unsigned int	len;
 
+	if (!s)
+		return ;
 	i = 0;
-	while (envp[i])
+	len = ft_strlen(s);
+	while (len > i)
 	{
-		printf("%s\n", envp[i]); // envp 관리하는거 불불러러다다가  printf 찍음될듯여
+		f(i, &s[i]);
 		i++;
 	}
 }

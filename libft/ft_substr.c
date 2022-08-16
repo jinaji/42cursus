@@ -1,26 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_env.c                                           :+:      :+:    :+:   */
+/*   ft_substr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jinkim2 <jinkim2@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/08/16 11:17:49 by jinkim2           #+#    #+#             */
-/*   Updated: 2022/08/16 20:05:53 by jinkim2          ###   ########seoul.kr  */
+/*   Created: 2022/03/14 14:14:26 by jinkim2           #+#    #+#             */
+/*   Updated: 2022/04/06 16:57:01 by jinkim2          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "builtin.h"
+#include "libft.h"
+#include <stdlib.h>
 
-int	main(int ac, char **av, char **envp)
+char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
-	t_key	tmp;
-	int		i;
+	char	*arr;
+	size_t	i;
 
 	i = 0;
-	while (envp[i])
+	if (!s)
+		return (0);
+	if (ft_strlen(s) <= start)
+		return (ft_strdup(""));
+	if (ft_strlen(s) < len)
+		len = ft_strlen(s);
+	arr = (char *)malloc(sizeof(char) * (len + 1));
+	if (!arr)
+		return (0);
+	while (len > i && s[start])
 	{
-		printf("%s\n", envp[i]); // envp 관리하는거 불불러러다다가  printf 찍음될듯여
+		arr[i] = s[start];
 		i++;
+		start++;
 	}
+	arr[i] = '\0';
+	return (arr);
 }

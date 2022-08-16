@@ -1,26 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_env.c                                           :+:      :+:    :+:   */
+/*   ft_strrchr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jinkim2 <jinkim2@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/08/16 11:17:49 by jinkim2           #+#    #+#             */
-/*   Updated: 2022/08/16 20:05:53 by jinkim2          ###   ########seoul.kr  */
+/*   Created: 2022/03/11 13:52:32 by jinkim2           #+#    #+#             */
+/*   Updated: 2022/03/16 14:47:20 by jinkim2          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "builtin.h"
+#include "libft.h"
 
-int	main(int ac, char **av, char **envp)
+char	*ft_strrchr(const char *s, int c)
 {
-	t_key	tmp;
+	char	chr;
+	char	*str;
 	int		i;
 
-	i = 0;
-	while (envp[i])
+	chr = (char)c;
+	str = (char *)s;
+	i = ft_strlen(s);
+	if (chr == '\0')
+		return (&str[i]);
+	while (i >= 0)
 	{
-		printf("%s\n", envp[i]); // envp 관리하는거 불불러러다다가  printf 찍음될듯여
-		i++;
+		if (str[i] == chr)
+			return (&str[i]);
+		i--;
 	}
+	return (0);
 }

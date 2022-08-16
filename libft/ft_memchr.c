@@ -1,26 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_env.c                                           :+:      :+:    :+:   */
+/*   ft_memchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jinkim2 <jinkim2@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/08/16 11:17:49 by jinkim2           #+#    #+#             */
-/*   Updated: 2022/08/16 20:05:53 by jinkim2          ###   ########seoul.kr  */
+/*   Created: 2022/03/11 14:46:39 by jinkim2           #+#    #+#             */
+/*   Updated: 2022/03/23 16:21:06 by jinkim2          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "builtin.h"
+#include <unistd.h>
 
-int	main(int ac, char **av, char **envp)
+void	*ft_memchr(const void *s, int c, size_t n)
 {
-	t_key	tmp;
-	int		i;
+	unsigned char	*str;
+	unsigned char	chr;
+	size_t			i;
 
+	str = (unsigned char *)s;
+	chr = (unsigned char)c;
 	i = 0;
-	while (envp[i])
+	while (n > i)
 	{
-		printf("%s\n", envp[i]); // envp 관리하는거 불불러러다다가  printf 찍음될듯여
+		if (str[i] == chr)
+			return (&str[i]);
 		i++;
 	}
+	if (c == '0')
+		return (&str[i]);
+	return (0);
 }

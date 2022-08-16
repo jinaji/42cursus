@@ -1,26 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_env.c                                           :+:      :+:    :+:   */
+/*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jinkim2 <jinkim2@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/08/16 11:17:49 by jinkim2           #+#    #+#             */
-/*   Updated: 2022/08/16 20:05:53 by jinkim2          ###   ########seoul.kr  */
+/*   Created: 2022/03/11 15:27:20 by jinkim2           #+#    #+#             */
+/*   Updated: 2022/04/07 15:45:21 by jinkim2          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "builtin.h"
+#include <stdlib.h>
 
-int	main(int ac, char **av, char **envp)
+int	ft_atoi(const char *str)
 {
-	t_key	tmp;
-	int		i;
+	int	i;
+	int	s;
+	int	r;
 
 	i = 0;
-	while (envp[i])
+	s = 1;
+	r = 0;
+	while ((str[i] >= 9 && 13 >= str[i]) || str[i] == 32)
+		i++;
+	if (str[i] == '+' || str[i] == '-')
 	{
-		printf("%s\n", envp[i]); // envp 관리하는거 불불러러다다가  printf 찍음될듯여
+		if (str[i] == '-')
+			s *= -1;
+		if (str[i + 1] == '+' || str[i + 1] == '-')
+			return (0);
 		i++;
 	}
+	while ('9' >= str[i] && str[i] >= '0')
+	{
+		r *= 10;
+		r += (str[i] - 48);
+		i++;
+	}
+	return (s * r);
 }
