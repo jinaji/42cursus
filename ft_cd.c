@@ -6,7 +6,7 @@
 /*   By: jinkim2 <jinkim2@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 11:16:59 by jinkim2           #+#    #+#             */
-/*   Updated: 2022/08/16 12:46:57 by jinkim2          ###   ########seoul.kr  */
+/*   Updated: 2022/08/18 01:10:57 by jinkim2          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,12 @@ int	main(int ac, char **av)
 
 	ret = 1;
 	buf = malloc(sizeof(stat));
-	if (ac == 1 || ft_strncmp(av[1], "~", ft_strlen(av[1])) == 0)
+	if (ac == 1 || ft_strncmp(av[1], "~", ft_strlen(av[1])) == 0 && getenv("HOME"))
 		ret = chdir(getenv("HOME"));
-	// ret = chdir("../pipex");
+	else if (!getenv("HOME"))
+		printf("어케하드라");
+	else if (ft_strcmp(av[1], "-"))
+		ret = chdir(getenv("OLDPWD")); // 이거 없으면 어케되는지 확인 
 	else
 		ret = chdir(av[1]);
 	printf("%d\n", ret);
