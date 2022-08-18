@@ -6,7 +6,7 @@
 /*   By: jinkim2 <jinkim2@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 11:16:59 by jinkim2           #+#    #+#             */
-/*   Updated: 2022/08/18 01:10:57 by jinkim2          ###   ########seoul.kr  */
+/*   Updated: 2022/08/18 13:30:01 by jinkim2          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	main(int ac, char **av)
 	else if (!getenv("HOME"))
 		printf("어케하드라");
 	else if (ft_strcmp(av[1], "-"))
-		ret = chdir(getenv("OLDPWD")); // 이거 없으면 어케되는지 확인 
+		ret = chdir(getenv("OLDPWD")); // 이거 없으면 어케되는지 확인 ... ㅎㅏ기 전에 복사한 env에서 잡아오는 걸로 바꿔야 함 
 	else
 		ret = chdir(av[1]);
 	printf("%d\n", ret);
