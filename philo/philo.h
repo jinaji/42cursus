@@ -6,7 +6,7 @@
 /*   By: jinkim2 <jinkim2@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/03 15:38:28 by jinkim2           #+#    #+#             */
-/*   Updated: 2022/08/08 13:47:35 by jinkim2          ###   ########seoul.kr  */
+/*   Updated: 2022/08/27 14:11:12 by jinkim2          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,9 @@ typedef struct s_argv{
 	int				tte;
 	int				tts;
 	int				tme;
+	int				full;
 	t_philo			*ph;
+	pthread_mutex_t	*write;
 }				t_argv;
 
 #endif
