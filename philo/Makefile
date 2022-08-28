@@ -1,5 +1,5 @@
 CC = cc
-CFLAGS = -Wall -Werror -Wextra -pthread
+CFLAGS = -Wall -Werror -Wextra -pthread -g
 
 SRCS = main.c
 OBJS = $(SRCS:.c=.o)

@@ -6,7 +6,7 @@
 /*   By: jinkim2 <jinkim2@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/03 15:38:21 by jinkim2           #+#    #+#             */
-/*   Updated: 2022/08/27 16:59:46 by jinkim2          ###   ########seoul.kr  */
+/*   Updated: 2022/08/28 17:53:28 by jinkim2          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,8 @@ int	ft_atoi(const char *str)
 		r += (str[i] - 48);
 		i++;
 	}
-	// if (str[i] != '\0')
-	// 	return (0);
+	if (str[i] != '\0')
+		return (-1);
 	return (s * r);
 }
 
@@ -92,21 +92,19 @@ void	philo_init(t_argv *ag, t_philo *ph, int i, pthread_mutex_t *pork)
 	ph->write = ag->write;
 }
 
-int	check_die(t_philo *ph)
+int	check_die(t_argv *ag, t_philo *ph)
 {
 	pthread_mutex_lock(ph->write);
 	if (ph->eat_count == 0 && (get_time() - ph->s_time) > ph->ttd)
 	{
 		printf("%ld %d died\n", (get_time() - ph->s_time), ph->id);
-		// usleep(100);
-	// pthread_mutex_unlock(ph->write);
+		ag->die = 1;
 		return (1);
 	}
 	else if (ph->eat_count != 0 && (get_time() - ph->last_eat) > ph->ttd)
 	{
 		printf("%ld %d died\n", (get_time() - ph->s_time), ph->id);
-		// usleep(100);
-	// pthread_mutex_unlock(ph->write);
+		ag->die = 1;
 		return (1);
 	}
 	else
@@ -118,10 +116,12 @@ int	think(t_philo *ph)
 {
 	pthread_mutex_lock(ph->write);
 	printf("%ld %d is sleeping\n", (get_time() - ph->s_time), ph->id);
+	ph->state = SLEEPING;
 	pthread_mutex_unlock(ph->write);
 	ft_sleep(ph->tts);
 	pthread_mutex_lock(ph->write);
 	printf("%ld %d is thinking\n", (get_time() - ph->s_time), ph->id);
+	ph->state = THINKING;
 	pthread_mutex_unlock(ph->write);
 	usleep (100);
 	return (0);
@@ -217,9 +217,11 @@ int	even_eat(t_philo *ph)
 
 void	*philo(void	*param)
 {
+	t_argv	*ag;
 	t_philo	*ph;
 
-	ph = (t_philo *)param;
+	ag = (t_argv *)param;
+	ph = ag->ph + ag->i;
 	while (1)
 	{
 		if (ph->id % 2)
@@ -248,35 +250,58 @@ void	pork_mutex_init(pthread_mutex_t *pork, int pnum)
 	}
 }
 
-void	argv_init(t_argv *ag, int ac, char **av)
+int	argu_check(t_argv *ag, int ac, char **av)
+{
+	if (ac != 5 && ac != 6)
+	{
+		printf ("argument error\n");
+		return (1);
+	}
+	ag->pnum = ft_atoi(av[1]);
+	if (ag->pnum < 1)
+	{
+		printf ("argument error\n");
+		return (1);
+	}
+	ag->ph = (t_philo *)malloc(sizeof(t_philo) * (ag->pnum));
+	if (!ag->ph)
+		return (1);
+	ag->ttd = ft_atoi(av[2]);
+	ag->tte = ft_atoi(av[3]);
+	ag->tts = ft_atoi(av[4]);
+	if (ac == 6)
+		ag->tme = ft_atoi(av[5]);
+	if (ag->ttd < 1 || ag->tte < 1 || ag->tts < 1 || (ac == 6 && ag->tme < 1))
+	{
+		printf ("argument error\n");
+		return (1);
+	}
+	return (0);
+}
+
+int	argv_init(t_argv *ag, int ac, char **av)
 {
 	pthread_mutex_t	*pork;
 	int				i;
 
 	i = 0;
 	memset(ag, 0, sizeof(t_argv));
-	ag->pnum = ft_atoi(av[1]);
-	ag->ph = (t_philo *)malloc(sizeof(t_philo) * (ag->pnum));
-	if (!ag->ph)
-		return ;
-	ag->ttd = ft_atoi(av[2]);
-	ag->tte = ft_atoi(av[3]);
-	ag->tts = ft_atoi(av[4]);
-	if (ac == 6)
-		ag->tme = ft_atoi(av[5]);
+	if (argu_check(ag, ac, av))
+		return (1);
 	pork = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t) * ag->pnum);
 	if (!pork)
-		return ;
+		return (1);
 	pork_mutex_init(pork, ag->pnum);
 	ag->write = malloc(sizeof(pthread_mutex_t));
 	if (!ag->write)
-		return ;
+		return (1);
 	pthread_mutex_init(ag->write, 0);
 	while (i < ag->pnum)
 	{
 		philo_init(ag, &(ag->ph[i]), i, pork);
 		i++;
 	}
+	return (0);
 }
 
 int	check_full(t_argv *ag, t_philo *ph)
@@ -298,10 +323,14 @@ int	view_philos(t_argv *ag)
 		i = 0;
 		while (i < ag->ph->pnum)
 		{
-			if (check_die(ag->ph + i))
+			if (check_die(ag, ag->ph + i))
 				return (1);
 			if (ag->tme && check_full(ag, ag->ph + i))
+			{
+				pthread_mutex_lock(ag->write);
+				printf ("all philos are full\n");
 				return (1);
+			}
 			i++;
 		}
 	}
@@ -312,36 +341,27 @@ int	main(int ac, char **av)
 {
 	pthread_t		*phi;
 	t_argv			ag;
-	int				i;
 
-	if (ac != 5 && ac != 6)
-		return (0);
-	argv_init(&ag, ac, av);
+	if (argv_init(&ag, ac, av))
+		return (1);
 	phi = (pthread_t *)malloc(sizeof(pthread_t) * ag.pnum);
 	if (!phi)
 		return (0);
-	i = 0;
-	while (i < ag.pnum)
+	while (ag.i < ag.pnum)
 	{
-		pthread_create(phi + i, 0, philo, (void *)&ag.ph[i]);
-		i++;
+		pthread_create(phi + ag.i, 0, philo, (void *)&ag);
+		ag.i++;
 	}
-	// pthread_join(phi[0], 0);
-	// pthread_join(phi[1], 0);
-	// pthread_join(phi[2], 0);
-	// pthread_join(phi[3], 0);
-	
-	// pthread_detach(phi[0]);
-	// pthread_detach(phi[1]);
-	// pthread_detach(phi[2]);
-	// pthread_detach(phi[3]);
-
-	usleep(1000000);
 	while (1)
 	{
 		if (view_philos(&ag))
 			break ;
 	}
+	// while (i)
+	// {
+	// 	pthread_join(*(phi + i), 0);
+	// 	i--;
+	// }
 	// pthread_mutex_unlock(ag.write);
 	// join 안하면 안 도는데 머임 이거 
 	// 포크 드는 순서도 정해줘야됨 ... 
