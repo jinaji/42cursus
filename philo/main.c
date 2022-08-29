@@ -6,7 +6,7 @@
 /*   By: jinkim2 <jinkim2@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/03 15:38:21 by jinkim2           #+#    #+#             */
-/*   Updated: 2022/08/28 17:53:28 by jinkim2          ###   ########seoul.kr  */
+/*   Updated: 2022/08/29 16:28:47 by jinkim2          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ void	philo_init(t_argv *ag, t_philo *ph, int i, pthread_mutex_t *pork)
 	int	r;
 	int	l;
 
+	memset(ph, 0, sizeof(t_philo));
 	ph->id = ++i;
 	ph->state = 2;
 	ph->ttd = ag->ttd;
@@ -92,19 +93,17 @@ void	philo_init(t_argv *ag, t_philo *ph, int i, pthread_mutex_t *pork)
 	ph->write = ag->write;
 }
 
-int	check_die(t_argv *ag, t_philo *ph)
+int	check_die(t_philo *ph)
 {
 	pthread_mutex_lock(ph->write);
 	if (ph->eat_count == 0 && (get_time() - ph->s_time) > ph->ttd)
 	{
 		printf("%ld %d died\n", (get_time() - ph->s_time), ph->id);
-		ag->die = 1;
 		return (1);
 	}
 	else if (ph->eat_count != 0 && (get_time() - ph->last_eat) > ph->ttd)
 	{
 		printf("%ld %d died\n", (get_time() - ph->s_time), ph->id);
-		ag->die = 1;
 		return (1);
 	}
 	else
@@ -217,21 +216,19 @@ int	even_eat(t_philo *ph)
 
 void	*philo(void	*param)
 {
-	t_argv	*ag;
 	t_philo	*ph;
 
-	ag = (t_argv *)param;
-	ph = ag->ph + ag->i;
+	ph = (t_philo *)param;
 	while (1)
 	{
 		if (ph->id % 2)
 		{
-			if (odd_eat(ph))
+			if (odd_eat(ph) && ph->state == THINKING)
 				return (0);
 		}
 		else
 		{
-			if (even_eat(ph))
+			if (even_eat(ph) && ph->state == THINKING)
 				return (0);
 		}
 	}
@@ -323,7 +320,7 @@ int	view_philos(t_argv *ag)
 		i = 0;
 		while (i < ag->ph->pnum)
 		{
-			if (check_die(ag, ag->ph + i))
+			if (check_die(ag->ph + i))
 				return (1);
 			if (ag->tme && check_full(ag, ag->ph + i))
 			{
@@ -341,21 +338,23 @@ int	main(int ac, char **av)
 {
 	pthread_t		*phi;
 	t_argv			ag;
+	int				i;
 
 	if (argv_init(&ag, ac, av))
 		return (1);
 	phi = (pthread_t *)malloc(sizeof(pthread_t) * ag.pnum);
 	if (!phi)
 		return (0);
-	while (ag.i < ag.pnum)
+	i = 0;
+	while (i < ag.pnum)
 	{
-		pthread_create(phi + ag.i, 0, philo, (void *)&ag);
-		ag.i++;
+		pthread_create(phi + i, 0, philo, (void *)&ag.ph[i]);
+		i++;
 	}
 	while (1)
 	{
 		if (view_philos(&ag))
-			break ;
+			return (0);
 	}
 	// while (i)
 	// {
