@@ -6,7 +6,7 @@
 /*   By: jinkim2 <jinkim2@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/09 23:13:17 by gulee             #+#    #+#             */
-/*   Updated: 2022/09/01 14:27:56 by jinkim2          ###   ########seoul.kr  */
+/*   Updated: 2022/09/02 12:07:09 by jinkim2          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,8 @@ typedef enum e_type
 	LESS_E = '<',
 	GREAT_E = '>',
 	SQUOTE_E = '\'',
-	DQUOTE_E = '\"'
+	DQUOTE_E = '\"',
+	ENV_VAL = '$'
 }	t_type;
 
 typedef enum e_bool

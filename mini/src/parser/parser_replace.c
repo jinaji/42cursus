@@ -6,7 +6,7 @@
 /*   By: jinkim2 <jinkim2@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 22:44:55 by gulee             #+#    #+#             */
-/*   Updated: 2022/09/01 20:05:09 by jinkim2          ###   ########seoul.kr  */
+/*   Updated: 2022/09/02 16:14:02 by jinkim2          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,9 +56,9 @@ static void	replace_home(t_node *data)
 		org = ft_substr(data->data, 1, ft_strlen(data->data) - 1);
 		path = ft_strjoin(home, org);
 		free(org);
-		// org = data->data;
+		org = data->data;
 		data->data = path;
-		// free(org);
+		free(org);
 		org = NULL;
 	}
 }
@@ -109,10 +109,10 @@ void	replace(t_node *node)
 	if (ft_strcmp(node->data, "$")) // 같으면 0 다르면 반환값있음
 	{
 		org_data = node->data;
-		// node->data = ft_strdup("");
+		node->data = ft_strdup("");
 		replace_token(node->data, org_data);
-		// free(org_data);
-		// org_data = NULL;
+		free(org_data);
+		org_data = NULL;
 	}
 	replace(node->left);
 	replace(node->right);

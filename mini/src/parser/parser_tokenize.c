@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_tokenize.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gulee <gulee@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jinkim2 <jinkim2@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 18:43:17 by gulee             #+#    #+#             */
-/*   Updated: 2022/08/31 21:28:42 by gulee            ###   ########.fr       */
+/*   Updated: 2022/09/02 15:53:11 by jinkim2          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ static t_type	what_is_type(char *str, int len)
 		return (SQUOTE_E);
 	else if (c == DQUOTE_E)
 		return (DQUOTE_E);
+	else if (c == ENV_VAL)
+		return (ENV_VAL);
 	else
 		return (TOKEN_E);
 }

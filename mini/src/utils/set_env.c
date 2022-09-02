@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   set_env.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gulee <gulee@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jinkim2 <jinkim2@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/12 01:08:23 by gulee             #+#    #+#             */
-/*   Updated: 2022/08/31 21:20:15 by gulee            ###   ########.fr       */
+/*   Updated: 2022/09/02 16:08:58 by jinkim2          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static	t_env	*env_last(t_env	*env)
 	if (!env)
 		return (NULL);
 	tmp = env;
-	while (tmp->next)
+	while (tmp)
 	{
 		if (!tmp->next)
 			break ;

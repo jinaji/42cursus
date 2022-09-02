@@ -6,7 +6,7 @@
 /*   By: jinkim2 <jinkim2@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 23:18:22 by gulee             #+#    #+#             */
-/*   Updated: 2022/09/01 00:13:09 by jinkim2          ###   ########seoul.kr  */
+/*   Updated: 2022/09/02 15:55:35 by jinkim2          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,18 +21,18 @@ void	join_squote(char *rest, char *data, int *front, int *end)
 
 int	join_str(char *new, char *org, int start, int end) // 들어오면 new == null
 {
-	// char	*org_data;
+	char	*org_data;
 	char	*new_data;
 
 	if (end - start > 0)
 	{
 		new_data = ft_substr(org, start, end - start);
-		// org_data = new;
+		org_data = new;
 		new = ft_strjoin(new, new_data);
 		free(new_data);
-		// free(org_data);
+		free(org_data);
 		new_data = NULL;
-		// org_data = NULL;
+		org_data = NULL;
 	}
 	return (end + 1);
 }
