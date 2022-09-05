@@ -38,6 +38,7 @@ EXECUTER		= execute.c						\
 					execute_redir.c				\
 					execute_bash.c				\
 					execute_utils.c				\
+					pre_execute.c
 
 
 UTILS			= error_print.c					\

@@ -6,7 +6,7 @@
 /*   By: jinkim2 <jinkim2@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/09 23:13:17 by gulee             #+#    #+#             */
-/*   Updated: 2022/09/04 17:41:01 by jinkim2          ###   ########seoul.kr  */
+/*   Updated: 2022/09/05 13:37:54 by jinkim2          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,6 +120,8 @@ typedef struct s_table
 	int				has_pipe;
 	int				is_run;
 	int				cmd_cnt;
+	int				**fd;
+	char			***cmd_op;
 	t_hdoc			*hdoc_list;
 }					t_table;
 
@@ -193,7 +195,6 @@ char			**ft_split(const char *str, char c);
 void			ft_remove(void);
 int				ft_strncmp(const char *s1, const char *s2, size_t n);
 char			*ft_strtrim(char const *s1, char const *set);
-
 
 /* list */
 void			list_add_back(t_hdoc **list, t_hdoc *new);
@@ -285,6 +286,11 @@ void			join_squote(char *rest, char *data, int *front, int *end);
 						execute
 ======================================================= */
 void			execute(t_node *node);
+
+/* pre */
+void			init_fd(t_table *table);
+char			*cut_pipe(t_node *tmp);
+void			pre_execute(t_table *table);
 
 /* heredoc */
 void			ex_heredoc(t_node *node);
