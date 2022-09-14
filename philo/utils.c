@@ -6,7 +6,7 @@
 /*   By: jinkim2 <jinkim2@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/08 16:08:38 by jinkim2           #+#    #+#             */
-/*   Updated: 2022/08/08 16:08:59 by jinkim2          ###   ########seoul.kr  */
+/*   Updated: 2022/09/10 19:26:13 by jinkim2          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,21 +33,12 @@ int	ft_atoi(const char *str)
 	}
 	while ('9' >= str[i] && str[i] >= '0')
 	{
-		r *= 10;
-		r += (str[i] - 48);
+		r = (r * 10 + (str[i] - 48));
 		i++;
 	}
+	if (str[i] != '\0')
+		return (-1);
 	return (s * r);
-}
-
-int	left(int i, int pnum)
-{
-	return ((i + pnum - 1) % pnum);
-}
-
-int	right(int i, int pnum)
-{
-	return ((i % pnum) + 1);
 }
 
 ssize_t	get_time(void)
@@ -58,4 +49,23 @@ ssize_t	get_time(void)
 	gettimeofday(&time, 0);
 	usec = time.tv_sec * 1000 + time.tv_usec / 1000;
 	return (usec);
+}
+
+void	ft_time(ssize_t time)
+{
+	ssize_t	in_time;
+
+	in_time = get_time();
+	while (get_time() - in_time < time)
+		usleep (100);
+}
+
+int	left(int i, int pnum)
+{
+	return ((i + pnum - 1) % pnum);
+}
+
+int	right(int i, int pnum)
+{
+	return ((i % pnum - 1) + 1);
 }
