@@ -6,16 +6,221 @@
 /*   By: jinkim2 <jinkim2@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/03 15:38:21 by jinkim2           #+#    #+#             */
-/*   Updated: 2022/09/10 20:15:59 by jinkim2          ###   ########seoul.kr  */
+/*   Updated: 2022/09/17 05:04:49 by jinkim2          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
+int	ft_atoi(const char *str)
+{
+	int	i;
+	int	s;
+	int	r;
+
+	i = 0;
+	s = 1;
+	r = 0;
+	while ((str[i] >= 9 && 13 >= str[i]) || str[i] == 32)
+		i++;
+	if (str[i] == '+' || str[i] == '-')
+	{
+		if (str[i] == '-')
+			s *= -1;
+		if (str[i + 1] == '+' || str[i + 1] == '-')
+			return (0);
+		i++;
+	}
+	while ('9' >= str[i] && str[i] >= '0')
+	{
+		r = (r * 10 + (str[i] - 48));
+		i++;
+	}
+	if (str[i] != '\0')
+		return (-1);
+	return (s * r);
+}
+
+ssize_t	get_time(void)
+{
+	struct timeval	time;
+	ssize_t			usec;
+
+	gettimeofday(&time, 0);
+	usec = time.tv_sec * 1000 + time.tv_usec / 1000;
+	return (usec);
+}
+
+void	ft_time(ssize_t time)
+{
+	ssize_t	in_time;
+
+	in_time = get_time();
+	while (get_time() - in_time < time)
+		usleep (100);
+}
+
+int	left(int i, int pnum)
+{
+	return ((i + pnum - 1) % pnum);
+}
+
+int	right(int i, int pnum)
+{
+	return ((i % pnum - 1) + 1);
+}
+
+int	think(t_philo *ph)
+{
+	pthread_mutex_lock(ph->write);
+	pthread_mutex_lock(ph->m_state);
+	ph->state = SLEEPING;
+	pthread_mutex_unlock(ph->m_state);
+	if (!ph->full)
+		printf("%ld %d is sleeping\n", (get_time() - ph->s_time), ph->id);
+	pthread_mutex_unlock(ph->write);
+	ft_time(ph->tts);
+	pthread_mutex_lock(ph->m_state);
+	ph->state = THINKING; // ㅇㅕ기있으면 write 잡고있는상태라 ???? 
+	pthread_mutex_unlock(ph->m_state); // 이거 위로 올리고 usleep 걸어줬떠니 덜밀림
+	// usleep (3000);
+	pthread_mutex_lock(ph->write);
+	if (!ph->full)
+		printf("%ld %d is thinking\n", (get_time() - ph->s_time), ph->id);
+	pthread_mutex_unlock(ph->write);
+	return (0);
+}
+
+int	odd_eat(t_philo *ph)
+{
+	hold_rpork(ph);
+	hold_lpork(ph);
+	pthread_mutex_lock(ph->m_state);
+	ph->state = EATING;
+	pthread_mutex_unlock(ph->m_state);
+	pthread_mutex_lock(ph->write);
+	ph->last_eat = get_time();
+	printf("%ld %d is eating\n", (ph->last_eat - ph->s_time), ph->id);
+	ph->eat_count++;
+	pthread_mutex_unlock(ph->write);
+	ft_time (ph->tte);
+	put_porks(ph);
+	think(ph);
+	return (0);
+}
+
+int	even_eat(t_philo *ph)
+{
+	hold_lpork(ph);
+	hold_rpork(ph);
+	pthread_mutex_lock(ph->m_state);
+	ph->state = EATING;
+	pthread_mutex_unlock(ph->m_state);
+	pthread_mutex_lock(ph->write);
+	ph->last_eat = get_time();
+	printf("%ld %d is eating\n", (ph->last_eat - ph->s_time), ph->id);
+	ph->eat_count++;
+	pthread_mutex_unlock(ph->write);
+	ft_time (ph->tte);
+	put_porks(ph);
+	think(ph);
+	return (0);
+}
+
+void	philo_init(t_argv *ag, t_philo *ph, int i, pthread_mutex_t *pork)
+{
+	int		r;
+	int		l;
+	// int		*full;
+
+	memset(ph, 0, sizeof(t_philo));
+	ph->id = ++i;
+	ph->state = THINKING;
+	ph->ttd = ag->ttd;
+	ph->tte = ag->tte;
+	ph->tts = ag->tts;
+	if (ag->tme)
+		ph->tme = ag->tme;
+	ph->pnum = ag->pnum;
+	r = right(i, (ph->pnum));
+	l = left(i, (ph->pnum));
+	ph->r_pork = &pork[r];
+	ph->l_pork = &pork[l];
+	ph->write = ag->write;
+	ph->m_state = ag->state;
+	ph->s_time = get_time();
+}
+
+void	pork_mutex_init(pthread_mutex_t *pork, int pnum)
+{
+	int	i;
+
+	i = 0;
+	while (i < pnum)
+	{
+		pthread_mutex_init(pork + i, 0);
+		i++;
+	}
+}
+
+int	argu_check(t_argv *ag, int ac, char **av)
+{
+	if (ac != 5 && ac != 6)
+	{
+		printf ("argument error\n");
+		return (1);
+	}
+	ag->pnum = ft_atoi(av[1]);
+	if (ag->pnum < 1)
+	{
+		printf ("argument error\n");
+		return (1);
+	}
+	ag->ph = (t_philo *)malloc(sizeof(t_philo) * (ag->pnum));
+	if (!ag->ph)
+		return (1);
+	ag->ttd = ft_atoi(av[2]);
+	ag->tte = ft_atoi(av[3]);
+	ag->tts = ft_atoi(av[4]);
+	if (ac == 6)
+		ag->tme = ft_atoi(av[5]);
+	if (ag->ttd < 1 || ag->tte < 1 || ag->tts < 1 || (ac == 6 && ag->tme < 1))
+	{
+		printf ("argument error\n");
+		return (1);
+	}
+	return (0);
+}
+
+int	argv_init(t_argv *ag, int ac, char **av)
+{
+	pthread_mutex_t	*pork;
+	int				i;
+
+	i = 0;
+	memset(ag, 0, sizeof(t_argv));
+	if (argu_check(ag, ac, av))
+		return (1);
+	pork = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t) * ag->pnum);
+	if (!pork)
+		return (1);
+	pork_mutex_init(pork, ag->pnum);
+	ag->write = malloc(sizeof(pthread_mutex_t));
+	ag->state = malloc(sizeof(pthread_mutex_t));
+	if (!ag->write || !ag->state)
+		return (1);
+	pthread_mutex_init(ag->write, 0);
+	pthread_mutex_init(ag->state, 0);
+	while (i < ag->pnum)
+	{
+		philo_init(ag, &(ag->ph[i]), i, pork);
+		i++;
+	}
+	return (0);
+}
+
 int	check_die(t_philo *ph)
 {
-	if (ph->check == 1)
-		return (0);
 	pthread_mutex_lock(ph->write);
 	if (ph->eat_count == 0 && (get_time() - ph->s_time) > ph->ttd)
 	{
@@ -65,6 +270,7 @@ void	*philo(void	*param)
 		// 	break ;
 		if (ph->id % 2)
 		{
+			usleep (100);
 			pthread_mutex_lock(ph->m_state);
 			if (ph->state == THINKING)
 			{
@@ -90,15 +296,15 @@ void	*philo(void	*param)
 int	check_full(t_argv *ag, t_philo *ph)
 {
 	// printf ("%d %d\n", ag->full, ag->pnum);
-	// pthread_mutex_lock(ag->write);
-	if (ph->eat_count >= ag->tme )
+	pthread_mutex_lock(ag->write);
+	if (ph->eat_count == ag->tme)
 	{
 		ag->full++;
-
+		ph->full = 1;
 	}
 	if (ag->full == ag->pnum)
 		return (1);
-	// pthread_mutex_unlock(ag->write);
+	pthread_mutex_unlock(ag->write);
 	return (0);
 }
 
@@ -118,14 +324,14 @@ int	view_philos(t_argv *ag)
 			if (ag->tme && (ag->ph + i)->state == THINKING)
 			{
 				pthread_mutex_unlock(ag->state);
-				pthread_mutex_lock(ag->write);
-				if (check_full(ag, ag->ph + i))
+				// pthread_mutex_lock(ag->write);
+				if (check_full(ag, ag->ph + i) && (ag->ph + i)->full != 0)
 				{
 					// pthread_mutex_lock(ag->write);
-					// printf ("all philos are full\n");
+					printf ("all philos are full\n");
 					return (1);
 				}
-				pthread_mutex_unlock(ag->write);
+				// pthread_mutex_unlock(ag->write);
 			}
 			pthread_mutex_unlock(ag->state);
 			i++;
@@ -144,12 +350,12 @@ int	main(int ac, char **av)
 		return (1);
 	phi = (pthread_t *)malloc(sizeof(pthread_t) * ag.pnum);
 	if (!phi)
-		return (0);
+		return (1);
 	i = 0;
 	while (i < ag.pnum)
 	{
 		pthread_create(phi + i, 0, philo, (void *)&ag.ph[i]);
-		// pthread_detach(phi[i]);
+		pthread_detach(phi[i]);
 		i++;
 	}
 	while (1)
@@ -157,11 +363,11 @@ int	main(int ac, char **av)
 		if (view_philos(&ag))
 			return (0);
 	}
-	while (i)
-	{
-		pthread_join(*(phi + i), 0);
-		i--;
-	}
+	// while (i)
+	// {
+	// 	pthread_join(*(phi + i), 0);
+	// 	i--;
+	// }
 	return (0);
 }
 
