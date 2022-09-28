@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: jinkim2 <jinkim2@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/08/08 16:08:38 by jinkim2           #+#    #+#             */
-/*   Updated: 2022/09/10 19:26:13 by jinkim2          ###   ########seoul.kr  */
+/*   Created: 2022/09/28 14:54:50 by jinkim2           #+#    #+#             */
+/*   Updated: 2022/09/28 14:58:08 by jinkim2          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,12 +60,12 @@ void	ft_time(ssize_t time)
 		usleep (100);
 }
 
-int	left(int i, int pnum)
+int	right(int i, int pnum)
 {
 	return ((i + pnum - 1) % pnum);
 }
 
-int	right(int i, int pnum)
+int	left(int i, int pnum)
 {
 	return ((i % pnum - 1) + 1);
 }
