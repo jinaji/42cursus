@@ -1,10 +1,9 @@
 CC = cc
-CFLAGS = -Wall -Werror -Wextra #-g -fsanitize=address
+CFLAGS = -Wall -Werror -Wextra
 
 SRCS = 	argument.c		\
 		check.c			\
 		philo.c  		\
-		routine_utils.c	\
 		routine.c		\
 		utils.c
 

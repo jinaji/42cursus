@@ -6,7 +6,7 @@
 /*   By: jinkim2 <jinkim2@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/03 15:38:28 by jinkim2           #+#    #+#             */
-/*   Updated: 2022/09/28 21:43:40 by jinkim2          ###   ########seoul.kr  */
+/*   Updated: 2022/09/29 17:16:34 by jinkim2          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,11 +56,8 @@ int		argv_init(t_argv *ag, int ac, char **av);
 int		view_philos(t_philo *ph);
 void	philo_init(t_argv *ag, t_philo *ph, int i, pthread_mutex_t *pork);
 int		philo_start(t_argv *ag, t_philo *ph);
-void	even_hold(t_philo *ph);
-void	odd_hold(t_philo *ph);
-void	put_porks(t_philo *ph);
-void	even_eat(t_philo *ph);
-void	odd_eat(t_philo *ph);
+void	eat(t_philo *ph);
+void	hold(t_philo *ph);
 int		ft_atoi(const char *str);
 ssize_t	get_time(void);
 void	ft_time(ssize_t time);

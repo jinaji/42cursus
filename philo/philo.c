@@ -6,7 +6,7 @@
 /*   By: jinkim2 <jinkim2@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/16 15:53:22 by jinkim2           #+#    #+#             */
-/*   Updated: 2022/09/28 21:48:08 by jinkim2          ###   ########seoul.kr  */
+/*   Updated: 2022/09/29 17:17:45 by jinkim2          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,19 +41,18 @@ static void	*philo(void *param)
 	t_philo	*ph;
 
 	ph = (t_philo *)param;
-	// if (ph->id % 2 == 0)
-	// 	usleep(1000);
+	if (ph->pnum == 1)
+	{
+		hold(ph);
+		return (0);
+	}
+	if (ph->id % 2 == 0)
+		usleep(1000);
 	pthread_mutex_lock(ph->write);
 	while (ph->ag->die == 0)
 	{
 		pthread_mutex_unlock(ph->write);
-		if (ph->id % 2)
-			odd_eat(ph);
-		else
-		{
-			// usleep (100);
-			even_eat(ph);
-		}
+		eat(ph);
 		pthread_mutex_lock(ph->write);
 	}
 	pthread_mutex_unlock(ph->write);

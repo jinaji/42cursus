@@ -6,7 +6,7 @@
 /*   By: jinkim2 <jinkim2@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 14:57:47 by jinkim2           #+#    #+#             */
-/*   Updated: 2022/09/28 20:49:57 by jinkim2          ###   ########seoul.kr  */
+/*   Updated: 2022/09/29 17:06:03 by jinkim2          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static int	check_die(t_philo *ph)
 		ph->ag->die = 1;
 		return (1);
 	}
-	else if (ph->eat_count != 0 && (get_time() - ph->last_eat) > ph->ttd)
+	else if (ph->last_eat && (get_time() - ph->last_eat) > ph->ttd)
 	{
 		printf ("%ld %d died\n", (get_time() - ph->s_time), ph->id);
 		ph->ag->die = 1;
