@@ -6,7 +6,7 @@
 /*   By: jinkim2 <jinkim2@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 14:55:25 by jinkim2           #+#    #+#             */
-/*   Updated: 2022/09/28 21:07:20 by jinkim2          ###   ########seoul.kr  */
+/*   Updated: 2022/10/01 09:52:49 by jinkim2          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@ static pthread_mutex_t	*pork_mutex_init(int pnum)
 		return (0);
 	while (i < pnum)
 	{
-		pthread_mutex_init(pork + i, 0);
+		if (pthread_mutex_init(pork + i, 0))
+			return (0);
 		i++;
 	}
 	return (pork);
@@ -55,26 +56,27 @@ static int	argu_check(t_argv *ag, int ac, char **av)
 int	argv_init(t_argv *ag, int ac, char **av)
 {
 	t_philo			*ph;
-	pthread_mutex_t	*pork;
 	int				i;
 
 	memset(ag, 0, sizeof(t_argv));
 	if (argu_check(ag, ac, av))
 		return (1);
-	pork = pork_mutex_init(ag->pnum);
-	ag->pork = pork;
+	ag->pork = pork_mutex_init(ag->pnum);
+	if (!ag->pork)
+		return (1);
 	ag->write = malloc(sizeof(pthread_mutex_t));
 	ph = malloc(sizeof(t_philo) * ag->pnum);
 	if (!(ag->write) || !(ph))
 		return (1);
-	pthread_mutex_init(ag->write, 0);
+	if (pthread_mutex_init(ag->write, 0))
+		return (1);
 	i = 0;
 	while (i < ag->pnum)
 	{
-		philo_init(ag, (ph) + i, i, pork);
+		philo_init(ag, (ph + i), i);
 		i++;
 	}
-	if (philo_start(ag, ph))
+	if (philo_start(ph))
 		return (1);
 	return (0);
 }

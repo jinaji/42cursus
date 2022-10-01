@@ -1,6 +1,5 @@
 CC = cc
 CFLAGS = -Wall -Werror -Wextra
-
 SRCS = 	argument.c		\
 		check.c			\
 		philo.c  		\
