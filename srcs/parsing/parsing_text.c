@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_text.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gulee <gulee@student.42seoul.kr>           +#+  +:+       +#+        */
+/*   By: jinkim2 <jinkim2@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/03 17:30:04 by gulee             #+#    #+#             */
-/*   Updated: 2022/10/03 18:02:57 by gulee            ###   ########.fr       */
+/*   Updated: 2022/10/03 19:23:02 by jinkim2          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,27 @@ static t_bool	err_img(t_map *parsing, int j)
 	return (TRUE_E);
 }
 
+// static char	*ft_change_blank(char *str, char *set)
+// {
+// 	int		start;
+// 	int		end;
+
+// 	if (!str || !set)
+// 		return (NULL);
+// 	start = 0;
+// 	while (str[start] && ft_char_set(str[start], set))
+// 	{
+// 		str[start] = 'B';
+// 		start++;
+// 	}
+// 	end = ft_strlen(str);
+// 	while (start < end && ft_char_set(str[end - 1], set))
+// 	{
+// 		str[end] = 'B';
+// 		end--;
+// 	}
+// }
+
 t_bool	vaild_img(t_map *parsing, char **file)
 {
 	int		i;
@@ -78,3 +99,32 @@ t_bool	vaild_img(t_map *parsing, char **file)
 		return (FALSE_E);
 	return (TRUE_E);
 }
+
+// t_bool	vaild_img(t_map *parsing, char **file)
+// {
+// 	int		i;
+// 	int		j;
+// 	char	*trim;
+
+// 	i = -1;
+// 	j = 0;
+// 	while (file && file[++i])
+// 	{
+// 		trim = ft_strtrim(file[i], " \t");
+// 		if (!ft_strncmp(trim, "NO ", 3) || !ft_strncmp(trim, "SO", 2)
+// 			|| !ft_strncmp(trim, "WE ", 3) || !ft_strncmp(trim, "EA", 2))
+// 			j++;
+// 		if (!ft_strncmp(trim, "NO ", 3) && !parsing->tex_path[NORTH])
+// 			parsing->tex_path[NORTH] = ft_strtrim(trim, "NO \t");
+// 		else if (!ft_strncmp(trim, "SO ", 3) && !parsing->tex_path[SOUTH])
+// 			parsing->tex_path[SOUTH] = ft_strtrim(trim, "SO \t");
+// 		else if (!ft_strncmp(trim, "WE ", 3) && !parsing->tex_path[WEST])
+// 			parsing->tex_path[WEST] = ft_strtrim(trim, "WE \t");
+// 		else if (!ft_strncmp(trim, "EA ", 3) && !parsing->tex_path[EAST])
+// 			parsing->tex_path[EAST] = ft_strtrim(trim, "EA \t");
+// 		free(trim);
+// 	}
+// 	if (err_img(parsing, j) == FALSE_E)
+// 		return (FALSE_E);
+// 	return (TRUE_E);
+// }

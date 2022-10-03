@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strtrim.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gulee <gulee@student.42seoul.kr>           +#+  +:+       +#+        */
+/*   By: jinkim2 <jinkim2@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/14 23:41:04 by gulee             #+#    #+#             */
-/*   Updated: 2022/10/03 15:29:55 by gulee            ###   ########.fr       */
+/*   Updated: 2022/10/03 19:18:38 by jinkim2          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3D.h"
 
-static int	ft_char_set(char c, char const *set)
+int	ft_char_set(char c, char const *set)
 {
 	size_t	index;
 

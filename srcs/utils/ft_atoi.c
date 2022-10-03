@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gulee <gulee@student.42seoul.kr>           +#+  +:+       +#+        */
+/*   By: jinkim2 <jinkim2@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/12 02:01:57 by gulee             #+#    #+#             */
-/*   Updated: 2022/10/03 14:50:50 by gulee            ###   ########.fr       */
+/*   Updated: 2022/10/03 21:59:09 by jinkim2          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,7 @@ int	ft_atoi(const char *str)
 		result = (result * 10) + (str[index] - '0');
 		index++;
 	}
-	if (result >= 9223372036854775808UL && negative == -1)
-		return (0);
-	else if (result >= 9223372036854775807 && negative == 1)
-		return (-1);
+	if (str[index] != '\0')
+		return (256);
 	return ((int)(result * negative));
 }

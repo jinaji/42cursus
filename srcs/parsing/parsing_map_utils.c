@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parsing_map_utils.c                                :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jinkim2 <jinkim2@student.42seoul.kr>       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/10/03 18:20:41 by jinkim2           #+#    #+#             */
+/*   Updated: 2022/10/03 21:46:17 by jinkim2          ###   ########seoul.kr  */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../cub3D.h"
 
 int	get_height(int *mapbeg, char **file)
@@ -38,7 +50,6 @@ int	valid_char(char **file, int mapbeg)
 		while (file[mapbeg][j])
 		{
 			if (file[mapbeg][j] != '1' && file[mapbeg][j] != '0'
-				&& file[mapbeg][j] != '2'
 				&& !ft_isspace(file[mapbeg][j]) && file[mapbeg][j] != 'N'
 				&& file[mapbeg][j] != 'W' && file[mapbeg][j] != 'S'
 				&& file[mapbeg][j] != 'E')
@@ -109,16 +120,13 @@ void	replace_space(int i, t_map *parsing, char *line)
 	k = 0;
 	while (j < parsing->width)
 	{
-		if (line[k] == '\t')
+		if (line[k] == '\0')
+			parsing->array[i][j] = ' ';
+		else if (line[k] == '\n')
 		{
-			parsing->array[i][j] = ' ';
-			parsing->array[i][++j] = ' ';
-			parsing->array[i][++j] = ' ';
-			parsing->array[i][++j] = ' ';
 			k++;
+			continue ;
 		}
-		else if (line[k] == '\0')
-			parsing->array[i][j] = ' ';
 		else
 		{
 			parsing->array[i][j] = line[k];

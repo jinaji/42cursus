@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_rgb.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gulee <gulee@student.42seoul.kr>           +#+  +:+       +#+        */
+/*   By: jinkim2 <jinkim2@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/03 17:31:28 by gulee             #+#    #+#             */
-/*   Updated: 2022/10/03 18:05:59 by gulee            ###   ########.fr       */
+/*   Updated: 2022/10/03 22:06:15 by jinkim2          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,13 @@ static t_bool	valid_digit(char **split)
 {
 	int		j;
 	int		i;
+	int		tmp;
 
 	i = 0;
 	while (split[i])
 	{
-		if (ft_atoi(split[i]) < 0 || ft_atoi(split[i]) > 255)
+		tmp = ft_atoi(ft_strtrim(split[i], " \t"));
+		if (tmp < 0 || tmp > 255)
 			return (FALSE_E);
 		j = 0;
 		while (split[i][j])
@@ -54,9 +56,9 @@ static t_bool	valid_rgb(int *count, char *line, t_map *data, char *str)
 	while (split[i])
 	{
 		if (str[0] == 'F')
-			data->floor[i] = ft_atoi(split[i]);
+			data->floor[i] = ft_atoi(ft_strtrim(split[i], " \t"));
 		else
-			data->ceil[i] = ft_atoi(split[i]);
+			data->ceil[i] = ft_atoi(ft_strtrim(split[i], " \t"));
 		i++;
 	}
 	(*count)++;

@@ -1,13 +1,25 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parsing_map.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jinkim2 <jinkim2@student.42seoul.kr>       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/10/03 18:20:45 by jinkim2           #+#    #+#             */
+/*   Updated: 2022/10/03 22:09:21 by jinkim2          ###   ########seoul.kr  */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../cub3D.h"
 
-static int	fill_array(char **file, t_map *parsing, int mapbeg)
+static t_bool	fill_array(char **file, t_map *parsing, int mapbeg)
 {
 	int	j;
 
 	j = 0;
 	parsing->width = get_max_len(file, mapbeg);
 	if (parser_space(parsing))
-		return (-1);
+		return (FALSE_E);
 	while (file && file[mapbeg])
 	{
 		replace_space(j, parsing, file[mapbeg]);
@@ -15,7 +27,7 @@ static int	fill_array(char **file, t_map *parsing, int mapbeg)
 		j++;
 	}
 	replace_void(parsing);
-	return (0);
+	return (TRUE_E);
 }
 
 int	check_open_wall(char **array, int y, int x)
@@ -31,7 +43,7 @@ int	check_open_wall(char **array, int y, int x)
 		+ check_open_wall(array, y, x + 1));
 }
 
-static int	get_player(t_i_vec *player, char **array)
+static t_bool	get_player(t_i_vec *player, char **array)
 {
 	int	i;
 	int	j;
@@ -56,11 +68,11 @@ static int	get_player(t_i_vec *player, char **array)
 		i++;
 	}
 	if (count != 1)
-		return (-1);
-	return (0);
+		return (FALSE_E);
+	return (TRUE_E);
 }
 
-int	open_wall(char **dup)
+t_bool	open_wall(char **dup)
 {
 	int	i;
 	int	j;
@@ -74,14 +86,14 @@ int	open_wall(char **dup)
 			if (dup[i][j] == '0' && check_open_wall(dup, i, j))
 			{
 				free_split(dup);
-				return (-1);
+				return (FALSE_E);
 			}
 			j++;
 		}
 		i++;
 	}
 	free_split(dup);
-	return (0);
+	return (TRUE_E);
 }
 
 t_bool	valid_map(t_map *parsing, char **file)
@@ -96,17 +108,19 @@ t_bool	valid_map(t_map *parsing, char **file)
 	{
 		return (error("valid char", NULL));
 	}
-	if (fill_array(file, parsing, mapbeg))
+	if (fill_array(file, parsing, mapbeg) == FALSE_E)
 		return (FALSE_E);
 	dup = dup_map(parsing->array, parsing->height);
 	if (!dup)
 		return (FALSE_E);
-	if (get_player(&player, dup))
+	if (get_player(&player, dup) == FALSE_E)
 	{
 		free_split(dup);
 		return (error("get player", NULL));
 	}
-	if (open_wall(dup))
+	if (open_wall(dup) == FALSE_E)
 		return (error("open wall", NULL));
+	if (check_player_pos(parsing, player) == FALSE_E)
+		return (error("unvalid position", NULL));
 	return (TRUE_E);
 }

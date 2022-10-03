@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gulee <gulee@student.42seoul.kr>           +#+  +:+       +#+        */
+/*   By: jinkim2 <jinkim2@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/03 17:43:01 by gulee             #+#    #+#             */
-/*   Updated: 2022/10/03 18:11:06 by gulee            ###   ########.fr       */
+/*   Updated: 2022/10/03 22:09:16 by jinkim2          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,12 +150,13 @@ t_bool	valid_arg(int argc, char **argv);
 t_bool	vaild_img(t_map *parsing, char **file);
 t_bool	valid_floor(t_map *parsing, char **file);
 char	**dup_start(char **argv, char **ret);
-void	free_split(char **split);
+int		free_split(char **split);
 int		error(char *msg, char *free_ptr);
 int		return_split_free(char **split);
 int		check_open_wall(char **array, int y, int x);
 char	**dup_map(char **array, int height);
 void	replace_void(t_map *parsing);
+t_bool	check_player_pos(t_map *parsing, t_i_vec play);
 
 /************************************************************************
 							utils

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parsing_utils.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jinkim2 <jinkim2@student.42seoul.kr>       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/10/03 18:20:51 by jinkim2           #+#    #+#             */
+/*   Updated: 2022/10/03 19:06:02 by jinkim2          ###   ########seoul.kr  */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../cub3D.h"
 
 static char	**dup_util(int len, char **argv, char **ret)
@@ -29,7 +41,7 @@ char	**dup_start(char **argv, char **ret)
 
 	fd = open(argv[1], O_RDONLY);
 	i = 0;
-    line = NULL;
+	line = NULL;
 	line = get_next_line(fd);
 	while (line)
 	{
@@ -41,7 +53,7 @@ char	**dup_start(char **argv, char **ret)
 	return (dup_util(i, argv, ret));
 }
 
-void	free_split(char **split)
+int	free_split(char **split)
 {
 	int	i;
 
@@ -52,6 +64,7 @@ void	free_split(char **split)
 		i++;
 	}
 	free(split);
+	return (FALSE_E);
 }
 
 int	error(char *msg, char *free_ptr)

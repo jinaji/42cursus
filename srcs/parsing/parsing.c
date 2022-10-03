@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parsing.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jinkim2 <jinkim2@student.42seoul.kr>       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/10/03 18:20:49 by jinkim2           #+#    #+#             */
+/*   Updated: 2022/10/03 20:17:12 by jinkim2          ###   ########seoul.kr  */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../cub3D.h"
 
 void	parser_start(t_map *parsing)
@@ -36,20 +48,11 @@ t_bool	parser(int argc, char **argv, t_map *parsing)
 	if (!file)
 		return (FALSE_E);
 	if (vaild_img(parsing, file) == FALSE_E)
-	{
-		free_split(file);
-		return (FALSE_E);
-	}
+		return (free_split(file));
 	if (valid_floor(parsing, file) == FALSE_E)
-	{
-		free_split(file);
-		return (FALSE_E);
-	}
+		return (free_split(file));
 	if (valid_map(parsing, file) == FALSE_E)
-	{
-		free_split(file);
-		return (FALSE_E);
-	}
+		return (free_split(file));
 	free_split(file);
 	return (TRUE_E);
 }
