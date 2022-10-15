@@ -24,9 +24,12 @@ class PhoneBook
 
 	public:
 	Contact	contact[8];
-	void	add(int i);
-	void	search(int i);
+	int		count;
+	void	add();
+	void	search();
 	void	exit();
+	void	search_display(int i);
+	void	display(int i);
 };
 
 #endif
