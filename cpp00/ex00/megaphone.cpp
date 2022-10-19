@@ -4,6 +4,7 @@ int main(int ac, char **av)
 {
 	int	i = 1;
 	int	j = 0;
+	std::string	tmp;
 
 	if (ac == 1)
 		std::cout << "* LOUD AND UNBEARABLE FEEDBACK NOISE *" << std::endl;
@@ -12,13 +13,14 @@ int main(int ac, char **av)
 		while (av[i])
 		{
 			j = 0;
-			while (av[i][j])
+			tmp = av[i];
+			while (tmp[j])
 			{
-				if (av[i][j] >= 'a' && 'z' >= av[i][j])
-					av[i][j] -= 32;
+				if (tmp[j] >= 'a' && 'z' >= tmp[j])
+					tmp[j] = toupper(tmp[j]);
 				j++;
 			}
-			std::cout << av[i];
+			std::cout << tmp;
 			i++;
 		}
 		std::cout << std::endl;

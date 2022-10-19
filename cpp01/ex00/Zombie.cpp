@@ -37,7 +37,6 @@ void	randomChump(std::string name)
 int main()
 {
 	Zombie	*a;
-	Zombie	b;
 
 	a = newZombie("a");
 	Zombie("b").announce();

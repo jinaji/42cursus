@@ -1,10 +1,10 @@
 #ifndef PHONEBOOK_HPP
 # define PHONEBOOK_HPP
 
-# include <string>
 # include <iostream>
+# include <string>
 
-class Contact
+class contact
 {
 	private:
 
@@ -17,13 +17,13 @@ class Contact
 	int		index;
 };
 
-class PhoneBook
+class phoneBook
 {
 
 	private:
 
 	public:
-	Contact	contact[8];
+	contact	contact[8];
 	int		count;
 	void	add();
 	void	search();

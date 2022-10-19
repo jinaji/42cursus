@@ -1,10 +1,12 @@
-CC = c++
-CFLAGS = -Wall -Werror -Wextra -std=c++98 -g
-SRCS = phonebook.cpp
+CXXFLAGS = -Wall -Werror -Wextra -std=c++98 -g
+SRCS = phoneBook.cpp
+OBJS = $(SRCS:.cpp=.o)
 NAME = phonebook
 
-all:
-	$(CC) $(CFLAGS) -o $(NAME) $(SRCS)
+all: $(NAME)
+
+$(NAME): $(OBJS)
+	$(CXX) $(CXXFLAGS) -o $(NAME) $^
 
 clean:
 	rm -rf $(OBJS)
