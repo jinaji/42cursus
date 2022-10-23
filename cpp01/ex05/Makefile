@@ -1,7 +1,7 @@
 CXXFLAGS = -Wall -Werror -Wextra -std=c++98
-SRCS = main.cpp
+SRCS = main.cpp Harl.cpp
 OBJS = $(SRCS:.cpp=.o)
-NAME = replace
+NAME = harl
 
 all: $(NAME)
 
