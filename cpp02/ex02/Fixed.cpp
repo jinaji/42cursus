@@ -122,14 +122,20 @@ Fixed&	Fixed::operator-(const Fixed& f)
 }
 
 Fixed&	Fixed::operator*(const Fixed& f)
-{
-	this->fixed_num *= f.fixed_num;
+{	
+	float	ret;
+
+	ret = this->toFloat() * f.toFloat();
+	this->fixed_num = roundf(ret * (1 << 8));
 	return (*this);
 }
 
 Fixed&	Fixed::operator/(const Fixed& f)
 {
-	this->fixed_num /= f.fixed_num;
+	float	ret;
+
+	ret = this->toFloat() / f.toFloat();
+	this->fixed_num = roundf(ret * (1 << 8));
 	return (*this);
 }
 
