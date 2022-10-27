@@ -26,6 +26,8 @@ int main(int ac, char **av)
 	}
 	s1 = av[2];
 	s2 = av[3];
+	if (s1.compare("") == 0)
+		return (1);
 	len1 = s1.length();
 	len2 = s2.length();
 	pos = save.find (s1);

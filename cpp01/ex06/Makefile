@@ -1,7 +1,7 @@
 CXXFLAGS = -Wall -Werror -Wextra -std=c++98
-SRCS = Fixed.cpp main.cpp
+SRCS = main.cpp Harl.cpp
 OBJS = $(SRCS:.cpp=.o)
-NAME = a.out
+NAME = harlFilter
 
 all: $(NAME)
 

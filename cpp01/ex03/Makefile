@@ -1,4 +1,4 @@
-CXXFLAGS = -Wall -Werror -Wextra -std=c++98
+CXXFLAGS = -Wall -Werror -Wextra -std=c++98 -g
 SRCS = Weapon.cpp human.cpp
 OBJS = $(SRCS:.cpp=.o)
 NAME = a.out

@@ -7,11 +7,15 @@ Weapon::Weapon(std::string weapon)
 
 Weapon::~Weapon()
 {
-	std::cout << this->getType() << " is destructed" << std::endl;
+	if (this->type.compare(""))
+		std::cout << this->getType() << " is destructed" << std::endl;
+	else
+		std::cout << "no type is desctructed" << std::endl;
 }
 
 const std::string& Weapon::getType()
 {
+
 	return (this->type);
 }
 
