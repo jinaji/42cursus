@@ -25,7 +25,9 @@ public:
 	float	toFloat(void) const;
 	int		toInt(void)	const;
 //  a(this) > b(param)
-	public:
+
+	public: 
+	// comparison operators
 	bool	operator>(const Fixed& f);
 	bool	operator<(const Fixed& f);
 	bool	operator>=(const Fixed& f);
@@ -33,15 +35,17 @@ public:
 	bool	operator==(const Fixed& f);
 	bool	operator!=(const Fixed& f);
 
+	// arithmetic operators
 	Fixed&	operator+(const Fixed& f);
 	Fixed&	operator-(const Fixed& f);
 	Fixed&	operator*(const Fixed& f);
 	Fixed&	operator/(const Fixed& f);
 
+	// increment / decrement operators
 	Fixed&	operator++(); //pre
 	Fixed&	operator--(); 
-	Fixed&	operator++(int fixed_num); //post
-	Fixed&	operator--(int fixed_num);
+	Fixed	operator++(int fixed_num); //post
+	Fixed	operator--(int fixed_num);
 
 	static Fixed&		min(Fixed& a, Fixed& b);
 	static const Fixed&	min(const Fixed& a, const Fixed& b);

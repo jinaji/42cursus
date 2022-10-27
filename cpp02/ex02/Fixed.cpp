@@ -2,24 +2,20 @@
 
 Fixed::Fixed()
 {
-	// std::cout << "Default constructor called" << std::endl;
 	this->fixed_num = 0;
 }
 
 Fixed::~Fixed()
 {
-	// std::cout << "Destructor called" << std::endl;
 }
 
 Fixed::Fixed(const Fixed& f)
 {
-	// std::cout << "Copy constructor called" << std::endl;
 	*this = f;
 }
 
 Fixed& Fixed::operator=(const Fixed& f)
 {
-	// std::cout << "Copy assignment operator called" << std::endl;
 	this->fixed_num = f.getRawBits();
 	return (*this);
 }
@@ -59,7 +55,7 @@ int		Fixed::toInt(void)	const
 }
 
 /* a(this) > b(param) */
-
+// comparison operators
 bool	Fixed::operator>(const Fixed& f)
 {
 	if (this->fixed_num > f.fixed_num)
@@ -108,7 +104,7 @@ bool	Fixed::operator!=(const Fixed& f)
 		return (1);
 }
 
-
+// arithmetic operators
 Fixed& Fixed::operator+(const Fixed& f)
 {
 	this->fixed_num += f.fixed_num;
@@ -139,7 +135,7 @@ Fixed&	Fixed::operator/(const Fixed& f)
 	return (*this);
 }
 
-
+// increment / decrement operators
 Fixed&	Fixed::operator++() // pre
 {
 	this->fixed_num += 1;
@@ -152,16 +148,27 @@ Fixed&	Fixed::operator--()
 	return (*this);
 }
 
-Fixed&	Fixed::operator++(int fixed_num) // post
+Fixed	Fixed::operator++(int fixed_num) // post
 {
-	this->fixed_num = fixed_num + 1;
-	return (*this);
+	Fixed	tmp = *this;
+
+	if (fixed_num == 0)
+		this->fixed_num = this->fixed_num + 1;
+	else
+		this->fixed_num = this->fixed_num + fixed_num;
+	return (tmp);
 }
 
-Fixed&	Fixed::operator--(int fixed_num)
+Fixed	Fixed::operator--(int fixed_num)
 {
-	this->fixed_num = fixed_num - 1;
-	return (*this);
+	Fixed	tmp = *this;
+
+	if (fixed_num == 0)
+		this->fixed_num = this->fixed_num + 1;
+	else
+		this->fixed_num = this->fixed_num - fixed_num;
+	this->fixed_num = this->fixed_num - 1;
+	return (tmp);
 }
 
 Fixed&	Fixed::min(Fixed& a, Fixed& b)
