@@ -22,29 +22,28 @@ std::string	inform_display(std::string inform)
 {
 	std::string	tmp;
 	int			len;
-
 	tmp = inform.data();
 	len = inform.length();
 	if (len > 10)
 	{
 		tmp.resize(10);
-		tmp[9] = '.';
 	}
 	else
 	{
-		for (int i = 0; len - 1 > i; i++)
-			tmp[i] = inform[i];
-		tmp[len - 1] = '.';
+		int i = 10 - len;
+		for (; i; i--)
+			tmp.insert(0, " ");
 	}
+	tmp[9] = '.';
 	return (tmp);
 }
 
 void	phoneBook::display(int i)
 {
-	std::cout << "index     | " << contact[i].index << std::endl;
-	std::cout << "first name| " << inform_display(contact[i].firstName) << std::endl;
-	std::cout << "last name | " << inform_display(contact[i].lastName) << std::endl;
-	std::cout << "nickname  | " << inform_display(contact[i].nickName) << std::endl << std::endl;
+	std::cout << "index: " << contact[i].index << " | ";
+	std::cout << "first name: " << inform_display(contact[i].firstName) << " | ";
+	std::cout << "last name: " << inform_display(contact[i].lastName) << " | ";
+	std::cout << "nickname: " << inform_display(contact[i].nickName) << std::endl;
 }
 
 void	phoneBook::search_display(int i)
@@ -70,6 +69,7 @@ void	phoneBook::search()
 		display(index);
 	else
 		std::cout << "wrong index" << std::endl;
+	std::cin.clear();
 }
 
 void	exit(void)
@@ -82,6 +82,7 @@ int main(void)
 	std::string	command;
 	
 	// std::cin >> command;
+	std::cout << "ADD SEARCH EXIT" << std::endl;
 	std::getline (std::cin, command);
 	book.count = 0;
 	// std::cin.clear();

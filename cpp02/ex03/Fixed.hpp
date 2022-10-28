@@ -31,12 +31,12 @@ public:
 
 	public: 
 	// comparison operators
-	bool	operator>(const Fixed& f);
-	bool	operator<(const Fixed& f);
-	bool	operator>=(const Fixed& f);
-	bool	operator<=(const Fixed& f);
-	bool	operator==(const Fixed& f);
-	bool	operator!=(const Fixed& f);
+	bool	operator>(const Fixed& f) const;
+	bool	operator<(const Fixed& f) const;
+	bool	operator>=(const Fixed& f) const;
+	bool	operator<=(const Fixed& f) const;
+	bool	operator==(const Fixed& f) const;
+	bool	operator!=(const Fixed& f) const;
 
 	// arithmetic operators
 	Fixed&	operator+(const Fixed& f);

@@ -17,7 +17,7 @@ Point::Point(const Point& point)
 	*this = point;
 }
 
-int Point::operator=(const Point& point)
+Point& Point::operator=(const Point& point)
 {
 	(void)point;
 	return (0);
@@ -34,28 +34,19 @@ Point::~Point()
 	Thus, if the point is a vertex or on edge, it will return False.
 */
 
-Fixed	Point::getX(void)
+Fixed	const	Point::getX(void) const
 {
-	Fixed	tmp;
-
-	tmp = this->x;
-	return (tmp);
+	return (this->x);
 }
 
-Fixed	Point::getY(void)
+Fixed	const	Point::getY(void) const
 {
-	Fixed	tmp;
-
-	tmp = this->y;
-	return (tmp);
+	return (this->y);
 }
 
-bool	Point::compareVertex(Point const a, Point const b, Point const c, Point const point)
-{
-	if (a.getX() == point.getX())
-}
 
 bool	bsp(Point const a, Point const b, Point const c, Point const point)
 {
+
 	return (1);
 }

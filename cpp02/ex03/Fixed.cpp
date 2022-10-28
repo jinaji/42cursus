@@ -52,7 +52,7 @@ int		Fixed::toInt(void)	const
 
 /* a(this) > b(param) */
 // comparison operators
-bool	Fixed::operator>(const Fixed& f)
+bool	Fixed::operator>(const Fixed& f) const
 {
 	if (this->fixed_num > f.fixed_num)
 		return (1);
@@ -60,7 +60,7 @@ bool	Fixed::operator>(const Fixed& f)
 		return (0);
 }
 
-bool	Fixed::operator<(const Fixed& f)
+bool	Fixed::operator<(const Fixed& f) const
 {
 	if (this->fixed_num < f.fixed_num)
 		return (1);
@@ -68,7 +68,7 @@ bool	Fixed::operator<(const Fixed& f)
 		return (0);
 }
 
-bool	Fixed::operator>=(const Fixed& f)
+bool	Fixed::operator>=(const Fixed& f) const
 {
 	if (this->fixed_num >= f.fixed_num)
 		return (1);
@@ -76,7 +76,7 @@ bool	Fixed::operator>=(const Fixed& f)
 		return (0);
 }
 
-bool	Fixed::operator<=(const Fixed& f)
+bool	Fixed::operator<=(const Fixed& f) const
 {
 	if (this->fixed_num <= f.fixed_num)
 		return (1);
@@ -84,7 +84,7 @@ bool	Fixed::operator<=(const Fixed& f)
 		return (0);
 }
 
-bool	Fixed::operator==(const Fixed& f)
+bool	Fixed::operator==(const Fixed& f) const
 {
 	if (this->fixed_num == f.fixed_num)
 		return (1);
@@ -92,7 +92,7 @@ bool	Fixed::operator==(const Fixed& f)
 		return (0);
 }
 
-bool	Fixed::operator!=(const Fixed& f)
+bool	Fixed::operator!=(const Fixed& f) const
 {
 	if (this->fixed_num == f.fixed_num)
 		return (0);

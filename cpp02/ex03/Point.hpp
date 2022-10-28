@@ -15,12 +15,12 @@ public:
 	Point(float x, float y);
 	Point(const Point& point);
 	Point(Fixed x, Fixed y);
-	int	operator=(const Point& point);
+	Point&	operator=(const Point& point);
 	~Point();
 
 	bool	compareVertex(Point const a, Point const b, Point const c, Point const point);
-	Fixed	getX(void);
-	Fixed	getY(void);
+	Fixed	const	getX(void) const;
+	Fixed	const	getY(void) const;
 };
 
 #endif
