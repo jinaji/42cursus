@@ -27,6 +27,6 @@ DiamondTrap::~DiamondTrap()
 {
 }
 
-DiamondTrap::attack() : (ScavTrap::attack)
+void	DiamondTrap::attack(const std::string& target)
 {
 }
