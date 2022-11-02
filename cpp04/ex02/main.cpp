@@ -33,10 +33,16 @@ int main()
 	// delete (i2);
 
 	Animal *animal[10];
+
 	for (int i = 0; 5 > i; i++)
 		animal[i] = new Dog();
 	for (int i = 5; 10 > i; i++)
 		animal[i] = new Cat();
+
+	std::cout << std::endl;
+	animal[0]->makeSound();
+	animal[5]->makeSound();
+	std::cout << std::endl;
 
 	for (int i = 0; 10 > i; i++)
 		delete (animal[i]);

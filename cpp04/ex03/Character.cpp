@@ -1,4 +1,6 @@
 #include "Character.hpp"
+#include "Cure.hpp"
+#include "Ice.hpp"
 
 Character::Character() : index(0), f_index(0)
 {
@@ -53,20 +55,34 @@ void Character::equip(AMateria* m)
 
 void Character::unequip(int idx)
 {
-	if (f_index >= 10 || (0 >= idx || idx >= 4) || this->index == 0)
+	if (f_index > 9 || (0 > idx || idx >= 4) || this->index == 0)
 		return ;
-	this->floor[f_index] = this->inventory[idx];
-	std::cout << this->getName() << " unequip " << this->inventory[index]->getType() << " material at " << this->index << "slot" << std::endl;
-	std::cout << "there are " << f_index << " materials on the floor" << std::endl;
-	this->f_index++;
-	this->index--;
+	if (!this->inventory[idx])
+	{
+		std::cout << "empty slot" << std::endl;
+		return ;
+	}
+	if (this->inventory[idx]->getType().compare("ice") == 0 || this->inventory[idx]->getType().compare("cure") == 0)
+	{
+		this->floor[f_index] = this->inventory[idx];
+		std::cout << this->getName() << " unequip " << this->inventory[idx]->getType() << " material at " << idx << " slot" << std::endl;
+		this->f_index++;
+		std::cout << "there are " << f_index << " materials on the floor" << std::endl;
+		this->index--;
+	}
 }
 
 void Character::use(int idx, ICharacter& target)
 {
 	AMateria	*tmp;
 
-	if (0 >= idx || idx >= 4)
+	if (0 > idx || idx >= 4)
 		return ;
+	if (this->inventory[idx]->getType().compare("ice") == 0)
+		tmp = new Ice();
+	else
+		tmp = new Cure();
+	std::cout << this->getName() << " use " << idx << " slot's " << tmp->getType() << std::endl;
 	tmp->use(target);
+	delete tmp;
 }
