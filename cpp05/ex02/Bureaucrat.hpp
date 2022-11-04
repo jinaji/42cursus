@@ -20,7 +20,8 @@ public:
 	~Bureaucrat();
 
 	Bureaucrat(const std::string name, int grade);
-	
+	void executeForm(Form const& form);
+
 public:
 	const std::string getName() const;
 	int getGrade() const;
