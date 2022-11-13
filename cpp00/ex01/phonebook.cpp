@@ -1,21 +1,27 @@
-#include "phoneBook.hpp"
+#include "PhoneBook.hpp"
 
-void	phoneBook::add()
+void	PhoneBook::add()
 {
-	if (count >= 8)
-		count -= 8;
-	contact[count].index = count;
+	int	index;
+
+	index = this->count % 8;
+	contact[index].index = index;
 	std::cout << "first name: ";
-	std::getline(std::cin, contact[count].firstName);
+	while (contact[index].firstName.length() < 1)
+		std::getline(std::cin, contact[index].firstName);
 	std::cout << "last name: ";
-	std::getline(std::cin, contact[count].lastName);
+	while (contact[index].lastName.length() < 1)
+		std::getline(std::cin, contact[index].lastName);
 	std::cout << "nickname: ";
-	std::getline(std::cin, contact[count].nickName);
+	while (contact[index].nickName.length() < 1)
+		std::getline(std::cin, contact[index].nickName);
 	std::cout << "phone number: ";
-	std::getline(std::cin, contact[count].phoneNumber);
+	while (contact[index].phoneNumber.length() < 1)
+		std::getline(std::cin, contact[index].phoneNumber);
 	std::cout << "darkest secret: ";
-	std::getline(std::cin, contact[count].darkestSecret);
-	count++;
+	while (contact[index].darkestSecret.length() < 1)
+		std::getline(std::cin, contact[index].darkestSecret);
+	this->count++;
 }
 
 std::string	inform_display(std::string inform)
@@ -38,35 +44,46 @@ std::string	inform_display(std::string inform)
 	return (tmp);
 }
 
-void	phoneBook::display(int i)
+void	PhoneBook::display(int i)
 {
-	std::cout << "index: " << contact[i].index << " | ";
+	std::cout << "index: " << "         " << contact[i].index << " | ";
 	std::cout << "first name: " << inform_display(contact[i].firstName) << " | ";
 	std::cout << "last name: " << inform_display(contact[i].lastName) << " | ";
 	std::cout << "nickname: " << inform_display(contact[i].nickName) << std::endl;
 }
 
-void	phoneBook::search_display(int i)
+void	PhoneBook::display_index(int i)
 {
-	if (i == -1)
+	std::cout << "first name: " << this->contact[i].firstName << std::endl;
+	std::cout << "last name: " << this->contact[i].lastName << std::endl;
+	std::cout << "nickname: " << this->contact[i].nickName << std::endl;
+	std::cout << "phone number: " << this->contact[i].phoneNumber << std::endl;
+	std::cout << "darkest secret: " << this->contact[i].darkestSecret << std::endl;
+}
+
+void	PhoneBook::search_display()
+{
+	if (count > 8)
+	{
+		for (int j = 0; 8 > j; j++)
+			display(j);
+	}
+	else
 	{
 		for (int j = 0; count > j; j++)
 			display(j);
-		return ;
 	}
-	else
-		display(i);
 }
 
-void	phoneBook::search()
+void	PhoneBook::search()
 {
-	int	index;
+	int	index = -1;
 
-	search_display(-1);
+	search_display();
 	std::cout << "input index" << std::endl;
 	std::cin >> index;
 	if (!isdigit(index) && index >= 0 && count > index)
-		display(index);
+		display_index(index);
 	else
 		std::cout << "wrong index" << std::endl;
 	std::cin.clear();
@@ -78,25 +95,32 @@ void	exit(void)
 
 int main(void)
 {
-	phoneBook	book;
+	PhoneBook	book;
 	std::string	command;
 	
-	// std::cin >> command;
-	std::cout << "ADD SEARCH EXIT" << std::endl;
-	std::getline (std::cin, command);
+	// std::cout << "ADD SEARCH EXIT" << std::endl;
+	// std::getline (std::cin, command);
 	book.count = 0;
-	// std::cin.clear();
-	// clearerr(stdin);
-	while (command.compare("EXIT"))
+	// while (command.compare("EXIT"))
+	// {
+	// 	if (command.compare("ADD") == 0)
+	// 		book.add();
+	// 	else if (command.compare("SEARCH") == 0)
+	// 		book.search();
+	// 	command.clear();
+	// 	std::getline (std::cin, command);
+	// 	std::cout << "ADD SEARCH EXIT" << std::endl;
+	// }
+		std::cout << "ADD SEARCH EXIT" << std::endl;
+	while (std::getline (std::cin, command))
 	{
 		if (command.compare("ADD") == 0)
 			book.add();
 		else if (command.compare("SEARCH") == 0)
 			book.search();
-		command.clear();
-		// std::cin >> command;
-		std::getline (std::cin, command);
+		else if (command.compare("EXIT") == 0)
+			exit();
+		std::cout << "ADD SEARCH EXIT" << std::endl;
 	}
-	exit();
 	return (0);
 }
