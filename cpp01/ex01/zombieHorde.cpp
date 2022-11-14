@@ -14,11 +14,3 @@ Zombie*	zombieHorde(int N, std::string name)
 
 	return (horde);
 }
-
-int main()
-{
-	Zombie* horde = zombieHorde(3, "hihi");
-	for (int i = 0; 3 > i; i++)
-		horde[i].announce();
-	delete[] horde;
-}

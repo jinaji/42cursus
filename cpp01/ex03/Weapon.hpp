@@ -9,6 +9,7 @@ class Weapon
 {
 private:
 	std::string	type;
+	
 public:
 	Weapon();
 	Weapon(std::string Weapon);

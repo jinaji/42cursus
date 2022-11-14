@@ -7,16 +7,16 @@ class PhoneBook
 {
 
 	private:
+		Contact	contact[8];
+		int		count;
 
 	public:
-	contact	contact[8];
-	int		count;
-	void	add();
-	void	search();
-	void	exit();
-	void	search_display();
-	void	display(int i);
-	void	display_index(int i);
+		PhoneBook();
+		void	add();
+		void	search();
+		void	searchDisplay(int count);
+		void	display(int i);
+		void	exit();
 };
 
 #endif
