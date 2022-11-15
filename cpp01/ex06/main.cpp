@@ -2,31 +2,30 @@
 
 int main(int ac, char **av)
 {
-	Harl		tmp;
-	std::string	str;
+	Harl		harl;
 	int			level;
 
 	if (ac != 2)
 	{
-		tmp.nothing();
+		harl.nothing();
 		return (1);
 	}
-	str = av[1];
-	level = tmp.getLevel(str);
+	level = harl.getLevel((std::string)av[1]);
+
 	switch(level)
 	{
 		case NOTHING :
 		{
-			tmp.nothing();
+			harl.nothing();
 			break ;
 		}
 		case DEBUG :
-			tmp.complain("DEBUG");
+			harl.complain("DEBUG");
 		case INFO :
-			tmp.complain("INFO");
+			harl.complain("INFO");
 		case WARNING :
-			tmp.complain("WARNING");
+			harl.complain("WARNING");
 		case ERROR :
-			tmp.complain("ERROR");
+			harl.complain("ERROR");
 	}
 }

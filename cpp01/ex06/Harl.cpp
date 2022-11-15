@@ -2,6 +2,10 @@
 
 Harl::Harl()
 {
+	this->LEVELS[0].assign("DEBUG");
+	this->LEVELS[1].assign("INFO");
+	this->LEVELS[2].assign("WARNING");
+	this->LEVELS[3].assign("ERROR");
 }
 
 Harl::~Harl()
@@ -36,16 +40,15 @@ void	Harl::nothing(void)
 int	Harl::getLevel(std::string level)
 {
 	int	i = 0;
-	const std::string	LEVELS[4] = {
-		"DEBUG", "INFO", "WARNING", "ERROR"
-	};
-	for (; i < 4 && level != LEVELS[i]; i++)
+
+	for (; i < 4 && level != this->LEVELS[i]; i++)
 		;
 	return (i);
 }
 
 void	Harl::complain(std::string level)
 {
+	int		i = 0;
 	void	(Harl::*f[5])(void);
 
 	f[0] = &Harl::debug;
@@ -53,15 +56,8 @@ void	Harl::complain(std::string level)
 	f[2] = &Harl::warning;
 	f[3] = &Harl::error;
 	f[4] = &Harl::nothing;
-	if (level == "DEBUG")
-		(this->*f[0])();
-	else if (level == "INFO")
-		(this->*f[1])();
-	else if (level == "WARNING")
-		(this->*f[2])();
-	else if (level == "ERROR")
-		(this->*f[3])();
-	else if (level == "NOTHING")
-		(this->*f[4])();
-}
 
+	for (; i < 4 && level != this->LEVELS[i]; i++)
+		;
+	(this->*f[i])();
+}

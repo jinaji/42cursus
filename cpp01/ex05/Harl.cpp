@@ -2,6 +2,10 @@
 
 Harl::Harl()
 {
+	this->LEVELS[0].assign("DEBUG");
+	this->LEVELS[1].assign("INFO");
+	this->LEVELS[2].assign("WARNING");
+	this->LEVELS[3].assign("ERROR");
 }
 
 Harl::~Harl()
@@ -30,19 +34,16 @@ void	Harl::error(void)
 
 void	Harl::complain(std::string level)
 {
+	int		i = 0;
 	void	(Harl::*f[4])(void);
 
 	f[0] = &Harl::debug;
 	f[1] = &Harl::info;
 	f[2] = &Harl::warning;
 	f[3] = &Harl::error;
-	if (level == "DEBUG")
-		(this->*f[0])();
-	else if (level == "INFO")
-		(this->*f[1])();
-	else if (level == "WARNING")
-		(this->*f[2])();
-	else if (level == "ERROR")
-		(this->*f[3])();
+
+	for (; i < 3 && level != this->LEVELS[i]; i++)
+		;
+	(this->*f[i])();
 }
 

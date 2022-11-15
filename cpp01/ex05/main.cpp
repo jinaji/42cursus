@@ -2,10 +2,10 @@
 
 int main()
 {
-	Harl	tmp;
+	Harl	harl;
 
-	tmp.complain("DEBUG");
-	tmp.complain("INFO");
-	tmp.complain("WARNING");
-	tmp.complain("ERROR");
+	harl.complain("DEBUG");
+	harl.complain("INFO");
+	harl.complain("WARNING");
+	harl.complain("ERROR");
 }

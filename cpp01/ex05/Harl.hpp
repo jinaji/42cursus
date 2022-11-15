@@ -7,6 +7,7 @@
 class	Harl
 {
 	private:
+	std::string	LEVELS[4];
 	void	debug(void);
 	void	info(void);
 	void	warning(void);

@@ -17,7 +17,6 @@ void	PhoneBook::add()
 
 void	PhoneBook::searchDisplay(int count)
 {
-	std::cout << count << std::endl;
 	if (count > 8)
 	{
 		for (int j = 0; 8 > j; j++)
@@ -46,10 +45,13 @@ void	PhoneBook::search()
 	if (index >= 0 && count > index)
 		this->contact[index].showAll();
 	else if (std::cin.eof())
+	{
+		std::cin.clear();
+		clearerr(stdin);
 		return ;
+	}
 	else
 		std::cout << "WRONG INDEX" << std::endl;
-	std::cin.clear();
 }
 
 void	PhoneBook::exit(void)
