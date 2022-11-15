@@ -32,6 +32,7 @@ void	PhoneBook::searchDisplay(int count)
 
 void	PhoneBook::search()
 {
+	std::string str;
 	int	index;
 
 	if (this->count > 8)
@@ -40,8 +41,9 @@ void	PhoneBook::search()
 		index = this->count;
 	searchDisplay(this->count);
 	std::cout << "INPUT THE INDEX" << std::endl;
-	std::cin >> index;
-	if (!isdigit(index) && index >= 0 && count > index)
+	std::getline(std::cin, str);
+	index = atoi(str.data());
+	if (index >= 0 && count > index)
 		this->contact[index].showAll();
 	else if (std::cin.eof())
 		return ;

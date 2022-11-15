@@ -1,4 +1,5 @@
 #include "Contact.hpp"
+#include <iomanip>
 
 void	Contact::showAll()
 {
@@ -11,29 +12,19 @@ void	Contact::showAll()
 
 std::string	Contact::informDisplay(std::string inform)
 {
-	std::string	tmp;
-	int			len;
-
-	tmp = inform.data();
-	len = inform.length();
-	if (len > 10)
-		tmp.resize(10);
+	if (inform.length() > 10)
+		inform.assign(inform, 0, 9).append(".");
 	else
-	{
-		int i = 10 - len;
-		for (; i; i--)
-			tmp.insert(0, " ");
-	}
-	tmp[9] = '.';
-	return (tmp);
+		inform.assign(inform);
+	return (inform);
 }
 
 void	Contact::display()
 {
-	std::cout << "index: " << "         " << this->index << " | ";
-	std::cout << "first name: " << informDisplay(this->firstName) << " | ";
-	std::cout << "last name: " << informDisplay(this->lastName) << " | ";
-	std::cout << "nickname: " << informDisplay(this->nickName) << std::endl;
+	std::cout << "index: " << std::setw(10) << this->index << " | ";
+	std::cout << "first name: " << std::setw(10) << informDisplay(this->firstName) << " | ";
+	std::cout << "last name: " << std::setw(10) << informDisplay(this->lastName) << " | ";
+	std::cout << "nickname: " << std::setw(10) << informDisplay(this->nickName) << std::endl;
 }
 
 void	Contact::fillContact(std::string &str)

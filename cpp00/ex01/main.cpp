@@ -21,6 +21,8 @@ int main(void)
 			continue ;
 		if (!std::cin.eof())
 			std::cout << "ADD SEARCH EXIT" << std::endl;
+		std::cin.clear();
+		command.clear();
 	}
 	newBook.exit();
 	return (0);
