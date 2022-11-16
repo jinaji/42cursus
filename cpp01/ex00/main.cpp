@@ -2,10 +2,16 @@
 
 int main()
 {
-	Zombie	*a;
+	Zombie	b;
+	Zombie	*c;
 
-	a = newZombie("a");
-	Zombie("b").announce();
-	a->announce();
-	delete a;
+	Zombie("a");
+	b = Zombie("b");
+	c = newZombie("c");
+
+	std::cout << std::endl;
+	
+	b.announce();
+	c->announce();
+	delete c;
 }

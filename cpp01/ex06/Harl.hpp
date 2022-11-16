@@ -6,14 +6,14 @@
 
 class	Harl
 {
-	private:
+private:
 	std::string	LEVELS[4];
 	void	debug(void);
 	void	info(void);
 	void	warning(void);
 	void	error(void);
 
-	public:
+public:
 	Harl();
 	~Harl();
 	void	nothing(void);
@@ -29,6 +29,6 @@ enum level
 	WARNING,
 	ERROR,
 	NOTHING
-	};
+};
 
 #endif

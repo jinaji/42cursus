@@ -2,7 +2,7 @@
 
 HumanA::HumanA(std::string name, Weapon &weapon) : name(name), weapon(weapon)
 {
-	std::cout << name << " is created" << std::endl;
+	std::cout << this->name << " is created" << std::endl;
 }
 
 void	HumanA::attack(void)
@@ -12,4 +12,5 @@ void	HumanA::attack(void)
 
 HumanA::~HumanA()
 {
+	std::cout << this->name << " is descructed" << std::endl;
 }

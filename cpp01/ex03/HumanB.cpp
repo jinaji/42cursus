@@ -2,7 +2,7 @@
 
 HumanB::HumanB(std::string name) : name(name)
 {
-	std::cout << name << " is created" << std::endl;
+	std::cout << this->name << " is created" << std::endl;
 }
 
 void	HumanB::setWeapon(Weapon *weapon)
@@ -20,4 +20,5 @@ void	HumanB::attack(void)
 
 HumanB::~HumanB()
 {
+	std::cout << this->name << " is descructed" << std::endl;
 }
