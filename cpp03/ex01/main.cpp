@@ -2,11 +2,15 @@
 
 int main()
 {
-	ScavTrap	tmp("tmp");
+	ScavTrap	scav("scav");
 
-	tmp.attack("jina");
-	tmp.takeDamage(10);
-	tmp.takeDamage(10);
-	tmp.beReparied(10);
-	tmp.takeDamage(10);
+	scav.attack("jina");
+	scav.takeDamage(10);
+	scav.takeDamage(10);
+	scav.beReparied(10);
+	scav.takeDamage(10);
+
+	std::cout << std::endl;
+	scav.guardGate();
+	std::cout << std::endl;
 }

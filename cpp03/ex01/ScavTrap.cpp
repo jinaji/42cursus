@@ -27,6 +27,22 @@ ScavTrap& ScavTrap::operator=(const ScavTrap& scavtrap)
 	return (*this);
 }
 
+void	ScavTrap::attack(const std::string& target)
+{
+	if (this->energyPoint <= 0)
+	{
+		std::cout << name << " has no energy point" << std::endl;
+		return ;
+	}
+	else if (this->hitPoint <= 0)
+	{
+		std::cout << name << " has no hit point" << std::endl;
+		return ;
+	}
+	std::cout << "ScavTrap " << name << " attacks " << target << ", causing " << this->attackDamage << " points of damage!" << std::endl;
+	this->energyPoint -= 1;
+}
+
 ScavTrap::~ScavTrap()
 {
 	std::cout << "ScavTrap " << name << " destructor called" << std::endl;

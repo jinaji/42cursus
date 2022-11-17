@@ -2,12 +2,15 @@
 
 int main()
 {
-	FragTrap	tmp("tmp");
+	FragTrap	frag("frag");
 
-	tmp.attack("jina");
-	tmp.takeDamage(10);
-	tmp.takeDamage(10);
-	tmp.beReparied(10);
-	tmp.takeDamage(10);
-	tmp.highFivesGuys();
+	frag.attack("jina");
+	frag.takeDamage(10);
+	frag.takeDamage(10);
+	frag.beReparied(10);
+	frag.takeDamage(10);
+
+	std::cout << std::endl;
+	frag.highFivesGuys();
+	std::cout << std::endl;
 }

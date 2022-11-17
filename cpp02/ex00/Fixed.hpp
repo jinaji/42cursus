@@ -8,11 +8,11 @@ class Fixed
 {
 private:
 	int					num;
-	static const int	n = 8;
+	static const int	bit = 8;
 public:
 	Fixed();
-	Fixed(const Fixed& f);
-	Fixed& operator=(const Fixed& f);
+	Fixed(const Fixed& obj);
+	Fixed& operator=(const Fixed& obj);
 	~Fixed();
 
 	int		getRawBits(void) const; // returns the raw value of the fixed-point value

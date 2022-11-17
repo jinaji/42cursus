@@ -29,10 +29,10 @@ FragTrap::FragTrap(const FragTrap& fragtrap)
 
 FragTrap::~FragTrap()
 {
-	std::cout << "FragTrap " << name << " destructor called" << std::endl;
+	std::cout << "FragTrap destructor called" << std::endl;
 }
 
 void	FragTrap::highFivesGuys(void)
 {
-	std::cout << "Positive high fives request" << std::endl;
+	std::cout << "Positive high fives request from " << this->name << std::endl;
 }

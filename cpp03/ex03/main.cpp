@@ -1,13 +1,19 @@
-#include "FragTrap.hpp"
+#include "DiamondTrap.hpp"
 
 int main()
 {
-	FragTrap	tmp("tmp");
+	DiamondTrap	dia("dia");
 
-	tmp.attack("jina");
-	tmp.takeDamage(10);
-	tmp.takeDamage(10);
-	tmp.beReparied(10);
-	tmp.takeDamage(10);
-	tmp.highFivesGuys();
+	dia.attack("jina");
+	dia.takeDamage(10);
+	dia.takeDamage(10);
+	dia.beReparied(10);
+	dia.takeDamage(10);
+	std::cout << std::endl;
+	dia.guardGate();
+	std::cout << std::endl;
+	dia.highFivesGuys();
+	std::cout << std::endl;
+	dia.whoAmI();
+	std::cout << std::endl;
 }

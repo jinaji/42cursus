@@ -2,11 +2,12 @@
 
 int main()
 {
-	ClapTrap	tmp("tmp");
+	ClapTrap	clap("clap");
 
-	tmp.attack("jina");
-	tmp.takeDamage(10);
-	tmp.takeDamage(10);
-	tmp.beReparied(10);
-	tmp.takeDamage(10);
+	clap.attack("jina");
+	clap.takeDamage(5);
+	clap.beReparied(5);
+	clap.takeDamage(10);
+	clap.takeDamage(10);
+	clap.beReparied(5);
 }

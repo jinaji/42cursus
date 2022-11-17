@@ -9,27 +9,27 @@ Fixed::~Fixed()
 {
 }
 
-Fixed::Fixed(const Fixed& f)
+Fixed::Fixed(const Fixed& obj)
 {
-	*this = f;
+	*this = obj;
 }
 
-Fixed& Fixed::operator=(const Fixed& f)
+Fixed& Fixed::operator=(const Fixed& obj)
 {
-	this->fixed_num = f.getRawBits();
+	this->fixed_num = obj.getRawBits();
 	return (*this);
 }
 
 Fixed::Fixed(const int n)
 {
 	// std::cout << "Int constructor called" << std::endl;
-	this->fixed_num = n << 8;
+	this->fixed_num = n << this->bit;
 }
 
-Fixed::Fixed(const float f)
+Fixed::Fixed(const float obj)
 {
 	// std::cout << "Float constuctor called" << std::endl;
-	this->fixed_num = roundf(f * (1 << 8));
+	this->fixed_num = roundf(obj * (1 << this->bit));
 }
 
 int	Fixed::getRawBits(void) const
@@ -46,93 +46,102 @@ void	Fixed::setRawBits(int const raw)
 
 float	Fixed::toFloat(void) const
 {
-	return ((float)(this->fixed_num) / (1 << 8)); 
+	return ((float)(this->fixed_num) / (1 << this->bit)); 
 }
 
 int		Fixed::toInt(void)	const
 {
-	return (this->fixed_num / (1 << 8));
+	return (this->fixed_num / (1 << this->bit));
 }
 
 /* a(this) > b(param) */
 // comparison operators
-bool	Fixed::operator>(const Fixed& f)
+bool	Fixed::operator>(const Fixed& obj)
 {
-	if (this->fixed_num > f.fixed_num)
+	if (this->fixed_num > obj.fixed_num)
 		return (1);
 	else
 		return (0);
 }
 
-bool	Fixed::operator<(const Fixed& f)
+bool	Fixed::operator<(const Fixed& obj)
 {
-	if (this->fixed_num < f.fixed_num)
+	if (this->fixed_num < obj.fixed_num)
 		return (1);
 	else
 		return (0);
 }
 
-bool	Fixed::operator>=(const Fixed& f)
+bool	Fixed::operator>=(const Fixed& obj)
 {
-	if (this->fixed_num >= f.fixed_num)
+	if (this->fixed_num >= obj.fixed_num)
 		return (1);
 	else
 		return (0);
 }
 
-bool	Fixed::operator<=(const Fixed& f)
+bool	Fixed::operator<=(const Fixed& obj)
 {
-	if (this->fixed_num <= f.fixed_num)
+	if (this->fixed_num <= obj.fixed_num)
 		return (1);
 	else
 		return (0);
 }
 
-bool	Fixed::operator==(const Fixed& f)
+bool	Fixed::operator==(const Fixed& obj)
 {
-	if (this->fixed_num == f.fixed_num)
+	if (this->fixed_num == obj.fixed_num)
 		return (1);
 	else
 		return (0);
 }
 
-bool	Fixed::operator!=(const Fixed& f)
+bool	Fixed::operator!=(const Fixed& obj)
 {
-	if (this->fixed_num == f.fixed_num)
+	if (this->fixed_num == obj.fixed_num)
 		return (0);
 	else
 		return (1);
 }
 
 // arithmetic operators
-Fixed& Fixed::operator+(const Fixed& f)
+Fixed Fixed::operator+(const Fixed& obj)
 {
-	this->fixed_num += f.fixed_num;
-	return (*this);
+	// this->fixed_num += obj.fixed_num;
+	// return (*this);
+	
+	Fixed	tmp;
+	tmp.fixed_num = this->fixed_num + obj.fixed_num;
+	return (tmp);
 }
 
-Fixed&	Fixed::operator-(const Fixed& f)
+Fixed	Fixed::operator-(const Fixed& obj)
 {
-	this->fixed_num -= f.fixed_num;
-	return (*this);
+	Fixed	tmp;
+	tmp.fixed_num = this->fixed_num - obj.fixed_num;
+	return (tmp);
+	// this->fixed_num -= obj.fixed_num;
+	// return (*this);
 }
 
-Fixed&	Fixed::operator*(const Fixed& f)
+Fixed	Fixed::operator*(const Fixed& obj)
 {	
+	Fixed	tmp;
 	float	ret;
 
-	ret = this->toFloat() * f.toFloat();
-	this->fixed_num = roundf(ret * (1 << 8));
-	return (*this);
+	ret = this->toFloat() * obj.toFloat();
+	tmp.fixed_num = roundf(ret * (1 << this->bit));
+	return (tmp);
 }
 
-Fixed&	Fixed::operator/(const Fixed& f)
+Fixed	Fixed::operator/(const Fixed& obj)
 {
+	Fixed	tmp;
 	float	ret;
 
-	ret = this->toFloat() / f.toFloat();
-	this->fixed_num = roundf(ret * (1 << 8));
-	return (*this);
+	ret = this->toFloat() / obj.toFloat();
+	tmp.fixed_num = roundf(ret * (1 << this->bit));
+	return (tmp);
 }
 
 // increment / decrement operators
@@ -148,26 +157,28 @@ Fixed&	Fixed::operator--()
 	return (*this);
 }
 
-Fixed	Fixed::operator++(int fixed_num) // post
+const Fixed	Fixed::operator++(int) // post
 {
-	Fixed	tmp = *this;
+	const Fixed	tmp = *this;
 
-	if (fixed_num == 0)
-		this->fixed_num = this->fixed_num + 1;
-	else
-		this->fixed_num = this->fixed_num + fixed_num;
+	// if (fixed_num == 0)
+	// 	this->fixed_num = this->fixed_num + 1;
+	// else
+	// 	this->fixed_num = this->fixed_num + fixed_num;
+	this->fixed_num += 1;
 	return (tmp);
 }
 
-Fixed	Fixed::operator--(int fixed_num)
+const Fixed	Fixed::operator--(int)
 {
-	Fixed	tmp = *this;
+	const Fixed	tmp = *this;
 
-	if (fixed_num == 0)
-		this->fixed_num = this->fixed_num + 1;
-	else
-		this->fixed_num = this->fixed_num - fixed_num;
-	this->fixed_num = this->fixed_num - 1;
+	// if (fixed_num == 0)
+	// 	this->fixed_num = this->fixed_num + 1;
+	// else
+	// 	this->fixed_num = this->fixed_num - fixed_num;
+	// this->fixed_num = this->fixed_num - 1;
+	this->fixed_num -= 1;
 	return (tmp);
 }
 
@@ -203,8 +214,8 @@ const Fixed&	Fixed::max(const Fixed& a, const Fixed& b)
 		return (b);
 }
 
-std::ostream&	operator<<(std::ostream& os, const Fixed& f)
+std::ostream&	operator<<(std::ostream& os, const Fixed& obj)
 {
-	os << f.toFloat();
+	os << obj.toFloat();
 	return (os);
 }

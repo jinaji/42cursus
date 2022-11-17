@@ -11,16 +11,16 @@ Fixed::~Fixed()
 	std::cout << "Destructor called" << std::endl;
 }
 
-Fixed::Fixed(const Fixed& f)
+Fixed::Fixed(const Fixed& obj)
 {
 	std::cout << "Copy constructor called" << std::endl;
-	*this = f;
+	*this = obj;
 }
 
-Fixed& Fixed::operator=(const Fixed& f)
+Fixed& Fixed::operator=(const Fixed& obj)
 {
 	std::cout << "Copy assignment operator called" << std::endl;
-	this->num = f.getRawBits();
+	this->num = obj.getRawBits();
 	return (*this);
 }
 

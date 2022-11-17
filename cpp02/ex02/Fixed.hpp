@@ -9,43 +9,44 @@ class Fixed
 {
 private:
 	int					fixed_num;
-	static const int	n = 8;
+	static const int	bit = 8;
 public:
 	Fixed();
-	Fixed(const Fixed& f);
-	Fixed& operator=(const Fixed& f);
+	Fixed(const Fixed& obj);
+	Fixed& operator=(const Fixed& obj);
 	~Fixed();
-
-	Fixed(const int n);
-	Fixed(float f);
 
 	int		getRawBits(void) const; // returns the raw value of the fixed-point value
 	void	setRawBits(int const raw); // sets the raw value of the fixed-point number
 
+	Fixed(const int n);
+	Fixed(const float obj);
+
 	float	toFloat(void) const;
 	int		toInt(void)	const;
+
 //  a(this) > b(param)
 
 	public: 
 	// comparison operators
-	bool	operator>(const Fixed& f);
-	bool	operator<(const Fixed& f);
-	bool	operator>=(const Fixed& f);
-	bool	operator<=(const Fixed& f);
-	bool	operator==(const Fixed& f);
-	bool	operator!=(const Fixed& f);
+	bool	operator>(const Fixed& obj);
+	bool	operator<(const Fixed& obj);
+	bool	operator>=(const Fixed& obj);
+	bool	operator<=(const Fixed& obj);
+	bool	operator==(const Fixed& obj);
+	bool	operator!=(const Fixed& obj);
 
 	// arithmetic operators
-	Fixed&	operator+(const Fixed& f);
-	Fixed&	operator-(const Fixed& f);
-	Fixed&	operator*(const Fixed& f);
-	Fixed&	operator/(const Fixed& f);
+	Fixed	operator+(const Fixed& obj);
+	Fixed	operator-(const Fixed& obj);
+	Fixed	operator*(const Fixed& obj);
+	Fixed	operator/(const Fixed& obj);
 
 	// increment / decrement operators
 	Fixed&	operator++(); //pre
 	Fixed&	operator--(); 
-	Fixed	operator++(int fixed_num); //post
-	Fixed	operator--(int fixed_num);
+	const Fixed	operator++(int fixed_num); //post
+	const Fixed	operator--(int fixed_num);
 
 	static Fixed&		min(Fixed& a, Fixed& b);
 	static const Fixed&	min(const Fixed& a, const Fixed& b);
@@ -53,6 +54,6 @@ public:
 	static const Fixed&	max(const Fixed& a, const Fixed& b);
 };
 
-std::ostream&	operator<<(std::ostream& os, const Fixed& f);
+std::ostream&	operator<<(std::ostream& os, const Fixed& obj);
 
 #endif

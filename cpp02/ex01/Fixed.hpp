@@ -8,22 +8,23 @@ class Fixed
 {
 private:
 	int					fixed_num;
-	static const int	n = 8;
+	static const int	bit = 8;
 public:
 	Fixed();
-	Fixed(const Fixed& f);
-	Fixed& operator=(const Fixed& f);
+	Fixed(const Fixed& obj);
+	Fixed& operator=(const Fixed& obj);
 	~Fixed();
-
-	Fixed(const int n);
-	Fixed(float f);
 
 	int		getRawBits(void) const; // returns the raw value of the fixed-point value
 	void	setRawBits(int const raw); // sets the raw value of the fixed-point number
 
+	Fixed(const int n);
+	Fixed(const float obj);
+
 	float	toFloat(void) const;
 	int		toInt(void)	const;
 };
-	std::ostream&	operator<<(std::ostream& os, const Fixed& f);
+
+std::ostream&	operator<<(std::ostream& os, const Fixed& obj);
 
 #endif

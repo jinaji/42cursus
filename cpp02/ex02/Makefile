@@ -1,4 +1,4 @@
-CXXFLAGS = -Wall -Werror -Wextra -std=c++98 
+CXXFLAGS = -Wall -Werror -Wextra -std=c++98
 SRCS = Fixed.cpp main.cpp
 OBJS = $(SRCS:.cpp=.o)
 NAME = a.out
