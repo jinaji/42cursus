@@ -15,6 +15,7 @@ Cat::Cat(const Cat& obj)
 const Cat& Cat::operator=(const Cat &obj)
 {
 	this->type = obj.type;
+	this->brain = obj.brain;
 	return (*this);
 }
 

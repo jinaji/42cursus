@@ -3,6 +3,7 @@
 int main()
 {
 	FragTrap	frag("frag");
+	std::cout << std::endl;
 
 	frag.attack("jina");
 	frag.takeDamage(10);

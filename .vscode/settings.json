@@ -55,6 +55,19 @@
 		"deque": "cpp",
 		"fstream": "cpp",
 		"stack": "cpp",
-		"cmath": "cpp"
+		"cmath": "cpp",
+		"__bits": "cpp",
+		"__hash_table": "cpp",
+		"__node_handle": "cpp",
+		"array": "cpp",
+		"clocale": "cpp",
+		"compare": "cpp",
+		"complex": "cpp",
+		"concepts": "cpp",
+		"optional": "cpp",
+		"sstream": "cpp",
+		"unordered_map": "cpp",
+		"variant": "cpp",
+		"vector": "cpp"
 	}
 }

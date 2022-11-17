@@ -8,23 +8,23 @@ FragTrap::FragTrap() : ClapTrap()
 FragTrap::FragTrap(std::string name) : ClapTrap(name)
 {
 	std::cout << "FragTrap " << name << " created" << std::endl;
-	this->hitPoint = 100;
-	this->energyPoint = 100;
-	this->attackDamage = 30;
+	this->HitPoint = 100;
+	this->EnergyPoint = 100;
+	this->AttackDamage = 30;
 }
 
-FragTrap& FragTrap::operator=(const FragTrap& fragtrap)
+FragTrap& FragTrap::operator=(const FragTrap& obj)
 {
-	this->attackDamage = fragtrap.attackDamage;
-	this->energyPoint = fragtrap.energyPoint;
-	this->hitPoint = fragtrap.hitPoint;
-	this->name = fragtrap.name;
+	this->AttackDamage = obj.AttackDamage;
+	this->EnergyPoint = obj.EnergyPoint;
+	this->HitPoint = obj.HitPoint;
+	this->name = obj.name;
 	return (*this);
 }
 
-FragTrap::FragTrap(const FragTrap& fragtrap)
+FragTrap::FragTrap(const FragTrap& obj)
 {
-	*this = fragtrap;
+	*this = obj;
 }
 
 FragTrap::~FragTrap()

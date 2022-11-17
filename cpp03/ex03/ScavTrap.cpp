@@ -3,36 +3,49 @@
 ScavTrap::ScavTrap() : ClapTrap()
 {
 	std::cout << "ScavTrap default constructor called" << std::endl;
-	this->hitPoint = 100;
-	this->energyPoint = 50;
-	this->attackDamage = 20;
 }
 
 ScavTrap::ScavTrap(std::string name) : ClapTrap(name)
 {
-	std::cout << "ScavTrap created" << std::endl;
-	this->hitPoint = 100;
-	this->energyPoint = 50;
-	this->attackDamage = 20;
+	std::cout << "ScavTrap " << name << " created" << std::endl;
+	this->HitPoint = 100;
+	this->EnergyPoint = 50;
+	this->AttackDamage = 20;
 }
 
-ScavTrap::ScavTrap(const ScavTrap& scavtrap)
+ScavTrap::ScavTrap(const ScavTrap& obj)
 {
-	*this = scavtrap;
+	*this = obj;
 }
 
-ScavTrap& ScavTrap::operator=(const ScavTrap& scavtrap)
+ScavTrap& ScavTrap::operator=(const ScavTrap& obj)
 {
-	this->name = scavtrap.name;
-	this->attackDamage = scavtrap.attackDamage;
-	this->energyPoint = scavtrap.energyPoint;
-	this->hitPoint = scavtrap.hitPoint;
+	this->name = obj.name;
+	this->AttackDamage = obj.AttackDamage;
+	this->EnergyPoint = obj.EnergyPoint;
+	this->HitPoint = obj.HitPoint;
 	return (*this);
+}
+
+void	ScavTrap::attack(const std::string& target)
+{
+	if (this->EnergyPoint <= 0)
+	{
+		std::cout << name << " has no energy point" << std::endl;
+		return ;
+	}
+	else if (this->HitPoint <= 0)
+	{
+		std::cout << name << " has no hit point" << std::endl;
+		return ;
+	}
+	std::cout << "ScavTrap " << name << " attacks " << target << ", causing " << this->AttackDamage << " points of damage!" << std::endl;
+	this->EnergyPoint -= 1;
 }
 
 ScavTrap::~ScavTrap()
 {
-	std::cout << "ScavTrap destructor called" << std::endl;
+	std::cout << "ScavTrap " << name << " destructor called" << std::endl;
 }
 
 void	ScavTrap::guardGate()

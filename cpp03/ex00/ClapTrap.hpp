@@ -8,9 +8,9 @@ class ClapTrap
 {
 private:
 	std::string 	name;
-	int	hitPoint;
-	int	energyPoint;
-	int	attackDamage;
+	int	HitPoint;
+	int	EnergyPoint;
+	int	AttackDamage;
 
 public:
 	ClapTrap();

@@ -59,7 +59,7 @@ void Character::unequip(int idx)
 		return ;
 	if (!this->inventory[idx])
 	{
-		std::cout << "empty slot" << std::endl;
+		std::cout << "Empty slot" << std::endl;
 		return ;
 	}
 	if (this->inventory[idx]->getType().compare("ice") == 0 || this->inventory[idx]->getType().compare("cure") == 0)
@@ -77,7 +77,15 @@ void Character::use(int idx, ICharacter& target)
 	AMateria	*tmp;
 
 	if (0 > idx || idx >= 4)
+	{
+		std::cout << "Wrong index" << std::endl;
 		return ;
+	}
+	if (!this->inventory[idx])
+	{
+		std::cout << "Empty slot" << std::endl;
+		return ;
+	}
 	if (this->inventory[idx]->getType().compare("ice") == 0)
 		tmp = new Ice();
 	else

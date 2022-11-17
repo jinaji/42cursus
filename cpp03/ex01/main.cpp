@@ -3,6 +3,7 @@
 int main()
 {
 	ScavTrap	scav("scav");
+	std::cout << std::endl;
 
 	scav.attack("jina");
 	scav.takeDamage(10);
