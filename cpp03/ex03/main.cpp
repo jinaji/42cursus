@@ -15,7 +15,7 @@ int main()
 	std::cout << std::endl;
 	dia.guardGate();
 
-	std::cout << std::endl;
+	std::cout << std::endl;  
 	dia.highFivesGuys();
 
 	std::cout << std::endl;

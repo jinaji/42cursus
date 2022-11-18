@@ -32,7 +32,7 @@ FragTrap::FragTrap(const FragTrap& fragtrap)
 
 FragTrap::~FragTrap()
 {
-	std::cout << "FragTrap destructor called" << std::endl;
+	std::cout << "FragTrap " << this->name << " destructor called" << std::endl;
 }
 
 void	FragTrap::highFivesGuys(void)

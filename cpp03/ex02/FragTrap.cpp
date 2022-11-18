@@ -3,6 +3,9 @@
 FragTrap::FragTrap() : ClapTrap()
 {
 	std::cout << "FragTrap default constructor called" << std::endl;
+	this->HitPoint = 100;
+	this->EnergyPoint = 100;
+	this->AttackDamage = 30;
 }
 
 FragTrap::FragTrap(std::string name) : ClapTrap(name)
@@ -29,7 +32,7 @@ FragTrap::FragTrap(const FragTrap& obj)
 
 FragTrap::~FragTrap()
 {
-	std::cout << "FragTrap destructor called" << std::endl;
+	std::cout << "FragTrap " << this->name << " destructor called" << std::endl;
 }
 
 void	FragTrap::highFivesGuys(void)
