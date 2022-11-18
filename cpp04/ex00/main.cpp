@@ -19,9 +19,9 @@ int main()
 	meta->makeSound();
 	std::cout << std::endl;
 
-	delete (meta);
-	delete (j);
-	delete (i);
+	delete meta;
+	delete j;
+	delete i;
 	std::cout << std::endl;
 
 	const WrongAnimal	*meta2 = new WrongAnimal();
@@ -35,8 +35,15 @@ int main()
 	i2->makeSound();
 	std::cout << std::endl;
 
-	delete (meta2);
-	delete (i2);
+	delete meta2;
+	delete i2;
+
+	// {
+	// 	const Animal* meta = new Animal();
+	// 	meta->makeSound();
+
+	// 	delete meta;
+	// }
 
 	return (0);
 }

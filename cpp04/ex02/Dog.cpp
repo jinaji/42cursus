@@ -14,7 +14,9 @@ Dog::Dog(const Dog& obj)
 
 const Dog& Dog::operator=(const Dog &obj)
 {
+	delete this->brain;
 	this->type = obj.type;
+	this->brain = new Brain(*obj.brain);
 	return (*this);
 }
 
