@@ -2,23 +2,10 @@
 
 int main()
 {
-	// Bureaucrat tmp("name", 1);
-	
-	// std::cout << tmp << std::endl;
-	// try
-	// {
-	// 	tmp.incrementGrade();
-	// }
-	// catch(std::exception &e)
-	// {
-	// 	std::cerr << e.what() << std::endl;
-	// }
-	// std::cout << tmp << std::endl;
+	Bureaucrat	tmp("jina", 5);
+	Form sign(4, 3);
 
-	Bureaucrat	tmp("name", 5);
-	Form sign(5, 4, 3);
-
-	std::cout << tmp << std::endl;
+	std::cout << std::endl << tmp << std::endl;
 	try
 	{
 		tmp.signForm(sign);
@@ -27,4 +14,17 @@ int main()
 	{
 		std::cerr << e.what() << std::endl;
 	}
+	std::cout << sign << std::endl;
+	std::cout << "*" << std::endl << std::endl;
+
+	try
+	{
+		tmp.incrementGrade();
+		tmp.signForm(sign);
+	}
+	catch(const std::exception& e)
+	{
+		std::cerr << e.what() << std::endl;
+	}
+	std::cout << sign << std::endl;
 }

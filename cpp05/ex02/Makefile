@@ -1,5 +1,5 @@
 CXXFLAGS = -Wall -Werror -Wextra -std=c++98
-SRCS = Bureaucrat.cpp Form.cpp main.cpp
+SRCS = Bureaucrat.cpp Form.cpp main.cpp ShrubberyCreationForm.cpp
 OBJS = $(SRCS:.cpp=.o)
 NAME = a.out
 

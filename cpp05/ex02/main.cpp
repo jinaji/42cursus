@@ -1,4 +1,5 @@
 #include "Bureaucrat.hpp"
+#include "ShrubberyCreationForm.hpp"
 
 int main()
 {
@@ -16,7 +17,7 @@ int main()
 	// std::cout << tmp << std::endl;
 
 	Bureaucrat	tmp("name", 5);
-	Form sign(5, 4, 3);
+	ShrubberyCreationForm	sign;
 
 	std::cout << tmp << std::endl;
 	try

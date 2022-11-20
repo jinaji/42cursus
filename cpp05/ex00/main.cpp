@@ -27,6 +27,7 @@ int main()
 	{
 		std::cerr << e.what() << std::endl;
 	}
+	std::cout << std::endl;
 	std::cout << tmp << std::endl;
 	std::cout << tmp2 << std::endl;
 }

@@ -9,21 +9,19 @@ class Form
 private:
 	const	std::string name;
 	bool	sign;
-	const int	grade;
 	const int	gradeForSign;
 	const int	gradeForExecute;
 	
 public:
 	Form();
 	Form(const Form& obj);
-	Form(int grade, int gradeForSign, int gradeForExecute);
+	Form(int gradeForSign, int gradeForExecute);
 	const Form& operator=(const Form& obj);
 	~Form();
 
 public:
 	const std::string getName() const;
 	bool	getSign() const;
-	int getGrade() const;
 	int getGradeForSign() const;
 	int getGradeForExecute() const;
 

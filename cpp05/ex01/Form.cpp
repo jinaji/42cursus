@@ -1,16 +1,16 @@
 #include "Form.hpp"
 
 
-Form::Form() : name("form no name"), sign(false), grade(0), gradeForSign(0), gradeForExecute(0)
+Form::Form() : name("form no name"), sign(false), gradeForSign(0), gradeForExecute(0)
 {
 }
 
-Form::Form(const Form& obj) : name("form no name"), sign(false), grade(obj.grade), gradeForSign(obj.gradeForSign), gradeForExecute(obj.gradeForExecute)
+Form::Form(const Form& obj) : name("form no name"), sign(false), gradeForSign(obj.gradeForSign), gradeForExecute(obj.gradeForExecute)
 {
 	*this = obj;
 }
 
-Form::Form(int grade, int gradeForSign, int gradeForExecute) : name("form no name"), grade(grade), gradeForSign(gradeForSign), gradeForExecute(gradeForExecute)
+Form::Form(int gradeForSign, int gradeForExecute) : name("form no name"), gradeForSign(gradeForSign), gradeForExecute(gradeForExecute)
 {
 }
 
@@ -28,11 +28,6 @@ const std::string Form::getName() const
 bool Form::getSign() const
 {
 	return (this->sign);
-}
-
-int Form::getGrade() const
-{
-	return (this->grade);
 }
 
 int Form::getGradeForSign() const
@@ -53,11 +48,16 @@ void Form::beSigned(Bureaucrat& obj)
 {
 	if (obj.getGrade() > this->getGradeForSign())
 		throw GradeTooLowException();
-	this->sign = true;
+	else
+		this->sign = true;
 }
 
 std::ostream& operator<<(std::ostream& os, const Form& obj)
 {
-	os << obj.getName() << ", bureaucrat grade " << obj.getGrade() << ". Signed: " << obj.getSign() << std::endl;
+	os << obj.getName() << " needs grade " << obj.getGradeForSign() << " for sign and " << obj.getGradeForExecute() << " for execute. ";
+	if (obj.getSign() == 1)
+		std::cout << obj.getName() << " is signed" << std::endl;
+	else
+		std::cout << obj.getName() << " isn't signed " << std::endl;
 	return (os);
 }

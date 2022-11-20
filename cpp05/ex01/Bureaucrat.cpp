@@ -58,9 +58,12 @@ std::ostream& operator<<(std::ostream& os, const Bureaucrat& obj)
 
 void	Bureaucrat::signForm(Form &form)
 {
-	if (form.getSign())
+	form.beSigned(*this);
+	if (form.getSign() == true)
 		std::cout << this->name << " signed " << form.getName() << std::endl;
 	else
+	{
 		std::cout << this->name << " couldn't sign " << form.getName() << " because ";
 		form.beSigned(*this);
+	}
 }

@@ -36,6 +36,12 @@ ShrubberyCreationForm::ShrubberyCreationForm(const Form& form) : gradeForSign(14
 	"      // \\";
 
 	writeFile.close();
-	// std::ofstream writeFile;
-	// writeFile.open(form.getName() + "_shrubbery");
+	std::ofstream writeFile;
+	writeFile.open(form.getName() + "_shrubbery");
+}
+
+void ShrubberyCreationForm::execute(Bureaucrat const &excutor) const
+{
+	if (this->getSign() == false)
+		throw (GradeTooLowException());
 }
