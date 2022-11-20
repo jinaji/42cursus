@@ -27,13 +27,15 @@ int main()
 	std::cout << std::endl;
 
 	me->unequip(0);
-	me->unequip(2);
 	me->unequip(1);
+	me->unequip(2);
 	std::cout << std::endl;
 
 	delete bob;
 	delete me;
 	delete src;
 
+	std::cout << std::endl;
+	system("leaks a.out | grep leaked");
 	return 0;
 }

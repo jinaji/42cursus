@@ -9,6 +9,7 @@ Cat::Cat()
 
 Cat::Cat(const Cat& obj)
 {
+	this->brain = new Brain();
 	*this = obj;
 }
 

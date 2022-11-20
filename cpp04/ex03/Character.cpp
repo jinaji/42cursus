@@ -46,11 +46,20 @@ std::string const& Character::getName() const
 
 void Character::equip(AMateria* m)
 {
-	if (index >= 4)
+	int i = 0;
+	
+	if (this->index >= 4)
 		delete m;
-	this->inventory[index] = m;
+	for (; 4 > i; i++)
+	{
+		if (!this->inventory[i])
+		{
+			this->inventory[i] = m;
+			break ;
+		}
+	}
 	this->index++;
-	std::cout << this->getName() << " equip " << this->index << " slot " << m->getType() << " material" << std::endl;
+	std::cout << this->getName() << " equip " << m->getType() << " material on " << i << std::endl;
 }
 
 void Character::unequip(int idx)
@@ -58,14 +67,13 @@ void Character::unequip(int idx)
 	if (f_index > 9 || (0 > idx || idx >= 4) || this->index == 0)
 		return ;
 	if (!this->inventory[idx])
-	{
-		std::cout << "Empty slot" << std::endl;
 		return ;
-	}
 	if (this->inventory[idx]->getType().compare("ice") == 0 || this->inventory[idx]->getType().compare("cure") == 0)
 	{
 		this->floor[f_index] = this->inventory[idx];
 		std::cout << this->getName() << " unequip " << this->inventory[idx]->getType() << " material at " << idx << " slot" << std::endl;
+		// 슬롯 비우기 ??
+		this->inventory[idx] = NULL;
 		this->f_index++;
 		std::cout << "there are " << f_index << " materials on the floor" << std::endl;
 		this->index--;
@@ -77,15 +85,9 @@ void Character::use(int idx, ICharacter& target)
 	AMateria	*tmp;
 
 	if (0 > idx || idx >= 4)
-	{
-		std::cout << "Wrong index" << std::endl;
 		return ;
-	}
 	if (!this->inventory[idx])
-	{
-		std::cout << "Empty slot" << std::endl;
 		return ;
-	}
 	if (this->inventory[idx]->getType().compare("ice") == 0)
 		tmp = new Ice();
 	else

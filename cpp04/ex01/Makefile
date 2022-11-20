@@ -1,4 +1,4 @@
-CXXFLAGS = -Wall -Werror -Wextra -std=c++98
+CXXFLAGS = -Wall -Werror -Wextra -std=c++98 -g
 SRCS = Animal.cpp Dog.cpp Cat.cpp WrongAnimal.cpp WrongCat.cpp Brain.cpp main.cpp
 OBJS = $(SRCS:.cpp=.o)
 NAME = a.out
@@ -16,4 +16,4 @@ fclean: clean
 
 re: fclean all
 
-.PHONY : all clean fclean bonus re
+.PHONY: all clean fclean bonus re

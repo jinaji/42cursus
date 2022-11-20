@@ -25,25 +25,21 @@ int main()
 	std::cout << std::endl;
 
 	const WrongAnimal	*meta2 = new WrongAnimal();
-	const WrongCat		*i2 = new WrongCat();
+	const WrongAnimal		*i2 = new WrongCat();
 
 	std::cout << std::endl;
 	std::cout << meta2->getType() << " " << std::endl;
 	std::cout << i2->getType() << " " << std::endl << std::endl;
 
-	meta2->getType();
-	i2->makeSound();
+	meta2->makeSound();
+	i2->makeSound(); // Wrongcat: Wrong animal sound
 	std::cout << std::endl;
 
 	delete meta2;
 	delete i2;
-
-	// {
-	// 	const Animal* meta = new Animal();
-	// 	meta->makeSound();
-
-	// 	delete meta;
-	// }
+	
+	std::cout << std::endl;
+	system("leaks a.out | grep leaked");
 
 	return (0);
 }
