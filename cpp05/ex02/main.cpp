@@ -1,31 +1,49 @@
 #include "Bureaucrat.hpp"
 #include "ShrubberyCreationForm.hpp"
+#include "RobotomyRequestForm.hpp"
+#include "PresidentialPardonForm.hpp"
 
 int main()
 {
-	// Bureaucrat tmp("name", 1);
-	
-	// std::cout << tmp << std::endl;
-	// try
-	// {
-	// 	tmp.incrementGrade();
-	// }
-	// catch(std::exception &e)
-	// {
-	// 	std::cerr << e.what() << std::endl;
-	// }
-	// std::cout << tmp << std::endl;
+	Bureaucrat	me("jina", 50);
+	ShrubberyCreationForm	shrubbery("Home");
+	RobotomyRequestForm		robotomy("robo");
+	PresidentialPardonForm	president("pre");
 
-	Bureaucrat	tmp("name", 5);
-	ShrubberyCreationForm	sign;
-
-	std::cout << tmp << std::endl;
+	std::cout << me << std::endl;
+	std::cout << std::endl;
 	try
 	{
-		tmp.signForm(sign);
+		me.signForm(shrubbery);
+		me.executeForm(shrubbery);
 	}
 	catch(const std::exception& e)
 	{
 		std::cerr << e.what() << std::endl;
 	}
+	std::cout << std::endl;
+	try
+	{
+		me.signForm(robotomy);
+		me.executeForm(robotomy);
+	}
+	catch(const std::exception& e)
+	{
+		std::cerr << e.what() << std::endl;
+	}
+	std::cout << std::endl;
+	try
+	{
+		me.signForm(president);
+		me.executeForm(president);
+	}
+	catch(const std::exception& e)
+	{
+		std::cerr << e.what() << std::endl;
+	}
+	std::cout << std::endl;
+	
+	std::cout << shrubbery << std::endl;
+	std::cout << robotomy << std::endl;
+	std::cout << president << std::endl;
 }

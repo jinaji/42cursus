@@ -10,7 +10,7 @@ Form::Form(const Form& obj) : name("form no name"), sign(false), gradeForSign(ob
 	*this = obj;
 }
 
-Form::Form(int gradeForSign, int gradeForExecute) : name("form no name"), gradeForSign(gradeForSign), gradeForExecute(gradeForExecute)
+Form::Form(std::string name, int gradeForSign, int gradeForExecute) : name(name), gradeForSign(gradeForSign), gradeForExecute(gradeForExecute)
 {
 }
 

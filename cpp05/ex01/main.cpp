@@ -3,7 +3,7 @@
 int main()
 {
 	Bureaucrat	tmp("jina", 5);
-	Form sign(4, 3);
+	Form sign("dinner choice", 4, 3);
 
 	std::cout << std::endl << tmp << std::endl;
 	try
@@ -16,7 +16,7 @@ int main()
 	}
 	std::cout << sign << std::endl;
 	std::cout << "*" << std::endl << std::endl;
-
+	
 	try
 	{
 		tmp.incrementGrade();
