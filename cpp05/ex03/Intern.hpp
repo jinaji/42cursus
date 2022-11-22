@@ -18,7 +18,7 @@ public:
 
 	Form	*makeForm(std::string formName, std::string target);
 
-	class WrognFormException : public std::exception
+	class WrongFormException : public std::exception
 	{
 		public:
 		const char* what() const throw()

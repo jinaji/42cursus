@@ -1,5 +1,5 @@
-CXXFLAGS = -Wall -Werror -Wextra -std=c++98
-SRCS = Fixed.cpp main.cpp
+CXXFLAGS = -Wall -Werror -Wextra -std=c++98 -g
+SRCS = main.cpp Convert.cpp
 OBJS = $(SRCS:.cpp=.o)
 NAME = a.out
 
@@ -16,4 +16,4 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all clean fclean bonus re
+.PHONY: all clean fclean re

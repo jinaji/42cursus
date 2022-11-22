@@ -1,7 +1,7 @@
 #include "Bureaucrat.hpp"
 #include "Form.hpp"
 
-Bureaucrat::Bureaucrat()
+Bureaucrat::Bureaucrat() : name("no name"), grade(150)
 {
 }
 
@@ -12,7 +12,8 @@ Bureaucrat::Bureaucrat(const Bureaucrat& obj)
 
 const Bureaucrat& Bureaucrat::operator=(const Bureaucrat& obj)
 {
-	(void)obj;
+	if (this == &obj)
+		return *this;
 	return (*this);
 }
 

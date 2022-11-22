@@ -16,7 +16,8 @@ Form::Form(std::string name, int gradeForSign, int gradeForExecute) : name(name)
 
 const Form& Form::operator=(const Form& obj)
 {
-	(void)obj;
+	if (this == &obj)
+		return *this;
 	return (*this);
 }
 

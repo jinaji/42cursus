@@ -8,7 +8,7 @@ int main()
 	Bureaucrat	me("jina", 50);
 	ShrubberyCreationForm	shrubbery("Home");
 	RobotomyRequestForm		robotomy("robo");
-	PresidentialPardonForm	president("pre");
+	PresidentialPardonForm	pardon("pre");
 
 	std::cout << me << std::endl;
 	std::cout << std::endl;
@@ -34,8 +34,8 @@ int main()
 	std::cout << std::endl;
 	try
 	{
-		me.signForm(president);
-		me.executeForm(president);
+		me.signForm(pardon);
+		me.executeForm(pardon);
 	}
 	catch(const std::exception& e)
 	{
@@ -45,5 +45,5 @@ int main()
 	
 	std::cout << shrubbery << std::endl;
 	std::cout << robotomy << std::endl;
-	std::cout << president << std::endl;
+	std::cout << pardon << std::endl;
 }

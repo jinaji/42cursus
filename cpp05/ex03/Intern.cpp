@@ -13,12 +13,13 @@ Intern::Intern()
 
 Intern::Intern(const Intern& obj)
 {
-	(void)obj;
+	*this = obj;
 }
 
 const Intern& Intern::operator=(const Intern& obj)
 {
-	(void)obj;
+	if (this == &obj)
+		return *this;
 	return (*this);
 }
 
@@ -31,7 +32,7 @@ Form* Intern::makeForm(std::string formName, std::string target)
 	Form *tmp;
 	int i = 0;
 
-	for (; this->form[i] != formName; i++)
+	for (; this->form[i] != formName && 4 > i; i++)
 		;
 
 	switch (i)
@@ -52,5 +53,5 @@ Form* Intern::makeForm(std::string formName, std::string target)
 			return (tmp);
 		}
 	}
-	throw (WrognFormException());
+	throw (WrongFormException());
 }
