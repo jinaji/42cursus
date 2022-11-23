@@ -62,7 +62,7 @@ void	Convert::printChar()
 	else if (tmpString.empty() == false && tmpString.back() != 'f')
 		std::cout << "char: " << "imposible" << std::endl;
 	else if (isprint(data) == true)
-		std::cout << "char: " << tData << std::endl;
+		std::cout << "char: " << "'" << tData << "'" << std::endl;
 	else
 		std::cout << "char: " << "Non displayable" << std::endl;
 }
