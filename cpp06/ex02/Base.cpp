@@ -13,19 +13,48 @@ Base*	generate(void)
 		case 2:
 			return (new C);
 	}
+	return (0);
 }
 
 void	identify(Base* p)
 {
-
+	if (dynamic_cast<A *>(p))
+		std::cout << "A" << std::endl;
+	else if (dynamic_cast<B *>(p))
+		std::cout << "A" << std::endl;
+	else if (dynamic_cast<C *>(p))
+		std::cout << "A" << std::endl;
 }
 
-void	indentify(Base& p)
+void	identify(Base& p)
 {
-
-}
-
-int main()
-{
-	//	다운캐스팅 되는지 어케봄??
+	Base tmp;
+	try
+	{
+		tmp = dynamic_cast<A &>(p);
+		std::cout << "A" << std::endl;
+	}
+	catch(const std::exception& e)
+	{
+		std::cerr << e.what() << '\n';
+	}
+	try
+	{
+		tmp = dynamic_cast<B &>(p);
+		std::cout << "B" << std::endl;
+	}
+	catch(const std::exception& e)
+	{
+		std::cerr << e.what() << '\n';
+	}
+	try
+	{
+		tmp = dynamic_cast<C &>(p);
+		std::cout << "C" << std::endl;
+	}
+	catch(const std::exception& e)
+	{
+		std::cerr << e.what() << '\n';
+	}
+	// try catch https://cplusplus.com/reference/typeinfo/bad_cast/
 }

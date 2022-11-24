@@ -26,36 +26,42 @@ Convert::~Convert()
 // method
 void	Convert::setData(char* val)
 {
-	this->data = strtod(val, &endptr);
+	if (strlen(val) == 1 && isascii(*val))
+	{
+		this->data = static_cast<char>(*val);
+		this->endptr = strdup("");
+	}
+	else
+		this->data = strtod(val, &endptr);
 	std::cout << this->data << std::endl;
 	if (endptr != '\0')
-		std::cout << "endptr " << (std::string)endptr << std::endl;
+		std::cout << "endptr " << static_cast<std::string>(endptr) << std::endl;
 }
 
 char	Convert::toChar()
 {
-	return ((char)this->data);
+	return (static_cast<char>(this->data));
 }
 
 int		Convert::toInt()
 {
-	return ((int)this->data);
+	return (static_cast<int>(this->data));
 }
 
 float	Convert::toFloat()
 {
-	return ((float)this->data);
+	return (static_cast<float>(this->data));
 }
 
 double	Convert::toDouble()
 {
-	return ((double)this->data);
+	return (static_cast<double>(this->data));
 }
 
 void	Convert::printChar()
 {
 	char tData =  this->toChar();
-	std::string		tmpString = (std::string)this->endptr;
+	std::string		tmpString = static_cast<std::string>(this->endptr);
 
 	if ((tmpString.back() == 'f' && tmpString.length() != 1))
 		std::cout << "char: " << "imposible" << std::endl;
@@ -70,7 +76,7 @@ void	Convert::printChar()
 void	Convert::printInt()
 {
 	int	tData =  this->toInt();
-	std::string		tmpString = (std::string)this->endptr;
+	std::string		tmpString = static_cast<std::string>(this->endptr);
 
 	if (this->data > INT_MAX || this->data < INT_MIN)
 		std::cout << "int: overflow" << std::endl;
@@ -85,13 +91,13 @@ void	Convert::printInt()
 void	Convert::printFloat()
 {
 	float	tData =  this->toFloat();
-	std::string		tmpString = (std::string)this->endptr;
+	std::string		tmpString = static_cast<std::string>(this->endptr);
 
 	if ((tmpString.back() == 'f' && tmpString.length() != 1))
 		std::cout << "float: " << "nanf" << std::endl;
 	else if (tmpString.empty() == false && tmpString.back() != 'f')
 		std::cout << "float: " << "nanf" << std::endl;
-	else if (tData == (int)tData)
+	else if (tData == static_cast<int>(tData))
 		std::cout << "float: " << tData << ".0f" << std::endl;
 	else
 		std::cout << "float: " << tData << "f" << std::endl;
@@ -100,13 +106,13 @@ void	Convert::printFloat()
 void	Convert::printDouble()
 {
 	double	tData =  this->toDouble();
-	std::string		tmpString = (std::string)this->endptr;
+	std::string		tmpString = static_cast<std::string>(this->endptr);
 
 	if ((tmpString.back() == 'f' && tmpString.length() != 1))
 		std::cout << "double: " << "nan" << std::endl;
 	else if (tmpString.empty() == false && tmpString.back() != 'f')
 		std::cout << "double: " << "nan" << std::endl;
-	else if (tData == (int)tData)
+	else if (tData == static_cast<int>(tData))
 		std::cout << "double: " << tData << ".0" << std::endl;
 	else
 		std::cout << "double: " << tData << std::endl;
