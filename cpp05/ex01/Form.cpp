@@ -48,7 +48,10 @@ Form::~Form()
 void Form::beSigned(Bureaucrat& obj)
 {
 	if (obj.getGrade() > this->getGradeForSign())
-		throw GradeTooLowException();
+	{
+		std::cout << obj.getName() << " couldn't sign " << this->name << " because ";
+		throw (GradeTooLowException());
+	}
 	else
 		this->sign = true;
 }

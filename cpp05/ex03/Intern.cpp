@@ -32,7 +32,7 @@ Form* Intern::makeForm(std::string formName, std::string target)
 	Form *tmp;
 	int i = 0;
 
-	for (; this->form[i] != formName && 4 > i; i++)
+	for (; this->form[i] != formName && 3 > i; i++)
 		;
 
 	switch (i)
@@ -40,18 +40,22 @@ Form* Intern::makeForm(std::string formName, std::string target)
 		case SHRUBBERY :
 		{
 			tmp = new ShrubberyCreationForm(target);
+			std::cout << "Intern creates " << tmp->getName() << std::endl;
 			return (tmp);
 		}
 		case ROBOTOMY :
 		{
 			tmp = new RobotomyRequestForm(target);
+			std::cout << "Intern creates " << tmp->getName() << std::endl;
 			return (tmp);
 		}
 		case PARDON :
 		{
 			tmp = new PresidentialPardonForm(target);
+			std::cout << "Intern creates " << tmp->getName() << std::endl;
 			return (tmp);
 		}
 	}
-	throw (WrongFormException());
+	std::cout << "Intren fails create form" << std::endl;
+	return (NULL);
 }

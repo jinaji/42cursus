@@ -9,10 +9,6 @@ public:
 	virtual ~Base();
 };
 
-Base::~Base()
-{
-}
-
 class A : public Base
 {
 };

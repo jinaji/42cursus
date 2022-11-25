@@ -3,9 +3,14 @@
 #include "RobotomyRequestForm.hpp"
 #include "PresidentialPardonForm.hpp"
 
+void lk()
+{
+	system("leaks a.out | grep leaked");
+}
+
 int main()
 {
-	Bureaucrat	me("jina", 50);
+	Bureaucrat	me("jina", 20);
 	ShrubberyCreationForm	shrubbery("Home");
 	RobotomyRequestForm		robotomy("robo");
 	PresidentialPardonForm	pardon("pre");
@@ -46,4 +51,7 @@ int main()
 	std::cout << shrubbery << std::endl;
 	std::cout << robotomy << std::endl;
 	std::cout << pardon << std::endl;
+
+	std::cout << std::endl;
+	atexit(lk);
 }

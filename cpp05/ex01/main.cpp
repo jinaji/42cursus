@@ -1,5 +1,10 @@
 #include "Bureaucrat.hpp"
 
+void lk()
+{
+	system("leaks a.out | grep leaked");
+}
+
 int main()
 {
 	Bureaucrat	tmp("jina", 5);
@@ -15,7 +20,6 @@ int main()
 		std::cerr << e.what() << std::endl;
 	}
 	std::cout << sign << std::endl;
-	std::cout << "*" << std::endl << std::endl;
 	
 	try
 	{
@@ -27,4 +31,6 @@ int main()
 		std::cerr << e.what() << std::endl;
 	}
 	std::cout << sign << std::endl;
+
+	atexit(lk);
 }

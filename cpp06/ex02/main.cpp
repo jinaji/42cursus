@@ -6,7 +6,9 @@ int main()
 	Base*	ptr;
 	ptr = generate();
 
-	// identify(ptr);
-	// identify(*ptr);
-	//	다운캐스팅 되는지 어케봄??
+	std::cout << "dynamic cast by pointer" << std::endl;
+	identify(ptr);
+	std::cout << std::endl;
+	std::cout << "dynamic cast by reference" << std::endl;
+	identify(*ptr);
 }

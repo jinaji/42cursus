@@ -1,8 +1,12 @@
 #include "Base.hpp"
 #include <cmath>
 
+Base::~Base()
+{}
+
 Base*	generate(void)
 {
+	srand(time(NULL));
 	int i = rand() % 3;
 	switch(i)
 	{
@@ -19,42 +23,43 @@ Base*	generate(void)
 void	identify(Base* p)
 {
 	if (dynamic_cast<A *>(p))
-		std::cout << "A" << std::endl;
+		std::cout << "type: A" << std::endl;
 	else if (dynamic_cast<B *>(p))
-		std::cout << "A" << std::endl;
+		std::cout << "type: B" << std::endl;
 	else if (dynamic_cast<C *>(p))
-		std::cout << "A" << std::endl;
+		std::cout << "type: C" << std::endl;
 }
 
 void	identify(Base& p)
 {
 	Base tmp;
+	
 	try
 	{
 		tmp = dynamic_cast<A &>(p);
-		std::cout << "A" << std::endl;
+		std::cout << "type: A" << std::endl;
 	}
 	catch(const std::exception& e)
 	{
-		std::cerr << e.what() << '\n';
+		std::cerr << e.what() << std::endl;
 	}
 	try
 	{
 		tmp = dynamic_cast<B &>(p);
-		std::cout << "B" << std::endl;
+		std::cout << "type: B" << std::endl;
 	}
 	catch(const std::exception& e)
 	{
-		std::cerr << e.what() << '\n';
+		std::cerr << e.what() << std::endl;
 	}
 	try
 	{
 		tmp = dynamic_cast<C &>(p);
-		std::cout << "C" << std::endl;
+		std::cout << "type: C" << std::endl;
 	}
 	catch(const std::exception& e)
 	{
-		std::cerr << e.what() << '\n';
+		std::cerr << e.what() << std::endl;
 	}
 	// try catch https://cplusplus.com/reference/typeinfo/bad_cast/
 }

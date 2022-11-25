@@ -19,7 +19,7 @@ public:
 	Form(const Form& obj);
 	Form(std::string name, int gradeForSign, int gradeForExecute);
 	const Form& operator=(const Form& obj);
-	~Form();
+	virtual ~Form();
 
 public:
 	const std::string getName() const;

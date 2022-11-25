@@ -18,6 +18,10 @@ const Bureaucrat& Bureaucrat::operator=(const Bureaucrat& obj)
 
 Bureaucrat::Bureaucrat(const std::string name, int grade) : name(name), grade(grade)
 {
+	if (grade > 150)
+		throw (GradeTooLowException());
+	else if (1 > grade)
+		throw (GradeTooHighException());
 }
 
 Bureaucrat::~Bureaucrat()
