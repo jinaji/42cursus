@@ -71,6 +71,7 @@
 		"vector": "cpp",
 		"*.tpp": "c",
 		"list": "cpp",
-		"__functional_03": "cpp"
+		"__functional_03": "cpp",
+		"filesystem": "cpp"
 	}
 }

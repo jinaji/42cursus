@@ -4,6 +4,11 @@
 #include <deque>
 #include <vector>
 
+void lk()
+{
+	system("leaks a.out | grep leaked");
+}
+
 int main()
 {
 	std::array<int, 5> test1 = {0, 1, 2, 3, 4};
@@ -25,4 +30,6 @@ int main()
 	std::cout << easyfind(test1, 3) << std::endl << std::endl;
 	std::cout << easyfind(test2, 3) << std::endl << std::endl;
 	std::cout << easyfind(test3, 3) << std::endl << std::endl;
+
+	atexit(lk);
 }

@@ -6,7 +6,8 @@
 class Span
 {
 private:
-	unsigned int n;
+	unsigned int maxCount;
+	unsigned int curCount;
 	std::vector<int>	store;
 public:
 	Span();
@@ -14,28 +15,39 @@ public:
 	const Span& operator=(const Span& obj);
 	~Span();
 
+public:
 	Span(unsigned int n);
 	void addNumber(int n);
 	int shortestSpan();
 	int longestSpan();
 
 	public :
-	class notValidCount : public std::exception
+	class notEnoughCount : public std::exception
 	{
 		public:
 		const char* what() const throw()
 		{
-			return ("No enough elements");
+			return ("Not enough elements");
 		}
 	};
 
 	public :
-	class doubleAdd : public std::exception
+	class doubleElement : public std::exception
 	{
 		public:
 		const char* what() const throw()
 		{
 			return ("Already exist element");
+		}
+	};
+
+	public :
+	class sizeOver : public std::exception
+	{
+		public:
+		const char* what() const throw()
+		{
+			return ("Size over");
 		}
 	};
 };
