@@ -11,7 +11,6 @@ int main()
 
 	{
 		Array<int>	test(n);
-		std::cout << typeid(test[0]).name() << std::endl;
 		size_t i = test.size();
 		std::cout << "size: " << i << std::endl;
 		try
@@ -53,7 +52,6 @@ int main()
 
 	{
 		Array<std::string>	test(n);
-		std::cout << typeid(test[0]).name() << std::endl;
 		size_t i = test.size();
 		std::cout << "size: " << i << std::endl;
 		try
@@ -95,7 +93,6 @@ int main()
 
 	{
 		Array<char>	test(n);
-		std::cout << typeid(test[0]).name() << std::endl;
 		size_t i = test.size();
 		std::cout << "size: " << i << std::endl;
 		try
