@@ -19,7 +19,9 @@ int main()
 		std::cout << "min : " << min(a, b) << std::endl;
 		std::cout << "max : " << max(a, b) << std::endl;
 	}
+
 	std::cout << std::endl;
+
 	{
 		const int a = 4;
 		const int b = 2;
@@ -28,7 +30,9 @@ int main()
 		std::cout << "min : " << min(a, b) << std::endl;
 		std::cout << "max : " << max(a, b) << std::endl;
 	}
+
 	std::cout << std::endl;
+
 	{
 		std::string a = "hihi";
 		std::string b = "hello";
@@ -39,7 +43,9 @@ int main()
 		std::cout << "min : " << min(a, b) << std::endl;
 		std::cout << "max : " << max(a, b) << std::endl;
 	}
+
 	std::cout << std::endl;
+	
 	{
 		int a = 2;
 		int b = 3;

@@ -61,5 +61,4 @@ void	identify(Base& p)
 	{
 		std::cerr << e.what() << std::endl;
 	}
-	// try catch https://cplusplus.com/reference/typeinfo/bad_cast/
 }

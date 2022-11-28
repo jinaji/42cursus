@@ -12,7 +12,7 @@ private:
 public:
 	Span();
 	Span(const Span& obj);
-	const Span& operator=(const Span& obj);
+	Span& operator=(const Span& obj);
 	~Span();
 
 public:

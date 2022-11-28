@@ -11,7 +11,7 @@ Span::Span(const Span& obj)
 	*this = obj;
 }
 
-const Span& Span::operator=(const Span& obj)
+Span& Span::operator=(const Span& obj)
 {
 	if (this == &obj)
 		return (*this);

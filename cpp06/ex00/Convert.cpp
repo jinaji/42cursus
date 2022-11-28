@@ -11,7 +11,7 @@ Convert::Convert(const Convert& obj)
 	*this = obj;
 }
 
-const Convert& Convert::operator=(const Convert& obj)
+Convert& Convert::operator=(const Convert& obj)
 {
 	if (this == &obj)
 		return (*this);
@@ -26,16 +26,13 @@ Convert::~Convert()
 // method
 void	Convert::setData(char* val)
 {
-	if (strlen(val) == 1 && isascii(*val))
+	if (strlen(val) == 1 && isascii(*val) && !isnumber(*val))
 	{
 		this->data = static_cast<char>(*val);
 		this->endptr = strdup("");
 	}
 	else
 		this->data = strtod(val, &endptr);
-	std::cout << this->data << std::endl;
-	if (endptr != '\0')
-		std::cout << "endptr " << static_cast<std::string>(endptr) << std::endl;
 }
 
 char	Convert::toChar()
@@ -78,10 +75,10 @@ void	Convert::printInt()
 	int	tData =  this->toInt();
 	std::string		tmpString = static_cast<std::string>(this->endptr);
 
-	if (this->data > INT_MAX || this->data < INT_MIN)
-		std::cout << "int: overflow" << std::endl;
-	else if ((tmpString.back() == 'f' && tmpString.length() != 1))
+	if ((tmpString.back() == 'f' && tmpString.length() != 1))
 		std::cout << "int: " << "imposible" << std::endl;
+	else if (this->data > INT_MAX || this->data < INT_MIN)
+		std::cout << "int: overflow" << std::endl;
 	else if (tmpString.empty() == false && tmpString.back() != 'f')
 		std::cout << "int: " << "imposible" << std::endl;
 	else

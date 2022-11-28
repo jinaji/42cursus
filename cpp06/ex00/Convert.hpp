@@ -12,7 +12,7 @@ private:
 public:
 	Convert();
 	Convert(const Convert& obj);
-	const Convert& operator=(const Convert& obj);
+	Convert& operator=(const Convert& obj);
 	~Convert();
 
 	void	setData(char* val);

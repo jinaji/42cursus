@@ -7,9 +7,9 @@ void lk()
 }
 
 template<typename T>
-void test(T const& n)
+void test(T const& obj)
 {
-	std::cout << n << std::endl;
+	std::cout << obj << std::endl;
 }
 
 int main()
