@@ -11,7 +11,7 @@ WrongAnimal::WrongAnimal(const WrongAnimal& obj)
 	*this = obj;
 }
 
-const WrongAnimal& WrongAnimal::operator=(const WrongAnimal &obj)
+WrongAnimal& WrongAnimal::operator=(const WrongAnimal &obj)
 {
 	this->type = obj.type;
 	return (*this);

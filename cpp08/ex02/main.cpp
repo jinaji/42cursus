@@ -28,6 +28,7 @@ int main()
 	// 	}
 	// 	std::stack<int> s(mstack);
 	// }
+
 	std::cout << std::endl;
 	{
 		MutantStack<int> mstack;

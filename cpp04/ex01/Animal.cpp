@@ -12,7 +12,7 @@ Animal::Animal(const Animal& obj)
 	*this = obj;
 }
 
-const Animal& Animal::operator=(const Animal &obj)
+Animal& Animal::operator=(const Animal &obj)
 {
 	std::cout << "Animal copy assignment operator called" << std::endl;
 	this->type = obj.type;

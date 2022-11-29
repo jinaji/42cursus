@@ -16,7 +16,7 @@ public:
 	Form();
 	Form(const Form& obj);
 	Form(std::string name, int gradeForSign, int gradeForExecute);
-	const Form& operator=(const Form& obj);
+	Form& operator=(const Form& obj);
 	~Form();
 
 public:

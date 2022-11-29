@@ -9,7 +9,7 @@ public:
 	PresidentialPardonForm();
 	PresidentialPardonForm(std::string target);
 	PresidentialPardonForm(const PresidentialPardonForm& obj);
-	const PresidentialPardonForm& operator=(const PresidentialPardonForm& obj);
+	PresidentialPardonForm& operator=(const PresidentialPardonForm& obj);
 	~PresidentialPardonForm();
 
 	PresidentialPardonForm(const Form& form);

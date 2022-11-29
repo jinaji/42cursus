@@ -12,7 +12,7 @@ Cat::Cat(const Cat& obj)
 	*this = obj;
 }
 
-const Cat& Cat::operator=(const Cat &obj)
+Cat& Cat::operator=(const Cat &obj)
 {
 	delete this->brain;
 	this->type = obj.type;

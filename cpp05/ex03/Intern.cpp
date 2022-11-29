@@ -16,7 +16,7 @@ Intern::Intern(const Intern& obj)
 	*this = obj;
 }
 
-const Intern& Intern::operator=(const Intern& obj)
+Intern& Intern::operator=(const Intern& obj)
 {
 	if (this == &obj)
 		return *this;

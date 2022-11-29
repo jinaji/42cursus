@@ -12,7 +12,7 @@ Brain::Brain(const Brain &obj)
 	*this = obj;
 }
 
-const Brain& Brain::operator=(const Brain& obj)
+Brain& Brain::operator=(const Brain& obj)
 {
 	for (int i = 0; 100 > i; i++)
 		this->ideas[i] = obj.ideas[i];

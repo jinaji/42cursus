@@ -13,7 +13,7 @@ private:
 public:
 	Intern();
 	Intern(const Intern& obj);
-	const Intern& operator=(const Intern& obj);
+	Intern& operator=(const Intern& obj);
 	~Intern();
 
 	Form	*makeForm(std::string formName, std::string target);

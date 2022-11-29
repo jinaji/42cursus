@@ -11,7 +11,7 @@ Cure::Cure(const Cure& obj)
 	*this = obj;
 }
 
-const Cure& Cure::operator=(const Cure& obj)
+Cure& Cure::operator=(const Cure& obj)
 {
 	(void)obj;
 	return (*this);

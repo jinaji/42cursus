@@ -20,6 +20,7 @@ public:
 	void addNumber(int n);
 	int shortestSpan();
 	int longestSpan();
+	void getCount();
 
 	public :
 	class notEnoughCount : public std::exception

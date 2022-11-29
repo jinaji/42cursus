@@ -9,7 +9,7 @@ AMateria::AMateria(const AMateria& obj)
 	*this = obj;
 }
 
-const AMateria& AMateria::operator=(const AMateria& obj)
+AMateria& AMateria::operator=(const AMateria& obj)
 {
 	this->type = obj.type;
 	return (*this);

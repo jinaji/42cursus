@@ -12,7 +12,7 @@ private:
 public:
 	MateriaSource();
 	MateriaSource(const MateriaSource& obj);
-	const MateriaSource& operator=(const MateriaSource& obj);
+	MateriaSource& operator=(const MateriaSource& obj);
 	~MateriaSource();
 public:
 	void learnMateria(AMateria* obj);

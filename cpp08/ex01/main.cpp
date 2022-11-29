@@ -10,7 +10,7 @@ int main()
 {
 	try
 	{
-		Span	test = Span(5);
+		Span	test(5);
 
 		test.addNumber(6);
 		test.addNumber(3);
@@ -75,5 +75,27 @@ int main()
 	{
 		std::cerr << e.what() << std::endl;
 	}
+
+	// {
+	// 	try
+	// 	{
+	// 		Span	test(10000);
+
+	// 		srand(time(NULL));
+	// 		for (int i = 0; 10000 > i; i++)
+	// 		{
+	// 			const int value = rand();
+	// 			test.addNumber(value);
+	// 		}
+	// 		test.getCount();
+	// 		std::cout << "shortest " << test.shortestSpan() << std::endl;
+	// 		std::cout << "longest " << test.longestSpan() << std::endl;
+	// 	}
+	// 	catch(const std::exception& e)
+	// 	{
+	// 		std::cerr << e.what() << '\n';
+	// 	}
+		
+	// }
 	atexit(lk);
 }

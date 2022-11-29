@@ -12,7 +12,7 @@ protected:
 public:
 	Animal();
 	Animal(const Animal& obj);
-	const Animal& operator=(const Animal &obj);
+	Animal& operator=(const Animal &obj);
 	virtual ~Animal();
 
 	virtual void	makeSound() const;

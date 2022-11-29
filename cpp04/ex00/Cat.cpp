@@ -11,7 +11,7 @@ Cat::Cat(const Cat& obj)
 	*this = obj;
 }
 
-const Cat& Cat::operator=(const Cat &obj)
+Cat& Cat::operator=(const Cat &obj)
 {
 	this->type = obj.type;
 	return (*this);

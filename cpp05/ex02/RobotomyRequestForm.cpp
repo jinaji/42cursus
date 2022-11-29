@@ -16,7 +16,7 @@ RobotomyRequestForm::RobotomyRequestForm(const RobotomyRequestForm& obj)
 	*this = obj;
 }
 
-const RobotomyRequestForm& RobotomyRequestForm::operator=(const RobotomyRequestForm& obj)
+RobotomyRequestForm& RobotomyRequestForm::operator=(const RobotomyRequestForm& obj)
 {
 	if (this == &obj)
 		return *this;

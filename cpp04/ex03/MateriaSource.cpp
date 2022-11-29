@@ -9,7 +9,7 @@ MateriaSource::MateriaSource(const MateriaSource& obj)
 	*this = obj;
 }
 
-const MateriaSource& MateriaSource::operator=(const MateriaSource& obj)
+MateriaSource& MateriaSource::operator=(const MateriaSource& obj)
 {
 	for (int i = 0; this->index > i; i++)
 		delete this->slot[i];

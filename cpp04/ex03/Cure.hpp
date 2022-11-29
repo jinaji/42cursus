@@ -10,7 +10,7 @@ private:
 public:
 	Cure();
 	Cure(const Cure& obj);
-	const Cure& operator=(const Cure& obj);
+	Cure& operator=(const Cure& obj);
 	~Cure();
 
 	public:

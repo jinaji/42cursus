@@ -12,7 +12,7 @@ protected:
 public:
 	AMateria();
 	AMateria(const AMateria& obj);
-	const AMateria& operator=(const AMateria& obj);
+	AMateria& operator=(const AMateria& obj);
 	virtual ~AMateria();
 
 public:

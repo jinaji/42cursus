@@ -10,7 +10,7 @@ private:
 public:
 	Ice();
 	Ice(const Ice& obj);
-	const Ice& operator=(const Ice& obj);
+	Ice& operator=(const Ice& obj);
 	~Ice();
 
 	public:

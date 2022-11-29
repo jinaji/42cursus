@@ -9,7 +9,7 @@ public:
 	RobotomyRequestForm();
 	RobotomyRequestForm(std::string target);
 	RobotomyRequestForm(const RobotomyRequestForm& obj);
-	const RobotomyRequestForm& operator=(const RobotomyRequestForm& obj);
+	RobotomyRequestForm& operator=(const RobotomyRequestForm& obj);
 	~RobotomyRequestForm();
 
 	void execute(Bureaucrat const &executor) const;

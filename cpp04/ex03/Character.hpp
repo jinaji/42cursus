@@ -18,7 +18,7 @@ private:
 public:
 	Character();
 	Character(const Character& obj);
-	const Character& operator=(const Character& obj);
+	Character& operator=(const Character& obj);
 	~Character();
 
 public:

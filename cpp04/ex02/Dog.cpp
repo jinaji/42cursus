@@ -12,7 +12,7 @@ Dog::Dog(const Dog& obj)
 	*this = obj;
 }
 
-const Dog& Dog::operator=(const Dog &obj)
+Dog& Dog::operator=(const Dog &obj)
 {
 	delete this->brain;
 	this->type = obj.type;

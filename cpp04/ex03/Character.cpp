@@ -11,7 +11,7 @@ Character::Character(const Character& obj)
 	*this = obj;
 }
 
-const Character& Character::operator=(const Character& obj)
+Character& Character::operator=(const Character& obj)
 {
 	for (int i = 0; this->index > i; i++)
 		delete this->inventory[i];

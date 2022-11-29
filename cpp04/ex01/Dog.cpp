@@ -14,7 +14,7 @@ Dog::Dog(const Dog& obj)
 	*this = obj;
 }
 
-const Dog& Dog::operator=(const Dog &obj)
+Dog& Dog::operator=(const Dog &obj)
 {
 	std::cout << "Dog copy assignment operator called" << std::endl;
 	delete this->brain;

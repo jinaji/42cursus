@@ -14,7 +14,7 @@ ShrubberyCreationForm::ShrubberyCreationForm(const ShrubberyCreationForm& obj)
 	*this = obj;
 }
 
-const ShrubberyCreationForm& ShrubberyCreationForm::operator=(const ShrubberyCreationForm& obj)
+ShrubberyCreationForm& ShrubberyCreationForm::operator=(const ShrubberyCreationForm& obj)
 {
 	if (this == &obj)
 		return *this;

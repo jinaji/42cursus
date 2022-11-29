@@ -11,7 +11,7 @@ Ice::Ice(const Ice& obj)
 	*this = obj;
 }
 
-const Ice& Ice::operator=(const Ice& obj)
+Ice& Ice::operator=(const Ice& obj)
 {
 	(void)obj;
 	return (*this);

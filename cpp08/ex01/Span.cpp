@@ -69,3 +69,8 @@ int Span::longestSpan()
 	sort(tmp.begin(), tmp.end());
 	return (*(tmp.end() - 1) - *(tmp.begin()));
 }
+
+void Span::getCount()
+{
+	std::cout << "Max count : " << this->maxCount << " | Current Count : " << this->curCount << std::endl;
+}

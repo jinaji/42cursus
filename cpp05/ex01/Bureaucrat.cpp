@@ -10,7 +10,7 @@ Bureaucrat::Bureaucrat(const Bureaucrat& obj)
 	*this = obj;
 }
 
-const Bureaucrat& Bureaucrat::operator=(const Bureaucrat& obj)
+Bureaucrat& Bureaucrat::operator=(const Bureaucrat& obj)
 {
 	if (this == &obj)
 		return *this;
