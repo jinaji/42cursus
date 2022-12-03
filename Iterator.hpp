@@ -2,17 +2,19 @@
 # define ITERATOR_HPP
 
 # include <cstddef>
+# include <vector>
+# include <iterator>
 
 namespace ft
 {
 
-template <typename category, typename T, typename distance = ptrdiff_t, typename pointer = T*, typename reference = T&>
+template <typename category, typename T, typename Distance = ptrdiff_t, typename Pointer = T*, typename Reference = T&>
 struct iterator
 {
 	typedef	T			value_type;
-	typedef	distance	difference_type;
-	typedef	pointer		pointer;
-	typedef	reference	reference;
+	typedef	Distance	difference_type;
+	typedef	Pointer		pointer;
+	typedef	Reference	reference;
 	typedef	category 	iterator_category;
 };
 
@@ -25,6 +27,7 @@ class iterator_traits // class?? struct???
 	typedef typename Iterator::reference			reference;
 	typedef typename Iterator::iterator_category	iterator_category;
 };
+
 
 template <typename T> 
 class iterator_traits<T*>
@@ -46,15 +49,15 @@ class iterator_traits<const T*>
 	typedef std::random_access_iterator_tag		iterator_category;
 };
 
-template <typename T>
-class random_access_iterator : public iterator<random_access_iterator_tag, T>
-{
-	typedef typename iterator<random_access_iterator_tag, T>::value_type		value_type;
-	typedef typename iterator<random_access_iterator_tag, T>::difference_type	difference_type;
-	typedef typename iterator<random_access_iterator_tag, T>::pointer			pointer;
-	typedef typename iterator<random_access_iterator_tag, T>::reference			reference;
-	typedef typename iterator<random_access_iterator_tag, T>::iterator_category	iterator_category;
-}
+// template <typename T>
+// class random_access_iterator : public iterator<std::random_access_iterator_tag, T>
+// {
+// 	typedef typename iterator<std::random_access_iterator_tag, T>::value_type		value_type;
+// 	typedef typename iterator<std::random_access_iterator_tag, T>::difference_type	difference_type;
+// 	typedef typename iterator<std::random_access_iterator_tag, T>::pointer			pointer;
+// 	typedef typename iterator<std::random_access_iterator_tag, T>::reference			reference;
+// 	typedef typename iterator<std::random_access_iterator_tag, T>::iterator_category	iterator_category;
+// };
 
 }
 
