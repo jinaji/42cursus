@@ -1,6 +1,11 @@
-CXXFLAGS = -Wall -Werror -Wextra -std=c++98 -ferror-limit=100 -g
+.DEFAULT_GOAL := all
+
+CXXFLAGS = -Wall -Werror -Wextra -std=c++98 -ferror-limit=100 -g -MMD -MP
 SRCS = main.cpp
 OBJS = $(SRCS:.cpp=.o)
+DEPS = $(SRCS:.cpp=.d)
+-include $(DEPS)  
+
 NAME = a.out
 
 all: $(NAME)
@@ -9,10 +14,10 @@ $(NAME): $(OBJS)
 	$(CXX) $(CXXFLAGS) -o $(NAME) $^
 
 clean:
-	rm -rf $(OBJS)
+	$(RM) -r $(OBJS) $(DEPS)
 
 fclean: clean
-	rm -rf $(NAME)
+	$(RM) -r $(NAME) $(DEPS)
 
 re: fclean all
 

@@ -16,10 +16,10 @@ struct iterator
 	typedef	Pointer		pointer;
 	typedef	Reference	reference;
 	typedef	category 	iterator_category;
-};
+}; // ㅇㅣ거 걍  std 이터레이터인데 필요한가 ???
 
 template <typename Iterator>
-class iterator_traits // class?? struct???
+struct iterator_traits // class?? struct???
 {
 	typedef typename Iterator::difference_type		difference_type;
 	typedef typename Iterator::value_type			value_type;
@@ -28,9 +28,8 @@ class iterator_traits // class?? struct???
 	typedef typename Iterator::iterator_category	iterator_category;
 };
 
-
 template <typename T> 
-class iterator_traits<T*>
+struct iterator_traits<T*>
 {
 	typedef ptrdiff_t							diffrence_type;
 	typedef T									value_type;
@@ -40,7 +39,7 @@ class iterator_traits<T*>
 };
 
 template <typename T> 
-class iterator_traits<const T*>
+struct iterator_traits<const T*>
 {
 	typedef ptrdiff_t							diffrence_type;
 	typedef T									value_type;

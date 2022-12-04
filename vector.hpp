@@ -2,13 +2,14 @@
 # define VECTOR_HPP
 
 # include <memory>
-# include <vector>
+// # include <vector>
 
 # include <iterator>
 # include "Iterator.hpp"
 
-# define FT_NOEXCEPT throw()
+# include <iostream>
 
+# define FT_NOEXCEPT throw()
 
 namespace ft
 {
@@ -44,21 +45,22 @@ protected:
     pointer				m_begin;		// begin iterator
     pointer				m_end;			// end iterator
     pointer				m_cap;			// capacity
-	allocator_type		m_alloc;			// allocator type
+	allocator_type		m_alloc;		// allocator type
 
 	/* method */
 	VectorBase() FT_NOEXCEPT : m_begin(NULL), m_end(NULL), m_cap(NULL), m_alloc(allocator_type()) {}
-	VectorBase(const allocator_type& __a) : m_begin(__a.m_begin), m_end(__a.m_end), m_cap(__a.m_cap), m_alloc(__a) {}
-	VectorBase(size_t __n) : m_begin(NULL), m_end(NULL), m_cap(NULL) 
+	VectorBase(const allocator_type& __a) : m_begin(NULL), m_end(NULL), m_cap(NULL), m_alloc(__a) {}
+	VectorBase(size_t __n) : m_alloc(allocator_type())
 	{
 		_M_create_storage(__n);
 	}
-	VectorBase(size_t __n, const allocator_type& __a) : VectorBase(__a)
+	VectorBase(size_t __n, const allocator_type& __a)
 	{
+		this->m_alloc = __a;
 		_M_create_storage(__n);
 	}
 
-	~VectorBase()
+	virtual ~VectorBase()
 	{
 		_M_deallocate(m_begin, m_cap - m_begin, m_alloc);
 	}
@@ -99,6 +101,7 @@ protected:
 		this->m_begin = obj.m_begin;
 		this->m_end = obj.m_end;
 		this->m_cap = obj.m_cap;
+		this->m_alloc = obj.m_alloc;
 	}
 
 	void _M_swap_data(VectorBase& obj)
@@ -112,20 +115,6 @@ protected:
 	size_type _M_capacity() const FT_NOEXCEPT
 	{
 		return static_cast<size_type>(m_end - m_begin);
-	}
-
-	void	_M_create_storage(size_t n, const value_type& val, const allocator_type& alloc)
-	{
-		size_t	i = 0;
-		(void)alloc; // ?????????????????????????????????
-		this->m_begin = this->_M_allocate(n);
-		for (; n > i; i++)
-		{
-			*m_begin = val;
-			m_begin += i;
-		}
-		this->m_end = m_begin + i;
-		this->m_cap = m_end; // ???
 	}
 
 	pointer	_M_allocate(size_t n)
@@ -146,11 +135,10 @@ protected:
 	void	_M_create_storage(size_t __n)
 	{
 		this->m_begin = this->_M_allocate(__n);
-		this->m_end = this->m_begin;
+		this->m_end = this->m_begin + __n;
 		this->m_cap = this->m_begin + __n;
 	}
 };
-
 
 template <class T, class Allocator = std::allocator<T> >
 class Vector : protected VectorBase <T,  Allocator>
@@ -168,42 +156,67 @@ public:
     // typedef typename __alloc_traits::reference			reference;
     // typedef typename __alloc_traits::const_reference	const_reference;
 
-	// typedef ft::iterator<std::random_access_iterator_tag, vector>::pointer			iterator;
+	// typedef typename ft::iterator<std::random_access_iterator_tag, Vector>::pointer			iterator;
+
+	typedef typename ft::iterator_traits<pointer>::pointer			iterator;
+	typedef typename ft::iterator_traits<const_pointer>::pointer	const_iterator;
     // typedef __wrap_iter<const_pointer>							
 	// typedef ft::iterator_traits<iterator>::pointer					pointer;
     // typedef _VSTD::reverse_iterator<iterator>		reverse_iterator;
     // typedef _VSTD::reverse_iterator<const_iterator>	const_reverse_iterator;
 	
-
-
 	Vector() {};
 	Vector(size_t n, const value_type& val = value_type(), const allocator_type& alloc = allocator_type())
 	{
-		this->_M_create_storage(n, val, alloc);
+		this->m_alloc = alloc;
+		this->_M_create_storage(n);
+		std::uninitialized_fill(this->m_begin, this->m_begin + n, val);
 	}
-	template <class InputIterator>
-	Vector(InputIterator first, InputIterator last, const allocator_type& alloc = allocator_type());
-	Vector(const Vector& x);
-	~Vector() {};
-	Vector& operator= (const Vector& x);
 
-// 	// iterator
-// 	iterator		begin();
-// 	const_iterator	begin() const;
-// 	iterator		end();
-// 	const_iterator	end() const;
-// 	iterator		rbegin();
-// 	const_iterator	rbegin() const;
-// 	iterator		rend();
-// 	const_iterator	rend() const;
-// 	iterator		cbegin();
-// 	const_iterator	cbegin() const;
-// 	iterator		cend();
-// 	const_iterator	cend() const;
-// 	iterator		crbegin();
-// 	const_iterator	crbegin() const;
-// 	iterator		crend();
-// 	const_iterator	crend() const;
+	template <class InputIterator> // int만 이걸로잡힘 이거뭐임 ????
+	Vector(InputIterator first, InputIterator last, const allocator_type& alloc = allocator_type())
+	{
+		this->m_alloc = alloc;
+		this->_M_create_storage(last - first);
+		std::uninitialized_copy(first, last, this->m_begin);
+	}
+
+	Vector(const Vector& x)
+	{
+		*this = x;
+	}
+	Vector& operator= (const Vector& x)
+	{
+		if (this == &x)
+			return (*this);
+		if (this->m_begin)
+			this->_M_deallocate(this->m_begin, (this->m_cap - this->m_begin), this->m_alloc);
+		this->m_begin = this->_M_allocate(x.m_cap - x.m_begin);
+		std::uninitialized_copy(x.m_begin, x.m_end, this->m_begin);
+		this->m_end = this->m_begin + (x.m_end - x.m_begin);
+		this->m_cap = this->m_begin + (x.m_cap - x.m_begin);
+		return (*this);
+	}
+
+	~Vector() {};
+
+	// iterator
+	iterator		begin() {return (this->m_begin);}
+	const_iterator	begin() const {return this->m_begin;}
+	iterator		end() {return (this->m_end);}
+	const_iterator	end() const {return (this->m_end);}
+	iterator		rbegin(); // begin end 뒤집으면 되는건가?????
+	const_iterator	rbegin() const;
+	iterator		rend();
+	const_iterator	rend() const;
+	// iterator		cbegin();
+	// const_iterator	cbegin() const;
+	// iterator		cend();
+	// const_iterator	cend() const;
+	// iterator		crbegin();
+	// const_iterator	crbegin() const;
+	// iterator		crend();
+	// const_iterator	crend() const;
 
 // 	//capacity
 // 	size_type	size() const;
