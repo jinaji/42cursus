@@ -6,6 +6,7 @@
 
 # include <iterator>
 # include "Iterator.hpp"
+# include <limits>
 
 # include <iostream>
 
@@ -42,6 +43,7 @@ protected:
     // typedef const_pointer								const_iterator;
 
 	/* element */
+	size_type			m_size;			// allocated size
     pointer				m_begin;		// begin iterator
     pointer				m_end;			// end iterator
     pointer				m_cap;			// capacity
@@ -96,7 +98,7 @@ protected:
 	// 	__move_assign_alloc(__c, integral_constant<bool, __alloc_traits::propagate_on_containter_move_assignment::value>());
 	// }
 
-	void _M_copy_data(const VectorBase& obj)
+	void _M_copy_data(const VectorBase& obj) // shallow? 
 	{
 		this->m_begin = obj.m_begin;
 		this->m_end = obj.m_end;
@@ -114,7 +116,7 @@ protected:
 
 	size_type _M_capacity() const FT_NOEXCEPT
 	{
-		return static_cast<size_type>(m_end - m_begin);
+		return static_cast<size_type>(m_cap - m_begin);
 	}
 
 	pointer	_M_allocate(size_t n)
@@ -147,12 +149,15 @@ private:
 	typedef VectorBase<T, Allocator>				__base;
 	typedef typename __base::__alloc_traits			__alloc_traits;
 	typedef typename __base::allocator_type			allocator_type;
+	typedef typename __base::size_type				size_type;
 	// typedef std::allocator<T>						allocator_type;
 
 public:
     typedef T											value_type;
 	typedef typename __base::pointer					pointer;
-    typedef typename __alloc_traits::const_pointer		const_pointer;
+    typedef typename __base::const_pointer				const_pointer;
+	typedef typename __base::reference					reference;
+	typedef typename __base::const_reference			const_reference;
     // typedef typename __alloc_traits::reference			reference;
     // typedef typename __alloc_traits::const_reference	const_reference;
 
@@ -172,19 +177,19 @@ public:
 		this->_M_create_storage(n);
 		std::uninitialized_fill(this->m_begin, this->m_begin + n, val);
 	}
-
-	template <class InputIterator> // int만 이걸로잡힘 이거뭐임 ????
-	Vector(InputIterator first, InputIterator last, const allocator_type& alloc = allocator_type())
+	Vector(iterator first, iterator last, const allocator_type& alloc = allocator_type())
 	{
 		this->m_alloc = alloc;
 		this->_M_create_storage(last - first);
 		std::uninitialized_copy(first, last, this->m_begin);
+		this->m_end = this->m_begin + (last - first);
 	}
 
 	Vector(const Vector& x)
 	{
 		*this = x;
 	}
+
 	Vector& operator= (const Vector& x)
 	{
 		if (this == &x)
@@ -205,55 +210,102 @@ public:
 	const_iterator	begin() const {return this->m_begin;}
 	iterator		end() {return (this->m_end);}
 	const_iterator	end() const {return (this->m_end);}
-	iterator		rbegin(); // begin end 뒤집으면 되는건가?????
-	const_iterator	rbegin() const;
-	iterator		rend();
-	const_iterator	rend() const;
-	// iterator		cbegin();
-	// const_iterator	cbegin() const;
-	// iterator		cend();
-	// const_iterator	cend() const;
-	// iterator		crbegin();
-	// const_iterator	crbegin() const;
-	// iterator		crend();
-	// const_iterator	crend() const;
+	iterator		rbegin() {return (this->m_end);}
+	const_iterator	rbegin() const {return (this->m_end);}
+	iterator		rend() {return (this->m_begin);}
+	const_iterator	rend() const {return (this->m_begin);}
 
 // 	//capacity
-// 	size_type	size() const;
-// 	size_type	max_size() const; // maximum number of a vector container can hold as content. != capacity
-// 	void		resize(size_type n, value_type val = value_type());
-// 	size_type	capacity() const;
-// 	bool		empty() const;
-// 	void		reverse(size_type n);
+	size_type	size() const {return (this->m_end - this->m_begin);}
+	size_type	max_size() const {return (sizeof(this->size_type));} // maximum number of a vector container can hold as content. != capacity
+	void		resize(size_type n, value_type val = value_type())
+	{
+		size_type	_size = size();
 
-// 	// element access
-// 	reference 			operator[](size_type n);
-// 	const reference		operator[](size_type n) const;
-// 	reference			at(size_type n);
-// 	const_reference		at(size_type n) const;
-// 	reference			front();
-// 	const reference		front() const;
-// 	reference			back();
-// 	const_reference		back() const;
-// 	value_type*			data() FT_NOEXCEPT; // no except c++ 11?? const ??  https://en.cppreference.com/w/cpp/container/vector/data
-// 	const value_type	data() const FT_NOEXCEPT;
+		if (n > capacity()) // realloc
+		{
+			pointer	_tmp;
+
+			_tmp = _M_allocate((capacity() - this->m_begin) * 2);
+			std::uninitialized_copy(this->m_begin, this->m_end, _tmp);
+			_M_deallocate(this->m_begin);
+			this->m_cap = (capacity() - this->m_begin) * 2;
+			this->end = this->m_begin + n;
+			this->m_begin = _tmp;
+		}
+		else if (_size > n) // 줄이기
+		{
+			while (_size > n)
+			{
+				__alloc_traits::destroy(this->m_end);
+				_size--;
+				this->m_end--;
+			}
+		}
+		else if (_size < n) // 지금보다 크긴한데 자리남음
+		{
+			std::uninitialized_fill(this->m_end, this->m_end + (n - _size), val);
+			this->m_end += (n - _size);
+		}
+	}
+	size_type	capacity() const {return static_cast<size_type>(this->m_cap - this->m_begin);}
+	bool		empty() const {return this->m_begin == this->m_end;}
+	void		reverse(size_type n)
+	{
+		if (n > capacity())
+		{
+			pointer	_tmp;
+
+			_tmp = _M_allocate(n);
+			std::uninitialized_copy(this->m_begin, this->m_end, _tmp);
+			_M_deallocate(this->m_begin);
+			this->m_begin = _tmp;
+			this->m_cap = this->m_begin + n;
+			this->end = this->m_begin + n;
+		}
+	}
+
+// element access
+	reference 			operator[](size_type n) {return &(*(this->m_begin + n));}
+	const reference		operator[](size_type n) const {return &(*(this->m_begin + n));}
+	reference			at(size_type n) {if (n > size()) throw("out of range");}
+	const_reference		at(size_type n) const {if (n > size()) throw("out of range");}
+	reference			front() {return (*(this->begin()));}
+	const reference		front() const {return (*(this->begin()));}
+	reference			back() {return (*(this->end()));}
+	const_reference		back() const {return (*(this->end()));}
+	// value_type*			data() FT_NOEXCEPT {return (this->begin());} // no except c++ 11?? const ??  https://en.cppreference.com/w/cpp/container/vector/data
+	// const value_type	data() const FT_NOEXCEPT {return (this->begin());}
 
 // 	// modifiers
-// 	template <class InputIterator>
-// 	void		assign(InputIterator first, InputIterator last);
+	template <class InputIterator>
+	void		assign(InputIterator first, InputIterator last);
 // 	void		assign(size_type n, const value_type& val);
 // 	void		push_back(const value_type& val);
 // 	void		pop_back();
 // 	iterator	insert(iterator position, const value_type& val);
 // 	void		insert(iterator position, size_type n, const value_type& val);
-// 	template <class InputIterator>
-// 	void		insert(iterator position, InputIterator first, InputIterator last);
+// template <class InputIterator>
+// void		insert(iterator position, InputIterator first, InputIterator last);
 // 	iterator	erase(iterator position);
 // 	iterator	erase(iterator first, iterator last);
 // 	void		swap(Vector& x);
 // 	void		clear(); // memory alives
 
 };
+
+template <typename T>
+struct	is_integral
+{
+	// https://en.cppreference.com/w/cpp/types/numeric_limits/is_integer
+};
+
+template <bool B, typename T = void> // 
+struct enable_if {};
+
+template <class T>
+struct enable_if<true, T> {typedef T type;}; 
+// https://cplusplus.com/reference/type_traits/enable_if/?kw=enable_if
 
 }
 
