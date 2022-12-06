@@ -63,6 +63,16 @@
 		"compare": "cpp",
 		"iostream": "cpp",
 		"__cxx_version": "cpp",
-		"__functional_03": "cpp"
+		"__functional_03": "cpp",
+		"__tree": "cpp",
+		"csignal": "cpp",
+		"deque": "cpp",
+		"fstream": "cpp",
+		"iomanip": "cpp",
+		"list": "cpp",
+		"map": "cpp",
+		"queue": "cpp",
+		"set": "cpp",
+		"stack": "cpp"
 	}
 }

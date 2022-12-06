@@ -1,6 +1,6 @@
-// #include <vector>
+#include <vector>
 #include <string>
-#include "vector.hpp"
+#include "Vector.hpp"
 #include <type_traits>
 
 int main()
@@ -35,19 +35,19 @@ int main()
 	// for (; it2 != ite2; it2++)
 	// 	std::cout << *it2 << std::endl;
 
-	ft::Vector<int>				test3(5);
-	ft::Vector<int>::iterator 	it3 = test3.begin();
-	ft::Vector<int>::iterator 	ite3 = test3.end();
+	// ft::Vector<int>				test3(5, 1);
+	// ft::Vector<int>::iterator 	it3 = test3.begin();
+	// ft::Vector<int>::iterator 	ite3 = test3.end();
 
-	int* p = test3.data();
-	*p = 10;
-	++p;
-	*p = 20;
+	// int* p = test3.data();
+	// *p = 10;
+	// ++p;
+	// *p = 20;
 
-	for (; it3 != ite3; it3++)
-		std::cout << *it3 << std::endl;
+	// for (; it3 != ite3; it3++)
+	// 	std::cout << *it3 << std::endl;
 
-	std::numeric_limits<T>::is_integral()
+	// std::numeric_limits<T>::is_integral()
 
 	// std::cout << std::endl;
 
@@ -88,4 +88,94 @@ int main()
 
 	// std::cout << it << std::endl;
 	// std::cout << ite << std::endl;
+
+  { // assign
+// {std::vector<int> first;
+//   std::vector<int> second;
+//   std::vector<int> third;
+
+//   first.assign (7,100);             // 7 ints with a value of 100
+
+//   std::vector<int>::iterator it;
+//   it=first.begin() + 1;
+
+//   second.assign (it, (first.end() - 1)); // the 5 central values of first
+
+//   int myints[] = {1776,7,4};
+//   third.assign (myints, (myints+3));   // assigning from array.
+
+//   std::cout << "Size of first: " << int (first.size()) << '\n';
+//   std::cout << "Size of second: " << int (second.size()) << '\n';
+//   std::cout << "Size of third: " << int (third.size()) << "\n \n \n";}
+
+//   ft::Vector<int> first;
+//   ft::Vector<int> second;
+//   ft::Vector<int> third;
+
+//   first.assign (7,100);             // 7 ints with a value of 100
+//   ft::Vector<int>::iterator it;
+//   it=first.begin() + 1;
+
+//   second.assign (it, (first.end() - 1)); // the 5 central values of first
+
+//   int myints[] = {1776,7,4};
+//   third.assign (myints, (myints+3));   // assigning from array.
+
+//   std::cout << "Size of first: " << int (first.size()) << '\n';
+//   std::cout << "Size of second: " << int (second.size()) << '\n';
+//   std::cout << "Size of third: " << int (third.size()) << '\n';
+//   return 0;
+// }
+
+// {
+  // constructors used in the same order as described above:
+//   ft::Vector<int> first;                                // empty vector of ints
+//   ft::Vector<int> second (4,100);                       // four ints with value 100
+//   ft::Vector<int> third (second.begin(),second.end());  // iterating through second
+//   ft::Vector<int> fourth (third);                       // a copy of third
+
+//   // the iterator constructor can also be used to construct from arrays:
+//   int myints[] = {16,2,77,29};
+//   ft::Vector<int> fifth (myints, myints + sizeof(myints) / sizeof(int) );
+
+//   std::cout << "The contents of fifth are:";
+//   for (ft::Vector<int>::iterator it = fifth.begin(); it != fifth.end(); ++it)
+//     std::cout << ' ' << *it;
+//   std::cout << '\n';
+
+//   return 0;
+// {
+//   std::vector<int> myvector;
+//   int myint;
+
+//   std::cout << "Please enter some integers (enter 0 to end):\n";
+
+//   do {
+//     std::cin >> myint;
+//     myvector.push_back (myint);
+//   } while (myint);
+
+//   std::cout << "myvector stores " << int(myvector.size()) << " numbers.\n";
+
+//   return 0;
+// }
+// std::cout << std::endl;
+{
+  ft::Vector<int> myvector;
+  int myint;
+
+  std::cout << "Please enter some integers (enter 0 to end):\n";
+
+  do {
+    std::cin >> myint;
+    myvector.push_back (myint);
+  } while (myint);
+
+  std::cout << "myvector stores " << int(myvector.size()) << " numbers.\n";
+
+  return 0;
+}
+
+}
+
 } 

@@ -2,11 +2,12 @@
 # define VECTOR_HPP
 
 # include <memory>
-// # include <vector>
+# include <vector>
 
 # include <iterator>
-# include "Iterator.hpp"
 # include <limits>
+# include "Iterator.hpp"
+# include "functions.hpp"
 
 # include <iostream>
 
@@ -43,7 +44,7 @@ protected:
     // typedef const_pointer								const_iterator;
 
 	/* element */
-	size_type			m_size;			// allocated size
+	// size_type			m_size;			// allocated size
     pointer				m_begin;		// begin iterator
     pointer				m_end;			// end iterator
     pointer				m_cap;			// capacity
@@ -137,7 +138,7 @@ protected:
 	void	_M_create_storage(size_t __n)
 	{
 		this->m_begin = this->_M_allocate(__n);
-		this->m_end = this->m_begin + __n;
+		this->m_end = this->m_begin;
 		this->m_cap = this->m_begin + __n;
 	}
 };
@@ -170,14 +171,23 @@ public:
     // typedef _VSTD::reverse_iterator<iterator>		reverse_iterator;
     // typedef _VSTD::reverse_iterator<const_iterator>	const_reverse_iterator;
 	
-	Vector() {};
+	Vector()
+	{
+		this->m_begin = NULL;
+		this->m_end = NULL;
+		this->m_cap = NULL;
+		this->m_alloc = allocator_type();
+	};
 	Vector(size_t n, const value_type& val = value_type(), const allocator_type& alloc = allocator_type())
 	{
 		this->m_alloc = alloc;
 		this->_M_create_storage(n);
 		std::uninitialized_fill(this->m_begin, this->m_begin + n, val);
+		this->m_end += n;
 	}
-	Vector(iterator first, iterator last, const allocator_type& alloc = allocator_type())
+
+	template <class InputIterator>
+	Vector(InputIterator first, InputIterator last, const allocator_type& alloc = allocator_type(), typename ft::enable_if<!ft::is_integral<InputIterator>::value >::type* = 0)
 	{
 		this->m_alloc = alloc;
 		this->_M_create_storage(last - first);
@@ -220,37 +230,51 @@ public:
 	size_type	max_size() const {return (sizeof(this->size_type));} // maximum number of a vector container can hold as content. != capacity
 	void		resize(size_type n, value_type val = value_type())
 	{
-		size_type	_size = size();
+		std::cout << "resize size " << n << std::endl;
+		size_type	_size = size(); // n이 사이즈보다 클 때만 val로 채우는 건가
 
-		if (n > capacity()) // realloc
+		if (capacity() == 0)
+		{
+		std::cout << "hi 1 " << n << std::endl;
+			this->_M_create_storage(n);
+			std::uninitialized_fill(this->m_begin, this->m_begin + n, val);
+			this->m_end += n;
+		}
+		else if (n > capacity()) // realloc
 		{
 			pointer	_tmp;
+			size_type _end = this->m_end - this->m_begin; // 뻐큐 
+			size_type _cap = this->m_cap - this->m_begin;
 
-			_tmp = _M_allocate((capacity() - this->m_begin) * 2);
+			_tmp = this->_M_allocate(capacity() * 2); // segfault 
+			// std::cout << capacity() * 2 << std::endl;
 			std::uninitialized_copy(this->m_begin, this->m_end, _tmp);
-			_M_deallocate(this->m_begin);
-			this->m_cap = (capacity() - this->m_begin) * 2;
-			this->end = this->m_begin + n;
+			this->_M_deallocate(this->m_begin, this->m_end - this->m_begin, this->m_alloc);
 			this->m_begin = _tmp;
+			// std::cout << "under " << capacity() * 2 << std::endl;
+			this->m_cap = this->m_begin + _cap;
+			this->m_end = this->m_begin + _end;
 		}
 		else if (_size > n) // 줄이기
 		{
+		std::cout << "hi 3 " << n << std::endl;
 			while (_size > n)
 			{
-				__alloc_traits::destroy(this->m_end);
+				__alloc_traits::destroy(this->m_alloc, this->m_end);
 				_size--;
 				this->m_end--;
 			}
 		}
 		else if (_size < n) // 지금보다 크긴한데 자리남음
 		{
+		std::cout << "hi 4 " << n << std::endl;
 			std::uninitialized_fill(this->m_end, this->m_end + (n - _size), val);
 			this->m_end += (n - _size);
 		}
 	}
 	size_type	capacity() const {return static_cast<size_type>(this->m_cap - this->m_begin);}
 	bool		empty() const {return this->m_begin == this->m_end;}
-	void		reverse(size_type n)
+	void		reserve(size_type n)
 	{
 		if (n > capacity())
 		{
@@ -268,8 +292,8 @@ public:
 // element access
 	reference 			operator[](size_type n) {return &(*(this->m_begin + n));}
 	const reference		operator[](size_type n) const {return &(*(this->m_begin + n));}
-	reference			at(size_type n) {if (n > size()) throw("out of range");}
-	const_reference		at(size_type n) const {if (n > size()) throw("out of range");}
+	reference			at(size_type n) {if (n > size()) throw("out of range"); return (this->m_begin + n);}
+	const_reference		at(size_type n) const {if (n > size()) throw("out of range"); return (this->m_begin + n);}
 	reference			front() {return (*(this->begin()));}
 	const reference		front() const {return (*(this->begin()));}
 	reference			back() {return (*(this->end()));}
@@ -279,9 +303,37 @@ public:
 
 // 	// modifiers
 	template <class InputIterator>
-	void		assign(InputIterator first, InputIterator last);
-// 	void		assign(size_type n, const value_type& val);
-// 	void		push_back(const value_type& val);
+	void		assign(InputIterator first, InputIterator last, typename ft::enable_if<!ft::is_integral<InputIterator>::value>::type* = 0)
+	{
+		size_type	_size = (last - first);
+
+		for (size_type i = 0; _size > i; i++)
+			__alloc_traits::destroy(this->m_alloc, this->m_begin);
+		if (!this->m_begin)
+			this->_M_create_storage(last - first);
+		std::uninitialized_copy(first, last, this->m_begin);
+	}
+	void		assign(size_type n, const value_type& val)
+	{
+		std::cout << "a cap " << capacity() << std::endl;
+		std::cout << "a size " << size() << std::endl;
+		while (n > capacity())
+			resize(n, val);
+		size_type	_size = size();
+		std::uninitialized_fill(this->m_end, this->m_end + (n - _size), val);
+		this->m_end += (n - _size);
+	}
+	void		push_back(const value_type& val)
+	{
+		if (capacity() == 0)
+			this->_M_create_storage(1);
+		else if (this->m_cap == this->m_end)
+			resize(capacity() * 2);
+		std::cout << "p cap " << capacity() << std::endl;
+		std::cout << "p size " << size() << std::endl;
+		assign(1, val);
+		this->m_end += 1;
+	}
 // 	void		pop_back();
 // 	iterator	insert(iterator position, const value_type& val);
 // 	void		insert(iterator position, size_type n, const value_type& val);
@@ -293,19 +345,6 @@ public:
 // 	void		clear(); // memory alives
 
 };
-
-template <typename T>
-struct	is_integral
-{
-	// https://en.cppreference.com/w/cpp/types/numeric_limits/is_integer
-};
-
-template <bool B, typename T = void> // 
-struct enable_if {};
-
-template <class T>
-struct enable_if<true, T> {typedef T type;}; 
-// https://cplusplus.com/reference/type_traits/enable_if/?kw=enable_if
 
 }
 
