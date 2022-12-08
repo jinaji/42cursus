@@ -157,25 +157,187 @@ int main()
 
 //   std::cout << "myvector stores " << int(myvector.size()) << " numbers.\n";
 
+//   std::cout << "myvector stores " << int(myvector.size()) << " numbers.\n";
+//   for (std::vector<int>::iterator it = myvector.begin(); it != myvector.end(); it++)
+// 	std::cout << "elements" << *it << std::endl;
 //   return 0;
 // }
 // std::cout << std::endl;
-{
-  ft::Vector<int> myvector;
-  int myint;
+// {
+//   ft::Vector<int> myvector;
+//   int myint;
 
-  std::cout << "Please enter some integers (enter 0 to end):\n";
+//   std::cout << "Please enter some integers (enter 0 to end):\n";
 
-  do {
-    std::cin >> myint;
-    myvector.push_back (myint);
-  } while (myint);
+//   do {
+//     std::cin >> myint;
+//     myvector.push_back (myint);
+//   } while (myint);
 
-  std::cout << "myvector stores " << int(myvector.size()) << " numbers.\n";
+//   std::cout << "myvector stores " << int(myvector.size()) << " numbers.\n";
+//   for (ft::Vector<int>::iterator it = myvector.begin(); it != myvector.end(); it++)
+// 	std::cout << "elements" << *it << std::endl;
+
+//   return 0;
+// }
+
+// std::vector<int>	test(10);
+// test.assign(5, 3);
+// test.assign(3, 5);
+// // std::cout << test.capacity() << std::endl;
+
+// // test.assign(7, 4);
+// for (std::vector<int>::iterator it = test.begin(); it != test.end();it++)
+// {
+// 	std::cout << *it << std::endl;
+// }
+
+// std::cout << std::endl << std::endl;
+
+// ft::Vector<int>	test(10);
+// test.assign(5, 3);
+// test.assign(3, 5);
+
+// // test.assign(7, 4);
+// for (ft::Vector<int>::iterator it = test.begin(); it != test.end();it++)
+// {
+// 	std::cout << "main " << *it << std::endl;
+// }
+
+// std::vector<int> resize_test;
+
+// resize_test.resize(3, 5);
+// for (std::vector<int>::iterator it = resize_test.begin(); it != resize_test.end(); it++)
+// 	std::cout << *it << std::endl;
+// std::cout << "size " << resize_test.size() << std::endl << std::endl << std::endl;
+
+// resize_test.resize(5, 1);
+// for (std::vector<int>::iterator it = resize_test.begin(); it != resize_test.end(); it++)
+// 	std::cout << *it << std::endl;
+// std::cout << "size " << resize_test.size() << std::endl << std::endl << std::endl;
+
+// ft::Vector<int> resize_test;
+
+// resize_test.resize(3, 5);
+// for (ft::Vector<int>::iterator it = resize_test.begin(); it != resize_test.end(); it++)
+// 	std::cout << *it << std::endl;
+// std::cout << "size " << resize_test.size() << std::endl << std::endl << std::endl;
+
+// resize_test.resize(5, 1);
+// for (ft::Vector<int>::iterator it = resize_test.begin(); it != resize_test.end(); it++)
+// 	std::cout << *it << std::endl;
+// std::cout << "size " << resize_test.size() << std::endl << std::endl << std::endl;
+
+
+//   ft::Vector<int> myvector;
+//   int sum (0);
+//   myvector.push_back (100);
+//   myvector.push_back (200);
+//   myvector.push_back (300);
+
+//   for(ft::Vector<int>::iterator it = myvector.begin(); it != myvector.end(); it++)
+// 	std::cout << *it << std::endl;
+
+//   while (!myvector.empty())
+//   {
+// 	std::cout << myvector.back() << std::endl;
+//     sum+=myvector.back();
+//     myvector.pop_back();
+//   }
+
+//   std::cout << "The elements of myvector add up to " << sum << '\n';
+
+//   return 0;
+//   }
+
+
+//   ft::Vector<int> myvector;
+
+//   // set some initial content:
+//   for (size_t i = 1; i < 10; i++)
+//   	myvector.push_back(i);
+// //   for (size_t i=0;i<myvector.size();i++)
+// //     std::cout << ' ' << myvector[i] << std::endl;
+
+//   myvector.resize(5);
+//   myvector.resize(8,100);
+//   myvector.resize(12);
+
+//   std::cout << "myvector contains:";
+//   for (size_t i=0;i<myvector.size();i++)
+//     std::cout << ' ' << myvector[i];
+//   std::cout << '\n';
+
+//   return 0;
+
+//   ft::Vector<int> myvector (3,100);
+//   ft::Vector<int>::iterator it;
+
+//   it = myvector.begin();
+//   it = myvector.insert ( it , 200 );
+
+//   myvector.insert (it,2,300);
+
+  // "it" no longer valid, get a new one:
+//   it = myvector.begin();
+
+//   ft::Vector<int> anothervector (2,400);
+//   myvector.insert (it+2,anothervector.begin(),anothervector.end());
+
+//   int myarray [] = { 501,502,503 };
+//   myvector.insert (myvector.begin(), myarray, myarray+3);
+
+//   std::cout << "myvector contains:";
+//   for (it=myvector.begin(); it<myvector.end(); it++)
+//     std::cout << ' ' << *it;
+//   std::cout << '\n';
+
+//   return 0;
+
+//   ft::Vector<int>::size_type sz;
+
+//   ft::Vector<int> foo;
+//   sz = foo.capacity();
+//   std::cout << "making foo grow:\n";
+//   for (int i=0; i<100; ++i) {
+//     foo.push_back(i);
+//     if (sz!=foo.capacity()) {
+//       sz = foo.capacity();
+//       std::cout << "capacity changed: " << sz << '\n';
+//     }
+//   }
+
+//   ft::Vector<int> bar;
+//   sz = bar.capacity();
+//   bar.reserve(100);   // this is the only difference with foo above
+//   std::cout << "making bar grow:\n";
+//   for (int i=0; i<100; ++i) {
+//     bar.push_back(i);
+//     if (sz!=bar.capacity()) {
+//       sz = bar.capacity();
+//       std::cout << "capacity changed: " << sz << '\n';
+//   }
+// }
+
+// constructors used in the same order as described above:
+  ft::Vector<int> first;                                // empty vector of ints
+  ft::Vector<int> second (4,100);                       // four ints with value 100
+  ft::Vector<int> third (second.begin(),second.end());  // iterating through second
+  ft::Vector<int> fourth (third);                       // a copy of third
+
+  // the iterator constructor can also be used to construct from arrays:
+  int myints[] = {16,2,77,29};
+  ft::Vector<int> fifth (myints, myints + sizeof(myints) / sizeof(int) );
+
+  std::cout << "The contents of fifth are:";
+  for (ft::Vector<int>::iterator it = fifth.begin(); it != fifth.end(); ++it)
+    std::cout << ' ' << *it;
+  std::cout << '\n';
 
   return 0;
-}
+
+
+
 
 }
-
-} 
+}

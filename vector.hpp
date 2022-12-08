@@ -129,7 +129,7 @@ protected:
 		return (pointer());
 	}
 
-	void	_M_deallocate(pointer __p, size_t __n, allocator_type __a)
+	void	_M_deallocate(pointer __p, size_t __n, allocator_type __a = allocator_type())
 	{
 		if (__p)
 			__alloc_traits::deallocate(__a, __p, __n); // ???
@@ -150,7 +150,6 @@ private:
 	typedef VectorBase<T, Allocator>				__base;
 	typedef typename __base::__alloc_traits			__alloc_traits;
 	typedef typename __base::allocator_type			allocator_type;
-	typedef typename __base::size_type				size_type;
 	// typedef std::allocator<T>						allocator_type;
 
 public:
@@ -159,6 +158,7 @@ public:
     typedef typename __base::const_pointer				const_pointer;
 	typedef typename __base::reference					reference;
 	typedef typename __base::const_reference			const_reference;
+	typedef typename __base::size_type					size_type;
     // typedef typename __alloc_traits::reference			reference;
     // typedef typename __alloc_traits::const_reference	const_reference;
 
@@ -225,79 +225,90 @@ public:
 	iterator		rend() {return (this->m_begin);}
 	const_iterator	rend() const {return (this->m_begin);}
 
-// 	//capacity
-	size_type	size() const {return (this->m_end - this->m_begin);}
+// capacity
+	size_type	size() const {return static_cast<size_type>(this->m_end - this->m_begin);}
 	size_type	max_size() const {return (sizeof(this->size_type));} // maximum number of a vector container can hold as content. != capacity
 	void		resize(size_type n, value_type val = value_type())
 	{
-		std::cout << "resize size " << n << std::endl;
 		size_type	_size = size(); // n이 사이즈보다 클 때만 val로 채우는 건가
+		// size_type	_cap = capacity() - n;
 
 		if (capacity() == 0)
 		{
-		std::cout << "hi 1 " << n << std::endl;
 			this->_M_create_storage(n);
 			std::uninitialized_fill(this->m_begin, this->m_begin + n, val);
-			this->m_end += n;
+			// this->m_end += n;
 		}
 		else if (n > capacity()) // realloc
 		{
 			pointer	_tmp;
-			size_type _end = this->m_end - this->m_begin; // 뻐큐 
-			size_type _cap = this->m_cap - this->m_begin;
-
-			_tmp = this->_M_allocate(capacity() * 2); // segfault 
+			size_type _end = size(); // 뻐큐 
+			size_type _cap = capacity();
+			while (n > _cap)
+				_cap *= 2;
+			_tmp = this->_M_allocate(_cap); // segfault 
 			// std::cout << capacity() * 2 << std::endl;
 			std::uninitialized_copy(this->m_begin, this->m_end, _tmp);
 			this->_M_deallocate(this->m_begin, this->m_end - this->m_begin, this->m_alloc);
+			std::uninitialized_fill_n(_tmp + _end, n - _end, val);
 			this->m_begin = _tmp;
 			// std::cout << "under " << capacity() * 2 << std::endl;
 			this->m_cap = this->m_begin + _cap;
-			this->m_end = this->m_begin + _end;
+			this->m_end = this->m_begin + n - _end;
+			// std::cout << "hi 2 cap: " << capacity() << std::endl;
 		}
-		else if (_size > n) // 줄이기
+		else if (_size > n) // end 땡겨서 줄이기
 		{
-		std::cout << "hi 3 " << n << std::endl;
+			std::cout << "hi 3" << std::endl;
 			while (_size > n)
 			{
 				__alloc_traits::destroy(this->m_alloc, this->m_end);
 				_size--;
-				this->m_end--;
 			}
+			// std::uninitialized_fill_n(this->m_begin, n, val);
+			this->m_end = this->m_begin + n;
 		}
-		else if (_size < n) // 지금보다 크긴한데 자리남음
+		else // 지금보다 크긴한데 자리남음
 		{
-		std::cout << "hi 4 " << n << std::endl;
-			std::uninitialized_fill(this->m_end, this->m_end + (n - _size), val);
-			this->m_end += (n - _size);
+			std::cout << "hi 4" << std::endl;
+
+			for (size_type i = size(); n > i; i++)
+				__alloc_traits::destroy(this->m_alloc, this->m_end);
+			std::uninitialized_fill_n(this->m_end, n - size(), val);
+			this->m_end = this->m_begin + n;
+			// std::uninitialized_fill(this->m_end, this->m_end + (n - _size), val);
+			// this->m_end += (n - _size);
 		}
 	}
 	size_type	capacity() const {return static_cast<size_type>(this->m_cap - this->m_begin);}
 	bool		empty() const {return this->m_begin == this->m_end;}
 	void		reserve(size_type n)
 	{
+		std::cout << "reserve "<< capacity() << std::endl;
 		if (n > capacity())
-		{
-			pointer	_tmp;
+			resize(n);
+		// if (n > capacity())
+		// {
+		// 	pointer	_tmp;
 
-			_tmp = _M_allocate(n);
-			std::uninitialized_copy(this->m_begin, this->m_end, _tmp);
-			_M_deallocate(this->m_begin);
-			this->m_begin = _tmp;
-			this->m_cap = this->m_begin + n;
-			this->end = this->m_begin + n;
-		}
+		// 	_tmp = this->_M_allocate(n);
+		// 	std::uninitialized_copy(this->m_begin, this->m_end, _tmp);
+		// 	_M_deallocate(this->m_begin);
+		// 	this->m_begin = _tmp;
+		// 	this->m_cap = this->m_begin + n;
+		// 	this->end = this->m_begin + n;
+		// }
 	}
 
 // element access
-	reference 			operator[](size_type n) {return &(*(this->m_begin + n));}
-	const reference		operator[](size_type n) const {return &(*(this->m_begin + n));}
+	reference 			operator[](size_type n) {return (*(this->m_begin + n));}
+	const reference		operator[](size_type n) const {return (*(this->m_begin + n));}
 	reference			at(size_type n) {if (n > size()) throw("out of range"); return (this->m_begin + n);}
 	const_reference		at(size_type n) const {if (n > size()) throw("out of range"); return (this->m_begin + n);}
 	reference			front() {return (*(this->begin()));}
 	const reference		front() const {return (*(this->begin()));}
-	reference			back() {return (*(this->end()));}
-	const_reference		back() const {return (*(this->end()));}
+	reference			back() {return (*(this->end() - 1));}
+	const_reference		back() const {return (*(this->end() - 1));}
 	// value_type*			data() FT_NOEXCEPT {return (this->begin());} // no except c++ 11?? const ??  https://en.cppreference.com/w/cpp/container/vector/data
 	// const value_type	data() const FT_NOEXCEPT {return (this->begin());}
 
@@ -313,29 +324,69 @@ public:
 			this->_M_create_storage(last - first);
 		std::uninitialized_copy(first, last, this->m_begin);
 	}
+
 	void		assign(size_type n, const value_type& val)
 	{
-		std::cout << "a cap " << capacity() << std::endl;
-		std::cout << "a size " << size() << std::endl;
-		while (n > capacity())
+		// while (n > capacity())
+		// 	resize(n, val);
+		// size_type	_size = size();
+		// std::uninitialized_fill(this->m_end, this->m_end + (n), val);
+		// resize(n, val);
+		// this->m_end += (n);
+		// std::cout << capacity() << std::endl;
+		// std::cout << size() << std::endl;
+		if (capacity() == 0)
 			resize(n, val);
-		size_type	_size = size();
-		std::uninitialized_fill(this->m_end, this->m_end + (n - _size), val);
-		this->m_end += (n - _size);
+		else if (this->m_end == this->m_cap)
+			resize(n * 2);
+		for (size_type i = 0; n > i; i++)
+			__alloc_traits::destroy(this->m_alloc, this->m_begin);
+		std::uninitialized_fill_n(this->m_begin, n, val);
+		this->m_end = this->m_begin + n;
 	}
+
 	void		push_back(const value_type& val)
 	{
 		if (capacity() == 0)
 			this->_M_create_storage(1);
-		else if (this->m_cap == this->m_end)
+		else if (capacity() == size())
 			resize(capacity() * 2);
-		std::cout << "p cap " << capacity() << std::endl;
-		std::cout << "p size " << size() << std::endl;
-		assign(1, val);
+		std::uninitialized_fill_n(this->m_end, 1, val);
 		this->m_end += 1;
 	}
-// 	void		pop_back();
-// 	iterator	insert(iterator position, const value_type& val);
+
+	void		pop_back()
+	{
+		if (empty())
+			return ;
+		__alloc_traits::destroy(this->m_alloc, this->m_end);
+		this->m_end -= 1;
+	}
+
+	iterator	insert(iterator position, const value_type& val)
+	{
+		//copy ,,,??? 
+		// size_type	_pos = position - this->m_begin;
+
+		// if (this->m_begin == this->m_end)
+		// 	resize(capacity() * 2);
+		// for (size_type i = size() + 1; i > _pos; i--)
+		// {
+		// 	this->m_end + i = this->m_end + (i - 1);
+		// }
+		// this->m_begin + _pos = val;
+	
+		size_type	_pos = position - this->m_begin;
+		pointer		_tmp;
+
+		if (capacity() == size())
+			resize(capacity() * 2);
+		_tmp = std::uninitialized_copy_n(this->m_begin + _pos, size() - _pos, _tmp);
+		std::uninitialized_fill_n(this->m_begin + _pos, 1, val);
+		// 뒤에 붙이기 ,,?... 
+
+	}
+
 // 	void		insert(iterator position, size_type n, const value_type& val);
 // template <class InputIterator>
 // void		insert(iterator position, InputIterator first, InputIterator last);
