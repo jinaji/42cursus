@@ -9,7 +9,7 @@ namespace ft
 {
 
 template <typename category, typename T, typename Distance = ptrdiff_t, typename Pointer = T*, typename Reference = T&>
-class iterator
+struct iterator
 {
 	typedef	T			value_type;
 	typedef	Distance	difference_type;
@@ -19,7 +19,7 @@ class iterator
 }; // ㅇㅣ거 걍  std 이터레이터인데 필요한가 ???
 
 template <typename Iterator>
-struct iterator_traits // class?? struct???
+struct iterator_traits
 {
 	typedef typename Iterator::difference_type		difference_type;
 	typedef typename Iterator::value_type			value_type;
@@ -84,15 +84,43 @@ class reverse_iterator : public iterator<typename iterator_traits<It>::iterator_
 	reference			operator[](difference_type n) const {return *(this + n);}
 };
 
-// template <typename T>
-// class random_access_iterator : public iterator<std::random_access_iterator_tag, T>
-// {
-// 	typedef typename iterator<std::random_access_iterator_tag, T>::value_type		value_type;
-// 	typedef typename iterator<std::random_access_iterator_tag, T>::difference_type	difference_type;
-// 	typedef typename iterator<std::random_access_iterator_tag, T>::pointer			pointer;
-// 	typedef typename iterator<std::random_access_iterator_tag, T>::reference			reference;
-// 	typedef typename iterator<std::random_access_iterator_tag, T>::iterator_category	iterator_category;
-// };
+template <typename T>
+class random_access_iterator : public ft::iterator<std::random_access_iterator_tag, T>
+{
+	T*	val;
+public:
+	typedef typename ft::iterator<std::random_access_iterator_tag, T>::value_type			value_type;
+	typedef typename ft::iterator<std::random_access_iterator_tag, T>::difference_type	difference_type;
+	typedef typename ft::iterator<std::random_access_iterator_tag, T>::pointer			pointer;
+	typedef typename ft::iterator<std::random_access_iterator_tag, T>::reference			reference;
+	typedef typename ft::iterator<std::random_access_iterator_tag, T>::iterator_category	iterator_category;
+
+	random_access_iterator() {}
+  	random_access_iterator(int* x) : val(x) {}
+  	random_access_iterator(const random_access_iterator& mit) : val(mit.val) {}
+	
+  	bool operator==(const random_access_iterator& rhs) const {return val == rhs.val;}
+  	bool operator!=(const random_access_iterator& rhs) const {return val != rhs.val;}
+
+
+  	reference				operator*() {return *val;}
+	pointer					operator->() const {return &(operator*());}
+	random_access_iterator&	operator++() {++val; return *this;}
+	random_access_iterator	operator++(int) {random_access_iterator tmp(*this); ++val; return tmp;}
+	random_access_iterator&	operator--() {--val; return *this;}
+	random_access_iterator	operator--(int) {random_access_iterator tmp(*this); --val; return tmp;}
+	random_access_iterator	operator+(difference_type n) const {return random_access_iterator(val + n);}
+	random_access_iterator&	operator+=(difference_type n) const {val += n; return *this;}
+	random_access_iterator	operator-(difference_type n) const {return random_access_iterator(val - n);}
+	size_t					operator-(random_access_iterator n) const {return static_cast<size_t>(val - n.val);}
+	random_access_iterator&	operator-=(difference_type n) const {val -= n; return *this;}
+	reference				operator[](difference_type n) const {return *(this + n);}
+	bool					operator<(random_access_iterator n) {if ((*this - n) > 0) return true; return false;}
+
+
+	// bool operator==(const random_access_iterator& rhs) const {return p==rhs.p;}
+	// bool operator!=(const random_access_iterator& rhs) const {return p!=rhs.p;}
+};
 
 }
 

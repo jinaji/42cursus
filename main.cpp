@@ -320,21 +320,47 @@ int main()
 // }
 
 // constructors used in the same order as described above:
-  ft::Vector<int> first;                                // empty vector of ints
-  ft::Vector<int> second (4,100);                       // four ints with value 100
-  ft::Vector<int> third (second.begin(),second.end());  // iterating through second
-  ft::Vector<int> fourth (third);                       // a copy of third
+//   ft::Vector<int> first;                                // empty vector of ints
+//   ft::Vector<int> second (4,100);                       // four ints with value 100
+//   ft::Vector<int> third (second.begin(),second.end());  // iterating through second
+//   ft::Vector<int> fourth (third);                       // a copy of third
 
-  // the iterator constructor can also be used to construct from arrays:
-  int myints[] = {16,2,77,29};
-  ft::Vector<int> fifth (myints, myints + sizeof(myints) / sizeof(int) );
+//   // the iterator constructor can also be used to construct from arrays:
+//   int myints[] = {16,2,77,29};
+//   ft::Vector<int> fifth (myints, myints + sizeof(myints) / sizeof(int) );
 
-  std::cout << "The contents of fifth are:";
-  for (ft::Vector<int>::iterator it = fifth.begin(); it != fifth.end(); ++it)
+//   std::cout << "The contents of fifth are:";
+//   for (ft::Vector<int>::iterator it = fifth.begin(); it != fifth.end(); ++it)
+//     std::cout << ' ' << *it;
+//   std::cout << '\n';
+
+//   return 0;
+
+{
+  ft::Vector<int> myvector (5,100);
+  ft::Vector<int>::iterator it;
+
+  it = myvector.begin();
+  it = myvector.insert ( it , 200 );
+
+  myvector.insert (it,2,300);
+
+//   "it" no longer valid, get a new one:
+  it = myvector.begin();
+
+//   std::vector<int> anothervector (2,400);
+//   myvector.insert (it+2,anothervector.begin(),anothervector.end());
+
+//   int myarray [] = { 501,502,503 };
+//   myvector.insert (myvector.begin(), myarray, myarray+3);
+
+  std::cout << "myvector contains:";
+  for (it=myvector.begin(); it < myvector.end(); it++)
     std::cout << ' ' << *it;
   std::cout << '\n';
 
   return 0;
+}
 
 
 

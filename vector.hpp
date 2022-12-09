@@ -22,7 +22,7 @@ class VectorBase
 public:
     typedef Allocator									allocator_type;
 	typedef std::allocator_traits<allocator_type>		__alloc_traits;
-    // typedef typename allocator_traits<allocator_type>	__alloc_type;
+    // typedef std::allocator::<allocator_type>			__alloc_type;
     typedef typename __alloc_traits::size_type			size_type;
 
 protected:
@@ -147,9 +147,9 @@ template <class T, class Allocator = std::allocator<T> >
 class Vector : protected VectorBase <T,  Allocator>
 {
 private:
-	typedef VectorBase<T, Allocator>				__base;
-	typedef typename __base::__alloc_traits			__alloc_traits;
-	typedef typename __base::allocator_type			allocator_type;
+	typedef VectorBase<T, Allocator>					__base;
+	typedef typename __base::__alloc_traits				__alloc_traits;
+	typedef typename __base::allocator_type				allocator_type;
 	// typedef std::allocator<T>						allocator_type;
 
 public:
@@ -164,12 +164,14 @@ public:
 
 	// typedef typename ft::iterator<std::random_access_iterator_tag, Vector>::pointer			iterator;
 
-	typedef typename ft::iterator_traits<pointer>::pointer			iterator;
-	typedef typename ft::iterator_traits<const_pointer>::pointer	const_iterator;
+	// typedef typename ft::iterator_traits<pointer>::pointer			iterator;
+	// typedef typename ft::iterator_traits<const_pointer>::pointer	const_iterator;
     // typedef __wrap_iter<const_pointer>							
 	// typedef ft::iterator_traits<iterator>::pointer					pointer;
-    // typedef _VSTD::reverse_iterator<iterator>		reverse_iterator;
-    // typedef _VSTD::reverse_iterator<const_iterator>	const_reverse_iterator;
+    typedef ft::random_access_iterator<value_type>			iterator;
+    typedef ft::random_access_iterator<const value_type>	const_iterator;
+	typedef ft::reverse_iterator<iterator>					reverse_iterator;
+    typedef ft::reverse_iterator<const_iterator>			const_reverse_iterator;
 	
 	Vector()
 	{
@@ -182,8 +184,10 @@ public:
 	{
 		this->m_alloc = alloc;
 		this->_M_create_storage(n);
-		std::uninitialized_fill(this->m_begin, this->m_begin + n, val);
 		this->m_end += n;
+		while (n--)
+			this->m_alloc.construct(this->m_begin + n, val);
+		// std::uninitialized_fill(this->m_begin, this->m_begin + n, val);
 	}
 
 	template <class InputIterator>
@@ -227,7 +231,7 @@ public:
 
 // capacity
 	size_type	size() const {return static_cast<size_type>(this->m_end - this->m_begin);}
-	size_type	max_size() const {return (sizeof(this->size_type));} // maximum number of a vector container can hold as content. != capacity
+	size_type	max_size() const {return (-1);} // maximum number of a vector container can hold as content. != capacity
 	void		resize(size_type n, value_type val = value_type())
 	{
 		size_type	_size = size(); // n이 사이즈보다 클 때만 val로 채우는 건가
@@ -236,7 +240,9 @@ public:
 		if (capacity() == 0)
 		{
 			this->_M_create_storage(n);
-			std::uninitialized_fill(this->m_begin, this->m_begin + n, val);
+			while (n--)
+				this->m_alloc.construct(this->m_begin + n, val);
+			// std::uninitialized_fill(this->m_begin, this->m_begin + n, val);
 			// this->m_end += n;
 		}
 		else if (n > capacity()) // realloc
@@ -351,7 +357,8 @@ public:
 			this->_M_create_storage(1);
 		else if (capacity() == size())
 			resize(capacity() * 2);
-		std::uninitialized_fill_n(this->m_end, 1, val);
+		this->m_alloc.construct(this->m_end, val);
+		// std::uninitialized_fill_n(this->m_end, 1, val);
 		this->m_end += 1;
 	}
 
@@ -364,32 +371,55 @@ public:
 	}
 
 	iterator	insert(iterator position, const value_type& val)
-	{
-		//copy ,,,??? 
-		// size_type	_pos = position - this->m_begin;
-
-		// if (this->m_begin == this->m_end)
-		// 	resize(capacity() * 2);
-		// for (size_type i = size() + 1; i > _pos; i--)
-		// {
-		// 	this->m_end + i = this->m_end + (i - 1);
-		// }
-		// this->m_begin + _pos = val;
-	
+	{                                                             
+		size_type	_size = (size()) + 1;
 		size_type	_pos = position - this->m_begin;
 		pointer		_tmp;
 
-		if (capacity() == size())
+		if (_size >= capacity())
 			resize(capacity() * 2);
-		_tmp = std::uninitialized_copy_n(this->m_begin + _pos, size() - _pos, _tmp);
-		std::uninitialized_fill_n(this->m_begin + _pos, 1, val);
-		// 뒤에 붙이기 ,,?... 
-
+		_tmp = this->_M_allocate(size() - _pos);
+		std::uninitialized_copy_n(this->m_begin + _pos, size() - _pos, _tmp);
+		this->m_alloc.construct(this->m_begin + _pos, val);
+		this->m_end += 1;
+		std::uninitialized_copy_n(_tmp, _size - _pos, this->m_begin + _pos + 1);
+		return (this->m_begin + _pos); 
 	}
 
-// 	void		insert(iterator position, size_type n, const value_type& val);
-// template <class InputIterator>
-// void		insert(iterator position, InputIterator first, InputIterator last);
+	void		insert(iterator position, size_type n, const value_type& val)
+	{
+		size_type	_size = (size()) + n;
+		size_type	_pos = position - this->m_begin;
+		pointer		_tmp;
+
+		if (_size >= capacity())
+			resize(capacity() * 2);
+		_tmp = this->_M_allocate(size() - _pos);
+		std::uninitialized_copy_n(this->m_begin + _pos, size() - _pos, _tmp);
+		this->m_end += n;
+		while (n--)
+			this->m_alloc.construct(this->m_begin + _pos + n, val);
+		std::uninitialized_copy_n(_tmp, _size - _pos, this->m_begin + _pos + n);
+	}
+
+template <class InputIterator>
+void		insert(iterator position, InputIterator first, InputIterator last, typename ft::enable_if<!ft::is_integral<InputIterator>::value>::type* = 0)
+{
+		size_type	n = (last - first);
+		size_type	_size = (size()) + n;
+		size_type	_pos = position - this->m_begin;
+		pointer		_tmp;
+
+		if (_size >= capacity())
+			resize(capacity() * 2);
+		_tmp = this->_M_allocate(size() - _pos);
+		std::uninitialized_copy_n(this->m_begin + _pos, size() - _pos, _tmp);
+		while (first != last)
+			this->m_alloc.construct(this->m_begin + _pos, *first++);
+		this->m_end += n;
+		std::uninitialized_copy_n(_tmp, _size - _pos, this->m_begin + _pos + n);
+}
+
 // 	iterator	erase(iterator position);
 // 	iterator	erase(iterator first, iterator last);
 // 	void		swap(Vector& x);
