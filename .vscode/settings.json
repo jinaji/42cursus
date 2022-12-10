@@ -74,6 +74,11 @@
 		"queue": "cpp",
 		"set": "cpp",
 		"stack": "cpp",
-		"filesystem": "cpp"
+		"filesystem": "cpp",
+		"__bits": "cpp",
+		"clocale": "cpp",
+		"concepts": "cpp",
+		"variant": "cpp",
+		"*.ipp": "cpp"
 	}
 }

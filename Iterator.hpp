@@ -55,7 +55,7 @@ class reverse_iterator : public iterator<typename iterator_traits<It>::iterator_
                       typename iterator_traits<It>::pointer,
                       typename iterator_traits<It>::reference>
 {
-	protected:
+	public:
 		It current;
 	typedef It												iterator_type;
 	typedef typename iterator_traits<It>::difference_type	difference_type;
@@ -82,6 +82,8 @@ class reverse_iterator : public iterator<typename iterator_traits<It>::iterator_
 	reverse_iterator	operator-(difference_type n) const {return reverse_iterator(current + n);}
 	reverse_iterator&	operator-=(difference_type n) const {current += n; return *this;}
 	reference			operator[](difference_type n) const {return *(this + n);}
+	bool				operator==(reverse_iterator n) {if (current == n.current) return true; return false;}
+	bool				operator!=(reverse_iterator n) {if (current == n.current) return false; return true;}
 };
 
 template <typename T>
@@ -116,6 +118,10 @@ public:
 	random_access_iterator&	operator-=(difference_type n) const {val -= n; return *this;}
 	reference				operator[](difference_type n) const {return *(this + n);}
 	bool					operator<(random_access_iterator n) {if ((*this - n) > 0) return true; return false;}
+	bool					operator==(random_access_iterator n) {if ((*this - n) == 0) return true; return false;}
+	bool					operator!=(random_access_iterator n) {if ((*this - n) == 0) return false; return true;}
+	bool					operator==(difference_type n) {if ((*this - n) == 0) return true; return false;}
+	bool					operator!=(difference_type n) {if ((*this - n) == 0) return false; return true;}
 
 
 	// bool operator==(const random_access_iterator& rhs) const {return p==rhs.p;}

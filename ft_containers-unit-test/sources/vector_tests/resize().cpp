@@ -1,5 +1,6 @@
 #include "../system/system_methods.ipp"
 #include "__service.ipp"
+#include "../../../Vector.hpp"
 
 template <typename T>
 std::vector<int> resize_test(std::vector<T> vector) {

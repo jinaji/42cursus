@@ -99,21 +99,21 @@ protected:
 	// 	__move_assign_alloc(__c, integral_constant<bool, __alloc_traits::propagate_on_containter_move_assignment::value>());
 	// }
 
-	void _M_copy_data(const VectorBase& obj) // shallow? 
-	{
-		this->m_begin = obj.m_begin;
-		this->m_end = obj.m_end;
-		this->m_cap = obj.m_cap;
-		this->m_alloc = obj.m_alloc;
-	}
+	// void _M_copy_data(const VectorBase& obj) // shallow? 
+	// {
+	// 	this->m_begin = obj.m_begin;
+	// 	this->m_end = obj.m_end;
+	// 	this->m_cap = obj.m_cap;
+	// 	this->m_alloc = obj.m_alloc;
+	// }
 
-	void _M_swap_data(VectorBase& obj)
-	{
-		VectorBase tmp;
-		tmp._M_copy_data(*this);
-		_M_copy_data(obj);
-		obj._M_copy_data(tmp);
-	}
+	// void _M_swap_data(VectorBase& obj)
+	// {
+	// 	VectorBase tmp;
+	// 	tmp._M_copy_data(*this);
+	// 	_M_copy_data(obj);
+	// 	obj._M_copy_data(tmp);
+	// }
 
 	size_type _M_capacity() const FT_NOEXCEPT
 	{
@@ -220,14 +220,14 @@ public:
 	~Vector() {};
 
 	// iterator
-	iterator		begin() {return (this->m_begin);}
-	const_iterator	begin() const {return this->m_begin;}
-	iterator		end() {return (this->m_end);}
-	const_iterator	end() const {return (this->m_end);}
-	iterator		rbegin() {return (this->m_end);}
-	const_iterator	rbegin() const {return (this->m_end);}
-	iterator		rend() {return (this->m_begin);}
-	const_iterator	rend() const {return (this->m_begin);}
+	iterator				begin() {return (this->m_begin);}
+	const_iterator			begin() const {return this->m_begin;}
+	iterator				end() {return (this->m_end);}
+	const_iterator			end() const {return (this->m_end);}
+	reverse_iterator		rbegin() {return reverse_iterator(this->end());}
+	const_reverse_iterator	rbegin() const {return reverse_iterator(this->end());}
+	reverse_iterator		rend() {return reverse_iterator(this->begin());}
+	const_reverse_iterator	rend() const {return reverse_iterator(this->begin());}
 
 // capacity
 	size_type	size() const {return static_cast<size_type>(this->m_end - this->m_begin);}
@@ -240,32 +240,13 @@ public:
 		if (capacity() == 0)
 		{
 			this->_M_create_storage(n);
+			this->m_end += n;
 			while (n--)
 				this->m_alloc.construct(this->m_begin + n, val);
 			// std::uninitialized_fill(this->m_begin, this->m_begin + n, val);
-			// this->m_end += n;
 		}
-		else if (n > capacity()) // realloc
+		else if (n < _size) // end 땡겨서 줄이기
 		{
-			pointer	_tmp;
-			size_type _end = size(); // 뻐큐 
-			size_type _cap = capacity();
-			while (n > _cap)
-				_cap *= 2;
-			_tmp = this->_M_allocate(_cap); // segfault 
-			// std::cout << capacity() * 2 << std::endl;
-			std::uninitialized_copy(this->m_begin, this->m_end, _tmp);
-			this->_M_deallocate(this->m_begin, this->m_end - this->m_begin, this->m_alloc);
-			std::uninitialized_fill_n(_tmp + _end, n - _end, val);
-			this->m_begin = _tmp;
-			// std::cout << "under " << capacity() * 2 << std::endl;
-			this->m_cap = this->m_begin + _cap;
-			this->m_end = this->m_begin + n - _end;
-			// std::cout << "hi 2 cap: " << capacity() << std::endl;
-		}
-		else if (_size > n) // end 땡겨서 줄이기
-		{
-			std::cout << "hi 3" << std::endl;
 			while (_size > n)
 			{
 				__alloc_traits::destroy(this->m_alloc, this->m_end);
@@ -274,10 +255,8 @@ public:
 			// std::uninitialized_fill_n(this->m_begin, n, val);
 			this->m_end = this->m_begin + n;
 		}
-		else // 지금보다 크긴한데 자리남음
+		else if (n <= capacity()) // 지금보다 크긴한데 자리남음
 		{
-			std::cout << "hi 4" << std::endl;
-
 			for (size_type i = size(); n > i; i++)
 				__alloc_traits::destroy(this->m_alloc, this->m_end);
 			std::uninitialized_fill_n(this->m_end, n - size(), val);
@@ -285,36 +264,55 @@ public:
 			// std::uninitialized_fill(this->m_end, this->m_end + (n - _size), val);
 			// this->m_end += (n - _size);
 		}
+		else // realloc 인데 ... 큰거 걍 던지는 거 생각해서 좀 바꿔봐야할듯
+		{
+			pointer	_tmp;
+			size_type _end = size(); // 뻐큐 
+			size_type _cap = capacity();
+
+			while (n > _cap)
+				_cap *= 2;
+			_tmp = this->_M_allocate(_cap); // segfault 
+			// std::cout << capacity() * 2 << std::endl;
+			std::uninitialized_copy(this->m_begin, this->m_end, _tmp);
+			this->_M_deallocate(this->m_begin, capacity(), this->m_alloc);
+			std::uninitialized_fill_n(_tmp + _end, n - _end, val);
+			this->m_begin = _tmp;
+			// std::cout << "under " << capacity() * 2 << std::endl;
+			this->m_cap = this->m_begin + _cap;
+			// this->m_end = this->m_begin + n;
+			this->m_end = this->m_begin + n - _end;
+			// this->m_end = this->m_begin + _end;
+			// std::cout << "hi 2 cap: " << capacity() << std::endl;
+		}
 	}
 	size_type	capacity() const {return static_cast<size_type>(this->m_cap - this->m_begin);}
 	bool		empty() const {return this->m_begin == this->m_end;}
 	void		reserve(size_type n)
 	{
-		std::cout << "reserve "<< capacity() << std::endl;
 		if (n > capacity())
-			resize(n);
-		// if (n > capacity())
-		// {
-		// 	pointer	_tmp;
+		{
+			size_type	_size = size();
+			pointer	_tmp;
 
-		// 	_tmp = this->_M_allocate(n);
-		// 	std::uninitialized_copy(this->m_begin, this->m_end, _tmp);
-		// 	_M_deallocate(this->m_begin);
-		// 	this->m_begin = _tmp;
-		// 	this->m_cap = this->m_begin + n;
-		// 	this->end = this->m_begin + n;
-		// }
+			_tmp = this->_M_allocate(n);
+			std::uninitialized_copy(this->m_begin, this->m_end, _tmp);
+			this->_M_deallocate(this->m_begin, capacity());
+			this->m_begin = _tmp;
+			this->m_cap = this->m_begin + n;
+			this->m_end = this->m_begin + _size;
+		}
 	}
 
 // element access
 	reference 			operator[](size_type n) {return (*(this->m_begin + n));}
 	const reference		operator[](size_type n) const {return (*(this->m_begin + n));}
-	reference			at(size_type n) {if (n > size()) throw("out of range"); return (this->m_begin + n);}
-	const_reference		at(size_type n) const {if (n > size()) throw("out of range"); return (this->m_begin + n);}
+	reference			at(size_type n) {if (n > size()) throw("out of range"); return this->m_begin[n];}
+	const_reference		at(size_type n) const {if (n > size()) throw("out of range"); return this->m_begin[n];}
 	reference			front() {return (*(this->begin()));}
 	const reference		front() const {return (*(this->begin()));}
-	reference			back() {return (*(this->end() - 1));}
-	const_reference		back() const {return (*(this->end() - 1));}
+	reference			back() {this->m_alloc.destroy(this->m_end); return (*(this->end() - 1));}
+	const_reference		back() const {this->m_alloc.destroy(this->m_end); return (*(this->end() - 1));}
 	// value_type*			data() FT_NOEXCEPT {return (this->begin());} // no except c++ 11?? const ??  https://en.cppreference.com/w/cpp/container/vector/data
 	// const value_type	data() const FT_NOEXCEPT {return (this->begin());}
 
@@ -322,13 +320,26 @@ public:
 	template <class InputIterator>
 	void		assign(InputIterator first, InputIterator last, typename ft::enable_if<!ft::is_integral<InputIterator>::value>::type* = 0)
 	{
-		size_type	_size = (last - first);
+		size_type	_dist = (last - first);
+		size_type	_size = _dist;
 
-		for (size_type i = 0; _size > i; i++)
-			__alloc_traits::destroy(this->m_alloc, this->m_begin);
-		if (!this->m_begin)
-			this->_M_create_storage(last - first);
+		if (this->m_begin)
+		{
+			while (_dist--)
+				this->m_alloc.destroy(this->m_begin + _dist);
+			if (capacity() < _size)
+				this->m_alloc.deallocate(this->m_begin, capacity());
+		}
+		if (capacity() < _size)
+		{
+			this->_M_create_storage(_size);
+		}
+		// this->m_cap = this->m_begin + _size;
+		// this->m_begin = this->m_alloc.allocate(_size);
 		std::uninitialized_copy(first, last, this->m_begin);
+		this->m_end = this->m_begin + _size;
+		// this->m_cap = this->m_begin + _size;
+		// std::cout << "assign capa " << capacity() << std::endl;
 	}
 
 	void		assign(size_type n, const value_type& val)
@@ -341,14 +352,34 @@ public:
 		// this->m_end += (n);
 		// std::cout << capacity() << std::endl;
 		// std::cout << size() << std::endl;
-		if (capacity() == 0)
-			resize(n, val);
-		else if (this->m_end == this->m_cap)
-			resize(n * 2);
-		for (size_type i = 0; n > i; i++)
-			__alloc_traits::destroy(this->m_alloc, this->m_begin);
-		std::uninitialized_fill_n(this->m_begin, n, val);
+
+		// if (!this->m_begin)
+		// 	this->_M_create_storage(n);
+		// if (capacity() == 0)
+		// 	resize(n, val);
+		// else if (this->m_end == this->m_cap)
+		// 	resize(n);
+		// for (size_type i = 0; n > i; i++)
+		// 	this->m_alloc.destroy(this->m_begin);
+		// std::uninitialized_fill_n(this->m_begin, n, val);
+		// this->m_end = this->m_begin + n;
+
+		size_type	_size = size();
+
+		if (this->m_begin)
+		{
+			while (_size--)
+				this->m_alloc.destroy(this->m_begin + _size);
+			if (capacity() < n)
+				this->m_alloc.deallocate(this->m_begin, capacity());
+		}
+		// this->m_end = m_begin + n;
+		if (capacity() < n)
+			this->_M_create_storage(n);
 		this->m_end = this->m_begin + n;
+		while (n--)
+			this->m_alloc.construct(this->m_begin + n, val);
+		// this->m_cap = this->m_begin + n;
 	}
 
 	void		push_back(const value_type& val)
@@ -376,7 +407,7 @@ public:
 		size_type	_pos = position - this->m_begin;
 		pointer		_tmp;
 
-		if (_size >= capacity())
+		if (_size > capacity())
 			resize(capacity() * 2);
 		_tmp = this->_M_allocate(size() - _pos);
 		std::uninitialized_copy_n(this->m_begin + _pos, size() - _pos, _tmp);
@@ -389,41 +420,113 @@ public:
 	void		insert(iterator position, size_type n, const value_type& val)
 	{
 		size_type	_size = (size()) + n;
+		size_type	_n = n;
 		size_type	_pos = position - this->m_begin;
 		pointer		_tmp;
 
-		if (_size >= capacity())
-			resize(capacity() * 2);
+		if (n == 0)
+			return ;
+		if (n > max_size())
+			throw "length error";
+		if (_size > capacity())
+			resize(_size);
 		_tmp = this->_M_allocate(size() - _pos);
 		std::uninitialized_copy_n(this->m_begin + _pos, size() - _pos, _tmp);
+		while (_n)
+		{
+			this->m_alloc.construct(this->m_begin + _pos + _n, val);
+			_n--;
+		}
 		this->m_end += n;
-		while (n--)
-			this->m_alloc.construct(this->m_begin + _pos + n, val);
-		std::uninitialized_copy_n(_tmp, _size - _pos, this->m_begin + _pos + n);
+		// std::cout << size() << std::endl;
+		std::uninitialized_copy_n(_tmp, _size - _pos, this->m_begin + _pos);
 	}
 
 template <class InputIterator>
 void		insert(iterator position, InputIterator first, InputIterator last, typename ft::enable_if<!ft::is_integral<InputIterator>::value>::type* = 0)
 {
-		size_type	n = (last - first);
-		size_type	_size = (size()) + n;
+		size_type	_n = (last - first);
+		size_type	_size = (size()) + _n;
 		size_type	_pos = position - this->m_begin;
 		pointer		_tmp;
 
-		if (_size >= capacity())
-			resize(capacity() * 2);
+		if (_size > capacity())
+			resize(_n);
 		_tmp = this->_M_allocate(size() - _pos);
 		std::uninitialized_copy_n(this->m_begin + _pos, size() - _pos, _tmp);
-		while (first != last)
-			this->m_alloc.construct(this->m_begin + _pos, *first++);
-		this->m_end += n;
-		std::uninitialized_copy_n(_tmp, _size - _pos, this->m_begin + _pos + n);
+		for (size_type i = 0; first != last; i++)
+			this->m_alloc.construct(this->m_begin + _pos + i, *first++);
+		this->m_end += _n;
+		std::uninitialized_copy_n(_tmp, _size - _pos, this->m_begin + _pos + _n);
 }
 
-// 	iterator	erase(iterator position);
-// 	iterator	erase(iterator first, iterator last);
-// 	void		swap(Vector& x);
-// 	void		clear(); // memory alives
+iterator	erase(iterator position)
+{                                                           
+	size_type	_pos = position - this->m_begin;
+	size_type	_size = (size()) - _pos - 1;
+	pointer		_tmp;
+
+	_tmp = this->_M_allocate(_size);
+	std::uninitialized_copy_n(this->m_begin + _pos + 1, size() - _pos - 1, _tmp);
+	this->m_alloc.destroy(this->m_begin + _pos);
+	std::uninitialized_copy_n(_tmp, _size, (this->m_begin + _pos));
+	this->m_end -= 1;
+	return (this->m_begin + _pos);
+}
+
+iterator	erase(iterator first, iterator last)
+{
+	size_type	_n = (last - first);
+	size_type	_pos = first - this->m_begin;
+	size_type	_size = (size()) - _pos - _n;
+	pointer		_tmp;
+
+	_tmp = this->_M_allocate(_size);
+	std::uninitialized_copy_n(this->m_begin + _pos + _n, size() - _pos - _n, _tmp);
+	this->m_end -= _n;
+	while (_n--)
+		this->m_alloc.destroy(this->m_begin + _n + _pos);
+	std::uninitialized_copy_n(_tmp, _size, (this->m_begin + _pos));
+	this->m_alloc.deallocate(_tmp, _size);
+	return (this->m_begin + _pos);
+}
+
+void		swap(Vector& x)
+{
+	// pointer		_tmp;
+	// size_type	_cap = capacity();
+	// size_type	_size = size();
+
+	// _tmp = this->_M_allocate(_size);
+	// std::uninitialized_copy_n(this->m_begin, _size, _tmp);
+	// this->m_alloc.deallocate(this->m_begin, _cap);
+	// this->m_begin = x.m_begin;
+	// this->m_end = x.m_end;
+	// this->m_cap = x.m_cap;
+	// x.m_begin = _tmp;
+	// x.m_end = _tmp + _size;
+	// x.m_cap = _tmp + _cap;
+
+	pointer		_tmp;
+	size_type	_cap = capacity();
+	size_type	_size = size();
+
+	_tmp = this->m_begin;
+	this->m_begin = x.m_begin;
+	this->m_end = x.m_end;
+	this->m_cap = x.m_cap;
+	x.m_begin = _tmp;
+	x.m_end = _tmp + _size;
+	x.m_cap = _tmp + _cap;
+}
+
+void		clear() // memory alives
+{
+	while (this->m_begin != this->m_end--)
+		this->m_alloc.destroy(this->m_end);
+	this->m_end = this->m_begin;
+}
+
 
 };
 
