@@ -100,9 +100,6 @@ public:
 	random_access_iterator() {}
   	random_access_iterator(int* x) : val(x) {}
   	random_access_iterator(const random_access_iterator& mit) : val(mit.val) {}
-	
-  	bool operator==(const random_access_iterator& rhs) const {return val == rhs.val;}
-  	bool operator!=(const random_access_iterator& rhs) const {return val != rhs.val;}
 
 
   	reference				operator*() {return *val;}
@@ -118,8 +115,10 @@ public:
 	random_access_iterator&	operator-=(difference_type n) const {val -= n; return *this;}
 	reference				operator[](difference_type n) const {return *(this + n);}
 	bool					operator<(random_access_iterator n) {if ((*this - n) > 0) return true; return false;}
-	bool					operator==(random_access_iterator n) {if ((*this - n) == 0) return true; return false;}
-	bool					operator!=(random_access_iterator n) {if ((*this - n) == 0) return false; return true;}
+	bool					operator==(random_access_iterator n) {return val == n.val;}
+	bool					operator!=(random_access_iterator n) {return val != n.val;}
+  	bool					operator==(const random_access_iterator& n) const {return val == n.val;}
+  	bool 					operator!=(const random_access_iterator& n) const {return val != n.val;}
 	bool					operator==(difference_type n) {if ((*this - n) == 0) return true; return false;}
 	bool					operator!=(difference_type n) {if ((*this - n) == 0) return false; return true;}
 

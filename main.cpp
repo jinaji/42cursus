@@ -29,8 +29,129 @@
 //     return v;
 // }
 
+// bool mycomp (char c1, char c2)
+// { return std::tolower(c1)<std::tolower(c2); }
+
+// template <typename T>
+// std::vector<int> resize_test(std::vector<T> vector) {
+//     std::vector<int> v;
+//     vector.assign(9900 * _ratio, 1);
+//     vector.resize(5000 * _ratio);
+//     vector.reserve(5000 * _ratio);
+//     v.push_back(vector.size());
+//     v.push_back(vector.capacity());
+//     vector.resize(7000 * _ratio);
+//     v.push_back(vector.size());
+//     v.push_back(vector.capacity());
+//     vector.resize(15300 * _ratio, T());
+// 	// std::cout << vector.size() << std::endl;
+//     v.push_back(vector.size());
+//     v.push_back(vector.capacity());
+//     v.push_back(vector[65]);
+//     return v;
+// }
+
+// template <typename T>
+// ft::Vector<int> resize_test(ft::Vector<T> vector) {
+//     ft::Vector<int> v;
+//     vector.assign(9900 * _ratio, 1);
+//     vector.resize(5000 * _ratio);
+//     vector.reserve(5000 * _ratio);
+//     v.push_back(vector.size());
+//     v.push_back(vector.capacity());
+//     vector.resize(7000 * _ratio);
+//     v.push_back(vector.size());
+//     v.push_back(vector.capacity());
+//     vector.resize(15300 * _ratio, T());
+// 	// std::cout << vector.size() << std::endl;
+//     v.push_back(vector.size());
+//     v.push_back(vector.capacity());
+//     v.push_back(vector[65]);
+// 	// std::cout << vector[65] << std::endl;
+//     return v;
+// }
+
+template <typename T>
+std::vector<int> insert_std_test(std::vector<T> vector) {
+	std::vector<int> v;
+	std::vector<int> tmp;
+	tmp.assign(2600 * _ratio, 1);
+	vector.assign(4200 * _ratio, 7);
+	vector.insert(vector.begin(), tmp.begin(), tmp.end());
+	// std::cout << vector.size() << " " << vector.capacity() << std::endl;
+	// for (size_t i = 0; i < tmp.size(); ++i) {
+	// 	v.push_back(vector[i]);
+	// }
+	v.push_back(vector.size());
+	v.push_back(vector.capacity());
+	return v;
+}
+
+template <typename T>
+ft::Vector<int> insert_std_test(ft::Vector<T> vector) {
+	ft::Vector<int> v;
+	ft::Vector<int> tmp;
+	tmp.assign(2600 * _ratio, 1);
+	vector.assign(4200 * _ratio, 7);
+	vector.insert(vector.begin(), tmp.begin(), tmp.end());
+	// std::cout << vector.size() << " " << vector.capacity() << std::endl;
+	// for (size_t i = 0; i < tmp.size(); ++i) {
+	// 	v.push_back(vector[i]);
+	// }
+	v.push_back(vector.size());
+	v.push_back(vector.capacity());
+	return v;
+}
+
+
 int main()
 {
+
+	std::vector<int> v;
+	std::vector<int> v1;
+	ft::Vector<int> v2;
+	ft::Vector<int> v3;
+
+	v1 = insert_std_test(v);
+
+	v3 = insert_std_test(v2);
+
+	// v1 = resize_test(v);
+
+	std::cout << v1.size() << std::endl;
+	std::cout << v1.capacity() << std::endl;
+
+	for (std::vector<int>::iterator it = v1.begin(); it != v1.end(); it++)
+		std::cout << *it <<  " " ;
+	std::cout << std::endl << std::endl;
+
+
+
+	std::cout << v3.size() << std::endl;
+	std::cout << v3.capacity() << std::endl;
+
+	for (ft::Vector<int>::iterator it = v3.begin(); it != v3.end(); it++)
+		std::cout << *it <<  " " ;
+	std::cout << std::endl;
+
+
+//   char foo[]="Apple";
+//   char bar[]="apartment";
+
+//   std::cout << std::boolalpha;
+
+//   std::cout << "Comparing foo and bar lexicographically (foo<bar):\n";
+
+//   std::cout << "Using default comparison (operator<): ";
+//   std::cout << ft::lexicographical_compare(foo,foo+5,bar,bar+9);
+//   std::cout << '\n';
+
+//   std::cout << "Using mycomp as comparison object: ";
+//   std::cout << ft::lexicographical_compare(foo,foo+5,bar,bar+9,mycomp);
+//   std::cout << '\n';
+
+//   return 0;
+
 	// std::vector<int> a;
 	// // std::vector<int> b;
 	// ft::Vector<int> c;
@@ -248,68 +369,68 @@ int main()
 // }
 // std::cout << test.size() << " " << test.capacity() << std::endl;
 
-{
-	std::vector<int> v;
-	std::vector<int> vector;
-	std::vector<int> tmp;
-	std::vector<int> tmp2;
+// {
+// 	std::vector<int> v;
+// 	std::vector<int> vector;
+// 	std::vector<int> tmp;
+// 	std::vector<int> tmp2;
 
-	vector.assign(3, 3);
-    tmp.assign(4000 * _ratio, 1);
-    tmp2.assign(4 * _ratio, 1);
-    // g_start1 = timer();
-    vector.assign(tmp.begin(), tmp.end());
+// 	vector.assign(3, 3);
+//     tmp.assign(4000 * _ratio, 1);
+//     tmp2.assign(4 * _ratio, 1);
+//     // g_start1 = timer();
+//     vector.assign(tmp.begin(), tmp.end());
 
-    v.push_back(vector[1]);
-    v.push_back(vector.size());
-    v.push_back(vector.capacity());
+//     v.push_back(vector[1]);
+//     v.push_back(vector.size());
+//     v.push_back(vector.capacity());
 
-	// for (std::vector<int>::iterator it = v.begin(); it != v.end(); it++)
-	// 	std::cout << *it << " ";
-	// std::cout << std::endl;
+// 	// for (std::vector<int>::iterator it = v.begin(); it != v.end(); it++)
+// 	// 	std::cout << *it << " ";
+// 	// std::cout << std::endl;
 
-    vector.assign(tmp2.begin(), tmp2.end());
-    // g_end1 = timer();
-    v.push_back(vector[444]);
-    v.push_back(vector.size());
-    v.push_back(vector.capacity());
+//     vector.assign(tmp2.begin(), tmp2.end());
+//     // g_end1 = timer();
+//     v.push_back(vector[444]);
+//     v.push_back(vector.size());
+//     v.push_back(vector.capacity());
 
-	for (std::vector<int>::iterator it = v.begin(); it != v.end(); it++)
-		std::cout << *it << " ";
-	std::cout << std::endl;
-}
+// 	for (std::vector<int>::iterator it = v.begin(); it != v.end(); it++)
+// 		std::cout << *it << " ";
+// 	std::cout << std::endl;
+// }
 
-{
-	ft::Vector<int> v;
-	ft::Vector<int> vector;
-	ft::Vector<int> tmp;
-	ft::Vector<int> tmp2;
+// {
+// 	ft::Vector<int> v;
+// 	ft::Vector<int> vector;
+// 	ft::Vector<int> tmp;
+// 	ft::Vector<int> tmp2;
 
-	vector.assign(3, 3);
-    tmp.assign(4000 * _ratio, 1);
-    tmp2.assign(4 * _ratio, 1);
-    // g_start1 = timer();
-    vector.assign(tmp.begin(), tmp.end());
+// 	vector.assign(3, 3);
+//     tmp.assign(4000 * _ratio, 1);
+//     tmp2.assign(4 * _ratio, 1);
+//     // g_start1 = timer();
+//     vector.assign(tmp.begin(), tmp.end());
 
-    v.push_back(vector[1]);
-    v.push_back(vector.size());
-    v.push_back(vector.capacity());
+//     v.push_back(vector[1]);
+//     v.push_back(vector.size());
+//     v.push_back(vector.capacity());
 
-	// for (ft::Vector<int>::iterator it = v.begin(); it != v.end(); it++)
-	// 	std::cout << *it << " ";
-	// std::cout << std::endl;
+// 	// for (ft::Vector<int>::iterator it = v.begin(); it != v.end(); it++)
+// 	// 	std::cout << *it << " ";
+// 	// std::cout << std::endl;
 
-    vector.assign(tmp2.begin(), tmp2.end());
-	// std::cout << vector.capacity() << std::endl;
-    // g_end1 = timer();
-    v.push_back(vector[444]);
-    v.push_back(vector.size());
-    v.push_back(vector.capacity());
+//     vector.assign(tmp2.begin(), tmp2.end());
+// 	// std::cout << vector.capacity() << std::endl;
+//     // g_end1 = timer();
+//     v.push_back(vector[444]);
+//     v.push_back(vector.size());
+//     v.push_back(vector.capacity());
 
-	for (ft::Vector<int>::iterator it = v.begin(); it != v.end(); it++)
-		std::cout << *it << " ";
-	std::cout << std::endl;
-}
+// 	for (ft::Vector<int>::iterator it = v.begin(); it != v.end(); it++)
+// 		std::cout << *it << " ";
+// 	std::cout << std::endl;
+// }
 
 
 
@@ -709,6 +830,17 @@ int main()
 
 // }
 
+//   ft::Vector<int> foo (3,100);   // three ints with a value of 100
+//   ft::Vector<int> bar (2,200);   // two ints with a value of 200
+
+//   if (foo==bar) std::cout << "foo and bar are equal\n";
+//   if (foo!=bar) std::cout << "foo and bar are not equal\n";
+//   if (foo< bar) std::cout << "foo is less than bar\n";
+//   if (foo> bar) std::cout << "foo is greater than bar\n";
+//   if (foo<=bar) std::cout << "foo is less than or equal to bar\n";
+//   if (foo>=bar) std::cout << "foo is greater than or equal to bar\n";
+
+//   return 0;
 
 
 }

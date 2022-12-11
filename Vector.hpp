@@ -236,7 +236,6 @@ public:
 	{
 		size_type	_size = size(); // n이 사이즈보다 클 때만 val로 채우는 건가
 		// size_type	_cap = capacity() - n;
-
 		if (capacity() == 0)
 		{
 			this->_M_create_storage(n);
@@ -280,8 +279,11 @@ public:
 			this->m_begin = _tmp;
 			// std::cout << "under " << capacity() * 2 << std::endl;
 			this->m_cap = this->m_begin + _cap;
-			// this->m_end = this->m_begin + n;
-			this->m_end = this->m_begin + n - _end;
+			// if (size() == 0)
+			// this->m_end = this->m_begin + n - _end;
+			// else
+			this->m_end = this->m_begin + n;
+			// std::cout << "in resize size " << size() << std::endl;
 			// this->m_end = this->m_begin + _end;
 			// std::cout << "hi 2 cap: " << capacity() << std::endl;
 		}
@@ -387,10 +389,10 @@ public:
 		if (capacity() == 0)
 			this->_M_create_storage(1);
 		else if (capacity() == size())
-			resize(capacity() * 2);
+			reserve(capacity() * 2);
 		this->m_alloc.construct(this->m_end, val);
-		// std::uninitialized_fill_n(this->m_end, 1, val);
 		this->m_end += 1;
+		// std::uninitialized_fill_n(this->m_end, 1, val);
 	}
 
 	void		pop_back()
@@ -409,10 +411,10 @@ public:
 
 		if (_size > capacity())
 			resize(capacity() * 2);
+		this->m_end = this->m_begin + _size;
 		_tmp = this->_M_allocate(size() - _pos);
 		std::uninitialized_copy_n(this->m_begin + _pos, size() - _pos, _tmp);
 		this->m_alloc.construct(this->m_begin + _pos, val);
-		this->m_end += 1;
 		std::uninitialized_copy_n(_tmp, _size - _pos, this->m_begin + _pos + 1);
 		return (this->m_begin + _pos); 
 	}
@@ -429,7 +431,7 @@ public:
 		if (n > max_size())
 			throw "length error";
 		if (_size > capacity())
-			resize(_size);
+			assign(_size, val);
 		_tmp = this->_M_allocate(size() - _pos);
 		std::uninitialized_copy_n(this->m_begin + _pos, size() - _pos, _tmp);
 		while (_n)
@@ -437,8 +439,6 @@ public:
 			this->m_alloc.construct(this->m_begin + _pos + _n, val);
 			_n--;
 		}
-		this->m_end += n;
-		// std::cout << size() << std::endl;
 		std::uninitialized_copy_n(_tmp, _size - _pos, this->m_begin + _pos);
 	}
 
@@ -451,12 +451,12 @@ void		insert(iterator position, InputIterator first, InputIterator last, typenam
 		pointer		_tmp;
 
 		if (_size > capacity())
-			resize(_n);
-		_tmp = this->_M_allocate(size() - _pos);
+			resize(_size);
+		_tmp = this->_M_allocate(_size);
 		std::uninitialized_copy_n(this->m_begin + _pos, size() - _pos, _tmp);
 		for (size_type i = 0; first != last; i++)
 			this->m_alloc.construct(this->m_begin + _pos + i, *first++);
-		this->m_end += _n;
+		this->m_end = this->m_begin + _size;
 		std::uninitialized_copy_n(_tmp, _size - _pos, this->m_begin + _pos + _n);
 }
 
@@ -470,6 +470,7 @@ iterator	erase(iterator position)
 	std::uninitialized_copy_n(this->m_begin + _pos + 1, size() - _pos - 1, _tmp);
 	this->m_alloc.destroy(this->m_begin + _pos);
 	std::uninitialized_copy_n(_tmp, _size, (this->m_begin + _pos));
+	this->_M_deallocate(_tmp);
 	this->m_end -= 1;
 	return (this->m_begin + _pos);
 }
@@ -493,31 +494,31 @@ iterator	erase(iterator first, iterator last)
 
 void		swap(Vector& x)
 {
-	// pointer		_tmp;
-	// size_type	_cap = capacity();
-	// size_type	_size = size();
-
-	// _tmp = this->_M_allocate(_size);
-	// std::uninitialized_copy_n(this->m_begin, _size, _tmp);
-	// this->m_alloc.deallocate(this->m_begin, _cap);
-	// this->m_begin = x.m_begin;
-	// this->m_end = x.m_end;
-	// this->m_cap = x.m_cap;
-	// x.m_begin = _tmp;
-	// x.m_end = _tmp + _size;
-	// x.m_cap = _tmp + _cap;
-
 	pointer		_tmp;
 	size_type	_cap = capacity();
 	size_type	_size = size();
 
-	_tmp = this->m_begin;
+	_tmp = this->_M_allocate(_size);
+	std::uninitialized_copy_n(this->m_begin, _size, _tmp);
+	this->m_alloc.deallocate(this->m_begin, _cap);
 	this->m_begin = x.m_begin;
 	this->m_end = x.m_end;
 	this->m_cap = x.m_cap;
 	x.m_begin = _tmp;
 	x.m_end = _tmp + _size;
 	x.m_cap = _tmp + _cap;
+
+	// pointer		_tmp;
+	// size_type	_cap = capacity();
+	// size_type	_size = size();
+
+	// _tmp = this->m_begin;
+	// this->m_begin = x.m_begin;
+	// this->m_end = x.m_end;
+	// this->m_cap = x.m_cap;
+	// x.m_begin = _tmp;
+	// x.m_cap = _tmp + _cap;
+	// x.m_end = _tmp + _size;
 }
 
 void		clear() // memory alives
@@ -527,8 +528,61 @@ void		clear() // memory alives
 	this->m_end = this->m_begin;
 }
 
+// Allocator
+allocator_type	get_allocator() const
+{
+	return (this->m_alloc);
+}
 
 };
+// Non-member function overloads
+
+template <class T, class Alloc>  
+bool operator== (const ft::Vector<T,Alloc>& lhs, const ft::Vector<T,Alloc>& rhs)
+{
+	if (lhs.size() != rhs.size())
+		return false;
+	return ft::equal(lhs.begin(), lhs.end(), rhs.begin());
+}
+
+template <class T, class Alloc>  
+bool operator!= (const ft::Vector<T,Alloc>& lhs, const ft::Vector<T,Alloc>& rhs)
+{
+	if (!(lhs == rhs))
+		return true;
+	return false;
+}
+
+template <class T, class Alloc>  
+bool operator< (const ft::Vector<T,Alloc>& lhs, const ft::Vector<T,Alloc>& rhs)
+{
+	return ft::lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end());
+}
+
+template <class T, class Alloc>  
+bool operator<= (const ft::Vector<T,Alloc>& lhs, const ft::Vector<T,Alloc>& rhs)
+{
+	if (!(rhs < lhs))
+		return true;
+	return false;
+}
+
+template <class T, class Alloc>  
+bool operator>  (const ft::Vector<T,Alloc>& lhs, const ft::Vector<T,Alloc>& rhs)
+{
+	if (rhs < lhs)
+		return true;
+	return false;
+}
+
+template <class T, class Alloc>  
+bool operator>= (const ft::Vector<T,Alloc>& lhs, const ft::Vector<T,Alloc>& rhs)
+{
+	if (!(lhs < rhs))
+		return true;
+	return false;
+}
+
 
 }
 
