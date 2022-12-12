@@ -4,6 +4,7 @@
 # include <cstddef>
 # include <vector>
 # include <iterator>
+# include <iostream>
 
 namespace ft
 {
@@ -31,7 +32,7 @@ struct iterator_traits
 template <typename T> 
 struct iterator_traits<T*>
 {
-	typedef ptrdiff_t							diffrence_type;
+	typedef ptrdiff_t							difference_type;
 	typedef T									value_type;
 	typedef T*									pointer;
 	typedef T&									reference;
@@ -41,7 +42,7 @@ struct iterator_traits<T*>
 template <typename T> 
 struct iterator_traits<const T*>
 {
-	typedef ptrdiff_t							diffrence_type;
+	typedef ptrdiff_t							difference_type;
 	typedef T									value_type;
 	typedef T*									pointer;
 	typedef T&									reference;
@@ -77,10 +78,10 @@ class reverse_iterator : public iterator<typename iterator_traits<It>::iterator_
 	reverse_iterator	operator++(int) {reverse_iterator tmp(*this); --current; return tmp;}
 	reverse_iterator&	operator--() {++current; return *this;}
 	reverse_iterator	operator--(int) {reverse_iterator tmp(*this); ++current; return tmp;}
-	reverse_iterator	operator+(difference_type n) const {return reverse_iterator(current - n);}
-	reverse_iterator&	operator+=(difference_type n) const {current -= n; return *this;}
-	reverse_iterator	operator-(difference_type n) const {return reverse_iterator(current + n);}
-	reverse_iterator&	operator-=(difference_type n) const {current += n; return *this;}
+	reverse_iterator	operator+(difference_type n) {return reverse_iterator(current - n);}
+	reverse_iterator&	operator+=(difference_type n) {current -= n; return *this;}
+	reverse_iterator	operator-(difference_type n) {return reverse_iterator(current + n);}
+	reverse_iterator&	operator-=(difference_type n) {current += n; return *this;}
 	reference			operator[](difference_type n) const {return *(this + n);}
 	bool				operator==(reverse_iterator n) {if (current == n.current) return true; return false;}
 	bool				operator!=(reverse_iterator n) {if (current == n.current) return false; return true;}
@@ -90,17 +91,17 @@ template <typename T>
 class random_access_iterator : public ft::iterator<std::random_access_iterator_tag, T>
 {
 	T*	val;
+	
 public:
 	typedef typename ft::iterator<std::random_access_iterator_tag, T>::value_type			value_type;
-	typedef typename ft::iterator<std::random_access_iterator_tag, T>::difference_type	difference_type;
-	typedef typename ft::iterator<std::random_access_iterator_tag, T>::pointer			pointer;
+	typedef typename ft::iterator<std::random_access_iterator_tag, T>::difference_type		difference_type;
+	typedef typename ft::iterator<std::random_access_iterator_tag, T>::pointer				pointer;
 	typedef typename ft::iterator<std::random_access_iterator_tag, T>::reference			reference;
 	typedef typename ft::iterator<std::random_access_iterator_tag, T>::iterator_category	iterator_category;
 
 	random_access_iterator() {}
-  	random_access_iterator(int* x) : val(x) {}
+  	random_access_iterator(T* x) : val(x) {}
   	random_access_iterator(const random_access_iterator& mit) : val(mit.val) {}
-
 
   	reference				operator*() {return *val;}
 	pointer					operator->() const {return &(operator*());}
@@ -108,11 +109,11 @@ public:
 	random_access_iterator	operator++(int) {random_access_iterator tmp(*this); ++val; return tmp;}
 	random_access_iterator&	operator--() {--val; return *this;}
 	random_access_iterator	operator--(int) {random_access_iterator tmp(*this); --val; return tmp;}
-	random_access_iterator	operator+(difference_type n) const {return random_access_iterator(val + n);}
-	random_access_iterator&	operator+=(difference_type n) const {val += n; return *this;}
-	random_access_iterator	operator-(difference_type n) const {return random_access_iterator(val - n);}
-	size_t					operator-(random_access_iterator n) const {return static_cast<size_t>(val - n.val);}
-	random_access_iterator&	operator-=(difference_type n) const {val -= n; return *this;}
+	random_access_iterator	operator+(difference_type n) {return random_access_iterator(val + n);}
+	random_access_iterator&	operator+=(difference_type n) {val += n; return *this;}
+	random_access_iterator	operator-(difference_type n) {return random_access_iterator(val - n);}
+	size_t					operator-(random_access_iterator n) {return static_cast<size_t>(val - n.val);}
+	random_access_iterator&	operator-=(difference_type n) {val -= n; return *this;}
 	reference				operator[](difference_type n) const {return *(this + n);}
 	bool					operator<(random_access_iterator n) {if ((*this - n) > 0) return true; return false;}
 	bool					operator==(random_access_iterator n) {return val == n.val;}

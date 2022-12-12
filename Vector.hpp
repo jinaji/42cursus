@@ -168,7 +168,13 @@ public:
 	// typedef typename ft::iterator_traits<const_pointer>::pointer	const_iterator;
     // typedef __wrap_iter<const_pointer>							
 	// typedef ft::iterator_traits<iterator>::pointer					pointer;
-    typedef ft::random_access_iterator<value_type>			iterator;
+
+
+    // typedef typename ft::iterator_traits<ft::random_access_iterator<value_type> >::pointer 			iterator;
+    // typedef typename ft::iterator_traits<ft::random_access_iterator<const value_type> >::pointer 			const_iterator;
+    
+	typedef ft::random_access_iterator<value_type>			iterator;
+
     typedef ft::random_access_iterator<const value_type>	const_iterator;
 	typedef ft::reverse_iterator<iterator>					reverse_iterator;
     typedef ft::reverse_iterator<const_iterator>			const_reverse_iterator;
@@ -210,6 +216,7 @@ public:
 			return (*this);
 		if (this->m_begin)
 			this->_M_deallocate(this->m_begin, (this->m_cap - this->m_begin), this->m_alloc);
+		this->m_alloc = x.get_allocator();
 		this->m_begin = this->_M_allocate(x.m_cap - x.m_begin);
 		std::uninitialized_copy(x.m_begin, x.m_end, this->m_begin);
 		this->m_end = this->m_begin + (x.m_end - x.m_begin);
@@ -220,7 +227,7 @@ public:
 	~Vector() {};
 
 	// iterator
-	iterator				begin() {return (this->m_begin);}
+	iterator				begin() {return this->m_begin;}
 	const_iterator			begin() const {return this->m_begin;}
 	iterator				end() {return (this->m_end);}
 	const_iterator			end() const {return (this->m_end);}
@@ -308,11 +315,11 @@ public:
 
 // element access
 	reference 			operator[](size_type n) {return (*(this->m_begin + n));}
-	const reference		operator[](size_type n) const {return (*(this->m_begin + n));}
+	const_reference		operator[](size_type n) const {return (*(this->m_begin + n));}
 	reference			at(size_type n) {if (n > size()) throw("out of range"); return this->m_begin[n];}
 	const_reference		at(size_type n) const {if (n > size()) throw("out of range"); return this->m_begin[n];}
 	reference			front() {return (*(this->begin()));}
-	const reference		front() const {return (*(this->begin()));}
+	const_reference		front() const {return *(this->begin());}
 	reference			back() {this->m_alloc.destroy(this->m_end); return (*(this->end() - 1));}
 	const_reference		back() const {this->m_alloc.destroy(this->m_end); return (*(this->end() - 1));}
 	// value_type*			data() FT_NOEXCEPT {return (this->begin());} // no except c++ 11?? const ??  https://en.cppreference.com/w/cpp/container/vector/data
@@ -416,6 +423,7 @@ public:
 		std::uninitialized_copy_n(this->m_begin + _pos, size() - _pos, _tmp);
 		this->m_alloc.construct(this->m_begin + _pos, val);
 		std::uninitialized_copy_n(_tmp, _size - _pos, this->m_begin + _pos + 1);
+		this->_M_deallocate(_tmp, size() - _pos);
 		return (this->m_begin + _pos); 
 	}
 
@@ -440,6 +448,7 @@ public:
 			_n--;
 		}
 		std::uninitialized_copy_n(_tmp, _size - _pos, this->m_begin + _pos);
+		this->_M_deallocate(_tmp, size() - _pos);
 	}
 
 template <class InputIterator>
@@ -457,7 +466,8 @@ void		insert(iterator position, InputIterator first, InputIterator last, typenam
 		for (size_type i = 0; first != last; i++)
 			this->m_alloc.construct(this->m_begin + _pos + i, *first++);
 		this->m_end = this->m_begin + _size;
-		std::uninitialized_copy_n(_tmp, _size - _pos, this->m_begin + _pos + _n);
+		std::uninitialized_copy_n(_tmp, _size - _pos, this->m_begin + _pos);
+		this->_M_deallocate(_tmp, _size);
 }
 
 iterator	erase(iterator position)
@@ -470,7 +480,7 @@ iterator	erase(iterator position)
 	std::uninitialized_copy_n(this->m_begin + _pos + 1, size() - _pos - 1, _tmp);
 	this->m_alloc.destroy(this->m_begin + _pos);
 	std::uninitialized_copy_n(_tmp, _size, (this->m_begin + _pos));
-	this->_M_deallocate(_tmp);
+	this->_M_deallocate(_tmp, _size);
 	this->m_end -= 1;
 	return (this->m_begin + _pos);
 }
@@ -568,7 +578,7 @@ bool operator<= (const ft::Vector<T,Alloc>& lhs, const ft::Vector<T,Alloc>& rhs)
 }
 
 template <class T, class Alloc>  
-bool operator>  (const ft::Vector<T,Alloc>& lhs, const ft::Vector<T,Alloc>& rhs)
+bool operator> (const ft::Vector<T,Alloc>& lhs, const ft::Vector<T,Alloc>& rhs)
 {
 	if (rhs < lhs)
 		return true;
@@ -582,7 +592,6 @@ bool operator>= (const ft::Vector<T,Alloc>& lhs, const ft::Vector<T,Alloc>& rhs)
 		return true;
 	return false;
 }
-
 
 }
 

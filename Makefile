@@ -1,7 +1,7 @@
 .DEFAULT_GOAL := all
 
 CXXFLAGS = -Wall -Werror -Wextra -std=c++98 -ferror-limit=100 -g -MMD -MP
-SRCS = main.cpp
+SRCS = test.cpp 
 OBJS = $(SRCS:.cpp=.o)
 DEPS = $(SRCS:.cpp=.d)
 -include $(DEPS)  
