@@ -183,14 +183,45 @@ std::vector<int> insert_test_3(_vector<T> vector) {
     v1.push_back(&(*k2));
     v1.push_back(&(*k3));
     v1.push_back(&(*k4));
+	
     try { vv.insert(vv.begin(), v1.begin(), v1.end()); }
     catch (...) {
         v.push_back(vv.size());
         v.push_back(vv.capacity());
     }
-
     return v;
 }
+
+
+// template <typename T>
+// std::vector<int> insert_std_test(std::vector<T> vector) {
+// 	std::vector<int> v;
+// 	std::vector<int> tmp;
+// 	tmp.assign(2600 * _ratio, 1);
+// 	vector.assign(4200 * _ratio, 7);
+// 	vector.insert(vector.begin(), tmp.begin(), tmp.end());
+// 	// for (size_t i = 0; i < tmp.size(); ++i) {
+// 	// 	v.push_back(vector[i]);
+// 	// }
+// 	v.push_back(vector.size());
+// 	v.push_back(vector.capacity());
+// 	return v;
+// }
+
+// template <typename T>
+// std::vector<int> insert_std_test(_vector<T> vector) {
+// 	std::vector<int> v;
+// 	std::vector<int> tmp;
+// 	tmp.assign(2600 * _ratio, 1);
+// 	vector.assign(4200 * _ratio, 7);
+// 	vector.insert(vector.begin(), tmp.begin(), tmp.end());
+// 	// for (size_t i = 0; i < tmp.size(); ++i) {
+// 	// 	v.push_back(vector[i]);
+// 	// }
+// 	v.push_back(vector.size());
+// 	v.push_back(vector.capacity());
+// 	return v;
+// }
 
 int main()
 {
@@ -219,6 +250,7 @@ int main()
 		std::cout << *it <<  " " ;
 	std::cout << std::endl;
 
+while(1);
 
 //   char foo[]="Apple";
 //   char bar[]="apartment";

@@ -115,7 +115,7 @@ public:
 	size_t					operator-(random_access_iterator n) {return static_cast<size_t>(val - n.val);}
 	random_access_iterator&	operator-=(difference_type n) {val -= n; return *this;}
 	reference				operator[](difference_type n) const {return *(this + n);}
-	bool					operator<(random_access_iterator n) {if ((*this - n) > 0) return true; return false;}
+	bool					operator<(random_access_iterator n) {if ((*this - n) < 0) return true; return false;}
 	bool					operator==(random_access_iterator n) {return val == n.val;}
 	bool					operator!=(random_access_iterator n) {return val != n.val;}
   	bool					operator==(const random_access_iterator& n) const {return val == n.val;}

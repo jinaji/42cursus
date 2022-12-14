@@ -174,7 +174,6 @@ public:
     // typedef typename ft::iterator_traits<ft::random_access_iterator<const value_type> >::pointer 			const_iterator;
     
 	typedef ft::random_access_iterator<value_type>			iterator;
-
     typedef ft::random_access_iterator<const value_type>	const_iterator;
 	typedef ft::reverse_iterator<iterator>					reverse_iterator;
     typedef ft::reverse_iterator<const_iterator>			const_reverse_iterator;
@@ -459,15 +458,40 @@ void		insert(iterator position, InputIterator first, InputIterator last, typenam
 		size_type	_pos = position - this->m_begin;
 		pointer		_tmp;
 
+		if (position < begin() ||  end() < position || &(*first) > &(*last))
+                 throw std::out_of_range("vector");
 		if (_size > capacity())
 			resize(_size);
 		_tmp = this->_M_allocate(_size);
 		std::uninitialized_copy_n(this->m_begin + _pos, size() - _pos, _tmp);
-		for (size_type i = 0; first != last; i++)
-			this->m_alloc.construct(this->m_begin + _pos + i, *first++);
-		this->m_end = this->m_begin + _size;
+		try
+		{
+			for (size_type i = 0; first != last; i++)
+			{
+				// this->m_alloc.destroy(this->m_begin + _pos + i);
+				this->m_alloc.construct(this->m_begin + _pos + i, *first++);
+			}
+		}
+		catch(...)
+		{
+			for (size_type i = 0; i < _size; i++)
+				this->m_alloc.destroy(_tmp + i);
+			for (size_type i = 0; i < size(); i++)
+				this->m_alloc.destroy(this->m_begin + i);
+			// this->_M_deallocate(this->m_begin, size());
+			this->_M_deallocate(_tmp, _size);
+			this->m_cap = this->m_begin;
+			this->m_end = this->m_begin;
+			// for (size_type i = 0; i < _n; i++)
+			// 	this->m_alloc.destroy(first + i);
+			// this->_M_deallocate(first, _n);
+			throw;
+		}
 		std::uninitialized_copy_n(_tmp, _size - _pos, this->m_begin + _pos);
+		for (size_type i = 0; i < _size; i++)
+				this->m_alloc.destroy(_tmp + i);
 		this->_M_deallocate(_tmp, _size);
+		this->m_end = this->m_begin + _size;
 }
 
 iterator	erase(iterator position)
