@@ -3,10 +3,10 @@
 ## socket
 ```c++
 Syntax
-  #include <sys/types.h>
-  #include <sys/socket.h>
+#include <sys/types.h>
+#include <sys/socket.h>
 
-  int socket(int address_family, int type, int protocol)
+int socket(int address_family, int type, int protocol);
 ```
 ### 설명
 해당 소켓을 가리키는 소켓 디스크립터를 반환한다.
@@ -19,15 +19,21 @@ Syntax
 ## setsockopt
 ```c++
 Syntax
-  #include <sys/types.h>
-  #include <sys/socket.h>
+#include <sys/socket.h>
 
-  int socket(int address_family, int type, int protocol)
+int setsockopt(int s, int  level,  int  optname,  const  void  *optval, socklen_t optlen);
 ```
 ### 설명
-몰
+소켓의 옵션을 설정한다.
+- s: 옵션을 설정할 소켓 디스크립터.
+- level: optname 값이 socket level인지 특정 프로토콜에 대한 설정인지를 지정하는 값. 보통 SOL_SOCKET와 IPPROTO_TCP 중 하나를 사용.
+- optname: 설정을 위한 소켓옵션의 번호.
+- optval: 설정값을 저장하기 위한 버퍼의 포인터. <br>
+설정값을 void * 로 넘기는 이유는 설정하고자 하는 소켓옵션에 따라서, boolean, interger, 구조체등 다양한 크기를 가지는 데이터형이 사용되기 때문이다. 만약 변경하고자 하는 소켓옵션이 boolean값을 사용한다면, 0혹은 1값을 사용하면 된다.
+- optlen: optval 버퍼의 크기.
 ### 반환값
-라
+- 1 (unsuccessful)
+- 0 (successful)
 ## getsockname
 ## getprotobyname
 ## gethostbyname
