@@ -1,3 +1,26 @@
 # ft_irc
 
-hi
+## socket
+## setsockopt
+## getsockname
+## getprotobyname
+## gethostbyname
+## getaddrinfo
+## freeaddrinfo
+## bind
+## connect 
+## listen
+## accept
+## htons
+## htonl
+## ntohs
+## ntohl
+## inet_addr
+## inet_ntoa
+## send
+## recv
+## signal
+## lseek
+## fstat
+## fcntl
+## kqueue
