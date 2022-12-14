@@ -9,11 +9,11 @@ Syntax
   int socket(int address_family, int type, int protocol)
 ```
 ### 설명
-
+몰
 ### 반환값
-
+라
 ### 에러
-
+요
 ## setsockopt
 ## getsockname
 ## getprotobyname
