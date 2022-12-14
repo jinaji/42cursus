@@ -210,32 +210,60 @@ client의 접속 요청을 받아들여 client와 연결합니다. accept 함수
 
 ## htons
 ```c++
-Syntax
+#include <manifest.h>
+#include <bsdtypes.h>
+#include <in.h>
+ 
+unsigned short htons(unsigned short a);
 ```
 ### 설명
+호스트 바이트 정렬 방식의 2바이트 데이터를 네트워크 바이트 정렬 방식으로 변환.
+- a: 호스트 바이트 정렬 방식의 2바이트 데이터
 ### 반환값
-
+- -1 (unsuccessful)
+- 변환된 값 (successful)
 ## htonl
 ```c++
-Syntax
+#include <manifest.h>
+#include <bsdtypes.h>
+#include <in.h>
+ 
+unsigned long htonl(unsigned long a);
 ```
 ### 설명
+호스트 바이트 정렬 방식의 4바이트 데이터를 네트워크 바이트 정렬 방식으로 변환.
+- a: 호스트 바이트 정렬 방식의 4바이트 데이터
 ### 반환값
-
+- -1 (unsuccessful)
+- 변환된 값 (successful)
 ## ntohs
 ```c++
-Syntax
+#include <manifest.h>
+#include <bsdtypes.h>
+#include <in.h>
+ 
+unsigned short ntohs(unsigned short a);
 ```
 ### 설명
+네트워크 바이트 정렬 방식의 2바이트 데이터를 호스트 바이트 정렬 방식으로 변환.
+- a: 네트워크 바이트 정렬 방식의 2바이트 데이터
 ### 반환값
-
+- -1 (unsuccessful)
+- 변환된 값 (successful)
 ## ntohl
 ```c++
-Syntax
+#include <manifest.h>
+#include <bsdtypes.h>
+#include <in.h>
+ 
+unsigned long ntohl(unsigned long a);
 ```
 ### 설명
+네트워크 바이트 정렬 방식의 4바이트 데이터를 호스트 바이트 정렬 방식으로 변환.
+- a: 네트워크 바이트 정렬 방식의 4바이트 데이터
 ### 반환값
-
+- -1 (unsuccessful)
+- 변환된 값 (successful)
 ## inet_addr
 ```c++
 BSD 4.3 Syntax
