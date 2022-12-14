@@ -16,6 +16,7 @@ int socket(int address_family, int type, int protocol);
 ### 반환값
 - 1 (unsuccessful)
 - n (successful), where n is a socket descriptor.
+
 ## setsockopt
 ```c++
 Syntax
@@ -34,25 +35,160 @@ int setsockopt(int s, int  level,  int  optname,  const  void  *optval, socklen_
 ### 반환값
 - 1 (unsuccessful)
 - 0 (successful)
+
 ## getsockname
+```c++
+Syntax
+#include <sys/socket.h>
+
+int getsockname(int s, struct sockaddr *name, socklen_t *namelen);
+```
+### 설명
+### 반환값
+
 ## getprotobyname
+```c++
+Syntax
+```
+### 설명
+### 반환값
+
 ## gethostbyname
+```c++
+Syntax
+```
+### 설명
+### 반환값
+
 ## getaddrinfo
+```c++
+Syntax
+```
+### 설명
+### 반환값
+
 ## freeaddrinfo
+```c++
+Syntax
+```
+### 설명
+### 반환값
+
 ## bind
-## connect 
+```c++
+Syntax
+```
+### 설명
+### 반환값
+
+## connect
+```c++
+Syntax
+```
+### 설명
+### 반환값
+
 ## listen
+```c++
+Syntax
+```
+### 설명
+### 반환값
+
 ## accept
+```c++
+Syntax
+```
+### 설명
+### 반환값
+
 ## htons
+```c++
+Syntax
+```
+### 설명
+### 반환값
+
 ## htonl
+```c++
+Syntax
+```
+### 설명
+### 반환값
+
 ## ntohs
+```c++
+Syntax
+```
+### 설명
+### 반환값
+
 ## ntohl
+```c++
+Syntax
+```
+### 설명
+### 반환값
+
 ## inet_addr
+```c++
+Syntax
+```
+### 설명
+### 반환값
+
 ## inet_ntoa
+```c++
+Syntax
+```
+### 설명
+### 반환값
+
 ## send
+```c++
+Syntax
+```
+### 설명
+### 반환값
+
 ## recv
+```c++
+Syntax
+```
+### 설명
+### 반환값
+
 ## signal
+```c++
+Syntax
+```
+### 설명
+### 반환값
+
 ## lseek
+```c++
+Syntax
+```
+### 설명
+### 반환값
+
 ## fstat
+```c++
+Syntax
+```
+### 설명
+### 반환값
+
 ## fcntl
+```c++
+Syntax
+```
+### 설명
+### 반환값
+
 ## kqueue
+```c++
+Syntax
+```
+### 설명
+### 반환값
