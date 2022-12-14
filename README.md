@@ -1,6 +1,13 @@
 # ft_irc
 
 ## socket
+```c++
+Syntax
+  #include <sys/types.h>
+  #include <sys/socket.h>
+
+  int socket(int address_family, int type, int protocol)
+```
 ## setsockopt
 ## getsockname
 ## getprotobyname
