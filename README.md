@@ -274,23 +274,58 @@ Syntax
 ## lseek
 ```c++
 Syntax
+#include <unistd.h>
+
+ off_t lseek(int file_descriptor, off_t offset, int whence);
 ```
 ### 설명
-### 반환값
+현재 파일의 오프셋을 새로운 포지션으로 변경. 새 포지션은 whence 포지션에서 offset 바이트만큼 떨어진 곳.
+lseek() 사용 후엔 I/O 오퍼레이션이 새 위치에서 시작됨.
+현재 파일의 EOF를 넘어선 곳에 새로운 파일 오프셋을 지정할 경우 이 데이터과 파일의 이전 끝 사이의 간격에서 수행되는 read 오퍼레이션이 이진수 0을 포함하는 바이트를 반환 (먼씹?)
+open()에서 O_TEXTDATA / O_CCSID 플래그가 적용된 경우 몇 가지 중요한 고려사항이 있음...
 
+- file_descriptor: 파일 디스크립터
+- offset: 오프셋을 변경할 바이트 수. 음수가 들어오면 뒤로 양수가 들어오면 앞으로 움직임.
+- whence: <unistd.h> 헤더에 정의된 옵션
+SEEK_SET - 파일의 시작
+SEEK_CUR - 현재 오프셋
+SEEK_END - EOF
+whence의 비트가 위의 값이 아닌 다른 값으로 설정되면 실패 후 EINVAL 오류 발생
+### 반환값
+- -1 (unsuccessful)
+- value (successful) - 새 파일 오프셋이 시작 지점에서 몇 바이트 떨어져있는지
 ## fstat
 ```c++
 Syntax
+ #include <sys/stat.h>
+
+ int fstat(int descriptor, struct stat *buffer)
 ```
 ### 설명
+인자로 받은 open 상태의 디스크립터의 상태를 받아오고 buffer에 정보를 저장.
+상태 정보는 <sys/stat.h> 헤더 파일에 정의된 stat 구조체로 반환.
+- descriptor: 디스크립터
+- buffer: stat 구조체 유형의 버퍼 포인터
+소켓 디스크립터에는 st_mode, st_dev(-1), st_blksize(시스템에서 결정하는 최적의 값)만 정해져있음.                                                                                                                                                                                             
 ### 반환값
-
+- -1 (unsuccessful)
+- 0 (successful)
 ## fcntl
 ```c++
 Syntax
+ #include <sys/types.h>
+ #include <unistd.h>
+ #include <fcntl.h>
+
+ int fcntl(int descriptor, int command, ...)  
 ```
 ### 설명
+열려있는 파일 또는 소켓 디스크립터의 변수를 가져오거나 변경하는 등 다양한 작업을 수행함.
+- descriptor: 명령어가 적용될 디스크립터
+- command: 들어온 디스크립터에 적용될 명령어. 몇몇 명령어는 필요에 따라 매개변수를 더 받음
 ### 반환값
+- -1 (unsuccessful)
+- command's value (successful)
 
 ## kqueue
 ```c++
