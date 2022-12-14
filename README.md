@@ -12,8 +12,6 @@ Syntax
 몰
 ### 반환값
 라
-### 에러
-요
 ## setsockopt
 ```c++
 Syntax
@@ -26,8 +24,6 @@ Syntax
 몰
 ### 반환값
 라
-### 에러
-요
 ## getsockname
 ## getprotobyname
 ## gethostbyname
