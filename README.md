@@ -8,6 +8,12 @@ Syntax
 
   int socket(int address_family, int type, int protocol)
 ```
+### 설명
+
+### 반환값
+
+### 에러
+
 ## setsockopt
 ## getsockname
 ## getprotobyname
