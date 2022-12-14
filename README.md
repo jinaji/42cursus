@@ -141,7 +141,7 @@ int bind(int socket_descriptor, const struct sockaddr *local_address, socklen_t 
 ### 설명
 소켓에 IP주소와 포트번호를 지정한다. 소켓을 통신에 사용할 수 있도록 준비가 된다. (소켓에 주소를 할당)
 - socket_descriptor: 소켓 디스크립터.
-- local_address: 할당될 주소
+- local_address: 할당될 주소.
         - 주소 정보로 인터넷을 이용하는 AF_INET인지 시스템 내에서 통신하는 AF_UNIX에 따라서 달라짐
 	- 인터넷을 통해 통신하는 AF_INET인 경우 struct sockaddr_in을 사용
 	- 시스템 내부 통신인 AF_UNIX인 경우에는 struct sockaddr을 사용
@@ -158,31 +158,55 @@ int bind(int socket_descriptor, const struct sockaddr *local_address, socklen_t 
 		char				sa_data[14];
 	};
         ```
-- address_length: local_address 구조체의 크기
+- address_length: local_address 구조체의 크기.
 ### 반환값
 - -1 (unsuccessful)
 - 0 (successful)
 
 ## connect
 ```c++
-Syntax
+#include <sys/socket.h>
+
+int connect(int socket_descriptor, const struct sockaddr *destination_address, socklen_t address_length);
 ```
 ### 설명
+생성한 소켓을 통해 서버로 접속을 요청한다.
+- socket_descriptor: 소켓 디스크립터.
+- destination_address: 서버 주소 정보에 대한 포인터.
+- address_length: destination_address의 크기
 ### 반환값
+- -1 (unsuccessful)
+- 0 (successful)
 
 ## listen
 ```c++
-Syntax
+#include <sys/socket.h>
+
+int listen(int socket_descriptor, int back_log);
 ```
 ### 설명
+이 함수는 sockfd로 제공된 소켓을 정적으로 마크한다. 즉, accept()를 사용하여 들어오는 연결 요청을 받는데 사용하는 소켓이다.
+SOCK_STREAM, SOCK_SEQPACKET 등의 연결지향형 socket에 대해서 server socket을 활성화하여 client의 접속을 허용한다. client의 접속 요청에 대해 accept를 통해 연결이 맺어지고 accept되지 못한 요청은 backlog의 크기만큼 queue에 쌓인다. backlog의 크기보다 많은 Connection이 쌓이면 Client는 ECONNREFUSED 오류가 발생한다.
+- socket_descriptor: 소켓 디스크립터. (해당 디스크립터를 생성하는 socket 함수의 2번째 파라미터인 type이 SOCK_STREAM, SOCK_SEQPACKET과 같은 연결지향형이어야 함)
+- back_log: 연결이 대기할 수 있는 큐의 갯수이다. 만약 backlog에 연결이 모두 찬 상태에서 새로운 연결을 시도한다면, 클라이언트는 ECONNREFUSED 에러를 받게될 것이다. 만약 재전송을 지원하는 프로토콜을 사용한다면 에러를 무시하고 성공할 때까지 재시도를 하게 된다.
 ### 반환값
+- -1 (unsuccessful)
+- 0 (successful)
 
 ## accept
 ```c++
-Syntax
+#include <sys/socket.h>
+
+int accept(int socket_descriptor, struct sockaddr *address, socklen_t *address_length);
 ```
 ### 설명
+client의 접속 요청을 받아들여 client와 연결합니다. accept 함수의 결과로 client와 연결을 유지하는 새로운 socket을 생성합니다. socket() 호출 시 type이 SOCK_STREAM, SOCK_SEQPACKET과 같은 연결지향성 소켓이어야 합니다.
+- socket_descriptor: 소켓 디스크립터. (bind 및 listen이 완료된 상태)
+- address: 접속한 client의 주소 정보를 저장(설정하는 값이 아니라 얻는 값). address NULL을 넘기면, client 주소 정보를 받지 않겠다는 의미. 연결이 성공되면 이 구조체를 채워서 되돌려 주게 되고, 우리는 이구조체의 정보를 이용해서 연결된 클라이언트의 인터넷 정보를 알아낼수 있다.
+- address_length: address 크기
 ### 반환값
+- -1 (unsuccessful)
+- n (successful), where n is a socket descriptor.
 
 ## htons
 ```c++
