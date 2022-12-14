@@ -238,42 +238,132 @@ Syntax
 
 ## inet_addr
 ```c++
-Syntax
+BSD 4.3 Syntax
+
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <arpa/inet.h>
+
+  unsigned long inet_addr(char **address_string*);
+
+*
+
+[UNIX® 98 Compatible Syntax]
+
+#define _XOPEN_SOURCE 520
+#include <arpa/inet.h>
+
+in_addr_t inet_addr(const char **address_string*);
 ```
 ### 설명
+Dotted-Demical Notation을 unsigned long 타입의 네트워크 바이트 순서로 변환.
 ### 반환값
+- INADDR_NONE (unsuccessful)
+- Big Endian 32비트 값 
 
 ## inet_ntoa
 ```c++
-Syntax
+#include <manifest.h>
+#include <bsdtypes.h>
+#include <socket.h>
+#include <in.h>
+#include <inet.h>
+ 
+char *inet_ntoa(struct in_addr in);
 ```
 ### 설명
+dot(.)이 있는 10진수 문자열 포인터를 반환.
+네트워크 바이트 순서(엔디안?)에 맞는 32비트 값을 받아서 10진수로 표현된 문자열(주소값)을 반환.
+- in: 호스트 인터넷 주소
 ### 반환값
-
+- -1 (unsuccessful)
+- 변환된 해당 문자열의 포인터 (successful)
 ## send
 ```c++
-Syntax
+BSD 4.3 Syntax
+
+#include <sys/types.h>
+#include <sys/socket.h>
+
+int send(int socket_descriptor, char *buffer, int buffer_length, int flags);
+
+UNIX® 98 Compatible Syntax
+
+#define _XOPEN_SOURCE 520
+#include <sys/socket.h>
+
+ssize_t send(int socket_descriptor, const void *buffer, size_t buffer_length, int flags);
 ```
 ### 설명
-### 반환값
+소켓을 통해 데이터를 전송. 타입들 ... recv랑 동일
+- socket_descriptor: 쓰여질 파일 디스크립터
+- buffer: 쓰여질 정보가 저장된 포인터
+- buffer_length: 버퍼의 길이
+- flags: 정보 전송을 컨트롤 할 플래그. 0이거나 이런저런 옵션 OR 연산
 
+MSG_EOR
+프로토콜에서 지원하는 경우 기록을 끝냄
+
+MSG_OOB
+대역 외로 데이터를 보냄. AF_INET / AF_INET6와 SOCK_STREAM 타입에서 유효
+
+MSG_DONTROUTE
+라우팅을 우회함. AF_INET에서만 유효. 다른 주소체계에서는 무시됨
+### 반환값
+- -1 (unsuccessful)
+- n (successful) 전송한 데이터의 바이트 수
 ## recv
 ```c++
-Syntax
+BSD 4.3 Syntax
+ #include <sys/types.h>
+ #include <sys/socket.h>
+
+int recv(int socket_descriptor, char *buffer, int buffer_length, int flags);
+
+*
+
+#define _XOPEN_SOURCE 520
+#include <sys/socket.h>
+
+ ssize_t recv(int socket_descriptor, void *buffer, size_t buffer_length, int flags);
 ```
 ### 설명
-### 반환값
+소켓을 통해 데이터를 받음.
+두 가지 버전이 있는데 위가 베이스고 다른 건 UNIX 98버전이랑 호환되는 인터페이스. _XOPEN_SOURCE 매크로 사용하면 사용 가능
+- socket_descriptor: 읽힐 소켓 디스크립터
+- buffer: 데이터 저장할 버퍼 포인터
+- flags: 데이터 수신을 제어하는 플래그 값
+플래그는 0이거나 상수들 중 하나 이상에 대한 OR 연산
 
+
+MSG_OOB
+대역 외 데이터를 수신함. AF_INET이나 AF_INET6, SOCK_STREAM 타입에서만 유효함.
+
+MSG_PEEK
+소켓에서 메세지를 제거하지 않고 메세지 사본을 가져옴
+
+MSG_WAITALL
+전체 요청이나 에러가 발생할 때까지 기다림
+### 반환값
+- -1 (unsuccessful)
+- n (successful) 수신한 데이터의 바이트 수
 ## signal
 ```c++
-Syntax
+#include <signal.h>
+
+ void(*signal (int sig, void (*func)(int)) )(int); 
 ```
 ### 설명
+프로그램이 운영체제나 raise() 함수에서 인터럽트 신호를 처리할 수 있는 여러 방법 중 하나를 선택할 수 있게 하는 함수.
+- sig: <signal.h> 헤더 안에 정의된 매크로 이것저것들 중 하나여야하고 
+- func: 저 안에 있는 SIG_DFL 또는 SIG_IGN 중 하나여야 함
+자세한 건 검색,,, 또는 추후보충
 ### 반환값
-
+- SIG_ERR (unsuccessful)
+- most recent value of func (successful)
 ## lseek
 ```c++
-Syntax
 #include <unistd.h>
 
  off_t lseek(int file_descriptor, off_t offset, int whence);
@@ -296,10 +386,9 @@ whence의 비트가 위의 값이 아닌 다른 값으로 설정되면 실패 �
 - value (successful) - 새 파일 오프셋이 시작 지점에서 몇 바이트 떨어져있는지
 ## fstat
 ```c++
-Syntax
  #include <sys/stat.h>
 
- int fstat(int descriptor, struct stat *buffer)
+ int fstat(int descriptor, struct stat *buffer);
 ```
 ### 설명
 인자로 받은 open 상태의 디스크립터의 상태를 받아오고 buffer에 정보를 저장.
@@ -312,12 +401,11 @@ Syntax
 - 0 (successful)
 ## fcntl
 ```c++
-Syntax
  #include <sys/types.h>
  #include <unistd.h>
  #include <fcntl.h>
 
- int fcntl(int descriptor, int command, ...)  
+ int fcntl(int descriptor, int command, ...);
 ```
 ### 설명
 열려있는 파일 또는 소켓 디스크립터의 변수를 가져오거나 변경하는 등 다양한 작업을 수행함.
