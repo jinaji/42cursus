@@ -3,7 +3,6 @@
 
 Server::Server(const std::string port, const std::string pass): _port(port), _pass(pass)
 {
-
 }
 
 Server::~Server()
@@ -45,4 +44,20 @@ void    Server::loop()
 }
 
 std::string Server::getPort() { return _port; }
+
 std::string Server::getPass() { return _pass; }
+
+void    Server::test()
+{
+	// socket()
+	int sock_fd;
+	if ((sock_fd = socket(AF_INET, SOCK_STREAM, 0)) == -1)
+		throw std::runtime_error("소켓 에러");
+	
+	// setsockopt() 왜함
+	// bool opt = false;
+	// // int opt = 0;
+	// if (setsockopt(sock_fd, SOL_SOCKET, SO_REUSEADDR, &opt, sizeof(opt) * 4) == -1)
+	// 	throw std::runtime_error("소켓 옵션 에러");
+
+}
