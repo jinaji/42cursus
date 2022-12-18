@@ -29,7 +29,6 @@ class Server
         Server(const std::string port, const std::string pass);
         ~Server();
         
-        void    test();
         void    loop();
         std::string    getPort();
         std::string    getPass();
