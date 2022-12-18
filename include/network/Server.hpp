@@ -5,11 +5,17 @@
 
 // 임시
 #include <iostream>
+#include <algorithm>
+#include <sys/poll.h>
 #include <sys/socket.h>
-#include <unistd.h>
-#include <string>
-#include <poll.h>
+#include <arpa/inet.h>
+#include <netdb.h>
+#include <fcntl.h>
 #include <vector>
+#include <map>
+#include <poll.h>
+#include <unistd.h>
+#include <sys/time.h>
 //
 
 class Server
