@@ -77,6 +77,7 @@ void    Server::loops()
 				}
 			}
 		}
+		// Disconnected 되면 루프에서 못나옴
 	}
 	close(_sock);
 	close(clnt_fd);
