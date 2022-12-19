@@ -21,14 +21,21 @@
 class Server
 {
     private:
-        // int         _socket;
+        int         _sock;
         std::string _port;
         std::string _pass;
+
+        //selete
+        fd_set      _read_fd, _cp_read;
+        int         _fd_max;
+
         
     public:
         Server(const std::string port, const std::string pass);
         ~Server();
         
+        void    makesock();
+        void    loops();
         void    loop();
         std::string    getPort();
         std::string    getPass();
