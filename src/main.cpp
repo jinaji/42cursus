@@ -9,8 +9,7 @@ int main(int ac, char **av)
             
         Server server(av[1], av[2]); // port, pass
         server.makesock();
-        server.loops();
-        // server.loop();
+        server.loop();
 
         return 0;
     }
