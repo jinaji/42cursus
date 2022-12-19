@@ -47,6 +47,7 @@ void    Server::makesock()
 
 void    Server::loops()
 {
+	std::string	input;
 	int clnt_fd;
 	struct sockaddr_in clnt_adr;
 	while(1)
@@ -73,6 +74,8 @@ void    Server::loops()
 					char received[256];
 					int len = recv(i, received, sizeof(received), 0);
 					received[len] = 0;
+					// input = c.str(received);
+					// cmd.execute(input);
 					std::cout << received << std::endl;
 				}
 			}

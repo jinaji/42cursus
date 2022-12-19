@@ -7,6 +7,7 @@ class Command
 
 	public:
 	Command();
+	void execute();
 
 	public:
 	void Authenticate(); // ??
