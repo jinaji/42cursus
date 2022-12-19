@@ -55,7 +55,7 @@ void    Server::loops()
 		// select() https://1d1cblog.tistory.com/356
 		//			https://couplewith.tistory.com/entry/%EC%86%8C%EC%BC%93-multi-thread%EB%A5%BC-%ED%99%9C%EC%9A%A9%ED%95%9C-%EC%86%8C%EC%BC%93-%EC%84%9C%EB%B2%84-%EA%B0%9C%EB%B0%9C
 		if (select(_fd_max + 1, &_cp_read, 0, 0, 0) == -1) // 0: 타임아웃, -1: 오류
-				throw std::runtime_error("select 에러");
+			throw std::runtime_error("select 에러");
 		for (int i = 0; i < _fd_max + 1; i++)
 		{
 			if (FD_ISSET(i, &_cp_read))
