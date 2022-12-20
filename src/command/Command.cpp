@@ -55,3 +55,16 @@ void Command::execute()
 
     // COMMAND asd asdsa d
 }
+
+void Command::Numerics(int num)
+{
+    switch (num)
+    {
+    case 464:
+        std::cout << "Password incorrect" << std::endl;
+        break;
+    
+    default:
+        break;
+    }
+}

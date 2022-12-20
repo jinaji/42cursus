@@ -40,6 +40,7 @@ class Command
 	void Help();
 	void Names();
 	void Topic();
+	void Numerics(int num);
 };
 
 #endif
