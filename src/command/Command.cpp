@@ -4,16 +4,12 @@
 Command::Command(std::string input, std::string pass): _pass(pass)
 {
     const unsigned long pos = input.find(' ');
-    // const unsigned long nl = input.find("\n");
 
     if (pos != std::string::npos)
     {
-        // std::cout << nl << std::endl;
         _cmd = input.substr(0, pos);
-        this->_para = input.substr(pos + 1, input.size() - 1);
+        this->_para = input.substr(pos + 1, input.size() - _cmd.size() - 2);
     }
-    // std::cout << "_cmd " << _cmd << std::endl;
-    // std::cout << "para " << _para << std::endl;s
     // else
     // {
     //     _cmd = NULL;
