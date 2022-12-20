@@ -1,12 +1,20 @@
 #ifndef COMMAND_HPP
 # define COMMAND_HPP
 
+# include <string>
+# include <iostream>
+
 class Command
 {
 	private:
+		std::string _cmd;
+		std::string _para;
+		std::string _pass;
 
 	public:
 	Command();
+	// Command(std::string input);
+	Command(std::string input, std::string pass);
 	void execute();
 
 	public:

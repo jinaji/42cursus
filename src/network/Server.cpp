@@ -16,9 +16,9 @@ void    Server::makesock()
 	
 	// setsockopt() https://www.joinc.co.kr/w/Site/Network_Programing/AdvancedComm/SocketOption
 	// bool opt = false;
-	// // int opt = 1;
-	// if (setsockopt(_sock, SOL_SOCKET, SO_REUSEADDR, &opt, sizeof(opt) * 4) == -1)
-	// 	throw std::runtime_error("setsockopt 에러");
+	int opt = 1;
+	if (setsockopt(_sock, SOL_SOCKET, SO_REUSEADDR, &opt, sizeof(opt) * 4) == -1)
+		throw std::runtime_error("setsockopt 에러");
 
 	// fcntl() https://reakwon.tistory.com/110
 	if (fcntl(_sock, F_SETFL, O_NONBLOCK) == -1)
@@ -84,8 +84,11 @@ void    Server::loop()
 							throw std::runtime_error("recv 에러");
 					}
 					received[len] = 0;
-					input = c.str(received);
-					cmd.execute(input);
+					input.clear();
+					input.append(received);
+					// Command cmd(input);
+					Command cmd(input, this->getPass());
+					cmd.execute();
 					std::cout << received;
 				}
 			}

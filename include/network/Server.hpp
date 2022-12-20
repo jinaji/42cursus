@@ -18,6 +18,7 @@
 #include <sys/time.h>
 #include "../in.h"
 #include "./Client.hpp"
+#include "./../command/Command.hpp"
 #include <list>
 //
 
