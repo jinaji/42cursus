@@ -15,6 +15,10 @@ class Client
     public:
         Client(int fd);
         ~Client();
+
+        int getSocket();
+        
+        void setPass(std::string pass);
 };
 
 #endif

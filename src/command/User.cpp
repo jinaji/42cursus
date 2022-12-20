@@ -1,4 +1,9 @@
-#include "../../include/Command.hpp"
+#include "../../include/command/Command.hpp"
+
+void Command::User()
+{
+  std::cout << "USER" << std::endl;
+}
 
 // https://modern.ircdocs.horse/#authenticate-message
 

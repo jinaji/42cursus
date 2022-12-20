@@ -6,3 +6,7 @@ Client::Client(int fd)
 }
 
 Client::~Client() {}
+
+int Client::getSocket() { return _fd; }
+
+void Client::setPass(std::string pass) { _pass = pass; }

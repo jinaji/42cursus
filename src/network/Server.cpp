@@ -4,10 +4,6 @@ Server::Server(const std::string port, const std::string pass): _port(port), _pa
 
 Server::~Server() {}
 
-std::string Server::getPort() { return _port; }
-
-std::string Server::getPass() { return _pass; }
-
 void    Server::makesock()
 {
 	// socket()
@@ -83,13 +79,15 @@ void    Server::loop()
 						else
 							throw std::runtime_error("recv 에러");
 					}
-					received[len] = 0;
+					// received[len] = 0;
 					input.clear();
 					input.append(received);
-					// Command cmd(input);
-					Command cmd(input, this->getPass());
+					Client user = this->getClient(i);
+					// Command cmd(input, this->getPass());
+					Command cmd(input, this->getPass(), user);
+					// std::cout << received;
 					cmd.execute();
-					std::cout << received;
+					input.clear();
 				}
 			}
 		}
@@ -97,3 +95,19 @@ void    Server::loop()
 	close(_sock);
 	close(clnt_fd);
 }
+
+Client    Server::getClient(int fd)
+{
+	for (std::list<Client>::iterator it = _clnt.begin(); it != _clnt.end(); ++it)
+	{
+		if (it->getSocket() == fd)
+			return (*it);
+	}
+	return NULL;
+}
+
+int	Server::getSock() { return _sock; }
+
+std::string Server::getPort() { return _port; }
+
+std::string Server::getPass() { return _pass; }

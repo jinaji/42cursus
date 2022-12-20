@@ -38,7 +38,7 @@ class Server
         //Channel
         // std::list<Client> _clnt;
     public:
-        std::list<Client>::iterator     _clnt_iter;
+        // std::list<Client>::iterator     _clnt_iter;
         // std::list<Channel>::iterator    _chnl_iter;
     public:
         Server(const std::string port, const std::string pass);
@@ -46,7 +46,9 @@ class Server
         
         void    makesock();
         void    loop();
-        std::string    getPort();
-        std::string    getPass();
+        Client    getClient(int fd);
+        int             getSock();
+        std::string     getPort();
+        std::string     getPass();
 };
 #endif

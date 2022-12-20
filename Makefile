@@ -1,6 +1,6 @@
 CXX = c++
 SRCS = src/main.cpp src/network/Server.cpp src/network/Client.cpp src/command/Command.cpp \
-	src/command/Pass.cpp
+	src/command/Pass.cpp src/command/Nick.cpp src/command/User.cpp
 OBJS = $(SRCS:.cpp=.o)
 
 NAME = ircserv

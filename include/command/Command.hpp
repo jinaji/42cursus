@@ -4,16 +4,21 @@
 # include <string>
 # include <iostream>
 
+# include "../network/Client.hpp"
+
+class Client;
+
 class Command
 {
 	private:
 		std::string _cmd;
 		std::string _para;
 		std::string _pass;
+		Client		_caller;
 
 	public:
 	Command();
-	// Command(std::string input);
+	Command(std::string input, std::string pass, Client caller);
 	Command(std::string input, std::string pass);
 	void execute();
 
