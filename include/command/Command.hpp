@@ -15,13 +15,18 @@ class Command
 		std::string _cmd;
 		std::string _pass;
 		std::string _para;
-		std::string _parsingPara[9][256];
+		size_t		_paraNum;
+		std::string _parsingPara[9];
 		Client		_caller;
 
 	public:
-	Command();
+	// Command();
 	Command(std::string input, std::string pass, Client caller);
-	Command(std::string input, std::string pass);
+	// Command(std::string input, std::string pass);
+	~Command();
+
+	// void setParanum(std::string input);
+
 	void input_parse(std::string input);
 	void para_parse(std::string para);
 	void execute();

@@ -1,17 +1,20 @@
 #include "../../include/command/Command.hpp"
 #include <iostream>
 
-Command::Command(std::string input, std::string pass, Client caller): _caller(caller)
+Command::Command(std::string input, std::string pass, Client caller): _paraNum(0), _caller(caller)
 {
     std::cout << input << std::endl;
     input_parse(input);
     _pass = pass + "\r\n";
 }
 
+Command::~Command() {}
+
 void Command::input_parse(std::string input)
 {
     size_t pos = input.find(' ');
-    if (pos != std::string::npos || pos)
+
+    if (pos != std::string::npos)
     {
         _cmd = input.substr(0, pos);
         _para = input.substr(pos + 1);
@@ -28,16 +31,17 @@ void Command::input_parse(std::string input)
 void Command::para_parse(std::string para)
 {
     int i = 0;
+    int j = 0;  // parsingPara[index]
     size_t pos = para.find(' ');
-    
+
     while (pos != std::string::npos)
     {
-        std::string sub = para.substr(i, pos - i);
-        // _parsingPara[i] = sub;
+        _parsingPara[++j] = para.substr(i, pos - i);
         i = pos + 1;
         pos = para.find(' ', i);
     }
-    // _parsingPara[i] = para.substr(i, pos - i);
+    _parsingPara[++j] = para.substr(i, pos - i);
+    _paraNum += j;
 }
 
 
