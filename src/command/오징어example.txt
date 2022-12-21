@@ -1,0 +1,33 @@
+Welcome to the Ozinger IRC Network gyum!g@2001:2d8:ed19:b677:3467:c6f3:b031:ecfb
+22:18
+Your host is scarlet.irc.ozinger.org, running version InspIRCd-2.0
+This server was created 05:24:08 Mar  8 2016
+scarlet.irc.ozinger.org InspIRCd-2.0 IRSZcikorswx CHIJKLMNOQRSTZabcefhijklmnopqrstvz HIJLabefhjkloqv
+AWAYLEN=200 CASEMAPPING=ko_KR.utf8 CHANMODES=Ibe,k,HJLfjl,CKMNOQRSTZcimnprstz CHANNELLEN=64 CHANTYPES=# CHARSET=ascii ELIST=MU EXCEPTS=e EXTBAN=,CNOQRSTUZcz FNC INVEX=I KICKLEN=255 MAP are supported by this server
+MAXBANS=60 MAXCHANNELS=30 MAXPARA=32 MAXTARGETS=20 MODES=20 NAMESX NETWORK=Ozinger NICKLEN=31 PREFIX=(qaohv)~&@%+ SSL=10.12.0.6:443 STARTTLS STATUSMSG=~&@%+ TOPICLEN=307 are supported by this server
+UHNAMES VBANLIST WALLCHOPS WALLVOICES are supported by this server
+058ABCTF8 your unique ID
+scarlet.irc.ozinger.org message of the day
+-  ______   ______ _____  ______   ______   ______  ______
+- / |  | \     / /  | |  | |  \ \ | | ____ | |     | |  | \
+- | |  | |  .---'   | |  | |  | | | |  | | | |---- | |__| |
+- \_|__|_/ /_/___  _|_|_ |_|  |_| |_|__|_| |_|____ |_|  \_\
+-
+-             * * *  오징어 IRC 네트워크  * * *            
+-
+- 오징어 IRC 네트워크는 시범적인 한국어 IRC 네트워크입니다.
+- 자세한 정보는 http://ozinger.org/ 을 참고하세요.
+-
+- | SEE http://ozinger.org/mirc/ FOR USING OZINGER NETWORK
+- | IN mIRC 6.x VERSION!
+-
+- This network is for UTF-8 encoding only; please configure
+- your client accordingly. If you have any question, please
+- visit #ozinger channel.
+End of message of the day.
+There are 93 users and 17 invisible on 3 servers
+4 operator(s) online
+409 channels formed
+I have 65 clients and 2 servers
+Current Local Users: 65  Max: 230
+Current Global Users: 110  Max: 389
