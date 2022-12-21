@@ -7,6 +7,12 @@ Client::Client(int fd): _passState(false)
 
 Client::~Client() {}
 
+void Client::addChannel(Channel chnl)
+{
+    chnl.setParticipants(1);
+    _channelList.push_back(chnl);
+}
+
 int Client::getSocket() { return _fd; }
 bool Client::getpassState() { return _passState; }
 

@@ -48,6 +48,8 @@ void Command::execute()
         Nick();
     else if (_cmd == "USER")
         User();
+    else if (_cmd == "JOIN")
+        Join();
     else
         std::cout << "NO MATCHING COMMAND!" << std::endl;
     // else if (cmd == )

@@ -74,8 +74,7 @@ void    Server::loop()
 					if ((len = recv(i, received, sizeof(received), 0)) <= 0)
 					{
 						if (len == 0)
-							exit(1);
-							// user disconnect
+							std::cout << "@disconnect@ Client fd: [" << this->disconnectClient(i) << "]\n";
 						else
 							throw std::runtime_error("recv 에러");
 					}
@@ -84,10 +83,12 @@ void    Server::loop()
 					input.append(received);
 					Client user = this->getClient(i);
 					// Command cmd(input, this->getPass());
-					Command cmd(input, this->getPass(), user);
+					if (user.getSocket() > 0) // Cntl+C , +D 처리
+					{
+						Command cmd(input, this->getPass(), user);
 					// std::cout << received;
-					cmd.execute();
-					input.clear();
+						cmd.execute();
+					}
 				}
 			}
 		}
@@ -96,15 +97,37 @@ void    Server::loop()
 	close(clnt_fd);
 }
 
-Client    Server::getClient(int fd)
+int	Server::disconnectClient(int fd)
 {
 	for (std::list<Client>::iterator it = _clnt.begin(); it != _clnt.end(); ++it)
 	{
 		if (it->getSocket() == fd)
 		{
-			return (*it);
+			FD_CLR(fd, &_read_fd);
+			_clnt.erase(it);
+			close(fd);
+			if (_clnt.empty() == true)	// _sock = 3
+				_fd_max = _sock;
+			else if (_fd_max == fd)
+				this->chgFdmax();
+			return fd;
 		}
 	}
+	return -1;
+}
+
+void	Server::chgFdmax()
+{
+	for (std::list<Client>::iterator it = _clnt.begin(); it != _clnt.end(); ++it)
+		if (it->getSocket() > _fd_max)
+			_fd_max = it->getSocket();
+}
+
+Client    Server::getClient(int fd)
+{
+	for (std::list<Client>::iterator it = _clnt.begin(); it != _clnt.end(); ++it)
+		if (it->getSocket() == fd)
+			return (*it);
 	return NULL;
 }
 

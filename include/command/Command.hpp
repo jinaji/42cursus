@@ -5,6 +5,7 @@
 # include <iostream>
 
 # include "../network/Client.hpp"
+# include "../network/Channel.hpp"
 
 class Client;
 

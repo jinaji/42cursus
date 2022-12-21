@@ -44,8 +44,16 @@ class Server
         Server(const std::string port, const std::string pass);
         ~Server();
         
+        // main
         void    makeSock();
         void    loop();
+
+        // sub
+        int	disconnectClient(int fd);
+        void chgFdmax();
+
+
+        // get
         Client    getClient(int fd);
         int             getSock();
         std::string     getPort();

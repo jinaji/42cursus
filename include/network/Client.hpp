@@ -2,6 +2,8 @@
 # define CLIENT_HPP
 
 # include <string>
+# include <list>
+# include "./Channel.hpp"
 
 class Client
 {
@@ -11,6 +13,8 @@ class Client
     std::string _user;
     std::string _real;
     std::string _pass;
+
+    std::list<Channel>		_channelList;
     
     //PASS
     bool _passState;
@@ -21,6 +25,8 @@ class Client
 
         int getSocket();
         bool getpassState();
+
+        void addChannel(Channel chnl);
 
         void setpassState(bool state);
         void setNick(std::string nick);
