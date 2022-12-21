@@ -5,7 +5,7 @@ Command::Command(std::string input, std::string pass, Client caller): _caller(ca
 {
     const unsigned long pos = input.find(' ');
 
-    _pass = pass + "\n";
+    _pass = pass + "\r\n";
     if (pos != std::string::npos)
     {
         _cmd = input.substr(0, pos);
