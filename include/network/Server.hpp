@@ -44,7 +44,7 @@ class Server
         Server(const std::string port, const std::string pass);
         ~Server();
         
-        void    makesock();
+        void    makeSock();
         void    loop();
         Client    getClient(int fd);
         int             getSock();

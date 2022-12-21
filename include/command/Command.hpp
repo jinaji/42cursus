@@ -23,23 +23,29 @@ class Command
 	void execute();
 
 	public:
-	void Authenticate(); // ??
+	// Client Messages
 	void Pass(); // <password>
 	void Nick(); // <nickname>
 	void User(); // <username> 0 * <realname>
+	void Oper();
 	void Quit(); // <reason>
-	void Mode(); // <target> [<modestring>] [<mode arguments>...]
-	void List(); // <channel> [<elistcond>] <- Clients MUST NOT submit an ELIST condition unless the server has explicitly defined support for that condition with the ELIST token.
+	// Channel Operations
 	void Join(); // <channel> (<key>)
 	void Part(); // <channel> [<reason>]
-	void Who(); // <mask> <- channel name / exact nickname / mask pattern? 읽어보면 알 듯
+	void Topic();
+	void Names();
+	void List(); // <channel> [<elistcond>] <- Clients MUST NOT submit an ELIST condition unless the server has explicitly defined support for that condition with the ELIST token.
+	void Invite();
 	void Kick(); // <channel> <user> * [<comment>]
+	// Server Queries and Commands
+	void Help();
+	void Mode(); // <target> [<modestring>] [<mode arguments>...]
+	// Sending Messages
 	void Notice(); // <target> <text to be sent>
 	void Privmsg(); // <target> <text to be sent>
-	void Invite();
-	void Help();
-	void Names();
-	void Topic();
+	// User-Based Queries
+	void Who(); // <mask> <- channel name / exact nickname / mask pattern? 읽어보면 알 듯
+	// Numerics
 	void Numerics(int num);
 };
 

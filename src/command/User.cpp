@@ -2,7 +2,9 @@
 
 void Command::User()
 {
-  std::cout << "USER" << std::endl;
+  // 이미 user 정보가 있으면 -> 462
+  // 유효한 인자가 안들어오면 -> 461
+  std::cout << "USER GATE DONE\n";
 }
 
 // https://modern.ircdocs.horse/#authenticate-message

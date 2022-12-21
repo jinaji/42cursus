@@ -11,14 +11,19 @@ class Client
     std::string _user;
     std::string _real;
     std::string _pass;
+    
+    //PASS
+    bool _passState;
 
     public:
         Client(int fd);
         ~Client();
 
         int getSocket();
-        
-        void setPass(std::string pass);
+        bool getpassState();
+
+        void setpassState(bool state);
+        void setNick(std::string nick);
 };
 
 #endif

@@ -4,7 +4,7 @@ Server::Server(const std::string port, const std::string pass): _port(port), _pa
 
 Server::~Server() {}
 
-void    Server::makesock()
+void    Server::makeSock()
 {
 	// socket()
 	if ((_sock = socket(AF_INET, SOCK_STREAM, 0)) == -1)
@@ -101,7 +101,9 @@ Client    Server::getClient(int fd)
 	for (std::list<Client>::iterator it = _clnt.begin(); it != _clnt.end(); ++it)
 	{
 		if (it->getSocket() == fd)
+		{
 			return (*it);
+		}
 	}
 	return NULL;
 }

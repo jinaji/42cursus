@@ -8,7 +8,7 @@ int main(int ac, char **av)
 		    throw std::runtime_error("Usage: ./ircserv <port> <password>");
             
         Server server(av[1], av[2]); // port, pass
-        server.makesock();
+        server.makeSock();
         server.loop();
 
         return 0;
