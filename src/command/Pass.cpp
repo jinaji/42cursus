@@ -14,7 +14,7 @@ void Command::Pass()
     else
     {
         _caller.setpassState(true);
-        std::cout << "PASS GATE DONE\n";
+        // std::cout << "PASS GATE DONE\n";
     }
         // 클라이언트의 PASS정보 통과
 }

@@ -73,22 +73,23 @@ void    Server::loop()
 					int len;
 					if ((len = recv(i, received, sizeof(received), 0)) <= 0)
 					{
+						received[len] = 0;
 						if (len == 0)
 							std::cout << "@disconnect@ Client fd: [" << this->disconnectClient(i) << "]\n";
 						else
 							throw std::runtime_error("recv 에러");
 					}
-					// received[len] = 0;
+					received[len] = 0;
 					input.clear();
 					input.append(received);
 					Client user = this->getClient(i);
-					// Command cmd(input, this->getPass());
 					if (user.getSocket() > 0) // Cntl+C , +D 처리
 					{
 						Command cmd(input, this->getPass(), user);
-					// std::cout << received;
 						cmd.execute();
 					}
+					input.clear();
+					// 리눅스 줄내림은 \n, window 줄내림은 \r\n -> nc와 limechat이 다름
 				}
 			}
 		}

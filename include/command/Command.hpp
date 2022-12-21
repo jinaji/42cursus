@@ -13,14 +13,17 @@ class Command
 {
 	private:
 		std::string _cmd;
-		std::string _para;
 		std::string _pass;
+		std::string _para;
+		std::string _parsingPara[9][256];
 		Client		_caller;
 
 	public:
 	Command();
 	Command(std::string input, std::string pass, Client caller);
 	Command(std::string input, std::string pass);
+	void input_parse(std::string input);
+	void para_parse(std::string para);
 	void execute();
 
 	public:

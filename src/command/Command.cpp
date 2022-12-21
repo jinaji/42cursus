@@ -3,20 +3,41 @@
 
 Command::Command(std::string input, std::string pass, Client caller): _caller(caller)
 {
-    const unsigned long pos = input.find(' ');
-
+    std::cout << input << std::endl;
+    input_parse(input);
     _pass = pass + "\r\n";
-    if (pos != std::string::npos)
+}
+
+void Command::input_parse(std::string input)
+{
+    size_t pos = input.find(' ');
+    if (pos != std::string::npos || pos)
     {
         _cmd = input.substr(0, pos);
         _para = input.substr(pos + 1);
+        if (_cmd == _para)
+        {
+            std::cout << "NO parameter\n";
+            return ;
+        }
+        else
+            para_parse(_para);
     }
-    // else
-    // {
-    //     _cmd = NULL;
-    //     _para = input;
-    // }
-    // _cmd.execute();
+}
+
+void Command::para_parse(std::string para)
+{
+    int i = 0;
+    size_t pos = para.find(' ');
+    
+    while (pos != std::string::npos)
+    {
+        std::string sub = para.substr(i, pos - i);
+        // _parsingPara[i] = sub;
+        i = pos + 1;
+        pos = para.find(' ', i);
+    }
+    // _parsingPara[i] = para.substr(i, pos - i);
 }
 
 
@@ -41,7 +62,7 @@ Command::Command(std::string input, std::string pass, Client caller): _caller(ca
 void Command::execute()
 {
     // 무조건 PASS -> NICK, USER
-    std::cout << "_cmd: " << _cmd << std::endl;
+    // std::cout << "_cmd: " << _cmd << std::endl;
     if (_cmd == "PASS")
         Pass();
     else if (_cmd == "NICK")
