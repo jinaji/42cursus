@@ -85,12 +85,10 @@ void    Server::loop()
 					received[len] = 0;
 					input.clear();
 					input.append(received);
-					std::cout << "i: " << i << std::endl;
 					Client *user = this->getclientSock(i);
-					std::cout << "wHy: " << user->getSocket() << std::endl;
 					if (user->getSocket() > 0) // Cntl+C , +D 처리
 					{
-						Command cmd(input, this->getPass(), *user);
+						Command cmd(input, this->getPass(), *user, *this);
 						cmd.execute();
 					}
 					input.clear();

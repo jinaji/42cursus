@@ -3,8 +3,9 @@
 void    Command::Nick()
 {
     // 이미쓰고있는 닉 -> 433
-    std::list<Client *>::iterator it = this->_server->getClient().begin();
-    for (; it != this->_server->getClient().end(); ++it)
+    std::list<Client *>::iterator it;
+    it = this->_server.getClient().begin();
+    for (; it != this->_server.getClient().end(); ++it)
     {
         if ((*it)->getNick() == this->_parsingPara[0])
         {

@@ -1,7 +1,14 @@
 #include "../../include/command/Command.hpp"
 #include <iostream>
 
-Command::Command(std::string input, std::string pass, Client &caller): _paraNum(0), _caller(caller)
+// Command::Command(std::string input, std::string pass, Client &caller): _paraNum(0), _caller(caller)
+// {
+//     std::cout << input << std::endl;
+//     input_parse(input);
+//     _pass = pass + "\r\n";
+// }
+
+Command::Command(std::string input, std::string pass, Client &caller, Server &server): _paraNum(0), _caller(caller), _server(server)
 {
     std::cout << input << std::endl;
     input_parse(input);

@@ -20,12 +20,12 @@ class Command
 		size_t		_paraNum;
 		std::string _parsingPara[9];
 		Client		&_caller;
-		Server		*_server;
+		Server		&_server;
 
 	public:
 	// Command();
 	Command(std::string input, std::string pass, Client &caller);
-	// Command(std::string input, std::string pass);
+	Command(std::string input, std::string pass, Client &caller, Server &server);
 	~Command();
 
 	// void setParanum(std::string input);

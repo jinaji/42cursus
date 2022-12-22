@@ -38,9 +38,8 @@ class Server
         //Client
         std::list<Client *> _clnt;
         //Channel
-        // std::list<Client> _clnt;
+        // std::list<Channel> _clnt;
     public:
-        // std::list<Client>::iterator     _clnt_iter;
         // std::list<Channel>::iterator    _chnl_iter;
     public:
         Server(const std::string port, const std::string pass);
