@@ -24,6 +24,7 @@ class Client
         ~Client();
 
         int getSocket();
+        std::string getNick();
         bool getpassState();
 
         void addChannel(Channel chnl);
