@@ -19,12 +19,12 @@ class Command
 		std::string _para;
 		size_t		_paraNum;
 		std::string _parsingPara[9];
-		Client		_caller;
+		Client		&_caller;
 		Server		*_server;
 
 	public:
 	// Command();
-	Command(std::string input, std::string pass, Client caller);
+	Command(std::string input, std::string pass, Client &caller);
 	// Command(std::string input, std::string pass);
 	~Command();
 

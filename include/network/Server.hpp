@@ -36,7 +36,7 @@ class Server
         int         _fd_max;
 
         //Client
-        std::list<Client> _clnt;
+        std::list<Client *> _clnt;
         //Channel
         // std::list<Client> _clnt;
     public:
@@ -56,7 +56,7 @@ class Server
 
 
         // get
-        Client    getClient(int fd);
+        Client    *getClient(int fd);
         int             getSock();
         std::string     getPort();
         std::string     getPass();

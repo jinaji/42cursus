@@ -1,7 +1,7 @@
 #include "../../include/command/Command.hpp"
 #include <iostream>
 
-Command::Command(std::string input, std::string pass, Client caller): _paraNum(0), _caller(caller)
+Command::Command(std::string input, std::string pass, Client &caller): _paraNum(0), _caller(caller)
 {
     std::cout << input << std::endl;
     input_parse(input);
@@ -48,12 +48,18 @@ void Command::execute()
 {
     if (_cmd == "PASS")
         Pass();
-    else if (_caller.getpassState())
+    else if (_caller.getpassState() == true)
     {
         if (_cmd == "NICK")
+        {
+            std::cout << "NICK ^^\n";
             Nick();
+        }
         else if (_cmd == "USER")
+        {
+            std::cout << "USER ^^\n";
             User();
+        }
         else if (_cmd == "JOIN")
             Join();
         else

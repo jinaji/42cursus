@@ -62,7 +62,7 @@ void    Server::loop()
 					if ((clnt_fd = accept(_sock, (struct sockaddr *)&clnt_adr, &adr_sz)) == -1)
 						std::runtime_error("accept 에러");
 					Client clnt(clnt_fd);
-					_clnt.push_back(clnt);
+					_clnt.push_back(&clnt);
 					FD_SET(clnt_fd, &_read_fd);
 					if (_fd_max < clnt_fd)
 						_fd_max = clnt_fd;
@@ -75,17 +75,20 @@ void    Server::loop()
 					{
 						received[len] = 0;
 						if (len == 0)
+						{
 							std::cout << "@disconnect@ Client fd: [" << this->disconnectClient(i) << "]\n";
+							continue;
+						}
 						else
 							throw std::runtime_error("recv 에러");
 					}
 					received[len] = 0;
 					input.clear();
 					input.append(received);
-					Client user = this->getClient(i);
-					if (user.getSocket() > 0) // Cntl+C , +D 처리
+					Client *user = this->getClient(i);
+					if (user->getSocket() > 0) // Cntl+C , +D 처리
 					{
-						Command cmd(input, this->getPass(), user);
+						Command cmd(input, this->getPass(), *user);
 						cmd.execute();
 					}
 					input.clear();
@@ -100,9 +103,9 @@ void    Server::loop()
 
 int	Server::disconnectClient(int fd)
 {
-	for (std::list<Client>::iterator it = _clnt.begin(); it != _clnt.end(); ++it)
+	for (std::list<Client *>::iterator it = _clnt.begin(); it != _clnt.end(); ++it)
 	{
-		if (it->getSocket() == fd)
+		if ((*it)->getSocket() == fd)
 		{
 			FD_CLR(fd, &_read_fd);
 			_clnt.erase(it);
@@ -119,15 +122,15 @@ int	Server::disconnectClient(int fd)
 
 void	Server::chgFdmax()
 {
-	for (std::list<Client>::iterator it = _clnt.begin(); it != _clnt.end(); ++it)
-		if (it->getSocket() > _fd_max)
-			_fd_max = it->getSocket();
+	for (std::list<Client *>::iterator it = _clnt.begin(); it != _clnt.end(); ++it)
+		if ((*it)->getSocket() > _fd_max)
+			_fd_max = (*it)->getSocket();
 }
 
-Client    Server::getClient(int fd)
+Client    *Server::getClient(int fd)
 {
-	for (std::list<Client>::iterator it = _clnt.begin(); it != _clnt.end(); ++it)
-		if (it->getSocket() == fd)
+	for (std::list<Client *>::iterator it = _clnt.begin(); it != _clnt.end(); ++it)
+		if ((*it)->getSocket() == fd)
 			return (*it);
 	return NULL;
 }
