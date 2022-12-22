@@ -61,8 +61,8 @@ void    Server::loop()
 					socklen_t adr_sz = sizeof(clnt_adr);
 					if ((clnt_fd = accept(_sock, (struct sockaddr *)&clnt_adr, &adr_sz)) == -1)
 						std::runtime_error("accept 에러");
-					Client clnt(clnt_fd);
-					_clnt.push_back(&clnt);
+					Client *clnt = new Client(clnt_fd);
+					_clnt.push_back(clnt);
 					FD_SET(clnt_fd, &_read_fd);
 					if (_fd_max < clnt_fd)
 						_fd_max = clnt_fd;
@@ -85,7 +85,9 @@ void    Server::loop()
 					received[len] = 0;
 					input.clear();
 					input.append(received);
-					Client *user = this->getClient(i);
+					std::cout << "i: " << i << std::endl;
+					Client *user = this->getclientSock(i);
+					std::cout << "wHy: " << user->getSocket() << std::endl;
 					if (user->getSocket() > 0) // Cntl+C , +D 처리
 					{
 						Command cmd(input, this->getPass(), *user);
@@ -109,6 +111,7 @@ int	Server::disconnectClient(int fd)
 		{
 			FD_CLR(fd, &_read_fd);
 			_clnt.erase(it);
+			delete *it;
 			close(fd);
 			if (_clnt.empty() == true)	// _sock = 3
 				_fd_max = _sock;
@@ -127,13 +130,15 @@ void	Server::chgFdmax()
 			_fd_max = (*it)->getSocket();
 }
 
-Client    *Server::getClient(int fd)
+Client    *Server::getclientSock(int fd)
 {
 	for (std::list<Client *>::iterator it = _clnt.begin(); it != _clnt.end(); ++it)
 		if ((*it)->getSocket() == fd)
 			return (*it);
 	return NULL;
 }
+
+std::list<Client *> Server::getClient() { return _clnt; }
 
 int	Server::getSock() { return _sock; }
 

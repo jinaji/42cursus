@@ -24,7 +24,7 @@
 
 class Server
 {
-    friend class Command;
+    // friend class Command;
 
     private:
         int         _sock;
@@ -56,7 +56,8 @@ class Server
 
 
         // get
-        Client    *getClient(int fd);
+        Client    *getclientSock(int fd);
+        std::list<Client *> getClient();
         int             getSock();
         std::string     getPort();
         std::string     getPass();

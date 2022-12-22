@@ -14,6 +14,7 @@ void Client::addChannel(Channel chnl)
 }
 
 int Client::getSocket() { return _fd; }
+std::string Client::getNick() { return _nick; }
 bool Client::getpassState() { return _passState; }
 
 void Client::setpassState(bool state) { _passState = state; }
