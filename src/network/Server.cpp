@@ -109,7 +109,7 @@ int	Server::disconnectClient(int fd)
 		{
 			FD_CLR(fd, &_read_fd);
 			_clnt.erase(it);
-			delete *it;
+			// delete *it;
 			close(fd);
 			if (_clnt.empty() == true)	// _sock = 3
 				_fd_max = _sock;
@@ -136,7 +136,7 @@ Client    *Server::getclientSock(int fd)
 	return NULL;
 }
 
-std::list<Client *> Server::getClient() { return _clnt; }
+std::list<Client *> &Server::getClient() { return _clnt; }
 
 int	Server::getSock() { return _sock; }
 

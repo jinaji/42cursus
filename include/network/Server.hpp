@@ -56,7 +56,7 @@ class Server
 
         // get
         Client    *getclientSock(int fd);
-        std::list<Client *> getClient();
+        std::list<Client *> &getClient();
         int             getSock();
         std::string     getPort();
         std::string     getPass();
