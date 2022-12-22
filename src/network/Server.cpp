@@ -61,8 +61,8 @@ void    Server::loop()
 					socklen_t adr_sz = sizeof(clnt_adr);
 					if ((clnt_fd = accept(_sock, (struct sockaddr *)&clnt_adr, &adr_sz)) == -1)
 						std::runtime_error("accept 에러");
-					Client clnt(clnt_fd);
-					_clnt.push_back(&clnt);
+					Client *clnt = new Client(clnt_fd);
+					_clnt.push_back(clnt);
 					FD_SET(clnt_fd, &_read_fd);
 					if (_fd_max < clnt_fd)
 						_fd_max = clnt_fd;

@@ -31,7 +31,9 @@ class Client
         void setpassState(bool state);
         void setNick(std::string nick);
         void setUser(std::string user);
-        void setReal(std::string real);
+        void setReal(std::string _parsingPara[9], size_t _paraNum);
+        std::string getUser();
+        std::string getReal();
 };
 
 #endif
