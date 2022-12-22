@@ -1,14 +1,11 @@
 #include "../../include/command/Command.hpp"
 
+// 이미 user 정보가 있으면 -> 462
+// 유효한 인자가 안들어오면 -> 461
+
 void Command::User()
 {
-  // 이미 user 정보가 있으면 -> 462
-  // 유효한 인자가 안들어오면 -> 461
-  // std::cout << "USER GATE DONE\n";
-  if (_caller.getpassState() == false)
-    return ; 
-  setUser(_parsingPara[0]);
-  setReal(_parsingPara[3]);
+    //start
 }
 
 // https://modern.ircdocs.horse/#authenticate-message

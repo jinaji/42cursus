@@ -24,6 +24,8 @@
 
 class Server
 {
+    friend class Command;
+
     private:
         int         _sock;
         std::string _port;

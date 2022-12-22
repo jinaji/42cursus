@@ -46,22 +46,19 @@ void Command::para_parse(std::string para)
 
 void Command::execute()
 {
-    // 무조건 PASS -> NICK, USER 이거 아닌가여
-    // std::cout << "_cmd: " << _cmd << std::endl;
     if (_cmd == "PASS")
         Pass();
-       else if (_caller.getpassState())
-       {
+    else if (_caller.getpassState())
+    {
         if (_cmd == "NICK")
-              Nick();
-       else if (_cmd == "USER")
-              User();
-       else if (_cmd == "JOIN")
-              Join();
-       else
-              std::cout << "NO MATCHING COMMAND!" << std::endl;
-
-       }
+            Nick();
+        else if (_cmd == "USER")
+            User();
+        else if (_cmd == "JOIN")
+            Join();
+        else
+            std::cout << "NO MATCHING COMMAND!" << std::endl;
+    }
     // else if (cmd == )
 
     // 맞는 함수 찾아서 호출

@@ -6,8 +6,10 @@
 
 # include "../network/Client.hpp"
 # include "../network/Channel.hpp"
+# include "../network/Server.hpp"
 
 class Client;
+class Server;
 
 class Command
 {
@@ -18,6 +20,7 @@ class Command
 		size_t		_paraNum;
 		std::string _parsingPara[9];
 		Client		_caller;
+		Server		*_server;
 
 	public:
 	// Command();
@@ -41,9 +44,9 @@ class Command
 	// Channel Operations
 	void Join(); // <channel> (<key>)
 	void Part(); // <channel> [<reason>]
-	void Topic();
 	void Names();
 	void List(); // <channel> [<elistcond>] <- Clients MUST NOT submit an ELIST condition unless the server has explicitly defined support for that condition with the ELIST token.
+	void Topic();
 	void Invite();
 	void Kick(); // <channel> <user> * [<comment>]
 	// Server Queries and Commands
