@@ -31,7 +31,7 @@ void Command::input_parse(std::string input)
 void Command::para_parse(std::string para)
 {
     size_t i = 0;
-    size_t j = 0;  // parsingPara[index]
+    size_t j = -1;  // parsingPara[index]
     size_t pos = para.find(' ');
 
     while (pos != std::string::npos)
@@ -41,7 +41,7 @@ void Command::para_parse(std::string para)
         pos = para.find(' ', i);
     }
     _parsingPara[++j] = para.substr(i, pos - i);
-    _paraNum += j;
+    _paraNum += j + 1;
 }
 
 void Command::execute()
