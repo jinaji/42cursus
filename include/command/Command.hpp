@@ -19,6 +19,7 @@ class Command
 		std::string _para;
 		size_t		_paraNum;
 		std::string _parsingPara[9];
+
 		Client		&_caller;
 		Server		&_server;
 

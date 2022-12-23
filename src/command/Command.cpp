@@ -65,7 +65,17 @@ void Command::execute()
 		if (_cmd == "NICK")
 			Nick();
 		else if (_cmd == "USER")
+		{
 			User();
+			if (_caller.getaccessState() == false)
+			{
+				this->Numerics(1);
+				this->Numerics(2);
+				this->Numerics(3);
+				this->Numerics(4);
+				_caller.setaccessState(true);
+			}
+		}
 		else if (_cmd == "JOIN")
 			Join();
 	   else if (_cmd == "LIST")
@@ -86,8 +96,19 @@ void Command::Numerics(int num)
 	{
 		case 1:
 			std::cout << "Welcome to the Internet Relay Network" << std::endl;
+			break;
+		case 2:
+			std::cout << "Your host is <servername>, running version <ver>" << std::endl;
+			break;
+		case 3:
+			std::cout << "This server was created <date>" << std::endl;
+			break;
+		case 4:
+			std::cout << "<servername> <version> <available user modes> <available channel modes>" << std::endl;
+			break;
 		case 462:
 			std::cout << "<client> :You may not reregister" << std::endl;
+			break;
 		case 464:
 			std::cout << "<client> :Password incorrect" << std::endl;
 			break;
@@ -101,7 +122,7 @@ void Command::Numerics(int num)
 		001    RPL_WELCOME
 			  "Welcome to the Internet Relay Network
 			   <nick>!<user>@<host>"
-	   002    RPL_YOURHOST
+	   	002    RPL_YOURHOST
 			  "Your host is <servername>, running version <ver>"
 	   003    RPL_CREATED
 			  "This server was created <date>"
