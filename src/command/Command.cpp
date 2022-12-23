@@ -78,16 +78,28 @@ void Command::execute()
 		}
 		else if (_cmd == "JOIN")
 			Join();
-	   else if (_cmd == "LIST")
+	   	else if (_cmd == "LIST")
 			List();
 		else
 			std::cout << "NO MATCHING COMMAND!" << std::endl;
+
+		/*
+		OPER
+		QUIT
+		JOIN
+		PART
+		TOPIC
+		NAMES
+		LIST
+		Invite
+		KICK
+		Help
+		MODE
+		PRIVMSG
+		Notice
+		Who?
+		*/
 	}
-	// else if (cmd == )
-
-	// 맞는 함수 찾아서 호출
-
-	// COMMAND asd asdsa d
 }
 
 void Command::Numerics(int num)
@@ -113,6 +125,8 @@ void Command::Numerics(int num)
 			std::cout << "<client> :Password incorrect" << std::endl;
 			break;
 		
+		
+
 		default:
 			break;
 	}
