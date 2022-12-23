@@ -38,7 +38,7 @@ class Server
         //Client
         std::list<Client *> _clnt;
         //Channel
-        // std::list<Channel> _clnt;
+        std::list<Channel> _chnl;
     public:
         // std::list<Channel>::iterator    _chnl_iter;
     public:
@@ -57,6 +57,7 @@ class Server
         // get
         Client    *getclientSock(int fd);
         std::list<Client *> &getClient();
+        std::list<Channel>  &getChannel();
         int             getSock();
         std::string     getPort();
         std::string     getPass();

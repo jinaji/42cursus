@@ -35,6 +35,8 @@ class Client
         void setReal(std::string _parsingPara[9], size_t _paraNum);
         std::string getUser();
         std::string getReal();
+
+        std::list<Channel> &getChannel();
 };
 
 #endif

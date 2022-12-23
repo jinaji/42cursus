@@ -138,6 +138,8 @@ Client    *Server::getclientSock(int fd)
 
 std::list<Client *> &Server::getClient() { return _clnt; }
 
+std::list<Channel> &Server::getChannel() { return _chnl; }
+
 int	Server::getSock() { return _sock; }
 
 std::string Server::getPort() { return _port; }

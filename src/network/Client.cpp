@@ -9,7 +9,7 @@ Client::~Client() {}
 
 void Client::addChannel(Channel chnl)
 {
-    chnl.setParticipants(1);
+    chnl.setParticipants(1, _fd);
     _channelList.push_back(chnl);
 }
 
@@ -23,3 +23,4 @@ void Client::setUser(std::string user) { _user = user; }
 void Client::setReal(std::string parsingPara[9], size_t paraNum) { _real = std::string(); for (size_t i = 3; i < paraNum; i++) _real.append(parsingPara[i]) += " "; }
 std::string Client::getUser() { return (_user); }
 std::string Client::getReal() { return (_real); }
+std::list<Channel> &Client::getChannel() { return (_channelList);};
