@@ -2,22 +2,22 @@
 
 void Command::Numerics(int num)
 {
-	std::string print = ":127.0.0.1 " + std::to_string(num) + " " + _caller.getNick();
+	std::string print = ":127.0.0.1 " + std::to_string(num) + " " + _caller.getNick() + " ";
 
 	switch (num)
 	{
 		case 1:
 			print += ":Welcome to the Internet Relay Network";
 			break;
-		// case 2:
-		// 	print += "Your host is <servername>, running version <ver>";
-		// 	break;
-		// case 3:
-		// 	print += "This server was created <date>";
-		// 	break;
-		// case 4:
-		// 	print += "<servername> <version> <available user modes> <available channel modes>";
-		// 	break;
+		case 2:
+			print += ":Your host is <servername>, running version <ver>";
+			break;
+		case 3:
+			print += ":This server was created <date>";
+			break;
+		case 4:
+			print += ":<servername> <version> <available user modes> <available channel modes>";
+			break;
 		// case 462:
 		// 	print += "<client> :You may not reregister";
 		// 	break;

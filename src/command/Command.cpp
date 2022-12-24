@@ -10,11 +10,9 @@
 
 Command::Command(std::string input, std::string pass, Client &caller, Server &server): _paraNum(0), _caller(caller), _server(server)
 {
-	std::cout << input << std::endl;
+	// std::cout << input << std::endl;
 	input_parse(input);
-	// (void)pass;
 	_pass = pass;
-	// _pass = pass + "\r\n";
 }
 
 Command::~Command() {}
@@ -24,12 +22,12 @@ void Command::input_parse(std::string input)
 	size_t ret_pos2 = input.find("\r\n");
 	if (ret_pos2 != std::string::npos)
 		input = input.substr(0, ret_pos2);
+
 	size_t ret_pos = input.find("\n");
 	if (ret_pos != std::string::npos)
 		input = input.substr(0, ret_pos);
-	
-	size_t pos = input.find(' ');
 
+	size_t pos = input.find(' ');
 	if (pos != std::string::npos)
 	{
 		_cmd = input.substr(0, pos);
@@ -79,9 +77,9 @@ void Command::execute()
 			if (_caller.getaccessState() == false)
 			{
 				this->Numerics(1);
-				// this->Numerics(2);
-				// this->Numerics(3);
-				// this->Numerics(4);
+				this->Numerics(2);
+				this->Numerics(3);
+				this->Numerics(4);
 				_caller.setaccessState(true);
 			}
 		}
@@ -109,4 +107,6 @@ void Command::execute()
 		Who?
 		*/
 	}
+	else
+		std::cout << "ERROR PASS COMMAND!" << std::endl;
 }
