@@ -10,7 +10,7 @@
 
 Command::Command(std::string input, std::string pass, Client &caller, Server &server): _paraNum(0), _caller(caller), _server(server)
 {
-	// std::cout << input << std::endl;
+	std::cout << input << std::endl;
 	input_parse(input);
 	_pass = pass;
 }
@@ -87,6 +87,8 @@ void Command::execute()
 			Join();
 	   	else if (_cmd == "LIST")
 			List();
+		else if (_cmd == "QUIT")
+			Quit();
 		else
 			std::cout << "NO MATCHING COMMAND!" << std::endl;
 
