@@ -13,7 +13,7 @@ void    Server::makeSock()
 	// setsockopt() https://www.joinc.co.kr/w/Site/Network_Programing/AdvancedComm/SocketOption
 	// bool opt = false;
 	int opt = 1;
-	if (setsockopt(_sock, SOL_SOCKET, SO_REUSEADDR, &opt, sizeof(opt) * 4) == -1)
+	if (setsockopt(_sock, SOL_SOCKET, SO_REUSEADDR, &opt, sizeof(opt)) == -1)
 		throw std::runtime_error("setsockopt 에러");
 
 	// fcntl() https://reakwon.tistory.com/110
@@ -45,6 +45,7 @@ void    Server::loop()
 	std::string	input;
 	int clnt_fd;
 	struct sockaddr_in clnt_adr;
+
 	while(1)
 	{
 		_cp_read = _read_fd;
@@ -60,7 +61,8 @@ void    Server::loop()
 				{
 					socklen_t adr_sz = sizeof(clnt_adr);
 					if ((clnt_fd = accept(_sock, (struct sockaddr *)&clnt_adr, &adr_sz)) == -1)
-						std::runtime_error("accept 에러");
+						throw std::runtime_error("accept 에러");
+					// if (fcntl(clnt_fd, F_SETFL, O_NONBLOCK) ==/
 					Client *clnt = new Client(clnt_fd);
 					_clnt.push_back(clnt);
 					FD_SET(clnt_fd, &_read_fd);
