@@ -12,13 +12,22 @@ Command::Command(std::string input, std::string pass, Client &caller, Server &se
 {
 	std::cout << input << std::endl;
 	input_parse(input);
-	_pass = pass + "\r\n";
+	// (void)pass;
+	_pass = pass;
+	// _pass = pass + "\r\n";
 }
 
 Command::~Command() {}
 
 void Command::input_parse(std::string input)
 {
+	size_t ret_pos2 = input.find("\r\n");
+	if (ret_pos2 != std::string::npos)
+		input = input.substr(0, ret_pos2);
+	size_t ret_pos = input.find("\n");
+	if (ret_pos != std::string::npos)
+		input = input.substr(0, ret_pos);
+	
 	size_t pos = input.find(' ');
 
 	if (pos != std::string::npos)
@@ -41,7 +50,7 @@ void Command::para_parse(std::string para)
 	size_t j = -1;  // parsingPara[index]
 	size_t pos = para.find(' ');
 
-	if (para == "\r\n")
+	if (para.empty())
 	{
 		_paraNum = 0;
 		return ;
