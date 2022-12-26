@@ -22,6 +22,9 @@ void Command::Numerics(int num)
         case 5:
             print += ":<1-13 tokens> :are supported by this server";
             break;
+        case 421:
+            print += _cmd + " :Unknown command";
+            break;
         case 431:
             print += ":No nickname given";
             break;
@@ -30,6 +33,9 @@ void Command::Numerics(int num)
             break;
         case 433:
             print += ":Nickname is already in use";
+            break;
+        case 461:
+            print += ":Not enough parameters";
             break;
 		case 462:
 			print += ":You may not reregister";

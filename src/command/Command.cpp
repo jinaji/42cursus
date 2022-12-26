@@ -74,7 +74,7 @@ void Command::execute()
 		else if (_cmd == "USER")
 		{
 			User();
-			if (_caller.getaccessState() == false || _caller.getuserState() == false)
+			if (_caller.getuserState() == false || _caller.getaccessState() == false)
 			{
 				this->Numerics(1);
 				this->Numerics(2);
@@ -113,24 +113,7 @@ void Command::execute()
 		// else if (_cmd == "WHO")
 		// 	Who();
 		else
-			std::cout << "NO MATCHING COMMAND!" << std::endl;
-
-		/*
-		OPER
-		QUIT
-		JOIN
-		PART
-		TOPIC
-		NAMES
-		LIST
-		Invite
-		KICK
-		Help
-		MODE
-		PRIVMSG
-		Notice
-		Who?
-		*/
+			this->Numerics(421);
 	}
 	else
 		std::cout << "ERROR PASS COMMAND!" << std::endl;
