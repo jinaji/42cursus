@@ -7,7 +7,7 @@ class Channel
 {
 	private:
 		std::string _name;
-
+		
 		size_t	_participants;
 		std::string _chnlPass;
 		int		_participantsFd[1024]; // 참여자들 담아두께여

@@ -79,6 +79,8 @@ void Command::execute()
 			Join();
 	   else if (_cmd == "LIST")
 			List();
+		else if (_cmd == "PRIVMSG")
+			Privmsg();
 		else
 			std::cout << "NO MATCHING COMMAND!" << std::endl;
 	}

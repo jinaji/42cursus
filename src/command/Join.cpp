@@ -63,8 +63,6 @@ void    Command::Join()
 		passStart = passPos + 1;
 		passPos = _parsingPara[1].find(',', passStart);
 
-		// std::cout << "chnl Name " << chnlName << std::endl;
-		// std::cout << "chnl Pass " << chnlPass << std::endl;
 		if (chnlName.find(0x07) != std::string::npos || chnlName.find(',') != std::string::npos) // space 무조건 앞에서 잘려서 확인안함
 		{
 			this->Numerics(403);
@@ -93,8 +91,6 @@ void    Command::Join()
 				}
 			}
 		}
-		std::cout << "chnl Name " << chnlName << std::endl;
-		std::cout << "chnl Pass " << chnlPass << std::endl;
 	}
 		chnlName = _parsingPara[0].substr(nameStart);
 		chnlPass = _parsingPara[1].substr(passStart);
@@ -125,7 +121,4 @@ void    Command::Join()
 				}
 			}
 		}
-		std::cout << "chnl Name " << chnlName << std::endl;
-		std::cout << "chnl Pass " << chnlPass << std::endl;
-	// 서버의 채널 목록도 추가해야함
 }

@@ -1,7 +1,7 @@
 NAME = ircserv
 
 NETWORK_SRCS = $(addprefix ./src/network/, Server.cpp Client.cpp Channel.cpp)
-COMMAND_SRCS = $(addprefix ./src/command/, Command.cpp Pass.cpp Nick.cpp User.cpp Join.cpp List.cpp)
+COMMAND_SRCS = $(addprefix ./src/command/, Command.cpp Pass.cpp Nick.cpp User.cpp Join.cpp List.cpp Privmsg.cpp)
 
 SRCS = src/main.cpp $(NETWORK_SRCS) $(COMMAND_SRCS)
 OBJS = $(SRCS:.cpp=.o)
