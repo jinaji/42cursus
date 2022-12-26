@@ -33,3 +33,19 @@ void Command::Privmsg() // <target> <text to be sent>
 // 이거 말고도 이거저거 영향줄 수 있는 모드들이 있대염
 
 // 채널에 안 쏴지면 404
+
+// void Command::Privmsg()
+// {
+// 	/*
+// 	에러 코드
+// 	*/
+// 	std::string print = ":" + _caller.getNick() + " PRIVMSG";
+// 	/*
+// 	1. 서버에 전송
+// 	2. 유저에 전송
+// 	3. else
+
+// 	parsingPara[0]을 ,기준으로 잘라서 각 채널에다 parsingPara[1]를 send
+// 	없는 채널에 보내면 출력하고 Error(401)
+// 	*/
+// }
