@@ -106,6 +106,7 @@ bool Command::excute_mode(char mode, char c)
     }
     else if (c == 'c')  // channel_mode
     {
+        // 채널 주소도 필요할듯 ............?
     }
     return false;
 }
