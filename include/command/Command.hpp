@@ -40,8 +40,8 @@ class Command
 	void Pass(); // <password>
 	void Nick(); // <nickname>
 	void User(); // <username> 0 * <realname>
-	void Oper();
 	void Quit(); // <reason>
+	void Oper();
 	// Channel Operations
 	void Join(); // <channel> (<key>)
 	void Part(); // <channel> [<reason>]
