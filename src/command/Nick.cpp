@@ -12,10 +12,10 @@ void    Command::Nick()
         this->Numerics(432);
         return ;
     }
-    std::list<Client *>::iterator it = this->_server.getClient().begin();
-    for (; it != this->_server.getClient().end(); ++it)
+    std::list<Client *>::iterator it = _server.getClient().begin();
+    for (; it != _server.getClient().end(); ++it)
     {
-        if ((*it)->getNick() == this->_parsingPara[0]) // 이미쓰고있는 닉 -> 433
+        if ((*it)->getNick() == _parsingPara[0]) // 이미쓰고있는 닉 -> 433
         {
             this->Numerics(433);
             return ;

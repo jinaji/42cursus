@@ -22,6 +22,9 @@ void Command::Numerics(int num)
         case 5:
             print += ":<1-13 tokens> :are supported by this server";
             break;
+        case 381:
+            print += ":You are now an IRC operator";
+            break;
         case 421:
             print += _cmd + " :Unknown command";
             break;
@@ -43,8 +46,9 @@ void Command::Numerics(int num)
 		case 464:
 			print += ":Password incorrect";
 			break;
-
-
+        case 491:
+            print += ":No O-lines for your host";
+            break;
 
 		default:
 			break;

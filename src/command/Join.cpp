@@ -20,7 +20,6 @@
 
 void    Command::Join()
 {
-
     Channel instance(_para);
 
     _caller.addChannel(instance);

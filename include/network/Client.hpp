@@ -21,6 +21,7 @@ class Client
     bool _nickState;
     bool _userState;
     bool _accessState;	// PASS, NICK, USER 완료 플래그
+    bool _servOper;
 
     public:
         Client(int fd);
@@ -32,6 +33,7 @@ class Client
         bool getnickState();
         bool getuserState();
         bool getaccessState();
+        bool getservOper();
 
         void addChannel(Channel chnl);
 
@@ -39,6 +41,7 @@ class Client
         void setnickState(bool state);
         void setuserState(bool state);
         void setaccessState(bool state);
+        void setservOper(bool state);
         void setNick(std::string nick);
         void setUser(std::string user);
         void setReal(std::string _parsingPara[9], size_t _paraNum);

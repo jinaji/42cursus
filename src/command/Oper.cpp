@@ -2,8 +2,24 @@
 
 void Command::Oper()
 {
-    // 파라미터 2개 아니면 -> 461
-    // 비번 틀리면 -> 464
-    // 이름 없으면 -> 491
-    // 성공 -> 381  
+    if (_paraNum != 2)
+    {
+        this->Numerics(461);
+        return ;
+    }
+    if (_pass != _parsingPara[1])
+    {
+        this->Numerics(464);
+    }
+    std::list<Client *>::iterator it = _server.getClient().begin();
+    for (; it != _server.getClient().end(); ++it)
+    {
+        if ((*it)->getNick() != _parsingPara[0])
+        {
+            this->Numerics(491);
+            return ;
+        }
+    }
+    _caller.setservOper(true);
+    this->Numerics(381);
 }
