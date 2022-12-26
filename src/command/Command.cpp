@@ -40,6 +40,8 @@ void Command::input_parse(std::string input)
 		else
 			para_parse(_para);
 	}
+	else
+		_cmd = input;
 }
 
 void Command::para_parse(std::string para)
@@ -112,6 +114,8 @@ void Command::execute()
 		// 	Notice();
 		// else if (_cmd == "WHO")
 		// 	Who();
+		else if (_cmd.empty())
+			return ;
 		else
 			this->Numerics(421);
 	}
