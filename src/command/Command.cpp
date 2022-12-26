@@ -123,12 +123,12 @@ void Command::execute()
 		std::cout << "ERROR PASS COMMAND!" << std::endl;
 }
 
-bool    Command::checkClient() // 찾으면 true, 못찾으면 false
+bool    Command::checkClient(std::string name) // 찾으면 true, 못찾으면 false
 {
 	std::list<Client *>::iterator it = _server.getClient().begin();
     for (; it != _server.getClient().end(); ++it)
     {
-        if ((*it)->getNick() == _parsingPara[0])
+        if ((*it)->getNick() == name)
             return true;
     }
 	return false;

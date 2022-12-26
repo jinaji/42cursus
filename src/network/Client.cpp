@@ -1,6 +1,10 @@
 #include "../../include/network/Client.hpp"
 
-Client::Client(int fd): _fd(fd), _passState(false), _nickState(false), _userState(false), _accessState(false), _servOper(false) {}
+Client::Client(int fd): _fd(fd), _passState(false), _nickState(false), _userState(false), _accessState(false), _servOper(false)
+{
+    for (int i = 0; i < 7; i++)
+        _userMode[i] = false;
+}
 
 Client::~Client() {}
 

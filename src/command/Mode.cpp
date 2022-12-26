@@ -12,7 +12,7 @@ void Command::Mode() // <target> [<modestring>] [<mode arguments>...]
         this->Numerics(461);
         return ;
     }
-    if (checkClient() == false)
+    if (checkClient(_parsingPara[0]) == false)
     {
         this->Numerics(401);
         return ;
@@ -22,10 +22,20 @@ void Command::Mode() // <target> [<modestring>] [<mode arguments>...]
         this->Numerics(502);
         return ;
     }
+    if (_parsingPara[0].at(0) == '#')   // mode가 user인지 channel인지
+        _mode = 'c';
+    else
+        _mode = 'u';
+    
+
+
+
+
+
     if (_parsingPara[1].at(0) == '+' || _parsingPara[1].at(0) == '-')
     {
         std::string modestring;
-        size_t mode_num = 0; // +123 -> 
+        size_t mode_num = 0; // +123 -> 3
         std::string::iterator it = _parsingPara[1].begin();
         while (it != _parsingPara[1].end())
         {
@@ -40,74 +50,62 @@ void Command::Mode() // <target> [<modestring>] [<mode arguments>...]
             return ;
         for (size_t i = 0; i < mode_num; i++)
         {
-            if (excute_mode(modestring.at(i)) == false)
-            {
+            if (excute_mode(modestring.at(i), _mode) == false)
                 this->Numerics(501);
-                return ;
-            }
         }
     }
     else
     {
-        for (size_t i = 0; i < _parsingPara[1].length(); i++)
+        for (size_t i = 1; i < _parsingPara[1].length(); i++)
         {
-            if (excute_mode(modestring.at(i)) == false)
-            {
+            if (excute_mode(_parsingPara[1].at(i), _mode) == false)
                 this->Numerics(501);
-                return ;
-            }
         }
     }
-	//User mode
-    
-
-    //Channel mode
 }
 
-bool Command::excute_mode(char mode)
+bool Command::excute_mode(char mode, char c)
 {
-    (void) mode;
-    return true;
-
-    if (mode == 'a')
+    if (c == 'u')   // user_mode
     {
-
+        if (mode == 'a')
+        {
+            _caller._userMode[user_a] = true;
+            return true;
+        }
+        else if (mode == 'i')
+        {
+            _caller._userMode[user_i] = true;                
+            return true;
+        }
+        else if (mode == 'w')
+        {
+            _caller._userMode[user_w] = true;                
+            return true;
+        }
+        else if (mode == 'r')
+        {
+            _caller._userMode[user_r] = true;                
+            return true;
+        }
+        else if (mode == 'o')
+        {
+            _caller._userMode[user_o] = true;                
+            return true;
+        }
+        else if (mode == 'O')
+        {
+            _caller._userMode[user_O] = true;                
+            return true;
+        }
+        else if (mode == 's')
+        {
+            _caller._userMode[user_s] = true;                
+            return true;
+        }
     }
-    else if (mode == 'i')
+    else if (c == 'c')  // channel_mode
     {
-
     }
-    else if (mode == 'w')
-    {
-
-    }
-    else if (mode == 'r')
-    {
-
-    }
-    else if (mode == 'o')
-    {
-
-    }
-    else if (mode == 'O')
-    {
-
-    }
-    else if (mode == 's')
-    {
-
-    }
-    else
-        return false;
-
-
-        /*
-           a - user is flagged as away;
-           i - marks a users as invisible;
-           w - user receives wallops;
-           r - restricted user connection;
-           o - operator flag;
-           O - local operator flag;
-           s - marks a user for receipt of server notices.
-        */
+    return false;
 }

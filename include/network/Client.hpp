@@ -5,6 +5,17 @@
 # include <list>
 # include "./Channel.hpp"
 
+enum User_mode
+    {
+        user_a = 0,
+        user_i,
+        user_w,
+        user_r,
+        user_o,
+        user_O,
+        user_s
+    };
+
 class Client
 {
     private:
@@ -23,9 +34,12 @@ class Client
     bool _accessState;	// PASS, NICK, USER 완료 플래그
     bool _servOper;
 
+
     public:
         Client(int fd);
         ~Client();
+
+        bool _userMode[7];
 
         int getSocket();
         std::string getNick();

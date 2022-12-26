@@ -3,6 +3,20 @@
 
 # include <string>
 
+enum Channel_mode
+{
+	channel_o = 0,
+	channel_p,
+	channel_s,
+	channel_i,
+	channel_t,
+	channel_m,
+	channel_v,
+	channel_l,
+	channel_b,
+	channel_k
+};
+
 class Channel
 {
 	private:
@@ -13,7 +27,9 @@ class Channel
 
 	public:
 		Channel(std::string name);
-		~Channel();	
+		~Channel();
+
+		bool _channelMode[10];
 
 		// set
 		void    setParticipants(size_t num, int fd);

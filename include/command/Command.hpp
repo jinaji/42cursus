@@ -19,6 +19,7 @@ class Command
 		std::string _para;
 		size_t		_paraNum;
 		std::string _parsingPara[9];
+		int _mode;
 
 		Client		&_caller;
 		Server		&_server;
@@ -61,8 +62,8 @@ class Command
 	// Numerics
 	void Numerics(int num);
 
-	bool checkClient(); // 찾으면 true, 못찾으면 false
-	bool excute_mode(char mode);
+	bool checkClient(std::string name); // 찾으면 true, 못찾으면 false
+	bool excute_mode(char mode, char c);
 };
 
 #endif
