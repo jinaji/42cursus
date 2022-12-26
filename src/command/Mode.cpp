@@ -12,7 +12,7 @@ void Command::Mode() // <target> [<modestring>] [<mode arguments>...]
         this->Numerics(461);
         return ;
     }
-    if (checkClient(_parsingPara[0]) == false)
+    if (checkClient(_parsingPara[0]) == false) // checkChannel() 추가
     {
         this->Numerics(401);
         return ;
