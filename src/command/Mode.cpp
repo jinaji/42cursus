@@ -106,7 +106,58 @@ bool Command::excute_mode(char mode, char c)
     }
     else if (c == 'c')  // channel_mode
     {
-        // 채널 주소도 필요할듯 ............?
+        std::list<Channel>::iterator it = _server.getChannel().begin();
+        for (; it != _server.getChannel().end(); ++it)
+        {
+            if ((*it).getName() == _parsingPara[0])
+            {
+                if (mode == 'o')
+                {
+                    (*it)._channelMode[channel_o] = true;
+                    return true;
+                }
+                else if (mode == 'p')
+                {
+                    (*it)._channelMode[channel_p] = true;
+                    return true;
+                }
+                else if (mode == 's')
+                {
+                    (*it)._channelMode[channel_s] = true;
+                    return true;
+                }
+                else if (mode == 't')
+                {
+                    (*it)._channelMode[channel_t] = true;
+                    return true;
+                }
+                else if (mode == 'm')
+                {
+                    (*it)._channelMode[channel_m] = true;
+                    return true;
+                }
+                else if (mode == 'v')
+                {
+                    (*it)._channelMode[channel_v] = true;
+                    return true;
+                }
+                else if (mode == 'l')
+                {
+                    (*it)._channelMode[channel_l] = true;
+                    return true;
+                }
+                else if (mode == 'b')
+                {
+                    (*it)._channelMode[channel_b] = true;
+                    return true;
+                }
+                else if (mode == 'k')
+                {
+                    (*it)._channelMode[channel_k] = true;
+                    return true;
+                }
+            }
+        }
     }
     return false;
 }
