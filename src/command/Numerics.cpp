@@ -6,6 +6,7 @@ void Command::Numerics(int num)
 
 	switch (num)
 	{
+        // come
 		case 1:
 			print += ":Welcome to the Internet Relay Network";
 			break;
@@ -21,13 +22,24 @@ void Command::Numerics(int num)
         case 5:
             print += ":<1-13 tokens> :are supported by this server";
             break;
+        case 431:
+            print += ":No nickname given";
+            break;
+        case 432:
+            print += ":Erroneous nickname";
+            break;
+        case 433:
+            print += ":Nickname is already in use";
+            break;
 		case 462:
 			print += ":You may not reregister";
 			break;
 		case 464:
 			print += ":Password incorrect";
 			break;
-		
+
+
+
 		default:
 			break;
 	}

@@ -1,6 +1,6 @@
 #include "../../include/network/Client.hpp"
 
-Client::Client(int fd): _fd(fd), _passState(false), _accessState(false) {}
+Client::Client(int fd): _fd(fd), _passState(false), _nickState(false), _userState(false), _accessState(false) {}
 
 Client::~Client() {}
 
@@ -13,9 +13,13 @@ void Client::addChannel(Channel chnl)
 int Client::getSocket() { return _fd; }
 std::string Client::getNick() { return _nick; }
 bool Client::getpassState() { return _passState; }
+bool Client::getnickState() { return _nickState; }
+bool Client::getuserState() { return _userState; }
 bool Client::getaccessState() { return _accessState; }
 
 void Client::setpassState(bool state) { _passState = state; }
+void Client::setnickState(bool state) { _nickState = state; }
+void Client::setuserState(bool state) { _userState = state; }
 void Client::setaccessState(bool state) { _accessState = state; }
 void Client::setNick(std::string nick) { _nick = nick; }
 void Client::setUser(std::string user) { _user = user; }

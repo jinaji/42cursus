@@ -5,6 +5,8 @@
 
 void Command::User()
 {
+	if (_caller.getnickState() == false)
+		return ;
 	// if (_paraNum < 4) // != 4 ... realname 엔 space 있을수도 있음 
 	// {
 	// 	this->Numerics(461);
@@ -24,6 +26,7 @@ void Command::User()
 		_parsingPara[0].resize(9);
 	_caller.setUser(_parsingPara[0]);
 	_caller.setReal(_parsingPara, _paraNum);
+	_caller.setuserState(true);
 }
 
 // https://modern.ircdocs.horse/#authenticate-message

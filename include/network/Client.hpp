@@ -18,6 +18,8 @@ class Client
     
     //PASS
     bool _passState;
+    bool _nickState;
+    bool _userState;
     bool _accessState;	// PASS, NICK, USER 완료 플래그
 
     public:
@@ -27,11 +29,15 @@ class Client
         int getSocket();
         std::string getNick();
         bool getpassState();
+        bool getnickState();
+        bool getuserState();
         bool getaccessState();
 
         void addChannel(Channel chnl);
 
         void setpassState(bool state);
+        void setnickState(bool state);
+        void setuserState(bool state);
         void setaccessState(bool state);
         void setNick(std::string nick);
         void setUser(std::string user);
