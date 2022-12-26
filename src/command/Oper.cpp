@@ -10,6 +10,7 @@ void Command::Oper()
     if (_pass != _parsingPara[1])
     {
         this->Numerics(464);
+        return ;
     }
     std::list<Client *>::iterator it = _server.getClient().begin();
     for (; it != _server.getClient().end(); ++it)

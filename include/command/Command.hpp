@@ -60,6 +60,9 @@ class Command
 	void Who(); // <mask> <- channel name / exact nickname / mask pattern? 읽어보면 알 듯
 	// Numerics
 	void Numerics(int num);
+
+	bool checkClient(); // 찾으면 true, 못찾으면 false
+	bool excute_mode(char mode);
 };
 
 #endif

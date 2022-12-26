@@ -106,8 +106,8 @@ void Command::execute()
 		// 	Kick();
 		// else if (_cmd == "HELP")
 		// 	Help();
-		// else if (_cmd == "MODE")
-		// 	Mode();
+		else if (_cmd == "MODE")
+			Mode();
 		// else if (_cmd == "PRIVMSG")
 		// 	Privmsg();
 		// else if (_cmd == "NOTICE")
@@ -121,4 +121,15 @@ void Command::execute()
 	}
 	else
 		std::cout << "ERROR PASS COMMAND!" << std::endl;
+}
+
+bool    Command::checkClient() // 찾으면 true, 못찾으면 false
+{
+	std::list<Client *>::iterator it = _server.getClient().begin();
+    for (; it != _server.getClient().end(); ++it)
+    {
+        if ((*it)->getNick() == _parsingPara[0])
+            return true;
+    }
+	return false;
 }
