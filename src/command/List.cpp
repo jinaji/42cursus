@@ -25,7 +25,6 @@ void	showChannel(std::string name, std::list<Channel> chnl)
 
 void	Command::List()
 {
-	std::cout << "pn " << _paraNum << std::endl;
 	if (_paraNum == 0)
 	{
 		for (std::list<Channel>::iterator it = _server.getChannel().begin(); it != _server.getChannel().end(); it++)
