@@ -16,24 +16,15 @@ void Command::Mode() // <target> [<modestring>] [<mode arguments>...]
         this->Numerics(401);
         return ;
     }
-    if (_caller.getNick() != _parsingPara[0])
-    {
-        this->Numerics(502);
-        return ;
-    }
-<<<<<<< HEAD
-=======
     if (_parsingPara[0].at(0) == '#')   // mode가 user인지 channel인지
         _mode = 'c';
     else
         _mode = 'u';
-    
-
-
-
-
-
->>>>>>> parent of aeeac7e... feat pong
+    if (_caller.getNick() != _parsingPara[0] && _mode == 'u')
+    {
+        this->Numerics(502);
+        return ;
+    }
     if (_parsingPara[1].at(0) == '+' || _parsingPara[1].at(0) == '-')
     {
         std::string modestring;

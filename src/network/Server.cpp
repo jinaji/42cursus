@@ -62,12 +62,8 @@ void    Server::loop()
 					socklen_t adr_sz = sizeof(clnt_adr);
 					if ((clnt_fd = accept(_sock, (struct sockaddr *)&clnt_adr, &adr_sz)) == -1)
 						throw std::runtime_error("accept 에러");
-<<<<<<< HEAD
 					// if (fcntl(clnt_fd, F_SETFL, O_NONBLOCK) == -1)
 					// 	throw std::runtime_error("fcntl 에러");
-=======
-					// if (fcntl(clnt_fd, F_SETFL, O_NONBLOCK) ==/
->>>>>>> parent of aeeac7e... feat pong
 					Client *clnt = new Client(clnt_fd);
 					_clnt.push_back(clnt);
 					FD_SET(clnt_fd, &_read_fd);
