@@ -6,13 +6,12 @@ void Command::Mode() // <target> [<modestring>] [<mode arguments>...]
     // 해당 nick이 X -> 401
     // Mode 커맨드를 사용한 user의 nick과 <target>의 nick이 다름 -> 502
 
-
     if (_paraNum == 0)
     {
         this->Numerics(461);
         return ;
     }
-    if (checkClient(_parsingPara[0]) == false) // checkChannel() 추가해야함
+    if (checkClient(_parsingPara[0]) == false && checkChannel(_parsingPara[0]) == false)
     {
         this->Numerics(401);
         return ;
@@ -75,6 +74,7 @@ bool Command::excute_mode(char mode, char c)
         }
         else if (mode == 'i')
         {
+            std::cout << "IIOIOIIIIIIIIIII\n";
             _caller._userMode[user_i] = true;                
             return true;
         }

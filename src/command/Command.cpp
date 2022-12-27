@@ -133,3 +133,16 @@ bool    Command::checkClient(std::string name) // 찾으면 true, 못찾으면 f
     }
 	return false;
 }
+
+bool    Command::checkChannel(std::string name)
+{
+    std::list<Channel>::iterator it = _server.getChannel().begin();
+    for (; it != _server.getChannel().end(); it++)
+    {
+		std::cout << "(*it).getName():" << (*it).getName() << std::endl;
+		std::cout << "name:" << name << std::endl;
+        if ((*it).getName() == name)
+            return true;
+    }
+    return false;
+}

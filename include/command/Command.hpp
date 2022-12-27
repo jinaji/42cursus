@@ -63,6 +63,7 @@ class Command
 	void Numerics(int num);
 
 	bool checkClient(std::string name); // 찾으면 true, 못찾으면 false
+	bool checkChannel(std::string name);
 	bool excute_mode(char mode, char c);
 };
 
