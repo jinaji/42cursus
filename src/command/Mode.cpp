@@ -25,6 +25,12 @@ void Command::Mode() // <target> [<modestring>] [<mode arguments>...]
         this->Numerics(502);
         return ;
     }
+    /*
+        Mode: +ins
+        Created at: Dec 27, 2022 at 2:46 PM
+    */
+    // if (_paraNum == 1)
+    //     return ;
     if (_parsingPara[1].at(0) == '+' || _parsingPara[1].at(0) == '-')
     {
         std::string modestring;
@@ -101,7 +107,7 @@ bool Command::excute_mode(char mode, char c)
     else if (c == 'c')  // channel_mode
     {
         std::list<Channel>::iterator it = _server.getChannel().begin();
-        for (; it != _server.getChannel().end(); ++it)
+        for (; it != _server.getChannel().end(); it++)
         {
             if ((*it).getName() == _parsingPara[0])
             {

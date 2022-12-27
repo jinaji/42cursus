@@ -29,8 +29,14 @@
 	// }
 
 
-void	joinMessage()
+void	Command::joinMessage(std::string name)
 {
+	std::string print = ":" + _caller.getNick() + " JOIN " + name;
+	print += " <USER> is joining the channel";
+	print += "\r\n";
+    std::cout << "print[" << print << "]";
+    if (send(_caller.getSocket(), print.c_str(), strlen(print.c_str()), 0) == -1)
+        throw std::runtime_error("send 에러");
 
 /*
 
@@ -68,7 +74,7 @@ void    Command::Join()
 			this->Numerics(403);
 			continue ;
 		}
-		if (!checkChannel(chnlName)) // 채널 존재 안 함 새로 만듦
+		if (checkChannel(chnlName) == false) // 채널 존재 안 함 새로 만듦
 		{
 			Channel instance(chnlName);
 			instance.setPass(chnlPass);
@@ -92,33 +98,34 @@ void    Command::Join()
 			}
 		}
 	}
-		chnlName = _parsingPara[0].substr(nameStart);
-		chnlPass = _parsingPara[1].substr(passStart);
-		if (!checkChannel(chnlName))
+	chnlName = _parsingPara[0].substr(nameStart, namePos - nameStart);
+	chnlPass = _parsingPara[1].substr(passStart ,passPos- passStart);
+	if (!checkChannel(chnlName))
+	{
+		Channel instance(chnlName);
+		instance.setPass(chnlPass);
+		instance.setParticipants(1, _caller.getSocket());
+		_caller.addChannel(instance);
+		_server.getChannel().push_back(instance);
+		this->joinMessage(chnlName);
+	}
+	else
+	{
+		std::list<Channel> chnl = _server.getChannel();
+		
+		for (std::list<Channel>::iterator it = chnl.begin(); it != chnl.end(); it++)
 		{
-			Channel instance(_para);
-			instance.setPass(chnlPass);
-			instance.setParticipants(1, _caller.getSocket());
-			_caller.addChannel(instance);
-			_server.getChannel().push_back(instance);
-		}
-		else
-		{
-			std::list<Channel> chnl = _server.getChannel();
-			
-			for (std::list<Channel>::iterator it = chnl.begin(); it != chnl.end(); it++)
+			if ((*it).getName() == chnlName)
 			{
-				if ((*it).getName() == chnlName)
+				if ((*it).getPass() == chnlPass || (*it).getPass().empty())
 				{
-					if ((*it).getPass() == chnlPass || (*it).getPass().empty())
-					{
-						(*it).setParticipants(1, _caller.getSocket());
-						if ((*it).getParticipants() == 1)
-							; // oper
-					}
-					else
-						this->Numerics(475);
+					(*it).setParticipants(1, _caller.getSocket());
+					if ((*it).getParticipants() == 1)
+						; // oper
 				}
+				else
+					this->Numerics(475);
 			}
 		}
+	}
 }

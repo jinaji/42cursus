@@ -139,8 +139,6 @@ bool    Command::checkChannel(std::string name)
     std::list<Channel>::iterator it = _server.getChannel().begin();
     for (; it != _server.getChannel().end(); it++)
     {
-		std::cout << "(*it).getName():" << (*it).getName() << std::endl;
-		std::cout << "name:" << name << std::endl;
         if ((*it).getName() == name)
             return true;
     }
