@@ -101,7 +101,10 @@ void    Command::Join()
 				if ((*it).getName() == chnlName)
 				{
 					if ((*it).getPass() == chnlPass || (*it).getPass().empty())
+					{
 						(*it).setParticipants(1, _caller.getSocket());
+						this->joinMessage(chnlName);
+					}
 					else
 						this->Numerics(475);
 				}
@@ -135,6 +138,7 @@ void    Command::Join()
 				if ((*it).getPass() == chnlPass || (*it).getPass().empty())
 				{
 					(*it).setParticipants(1, _caller.getSocket());
+					this->joinMessage(chnlName);
 					if ((*it).getParticipants() == 1)
 						; // oper
 				}
