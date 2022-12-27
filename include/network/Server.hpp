@@ -61,5 +61,6 @@ class Server
         int             getSock();
         std::string     getPort();
         std::string     getPass();
+        int             getFdmax();
 };
 #endif

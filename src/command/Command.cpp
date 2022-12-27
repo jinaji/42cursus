@@ -108,8 +108,8 @@ void Command::execute()
 		// 	Help();
 		else if (_cmd == "MODE")
 			Mode();
-		// else if (_cmd == "PRIVMSG")
-		// 	Privmsg();
+		else if (_cmd == "PRIVMSG")
+			Privmsg();
 		// else if (_cmd == "NOTICE")
 		// 	Notice();
 		// else if (_cmd == "WHO")

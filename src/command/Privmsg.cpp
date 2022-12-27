@@ -1,13 +1,22 @@
 #include "../../include/command/Command.hpp"
 
-int	getNickFd(std::string nick, std::list<Client *> clnt)
+void Command::privmsgMessage(std::string name, std::string msg, int fd)
+{
+	std::string print = ":" + _caller.getNick() + " PRIVMSG " + name + " :" + msg;
+	print += "\r\n";
+    std::cout << "print[" << print << "]";
+    if (send(fd, print.c_str(), strlen(print.c_str()), 0) == -1)
+        throw std::runtime_error("send 에러");
+}
+
+int	Command::getNickFd(std::string nick, std::list<Client *> clnt)
 {
 	for (std::list<Client *>::iterator it = clnt.begin(); it != clnt.end(); it++)
 	{
 		if ((*it)->getNick() == nick)
 			return ((*it)->getSocket());
 	}
-	return (3);
+	return (_server.getFdmax());
 }
 
 void Command::Privmsg() // <target> <text to be sent>
@@ -18,10 +27,10 @@ void Command::Privmsg() // <target> <text to be sent>
 		return ;
 	if (_parsingPara[0].find('#') == std::string::npos) // user
 	{
-		int fd = getNickFd(_parsingPara[0], _server.getClient());
-		msg = _caller.getNick() +  " PRIVMSG " + _parsingPara[0] + " " + _parsingPara[1];
-		send(fd, msg.c_str(), sizeof(msg), 0);
+		// Client *tmp = new Client();
+		this->privmsgMessage(_parsingPara[0], _parsingPara[1], getNickFd(_parsingPara[0], _server.getClient()));
 	}
+	// else if () // 채널
 }
 
 // 없는 채널로 보내면 위에 뜸
@@ -41,7 +50,7 @@ void Command::Privmsg() // <target> <text to be sent>
 // 	*/
 // 	std::string print = ":" + _caller.getNick() + " PRIVMSG";
 // 	/*
-// 	1. 서버에 전송
+// 	1. 채널에 전송
 // 	2. 유저에 전송
 // 	3. else
 

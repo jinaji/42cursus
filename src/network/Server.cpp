@@ -148,3 +148,5 @@ int	Server::getSock() { return _sock; }
 std::string Server::getPort() { return _port; }
 
 std::string Server::getPass() { return _pass; }
+
+int             Server::getFdmax() { return _fd_max; }
