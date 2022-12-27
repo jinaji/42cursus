@@ -1,6 +1,6 @@
 #include "../../include/command/Command.hpp"
 
-void Part() // <channel> [<reason>]
+void Command::Part() // <channel> [<reason>]
 {
 	
 }

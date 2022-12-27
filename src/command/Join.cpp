@@ -31,12 +31,14 @@
 
 void	Command::joinMessage(std::string name)
 {
-	std::string print = ":" + _caller.getNick() + " JOIN " + name;
-	print += " <USER> is joining the channel";
+	//  :WiZ JOIN #Twilight_zone		; WiZ is joining the channel
+	//  :dan-!d@localhost JOIN #test    ; dan- is joining the channel #test
+
+	std::string print = ":" + _caller.getNick() + "!" + _caller.getUser() + "@127.0.0.1" + " JOIN " + name;
 	print += "\r\n";
-    std::cout << "print[" << print << "]";
-    if (send(_caller.getSocket(), print.c_str(), strlen(print.c_str()), 0) == -1)
+	if (send(_caller.getSocket(), print.c_str(), strlen(print.c_str()), 0) == -1)
         throw std::runtime_error("send 에러");
+    // std::cout << "print[" << print << "]";
 
 /*
 
@@ -81,6 +83,14 @@ void    Command::Join()
 			instance.setParticipants(1, _caller.getSocket()); // op줘야댐 채널 모드도 줄거면 여기서 해야댐
 			_caller.addChannel(instance);
 			_server.getChannel().push_back(instance);
+			this->joinMessage(chnlName);
+			// :irc.example.com MODE #foobar +o bunny
+			// ; The irc.example.com server gave channel
+			// operator privileges to bunny on #foobar.
+			// std::string print = ":127.0.0.1 MODE " + chnlName + " +o " + _caller.getNick();
+			// print += "\r\n";
+			// if (send(_caller.getSocket(), print.c_str(), strlen(print.c_str()), 0) == -1)
+        	// 	throw std::runtime_error("send 에러");
 		}
 		else // 채널 있어서 거기 들어갈 거임
 		{
@@ -108,6 +118,11 @@ void    Command::Join()
 		_caller.addChannel(instance);
 		_server.getChannel().push_back(instance);
 		this->joinMessage(chnlName);
+		//:irc.example.com MODE #foobar +o bunny
+		// std::string print = ":127.0.0.1 MODE " + chnlName + " +o " + _caller.getNick();
+		// print += "\r\n";
+		// if (send(_caller.getSocket(), print.c_str(), strlen(print.c_str()), 0) == -1)
+		// 	throw std::runtime_error("send 에러");
 	}
 	else
 	{

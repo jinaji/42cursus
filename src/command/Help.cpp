@@ -1,3 +1,6 @@
 #include "../../include/command/Command.hpp"
 
-void Help();
+void Command::Help()
+{
+    
+}
