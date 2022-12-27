@@ -83,7 +83,7 @@ void    Command::Join()
 			instance.setParticipants(1, _caller.getSocket()); // op줘야댐 채널 모드도 줄거면 여기서 해야댐
 			_caller.addChannel(instance);
 			_server.getChannel().push_back(instance);
-			this->joinMessage(chnlName);
+			this->joinMessage(chnlName); // 채널에 이미 있는 유저한테 join했다고 알려야함
 			// :irc.example.com MODE #foobar +o bunny
 			// ; The irc.example.com server gave channel
 			// operator privileges to bunny on #foobar.

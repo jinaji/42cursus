@@ -7,111 +7,95 @@ USER one_L 0 * one_R
 PASS 123
 
 pass: 123, para: 123;NICK one_N
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-=======
->>>>>>> parent of aeeac7e... feat pong
 USER one_L 0 * one_R
 
 @disconnect@ Client fd: [4]
 PASS 123
 
 pass: 123, para: 123;NICK one_N
-USER one_L 0 * one_R
-
-@disconnect@ Client fd: [4]
-PASS 123
-
-pass: 123, para: 123;NICK one_N
-<<<<<<< HEAD
->>>>>>> parent of aeeac7e... feat pong
-=======
->>>>>>> parent of aeeac7e... feat pong
 
 USER one_L 0 * one_R
 
 print[:127.0.0.1 1 one_N :Welcome to the Internet Relay Network
 ]print[:127.0.0.1 2 one_N :Your host is ft_irc, running version 0.01
 ]print[:127.0.0.1 3 one_N :This server was created 2022 ~ 2023
-]print[:127.0.0.1 4 one_N :ft_irc 0.01 <available user modes> <available channel modes>
-]print[:127.0.0.1 5 one_N :<1-13 tokens> :are supported by this server
-<<<<<<< HEAD
-<<<<<<< HEAD
-]MODE #321
-
-print[:127.0.0.1 401 one_N 
-]MODE #321
-
-print[:127.0.0.1 401 one_N 
-]MODE #321
-
-print[:127.0.0.1 401 one_N 
-]MODE #321
-
-print[:127.0.0.1 401 one_N 
-]MODE #321
-
-print[:127.0.0.1 401 one_N 
-]MODE #321
-
-print[:127.0.0.1 401 one_N 
-]MODE #321
-
-print[:127.0.0.1 401 one_N 
-]MODE #321
-
-print[:127.0.0.1 401 one_N 
-]MODE #123
-
-print[:127.0.0.1 401 one_N 
-]MODE d
-
-print[:127.0.0.1 401 one_N 
-]MODE md
-
-print[:127.0.0.1 401 one_N 
-]MODE #123
-
-print[:127.0.0.1 401 one_N 
-]MODE #123
-
-print[:127.0.0.1 401 one_N 
+]print[:127.0.0.1 4 one_N :ft_irc 0.01
+]print[:127.0.0.1 5 one_N :are supported by this server
 ]JOIN #123
 
-MODE #123
-=======
-]JOIN #123 123
+JOIN #231
 
-MODE #123 -i
+JOIN #231
 
-(*it).getName():#123 123
-name:#123
-print[:127.0.0.1 401 one_N 
-]MODE #123 -i
+JOIN #231
 
-=======
-]JOIN #123 123
+PONG 127.0.0.1
 
-MODE #123 -i
-
-(*it).getName():#123 123
-name:#123
-print[:127.0.0.1 401 one_N 
-]MODE #123 -i
-
->>>>>>> parent of aeeac7e... feat pong
-(*it).getName():#123 123
-name:#123
-print[:127.0.0.1 401 one_N 
-]MODE #123 -i
-<<<<<<< HEAD
->>>>>>> parent of aeeac7e... feat pong
-=======
->>>>>>> parent of aeeac7e... feat pong
-
-(*it).getName():#123 123
-name:#123
-print[:127.0.0.1 401 one_N 
+print[:127.0.0.1 421 one_N PONG :Unknown command
 ]PONG 127.0.0.1
+
+print[:127.0.0.1 421 one_N PONG :Unknown command
+]PONG 127.0.0.1
+
+print[:127.0.0.1 421 one_N PONG :Unknown command
+]PONG 127.0.0.1
+
+print[:127.0.0.1 421 one_N PONG :Unknown command
+]PONG 127.0.0.1
+
+print[:127.0.0.1 421 one_N PONG :Unknown command
+]PONG 127.0.0.1
+
+print[:127.0.0.1 421 one_N PONG :Unknown command
+]PONG 127.0.0.1
+
+print[:127.0.0.1 421 one_N PONG :Unknown command
+]PONG 127.0.0.1
+
+print[:127.0.0.1 421 one_N PONG :Unknown command
+]PONG 127.0.0.1
+
+print[:127.0.0.1 421 one_N PONG :Unknown command
+]PONG 127.0.0.1
+
+print[:127.0.0.1 421 one_N PONG :Unknown command
+]PONG 127.0.0.1
+
+print[:127.0.0.1 421 one_N PONG :Unknown command
+]PONG 127.0.0.1
+
+print[:127.0.0.1 421 one_N PONG :Unknown command
+]LIST 
+
+#123
+#231
+PONG 127.0.0.1
+
+print[:127.0.0.1 421 one_N PONG :Unknown command
+]LIST 
+
+#123
+#231
+LIST 
+
+#123
+#231
+PASS 123
+
+pass: 123, para: 123;print[:127.0.0.1 462 one_N :You may not reregister
+]PASS md
+
+pass: 123, para: md;print[:127.0.0.1 462 one_N :You may not reregister
+]NICK 231
+
+print[:127.0.0.1 432 one_N :Erroneous nickname
+]NICK ak
+
+JOIN #123
+
+JOIN #123
+
+JOIN #123
+
+QUIT Leaving...
 

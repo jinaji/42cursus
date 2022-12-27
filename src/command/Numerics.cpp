@@ -17,10 +17,10 @@ void Command::Numerics(int num)
 			print += ":This server was created 2022 ~ 2023";
 			break;
 		case 4:
-			print += ":ft_irc 0.01 <available user modes> <available channel modes>";
+			print += ":ft_irc 0.01";
 			break;
         case 5:
-            print += ":<1-13 tokens> :are supported by this server";
+            print += ":are supported by this server";
             break;
         case 381:
             print += ":You are now an IRC operator";

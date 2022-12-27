@@ -52,13 +52,10 @@ class Command
 	void Invite();
 	void Kick(); // <channel> <user> * [<comment>]
 	// Server Queries and Commands
-	void Help(); // 해도 되고 안해도 됌
 	void Mode(); // <target> [<modestring>] [<mode arguments>...]
 	// Sending Messages
 	void Privmsg(); // <target> <text to be sent>
 	void Notice(); // <target> <text to be sent>
-	// User-Based Queries
-	void Who(); // 해도 되고 안해도 됌 // <mask> <- channel name / exact nickname / mask pattern? 읽어보면 알 듯
 	// Numerics
 	void Numerics(int num);
 

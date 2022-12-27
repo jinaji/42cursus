@@ -25,14 +25,21 @@ void Command::Privmsg() // <target> <text to be sent>
 
 	if (_paraNum == 1)
 		return ;
-	if (_parsingPara[0].find('#') == std::string::npos) // user
+	if (_parsingPara[0].find('#') == std::string::npos) // 유저
 	{
 		// Client *tmp = new Client();
+		std::cout << "유저!!!!!!1\n";
 		this->privmsgMessage(_parsingPara[0], _parsingPara[1], getNickFd(_parsingPara[0], _server.getClient()));
 	}
-	// else if () // 채널
+	else if (_parsingPara[0].at(0) == '#') // 채널 (모든 유저한테 전송)
+	{
+		std::cout << "채널!!!!!!1\n";
+		this->privmsgMessage(_parsingPara[0], _parsingPara[1], getNickFd(_parsingPara[0], _server.getClient()));
+	}
+	else
+		this->Numerics(401);
 }
-
+ 
 // 없는 채널로 보내면 위에 뜸
 // <#test>
 // text 
