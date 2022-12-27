@@ -25,12 +25,6 @@ void Command::Mode() // <target> [<modestring>] [<mode arguments>...]
         this->Numerics(502);
         return ;
     }
-    
-
-
-
-
-
     if (_parsingPara[1].at(0) == '+' || _parsingPara[1].at(0) == '-')
     {
         std::string modestring;
