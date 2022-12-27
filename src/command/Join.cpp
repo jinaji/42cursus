@@ -18,15 +18,15 @@
   _para 뒤에 개행 띠고 채널 이름으로 넣어야 list에서 편할듯해염
 */
 
-int		checkChannel(std::string name, std::list<Channel> chnl)
-{
-	for (std::list<Channel>::iterator it = chnl.begin(); it != chnl.end(); it++)
-	{
-		if (name == (*it).getName())
-			return (0);
-	}
-	return (1);
-}
+	// int		checkChannel(std::string name, std::list<Channel> chnl)
+	// {
+	// 	for (std::list<Channel>::iterator it = chnl.begin(); it != chnl.end(); it++)
+	// 	{
+	// 		if (name == (*it).getName())
+	// 			return (0);
+	// 	}
+	// 	return (1);
+	// }
 
 
 void	joinMessage()
@@ -68,7 +68,7 @@ void    Command::Join()
 			this->Numerics(403);
 			continue ;
 		}
-		if (checkChannel(chnlName, _server.getChannel())) // 채널 존재 안 함 새로 만듦
+		if (!checkChannel(chnlName)) // 채널 존재 안 함 새로 만듦
 		{
 			Channel instance(chnlName);
 			instance.setPass(chnlPass);
@@ -94,7 +94,7 @@ void    Command::Join()
 	}
 		chnlName = _parsingPara[0].substr(nameStart);
 		chnlPass = _parsingPara[1].substr(passStart);
-		if (checkChannel(chnlName, _server.getChannel()))
+		if (!checkChannel(chnlName))
 		{
 			Channel instance(_para);
 			instance.setPass(chnlPass);

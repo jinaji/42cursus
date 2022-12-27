@@ -98,8 +98,8 @@ void Command::execute()
 		// 	Topic();
 		// else if (_cmd == "NAMES")
 		// 	Names();
-		// else if (_cmd == "LIST")
-		// 	List();
+		else if (_cmd == "LIST")
+			List();
 		// else if (_cmd == "INVITE")
 		// 	Invite();
 		// else if (_cmd == "KICK")
