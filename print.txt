@@ -3,13 +3,30 @@ PASS 123
 pass: 123, para: 123;NICK one_N
 USER one_L 0 * one_R
 
-@disconnect@ Client fd: [4]
 PASS 123
 
-pass: 123, para: 123;NICK one_N
-USER one_L 0 * one_R
+pass: 123, para: 123;NICK two_N
+USER two_L 0 * two_R
 
-@disconnect@ Client fd: [4]
+@disconnect@ Client fd: [5]
+PASS 123
+
+pass: 123, para: 123;NICK two_N
+USER two_L 0 * two_R
+
+@disconnect@ Client fd: [5]
+PASS 123
+
+pass: 123, para: 123;NICK two_N
+
+USER two_L 0 * two_R
+
+print[:127.0.0.1 1 two_N :Welcome to the Internet Relay Network
+]print[:127.0.0.1 2 two_N :Your host is ft_irc, running version 0.01
+]print[:127.0.0.1 3 two_N :This server was created 2022 ~ 2023
+]print[:127.0.0.1 4 two_N :ft_irc 0.01
+]print[:127.0.0.1 5 two_N :are supported by this server
+]@disconnect@ Client fd: [4]
 PASS 123
 
 pass: 123, para: 123;NICK one_N
@@ -23,79 +40,223 @@ print[:127.0.0.1 1 one_N :Welcome to the Internet Relay Network
 ]print[:127.0.0.1 5 one_N :are supported by this server
 ]JOIN #123
 
-JOIN #231
-
-JOIN #231
-
-JOIN #231
+JOIN #123
 
 PONG 127.0.0.1
 
-print[:127.0.0.1 421 one_N PONG :Unknown command
+print[:127.0.0.1 421 two_N PONG :Unknown command
 ]PONG 127.0.0.1
 
 print[:127.0.0.1 421 one_N PONG :Unknown command
-]PONG 127.0.0.1
+]PASS 123
 
-print[:127.0.0.1 421 one_N PONG :Unknown command
-]PONG 127.0.0.1
+pass: 123, para: 123;NICK one_N
 
-print[:127.0.0.1 421 one_N PONG :Unknown command
-]PONG 127.0.0.1
+print[:127.0.0.1 433  :Nickname is already in use
+]USER one_L 0 * one_R
 
-print[:127.0.0.1 421 one_N PONG :Unknown command
-]PONG 127.0.0.1
-
-print[:127.0.0.1 421 one_N PONG :Unknown command
-]PONG 127.0.0.1
-
-print[:127.0.0.1 421 one_N PONG :Unknown command
-]PONG 127.0.0.1
-
-print[:127.0.0.1 421 one_N PONG :Unknown command
-]PONG 127.0.0.1
-
-print[:127.0.0.1 421 one_N PONG :Unknown command
-]PONG 127.0.0.1
-
-print[:127.0.0.1 421 one_N PONG :Unknown command
-]PONG 127.0.0.1
-
-print[:127.0.0.1 421 one_N PONG :Unknown command
-]PONG 127.0.0.1
-
-print[:127.0.0.1 421 one_N PONG :Unknown command
-]LIST 
-
-#123
-#231
-PONG 127.0.0.1
-
-print[:127.0.0.1 421 one_N PONG :Unknown command
-]LIST 
-
-#123
-#231
-LIST 
-
-#123
-#231
-PASS 123
-
-pass: 123, para: 123;print[:127.0.0.1 462 one_N :You may not reregister
-]PASS md
-
-pass: 123, para: md;print[:127.0.0.1 462 one_N :You may not reregister
-]NICK 231
-
-print[:127.0.0.1 432 one_N :Erroneous nickname
-]NICK ak
-
-JOIN #123
-
-JOIN #123
+print[:127.0.0.1 1  :Welcome to the Internet Relay Network
+]print[:127.0.0.1 2  :Your host is ft_irc, running version 0.01
+]print[:127.0.0.1 3  :This server was created 2022 ~ 2023
+]print[:127.0.0.1 4  :ft_irc 0.01
+]print[:127.0.0.1 5  :are supported by this server
+]NICK one_N_
 
 JOIN #123
 
 QUIT Leaving...
+
+PASS 123
+NICK one_N
+USER one_L 0 * one_R
+
+pass: 123, para: 123;@disconnect@ Client fd: [6]
+PASS 123
+
+pass: 123, para: 123;NICK one_N
+USER one_L 0 * one_R
+
+print[:127.0.0.1 433  :Nickname is already in use
+]NICK one_N_
+
+@disconnect@ Client fd: [6]
+PASS 123
+
+pass: 123, para: 123;NICK one_N
+USER one_L 0 * one_R
+
+print[:127.0.0.1 433  :Nickname is already in use
+]NICK one_N_
+
+@disconnect@ Client fd: [6]
+PASS 123
+NICK one_N
+
+pass: 123, para: 123;USER one_L 0 * one_R
+
+print[:127.0.0.1 1  :Welcome to the Internet Relay Network
+]print[:127.0.0.1 2  :Your host is ft_irc, running version 0.01
+]print[:127.0.0.1 3  :This server was created 2022 ~ 2023
+]print[:127.0.0.1 4  :ft_irc 0.01
+]print[:127.0.0.1 5  :are supported by this server
+]JOIN #123
+
+JOIN #123
+
+PRIVMSG #123 l
+
+채널!!!!!!1
+print[: PRIVMSG #123 :l
+]PRIVMSG #123 ;
+
+채널!!!!!!1
+print[: PRIVMSG #123 :;
+]PRIVMSG #123 l
+
+채널!!!!!!1
+print[: PRIVMSG #123 :l
+]QUIT Leaving...
+
+PASS 123
+
+pass: 123, para: 123;NICK one_N
+
+print[:127.0.0.1 433  :Nickname is already in use
+]USER one_L 0 * one_R
+
+print[:127.0.0.1 1  :Welcome to the Internet Relay Network
+]print[:127.0.0.1 2  :Your host is ft_irc, running version 0.01
+]print[:127.0.0.1 3  :This server was created 2022 ~ 2023
+]print[:127.0.0.1 4  :ft_irc 0.01
+]print[:127.0.0.1 5  :are supported by this server
+]NICK one_N_
+
+JOIN #123
+
+QUIT Leaving...
+
+PASS 123
+
+pass: 123, para: 123;NICK one_N
+
+print[:127.0.0.1 433  :Nickname is already in use
+]USER one_L 0 * one_R
+
+print[:127.0.0.1 1  :Welcome to the Internet Relay Network
+]print[:127.0.0.1 2  :Your host is ft_irc, running version 0.01
+]print[:127.0.0.1 3  :This server was created 2022 ~ 2023
+]print[:127.0.0.1 4  :ft_irc 0.01
+]print[:127.0.0.1 5  :are supported by this server
+]NICK one_N_
+
+JOIN #123
+
+JOIN #123
+
+PRIVMSG #123 ll
+
+채널!!!!!!1
+print[:one_N_ PRIVMSG #123 :ll
+]PRIVMSG #123 .,
+
+채널!!!!!!1
+print[:one_N_ PRIVMSG #123 :.,
+]PRIVMSG #123 ,
+
+채널!!!!!!1
+print[:one_N_ PRIVMSG #123 :,
+]PRIVMSG #123 ,
+
+채널!!!!!!1
+print[:one_N_ PRIVMSG #123 :,
+]PRIVMSG #123 ,
+
+채널!!!!!!1
+print[:one_N_ PRIVMSG #123 :,
+]PRIVMSG #123 .
+
+채널!!!!!!1
+print[:one_N_ PRIVMSG #123 :.
+]... 
+
+print[:127.0.0.1 421 one_N_ ... :Unknown command
+]QUIT Leaving...
+
+PONG 127.0.0.1
+
+print[:127.0.0.1 421 two_N PONG :Unknown command
+]PASS 123
+
+pass: 123, para: 123;NICK one_N
+USER one_L 0 * one_R
+
+print[:127.0.0.1 433  :Nickname is already in use
+]NICK one_N_
+
+@disconnect@ Client fd: [6]
+PASS 123
+
+pass: 123, para: 123;NICK one_N
+USER one_L 0 * one_R
+
+print[:127.0.0.1 433  :Nickname is already in use
+]NICK one_N_
+
+PONG 127.0.0.1
+
+print[:127.0.0.1 421 one_N PONG :Unknown command
+]@disconnect@ Client fd: [6]
+PASS 123
+
+pass: 123, para: 123;NICK one_N
+USER one_L 0 * one_R
+
+print[:127.0.0.1 433  :Nickname is already in use
+]NICK one_N_
+
+@disconnect@ Client fd: [6]
+PASS 123
+NICK one_N
+USER one_L 0 * one_R
+
+pass: 123, para: 123;@disconnect@ Client fd: [6]
+PONG 127.0.0.1
+
+print[:127.0.0.1 421 two_N PONG :Unknown command
+]PASS 123
+
+pass: 123, para: 123;NICK one_N
+
+print[:127.0.0.1 433  :Nickname is already in use
+]USER one_L 0 * one_R
+
+print[:127.0.0.1 1  :Welcome to the Internet Relay Network
+]print[:127.0.0.1 2  :Your host is ft_irc, running version 0.01
+]print[:127.0.0.1 3  :This server was created 2022 ~ 2023
+]print[:127.0.0.1 4  :ft_irc 0.01
+]print[:127.0.0.1 5  :are supported by this server
+]NICK one_N_
+
+JOIN #123
+
+PONG 127.0.0.1
+
+print[:127.0.0.1 421 one_N PONG :Unknown command
+]PONG 127.0.0.1
+
+print[:127.0.0.1 421 two_N PONG :Unknown command
+]PONG 127.0.0.1
+
+print[:127.0.0.1 421 one_N_ PONG :Unknown command
+]PONG 127.0.0.1
+
+print[:127.0.0.1 421 one_N PONG :Unknown command
+]QUIT Leaving...
+
+QUIT Leaving...
+
+PONG 127.0.0.1
+
+print[:127.0.0.1 421 one_N_ PONG :Unknown command
+]PONG 127.0.0.1
 
