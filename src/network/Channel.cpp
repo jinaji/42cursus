@@ -14,6 +14,8 @@ void	Channel::eraseParticipants(std::map<int, std::string>::iterator it)
     _participants -= 1;
 }
 
+void    Channel::sizedown() { _participants -= 1; }
+
 void	Channel::setPass(std::string pass) { _chnlPass = pass; }
 
 // size_t	Channel::getParticipants() { return _participants; }

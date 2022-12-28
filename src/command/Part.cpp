@@ -69,6 +69,7 @@ void Command::Part() // <channel> [<reason>]
 				{
 					this->partMessage(chnlName);
 					(*it).getParticipantsFd().erase(_caller.getSocket());
+					(*it).sizedown();
 					// _caller.getChannel().erase(it);
 				}
 				else
@@ -89,9 +90,14 @@ void Command::Part() // <channel> [<reason>]
 			this->partMessage(chnlName);
 			(*it).getParticipantsFd().erase(_caller.getSocket());
 			// _caller.getChannel().erase(it);
+			(*it).sizedown();
+
 		}
 		else
+		{
 			this->Numerics(442);
+			return ;
+		}
 	}
 
 }

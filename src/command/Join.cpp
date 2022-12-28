@@ -45,7 +45,7 @@ void	Command::joinMessage(std::string name)
 	std::string print = ":" + _caller.getNick() + "!" + _caller.getUser() + "@127.0.0.1" + " JOIN " + name;
 	print += "\r\n";
 	if (send(_caller.getSocket(), print.c_str(), strlen(print.c_str()), 0) == -1)
-        throw std::runtime_error("send 에러");
+        throw std::runtime_error("send 에러1");
 
 	Channel tmp;
 	for (std::list<Channel>::iterator it = _server.getChannel().begin(); it != _server.getChannel().end(); it++)
@@ -57,37 +57,38 @@ void	Command::joinMessage(std::string name)
 		}
 	}
 	std::map<int, std::string>::iterator it = tmp.getParticipantsFd().begin();
+	std::cout << "tmp size " << tmp.getParticipantsSize() << std::endl;
 	for (size_t i = 0; i < tmp.getParticipantsSize(); i++, it++)
 	{
 		if (send(tmp.getParticipantsKey(it) , print.c_str(), strlen(print.c_str()), 0) == -1)
-       		throw std::runtime_error("send 에러");
+       		throw std::runtime_error("send 에러2");
 		if (--tmp.getParticipantsFd().end() != it)
 		{
 			print = ":" + _caller.getNick() + "!" + _caller.getUser() + "@127.0.0.1" + " JOIN " + name;
 			print += "\r\n";
 			if (send(tmp.getParticipantsKey(it) , print.c_str(), strlen(print.c_str()), 0) == -1)
-       			throw std::runtime_error("send 에러");
+       			throw std::runtime_error("send 에러3");
 		}
 		// // 332
 		print = ":127.0.0.1 " + std::to_string(332) + " " + _caller.getNick() + " ";
 		print += _caller.getNick() + " " + name + " :" + "\r\n"; // <client> <channel> :<topic>";
 		if (send(_caller.getSocket(), print.c_str(), strlen(print.c_str()), 0) == -1)
-			throw std::runtime_error("send 에러");
+			throw std::runtime_error("send 에러4");
 		// // 333
 		print = ":127.0.0.1 " + std::to_string(333) + " " + _caller.getNick() + " ";
 		print += _caller.getNick() + " " + name + " " + tmp.getParticipantsValue(it) + "\r\n"; // "<client> <channel> <nick> <setat>";
 		if (send(_caller.getSocket(), print.c_str(), strlen(print.c_str()), 0) == -1)
-			throw std::runtime_error("send 에러");
+			throw std::runtime_error("send 에러5");
 		// // 353
 		print = ":127.0.0.1 " + std::to_string(353) + " " + _caller.getNick() + " ";
 		print += "@ " + name + " :" + tmp.getParticipantsValue(it) + "\r\n"; // "<client> <symbol> <channel> :[prefix]<nick>{ [prefix]<nick>}";
 		if (send(_caller.getSocket(), print.c_str(), strlen(print.c_str()), 0) == -1)
-			throw std::runtime_error("send 에러");
+			throw std::runtime_error("send 에러6");
 		// 366
 		print = ":127.0.0.1 " + std::to_string(366) + " " + _caller.getNick() + " ";
 		print += _caller.getNick() + " " + name + " :End of /Names list" + "\r\n"; //"<client> <channel> :End of /NAMES list";
 		if (send(_caller.getSocket(), print.c_str(), strlen(print.c_str()), 0) == -1)
-			throw std::runtime_error("send 에러");
+			throw std::runtime_error("send 에러7");
 	}
 /*
 

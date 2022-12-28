@@ -38,6 +38,7 @@ class Channel
 		void    setParticipants(size_t num, int fd, std::string name);
 		void	eraseParticipants(std::map<int, std::string>::iterator it);
 		void	setPass(std::string pass);
+		void    sizedown();
 		
 		// get
 
