@@ -66,7 +66,6 @@ void Command::Numerics(int num)
 			break;
 	}
     print += "\r\n";
-    std::cout << "print[" << print << "]";
     if (send(_caller.getSocket(), print.c_str(), strlen(print.c_str()), 0) == -1)
         throw std::runtime_error("send 에러");
 }

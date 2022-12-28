@@ -51,16 +51,7 @@ void Command::Part() // <channel> [<reason>]
 			this->Numerics(461);
 		else if (_paraNum == 1)
 		{
-			// std::list<Channel>::iterator it = _caller.getChannel().begin();
-
-			// for (; it != _caller.getChannel().end(); it++)
-			// 	if (_parsingPara[0] == (*it).getName())
-			// 		break ;
-			
-			// _caller.getChannel().erase(it);
-
-			// std::list<Channel> &chnl = _server.getChannel();
-			std::list<Channel> &chnl = _caller.getChannel();
+			std::list<Channel> &chnl = _server.getChannel();
 
 			for (std::list<Channel>::iterator it = chnl.begin(); it != chnl.end(); it++)
 			{
@@ -69,7 +60,7 @@ void Command::Part() // <channel> [<reason>]
 				{
 					this->partMessage(chnlName);
 					(*it).getParticipantsFd().erase(_caller.getSocket());
-					(*it).sizedown();
+					// (*it).sizedown();
 					// _caller.getChannel().erase(it);
 				}
 				else
@@ -81,7 +72,7 @@ void Command::Part() // <channel> [<reason>]
 		}
 	}
 	chnlName = _parsingPara[0].substr(nameStart, namePos - nameStart);
-	std::list<Channel> &chnl = _caller.getChannel();
+	std::list<Channel> &chnl = _server.getChannel();
 
 	for (std::list<Channel>::iterator it = chnl.begin(); it != chnl.end(); it++)
 	{
@@ -90,7 +81,7 @@ void Command::Part() // <channel> [<reason>]
 			this->partMessage(chnlName);
 			(*it).getParticipantsFd().erase(_caller.getSocket());
 			// _caller.getChannel().erase(it);
-			(*it).sizedown();
+			// (*it).sizedown();
 
 		}
 		else
@@ -99,5 +90,4 @@ void Command::Part() // <channel> [<reason>]
 			return ;
 		}
 	}
-
 }

@@ -1,52 +1,78 @@
 PASS 123
 
-pass: 123, para: 123;NICK p
+pass: 123, para: 123;NICK one_N
+USER one_L 0 * one_R
 
-USER g 0 * m
+@disconnect@ Client fd: [5]
+PASS 123
 
-print[:127.0.0.1 1 p :Welcome to the Internet Relay Network
-]print[:127.0.0.1 2 p :Your host is ft_irc, running version 0.01
-]print[:127.0.0.1 3 p :This server was created 2022 ~ 2023
-]print[:127.0.0.1 4 p :ft_irc 0.01
-]print[:127.0.0.1 5 p :are supported by this server
-]PASS 123
+pass: 123, para: 123;NICK one_N
+USER one_L 0 * one_R
 
-pass: 123, para: 123;NICK pp
+@disconnect@ Client fd: [5]
+PASS 123
 
-USER gg 0 * mm
+pass: 123, para: 123;NICK one_N
+USER one_L 0 * one_R
 
-print[:127.0.0.1 1 pp :Welcome to the Internet Relay Network
-]print[:127.0.0.1 2 pp :Your host is ft_irc, running version 0.01
-]print[:127.0.0.1 3 pp :This server was created 2022 ~ 2023
-]print[:127.0.0.1 4 pp :ft_irc 0.01
-]print[:127.0.0.1 5 pp :are supported by this server
-]PASS 123
+@disconnect@ Client fd: [5]
+PASS 123
 
-pass: 123, para: 123;NICK ppp
+pass: 123, para: 123;NICK one_N
+USER one_L 0 * one_R
 
-USER ggg 0 * mmm
+@disconnect@ Client fd: [5]
+PASS 123
 
-print[:127.0.0.1 1 ppp :Welcome to the Internet Relay Network
-]print[:127.0.0.1 2 ppp :Your host is ft_irc, running version 0.01
-]print[:127.0.0.1 3 ppp :This server was created 2022 ~ 2023
-]print[:127.0.0.1 4 ppp :ft_irc 0.01
-]print[:127.0.0.1 5 ppp :are supported by this server
-]JOIN #123
+pass: 123, para: 123;NICK one_N
 
-JOIN #123
+USER one_L 0 * one_R
 
 JOIN #123
 
 PASS 123
 
-pass: 123, para: 123;NICK pppp
+pass: 123, para: 123;NICK two_N
 
-USER gggg 0 * nnnn
+USER two_L 0 * two_R
 
-print[:127.0.0.1 1 pppp :Welcome to the Internet Relay Network
-]print[:127.0.0.1 2 pppp :Your host is ft_irc, running version 0.01
-]print[:127.0.0.1 3 pppp :This server was created 2022 ~ 2023
-]print[:127.0.0.1 4 pppp :ft_irc 0.01
-]print[:127.0.0.1 5 pppp :are supported by this server
-]JOIN #123
+JOIN #123
+
+PASS 123
+
+pass: 123, para: 123;PASS 123
+
+pass: 123, para: 123;NICK three_N
+
+NICK pppp
+
+USER three_L 0 * three_R
+
+USER gggg 0 * mmmm
+
+JOIN #123
+
+JOIN #123
+
+JOIN #321
+
+PART #123 Leaving...
+
+PART #123 Leaving...
+
+JOIN #123
+
+JOIN #123
+
+PRIVMSG #321 :part #123,#321
+
+PART #123,#321
+
+PONG 127.0.0.1
+
+PONG 127.0.0.1
+
+PONG 127.0.0.1
+
+PONG 127.0.0.1
 

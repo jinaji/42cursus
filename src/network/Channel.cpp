@@ -30,4 +30,5 @@ std::map<int, std::string> &Channel::getParticipantsFd() { return _participantsF
 
 int			Channel::getParticipantsKey(std::map<int, std::string>::iterator it) { return (*it).first; }
 std::string	Channel::getParticipantsValue(std::map<int, std::string>::iterator it) { return (*it).second; }
-size_t		Channel::getParticipantsSize() { return _participants; }
+// size_t		Channel::getParticipantsSize() { return _participants; }
+size_t		Channel::getParticipantsSize() { return _participantsFd.size(); }
