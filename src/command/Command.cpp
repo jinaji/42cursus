@@ -92,8 +92,8 @@ void Command::execute()
 			Oper();
 		else if (_cmd == "JOIN")
 			Join();
-		// else if (_cmd == "PART")
-		// 	Part();
+		else if (_cmd == "PART")
+			Part();
 		// else if (_cmd == "TOPIC")
 		// 	Topic();
 		// else if (_cmd == "NAMES")

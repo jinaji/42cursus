@@ -66,6 +66,7 @@ class Command
 	void privmsgMessage(std::string name, std::string msg, int fd);
 	void privmsgMessage(std::string name, std::string msg);
 	int  getNickFd(std::string nick, std::list<Client *> clnt);
+	void partMessage(std::string name);
 };
 
 #endif

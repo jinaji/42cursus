@@ -8,6 +8,12 @@ Channel::~Channel() {}
 
 void    Channel::setParticipants(size_t num, int fd, std::string name) { _participantsFd.insert(std::make_pair(fd, name)); this->_participants += num;}
 
+void	Channel::eraseParticipants(std::map<int, std::string>::iterator it)
+{
+    _participantsFd.erase(it);
+    _participants -= 1;
+}
+
 void	Channel::setPass(std::string pass) { _chnlPass = pass; }
 
 // size_t	Channel::getParticipants() { return _participants; }

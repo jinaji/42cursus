@@ -61,8 +61,6 @@ void	Command::joinMessage(std::string name)
 	{
 		if (send(tmp.getParticipantsKey(it) , print.c_str(), strlen(print.c_str()), 0) == -1)
        		throw std::runtime_error("send 에러");
-		// for ()
-		// std::cout << "inininininin" << tmp.getParticipantsValue(it) << "\n";
 		if (--tmp.getParticipantsFd().end() != it)
 		{
 			print = ":" + _caller.getNick() + "!" + _caller.getUser() + "@127.0.0.1" + " JOIN " + name;
