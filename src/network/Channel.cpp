@@ -6,7 +6,7 @@ Channel::Channel(std::string name): _name(name), _participants(0), _chnlPass("")
 
 Channel::~Channel() {}
 
-void    Channel::setParticipants(size_t num, int fd, std::string name) { _participantsFd.insert(std::make_pair(fd, name)); _participants += num;}
+void    Channel::setParticipants(size_t num, int fd, std::string name) { _participantsFd.insert(std::make_pair(fd, name)); this->_participants += num;}
 
 void	Channel::setPass(std::string pass) { _chnlPass = pass; }
 
@@ -22,4 +22,4 @@ std::map<int, std::string> &Channel::getParticipantsFd() { return _participantsF
 
 int			Channel::getParticipantsKey(std::map<int, std::string>::iterator it) { return (*it).first; }
 std::string	Channel::getParticipantsValue(std::map<int, std::string>::iterator it) { return (*it).second; }
-size_t		Channel::getParticipantsSize() { return _participantsFd.size(); }
+size_t		Channel::getParticipantsSize() { return _participants; }

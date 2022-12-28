@@ -61,6 +61,15 @@ void	Command::joinMessage(std::string name)
 	{
 		if (send(tmp.getParticipantsKey(it) , print.c_str(), strlen(print.c_str()), 0) == -1)
        		throw std::runtime_error("send 에러");
+		// for ()
+		// std::cout << "inininininin" << tmp.getParticipantsValue(it) << "\n";
+		if (--tmp.getParticipantsFd().end() != it)
+		{
+			print = ":" + _caller.getNick() + "!" + _caller.getUser() + "@127.0.0.1" + " JOIN " + name;
+			print += "\r\n";
+			if (send(tmp.getParticipantsKey(it) , print.c_str(), strlen(print.c_str()), 0) == -1)
+       			throw std::runtime_error("send 에러");
+		}
 		// // 332
 		print = ":127.0.0.1 " + std::to_string(332) + " " + _caller.getNick() + " ";
 		print += _caller.getNick() + " " + name + " :" + "\r\n"; // <client> <channel> :<topic>";
@@ -126,14 +135,10 @@ void    Command::Join()
 			_caller.addChannel(instance);
 			_server.getChannel().push_back(instance);
 			this->joinMessage(chnlName);
-			this->Numerics(332);
-			this->Numerics(333);
-			this->Numerics(353);
-			this->Numerics(366);
 		}
 		else // 채널 있어서 거기 들어갈 거임
 		{
-			std::list<Channel> chnl = _server.getChannel();
+			std::list<Channel> &chnl = _server.getChannel();
 
 			for (std::list<Channel>::iterator it = chnl.begin(); it != chnl.end(); it++)
 			{
@@ -143,10 +148,6 @@ void    Command::Join()
 					{
 						(*it).setParticipants(1, _caller.getSocket(), _caller.getNick());
 						this->joinMessage(chnlName);
-						this->Numerics(332);
-						this->Numerics(333);
-						this->Numerics(353);
-						this->Numerics(366);
 					}
 					else
 						this->Numerics(475);
@@ -164,14 +165,10 @@ void    Command::Join()
 		_caller.addChannel(instance);
 		_server.getChannel().push_back(instance);
 		this->joinMessage(chnlName);
-		this->Numerics(332);
-		this->Numerics(333);
-		this->Numerics(353);
-		this->Numerics(366);
 	}
 	else
 	{
-		std::list<Channel> chnl = _server.getChannel();
+		std::list<Channel> &chnl = _server.getChannel();
 		
 		for (std::list<Channel>::iterator it = chnl.begin(); it != chnl.end(); it++)
 		{
@@ -181,10 +178,6 @@ void    Command::Join()
 				{
 					(*it).setParticipants(1, _caller.getSocket(), _caller.getNick());
 					this->joinMessage(chnlName);
-					this->Numerics(332);
-					this->Numerics(333);
-					this->Numerics(353);
-					this->Numerics(366);
 					// if ((*it).getParticipants() == 1)
 					// 	; // oper
 				}
