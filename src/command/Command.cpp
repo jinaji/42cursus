@@ -144,3 +144,17 @@ bool    Command::checkChannel(std::string name)
     }
     return false;
 }
+
+// Channel Command::getChannelName(std::string name)
+// {
+// 	Channel tmp;
+// 	for (std::list<Channel>::iterator it = _server.getChannel().begin(); it != _server.getChannel().end(); it++)
+// 	{
+// 		if (name == (*it).getName())
+// 		{
+// 			tmp = (*it);
+// 			break ;
+// 		}
+// 	}
+// 	return (tmp);
+// };

@@ -28,6 +28,14 @@
 	// 	return (1);
 	// }
 
+	// :irc.example.com MODE #foobar +o bunny
+	// ; The irc.example.com server gave channel
+	// operator privileges to bunny on #foobar.
+	// std::string print = ":127.0.0.1 MODE " + chnlName + " +o " + _caller.getNick();
+	// print += "\r\n";
+	// if (send(_caller.getSocket(), print.c_str(), strlen(print.c_str()), 0) == -1)
+	// 	throw std::runtime_error("send 에러");
+
 
 void	Command::joinMessage(std::string name)
 {
@@ -38,8 +46,42 @@ void	Command::joinMessage(std::string name)
 	print += "\r\n";
 	if (send(_caller.getSocket(), print.c_str(), strlen(print.c_str()), 0) == -1)
         throw std::runtime_error("send 에러");
-    // std::cout << "print[" << print << "]";
 
+	Channel tmp;
+	for (std::list<Channel>::iterator it = _server.getChannel().begin(); it != _server.getChannel().end(); it++)
+	{
+		if (name == (*it).getName())
+		{
+			tmp = (*it);
+			break ;
+		}
+	}
+	std::map<int, std::string>::iterator it = tmp.getParticipantsFd().begin();
+	for (size_t i = 0; i < tmp.getParticipantsSize(); i++, it++)
+	{
+		if (send(tmp.getParticipantsKey(it) , print.c_str(), strlen(print.c_str()), 0) == -1)
+       		throw std::runtime_error("send 에러");
+		// // 332
+		print = ":127.0.0.1 " + std::to_string(332) + " " + _caller.getNick() + " ";
+		print += _caller.getNick() + " " + name + " :" + "\r\n"; // <client> <channel> :<topic>";
+		if (send(_caller.getSocket(), print.c_str(), strlen(print.c_str()), 0) == -1)
+			throw std::runtime_error("send 에러");
+		// // 333
+		print = ":127.0.0.1 " + std::to_string(333) + " " + _caller.getNick() + " ";
+		print += _caller.getNick() + " " + name + " " + tmp.getParticipantsValue(it) + "\r\n"; // "<client> <channel> <nick> <setat>";
+		if (send(_caller.getSocket(), print.c_str(), strlen(print.c_str()), 0) == -1)
+			throw std::runtime_error("send 에러");
+		// // 353
+		print = ":127.0.0.1 " + std::to_string(353) + " " + _caller.getNick() + " ";
+		print += "@ " + name + " :" + tmp.getParticipantsValue(it) + "\r\n"; // "<client> <symbol> <channel> :[prefix]<nick>{ [prefix]<nick>}";
+		if (send(_caller.getSocket(), print.c_str(), strlen(print.c_str()), 0) == -1)
+			throw std::runtime_error("send 에러");
+		// 366
+		print = ":127.0.0.1 " + std::to_string(366) + " " + _caller.getNick() + " ";
+		print += _caller.getNick() + " " + name + " :End of /Names list" + "\r\n"; //"<client> <channel> :End of /NAMES list";
+		if (send(_caller.getSocket(), print.c_str(), strlen(print.c_str()), 0) == -1)
+			throw std::runtime_error("send 에러");
+	}
 /*
 
 If a client’s JOIN command to the server is successful, the server MUST send, in this order:
@@ -80,17 +122,14 @@ void    Command::Join()
 		{
 			Channel instance(chnlName);
 			instance.setPass(chnlPass);
-			instance.setParticipants(1, _caller.getSocket()); // op줘야댐 채널 모드도 줄거면 여기서 해야댐
+			instance.setParticipants(1, _caller.getSocket(), _caller.getNick()); // op줘야댐 채널 모드도 줄거면 여기서 해야댐
 			_caller.addChannel(instance);
 			_server.getChannel().push_back(instance);
 			this->joinMessage(chnlName);
-			// :irc.example.com MODE #foobar +o bunny
-			// ; The irc.example.com server gave channel
-			// operator privileges to bunny on #foobar.
-			// std::string print = ":127.0.0.1 MODE " + chnlName + " +o " + _caller.getNick();
-			// print += "\r\n";
-			// if (send(_caller.getSocket(), print.c_str(), strlen(print.c_str()), 0) == -1)
-        	// 	throw std::runtime_error("send 에러");
+			this->Numerics(332);
+			this->Numerics(333);
+			this->Numerics(353);
+			this->Numerics(366);
 		}
 		else // 채널 있어서 거기 들어갈 거임
 		{
@@ -102,8 +141,12 @@ void    Command::Join()
 				{
 					if ((*it).getPass() == chnlPass || (*it).getPass().empty())
 					{
-						(*it).setParticipants(1, _caller.getSocket());
+						(*it).setParticipants(1, _caller.getSocket(), _caller.getNick());
 						this->joinMessage(chnlName);
+						this->Numerics(332);
+						this->Numerics(333);
+						this->Numerics(353);
+						this->Numerics(366);
 					}
 					else
 						this->Numerics(475);
@@ -117,15 +160,14 @@ void    Command::Join()
 	{
 		Channel instance(chnlName);
 		instance.setPass(chnlPass);
-		instance.setParticipants(1, _caller.getSocket());
+		instance.setParticipants(1, _caller.getSocket(), _caller.getNick());
 		_caller.addChannel(instance);
 		_server.getChannel().push_back(instance);
 		this->joinMessage(chnlName);
-		//:irc.example.com MODE #foobar +o bunny
-		// std::string print = ":127.0.0.1 MODE " + chnlName + " +o " + _caller.getNick();
-		// print += "\r\n";
-		// if (send(_caller.getSocket(), print.c_str(), strlen(print.c_str()), 0) == -1)
-		// 	throw std::runtime_error("send 에러");
+		this->Numerics(332);
+		this->Numerics(333);
+		this->Numerics(353);
+		this->Numerics(366);
 	}
 	else
 	{
@@ -137,10 +179,14 @@ void    Command::Join()
 			{
 				if ((*it).getPass() == chnlPass || (*it).getPass().empty())
 				{
-					(*it).setParticipants(1, _caller.getSocket());
+					(*it).setParticipants(1, _caller.getSocket(), _caller.getNick());
 					this->joinMessage(chnlName);
-					if ((*it).getParticipants() == 1)
-						; // oper
+					this->Numerics(332);
+					this->Numerics(333);
+					this->Numerics(353);
+					this->Numerics(366);
+					// if ((*it).getParticipants() == 1)
+					// 	; // oper
 				}
 				else
 					this->Numerics(475);
