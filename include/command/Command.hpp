@@ -64,7 +64,8 @@ class Command
 	bool excute_mode(char mode, char c);
 	void joinMessage(std::string name);
 	void privmsgMessage(std::string name, std::string msg, int fd);
-	int	getNickFd(std::string nick, std::list<Client *> clnt);
+	void privmsgMessage(std::string name, std::string msg);
+	int  getNickFd(std::string nick, std::list<Client *> clnt);
 };
 
 #endif

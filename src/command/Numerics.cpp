@@ -21,6 +21,21 @@ void Command::Numerics(int num)
 			break;
         case 5:
             print += ":are supported by this server";
+<<<<<<< HEAD
+=======
+            break;
+        case 332:
+            print += " ";
+            break;
+        case 333:
+            print += "<client> <channel> <nick> <setat>";
+            break;
+        case 353:
+            print += "<client> <symbol> <channel> :[prefix]<nick>{ [prefix]<nick>}";
+            break;
+        case 366:
+            print += "<client> <channel> :End of /NAMES list";
+>>>>>>> jina
             break;
         case 381:
             print += ":You are now an IRC operator";

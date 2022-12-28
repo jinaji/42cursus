@@ -1,12 +1,28 @@
 #include "../../include/command/Command.hpp"
 
-void Command::privmsgMessage(std::string name, std::string msg, int fd)
+// void Command::privmsgMessage(std::string name, std::string msg) // channel
+// {
+// 	//for문으로 돌릴거임 참여자들 ~~~ name <- channel name
+
+// 	std::string print = ":" + _caller.getNick() + " PRIVMSG " + name + " :" + msg;
+// 	print += "\r\n";
+//     std::cout << "print[" << print << "]";
+	
+//     if (send(fd, print.c_str(), strlen(print.c_str()), 0) == -1)
+//         throw std::runtime_error("send 에러");
+// 	if (fd == _server.getFdmax())
+// 		this->Numerics(401);
+// }
+
+void Command::privmsgMessage(std::string name, std::string msg, int fd) // user
 {
 	std::string print = ":" + _caller.getNick() + " PRIVMSG " + name + " :" + msg;
 	print += "\r\n";
     std::cout << "print[" << print << "]";
     if (send(fd, print.c_str(), strlen(print.c_str()), 0) == -1)
         throw std::runtime_error("send 에러");
+	if (fd == _server.getFdmax())
+		this->Numerics(401);
 }
 
 int	Command::getNickFd(std::string nick, std::list<Client *> clnt)
@@ -31,13 +47,10 @@ void Command::Privmsg() // <target> <text to be sent>
 		std::cout << "유저!!!!!!1\n";
 		this->privmsgMessage(_parsingPara[0], _parsingPara[1], getNickFd(_parsingPara[0], _server.getClient()));
 	}
-	else if (_parsingPara[0].at(0) == '#') // 채널 (모든 유저한테 전송)
-	{
-		std::cout << "채널!!!!!!1\n";
-		this->privmsgMessage(_parsingPara[0], _parsingPara[1], getNickFd(_parsingPara[0], _server.getClient()));
-	}
-	else
-		this->Numerics(401);
+	// else
+	// {
+	// 	this->privmsgMessage(_parsingPara[0], _parsingPara[1]);
+	// }
 }
  
 // 없는 채널로 보내면 위에 뜸
