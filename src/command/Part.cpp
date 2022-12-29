@@ -52,20 +52,22 @@ void Command::Part() // <channel> [<reason>]
 		else if (_paraNum == 1)
 		{
 			std::list<Channel> &chnl = _server.getChannel();
+			std::list<Channel>::iterator it = chnl.begin();
 
-			for (std::list<Channel>::iterator it = chnl.begin(); it != chnl.end(); it++)
+			for (; it != chnl.end(); it++)
 			{
 				
 				if ((*it).getName() == chnlName)
 				{
 					this->partMessage(chnlName);
 					(*it).getParticipantsFd().erase(_caller.getSocket());
+					break ;
 					// (*it).sizedown();
 					// _caller.getChannel().erase(it);
 				}
-				else
-					this->Numerics(442);
-			}	
+			}
+			if (it == chnl.end())	
+				this->Numerics(442);
 			// print = ":" + _caller.getNick() + "!" + _caller.getUser() + "@127.0.0.1" + " PART " + _parsingPara[0];
 			// print + "\r\n";
 			// send (_caller.getSocket(), print.c_str(), strlen(print.c_str()), 0);
@@ -73,21 +75,19 @@ void Command::Part() // <channel> [<reason>]
 	}
 	chnlName = _parsingPara[0].substr(nameStart, namePos - nameStart);
 	std::list<Channel> &chnl = _server.getChannel();
+	std::list<Channel>::iterator it = chnl.begin();
 
-	for (std::list<Channel>::iterator it = chnl.begin(); it != chnl.end(); it++)
+	for (; it != chnl.end(); it++)
 	{
 		if ((*it).getName() == chnlName)
 		{
 			this->partMessage(chnlName);
 			(*it).getParticipantsFd().erase(_caller.getSocket());
+			break ;
 			// _caller.getChannel().erase(it);
 			// (*it).sizedown();
-
-		}
-		else
-		{
-			this->Numerics(442);
-			return ;
 		}
 	}
+	if (it == chnl.end())
+		this->Numerics(442);
 }

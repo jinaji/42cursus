@@ -1,18 +1,32 @@
 #include "../../include/command/Command.hpp"
 
-// void Command::privmsgMessage(std::string name, std::string msg) // channel
-// {
-// 	//for문으로 돌릴거임 참여자들 ~~~ name <- channel name
+void Command::privmsgMessage(std::string name, std::string msg) // channel
+{
+	//for문으로 돌릴거임 참여자들 ~~~ name <- channel name
+	Channel tmp;
+	for (std::list<Channel>::iterator it = _server.getChannel().begin(); it != _server.getChannel().end(); it++)
+	{
+		if (name == (*it).getName())
+		{
+			tmp = (*it);
+			break ;
+		}
+	}
+	std::map<int, std::string>::iterator it = tmp.getParticipantsFd().begin();
 
-// 	std::string print = ":" + _caller.getNick() + " PRIVMSG " + name + " :" + msg;
-// 	print += "\r\n";
-//     std::cout << "print[" << print << "]";
-	
-//     if (send(fd, print.c_str(), strlen(print.c_str()), 0) == -1)
-//         throw std::runtime_error("send 에러");
-// 	if (fd == _server.getFdmax())
-// 		this->Numerics(401);
-// }
+	for (size_t i = 0; i < tmp.getParticipantsSize(); i++, it++)
+	{
+		std::string print = ":" + _caller.getNick() + " PRIVMSG " + name + " :" + msg;
+		print += "\r\n";
+		std::cout << "print[" << print << "]";
+		if (_caller.getSocket() == tmp.getParticipantsKey(it))
+			continue ;
+		if (send(tmp.getParticipantsKey(it), print.c_str(), strlen(print.c_str()), 0) == -1)
+			throw std::runtime_error("send 에러");
+		if (tmp.getParticipantsKey(it) == _server.getFdmax())
+			this->Numerics(401);
+	}
+}
 
 void Command::privmsgMessage(std::string name, std::string msg, int fd) // user
 {
@@ -44,13 +58,12 @@ void Command::Privmsg() // <target> <text to be sent>
 	if (_parsingPara[0].find('#') == std::string::npos) // 유저
 	{
 		// Client *tmp = new Client();
-		std::cout << "유저!!!!!!1\n";
 		this->privmsgMessage(_parsingPara[0], _parsingPara[1], getNickFd(_parsingPara[0], _server.getClient()));
 	}
-	// else
-	// {
-	// 	this->privmsgMessage(_parsingPara[0], _parsingPara[1]);
-	// }
+	else
+	{
+		this->privmsgMessage(_parsingPara[0], _parsingPara[1]);
+	}
 }
  
 // 없는 채널로 보내면 위에 뜸

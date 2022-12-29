@@ -94,26 +94,22 @@ void Command::execute()
 			Join();
 		else if (_cmd == "PART")
 			Part();
-		// else if (_cmd == "TOPIC")
-		// 	Topic();
-		// else if (_cmd == "NAMES")
-		// 	Names();
+		else if (_cmd == "TOPIC")
+			Topic();
+		else if (_cmd == "NAMES")
+			Names();
 		else if (_cmd == "LIST")
 			List();
-		// else if (_cmd == "INVITE")
-		// 	Invite();
-		// else if (_cmd == "KICK")
-		// 	Kick();
-		// else if (_cmd == "HELP")
-		// 	Help();
+		else if (_cmd == "INVITE")
+			Invite();
+		else if (_cmd == "KICK")
+			Kick();
 		else if (_cmd == "MODE")
 			Mode();
 		else if (_cmd == "PRIVMSG")
 			Privmsg();
-		// else if (_cmd == "NOTICE")
-		// 	Notice();
-		// else if (_cmd == "WHO")
-		// 	Who();
+		else if (_cmd == "NOTICE")
+			Notice();
 		else if (_cmd.empty())
 			return ;
 		else

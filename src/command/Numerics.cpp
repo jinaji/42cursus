@@ -14,7 +14,7 @@ void Command::Numerics(int num)
 			print += ":Your host is ft_irc, running version 0.01";
 			break;
 		case 3:
-			print += ":This server was created 2022 ~ 2023";
+			print += ":This server was created ~2022/12.31";
 			break;
 		case 4:
 			print += ":ft_irc 0.01";
