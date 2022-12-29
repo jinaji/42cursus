@@ -86,7 +86,6 @@ void Command::Part() // <channel> [<reason>]
 		}
 		else
 		{
-			dddsdsds
 			this->Numerics(442);
 			return ;
 		}
