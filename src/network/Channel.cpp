@@ -18,6 +18,8 @@ void	Channel::setPass(std::string pass) { _chnlPass = pass; }
 
 void	Channel::setTopic(std::string topic) { _topic = topic; }
 
+void	Channel::setTopicNick(std::string nick) { _topicNick = nick; }
+
 void	Channel::setTopicFlag(int flag) { _topicFlag = flag; }
 
 // size_t	Channel::getParticipants() { return _participants; }
@@ -29,6 +31,8 @@ std::string Channel::getName() { return _name; }
 std::string Channel::getPass() { return _chnlPass; }
 
 std::string Channel::getTopic() { return _topic; }
+
+std::string	Channel::getTopicNick() { return _topicNick; }
 
 bool    Channel::getTopicFlag() { return _topicFlag; }
 

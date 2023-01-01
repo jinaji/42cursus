@@ -26,11 +26,11 @@ void Command::Numerics(int num, std::string name, std::string other)
             break;
         // RPL_TOPIC (332) https://modern.ircdocs.horse/#rpltopic-332
         case 332:
-            // print += _caller.getNick() + " " + name + " :" + other;
+            print += name + " :" + other;
             break;
         // RPL_TOPICWHOTIME (333) https://modern.ircdocs.horse/#rpltopicwhotime-333
         case 333:
-            print += _caller.getNick() + " " + name + " " + other;
+            print += name + " " + other;
             break;
         // RPL_NAMREPLY (353) https://modern.ircdocs.horse/#rpltopicwhotime-333
         case 353:

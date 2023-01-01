@@ -26,6 +26,7 @@ class Channel
 		size_t	_participants;
 		std::string _chnlPass;
 		std::string _topic;
+		std::string _topicNick;
 		bool	_topicFlag;
 
 	public:
@@ -40,6 +41,7 @@ class Channel
 		void	eraseParticipants(std::map<int, std::string>::iterator it);
 		void	setPass(std::string pass);
 		void	setTopic(std::string topic);
+		void	setTopicNick(std::string nick);
 		void	setTopicFlag(int flag);
 		
 		// get
@@ -49,6 +51,7 @@ class Channel
 		std::string getName();
 		std::string getPass();
 		std::string	getTopic();
+		std::string	getTopicNick();
 		bool		getTopicFlag();
 
 		std::map<int, std::string> &getParticipantsFd();

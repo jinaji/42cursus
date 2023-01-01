@@ -46,16 +46,16 @@ void	Command::joinMessage(std::string name)
 			if (send(tmp.getParticipantsKey(it) , print.c_str(), strlen(print.c_str()), 0) == -1)
        			throw std::runtime_error("send 에러3");
 		}
-		if (tmp.getTopicFlag() == true)
-		{
-			this->Numerics(332, name, tmp.getTopic());
-			this->Numerics(333, name, tmp.getParticipantsValue(it));
-		}
 		// topic
 		// names reply
 		this->Numerics(353, name, tmp.getParticipantsValue(it));
 		this->Numerics(366, name);
 		it++;
+	}
+	if (tmp.getTopicFlag() == true)
+	{
+		this->Numerics(332, name, tmp.getTopic());
+		this->Numerics(333, name, tmp.getTopicNick());
 	}
 }
 

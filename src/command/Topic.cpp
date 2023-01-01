@@ -25,6 +25,7 @@ void Command::Topic()
 		{
 			this->topciMessage(chnlName, _parsingPara[1]);
 			(*it).setTopicFlag(true);
+			(*it).setTopicNick(_caller.getNick());
 			(*it).setTopic(_parsingPara[1]);
             return ;
 		}
