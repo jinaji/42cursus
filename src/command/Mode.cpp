@@ -11,7 +11,7 @@ void Command::Mode() // <target> [<modestring>] [<mode arguments>...]
         this->Numerics(461);
         return ;
     }
-    if (checkClient(_parsingPara[0]) == false && checkChannel(_parsingPara[0]) == false)
+    if (checkClient(_parsingPara[0]) == false && checkChannel_server(_parsingPara[0]) == false)
     {
         this->Numerics(401);
         return ;

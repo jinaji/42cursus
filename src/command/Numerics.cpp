@@ -26,7 +26,7 @@ void Command::Numerics(int num, std::string name, std::string other)
             break;
         // RPL_TOPIC (332) https://modern.ircdocs.horse/#rpltopic-332
         case 332:
-            print += name + " :" + other;
+            print += name + " :" + other; // + setat
             break;
         // RPL_TOPICWHOTIME (333) https://modern.ircdocs.horse/#rpltopicwhotime-333
         case 333:
@@ -43,6 +43,13 @@ void Command::Numerics(int num, std::string name, std::string other)
         case 381:
             print += ":You are now an IRC operator";
             break;
+        // ERR_NOSUCHCHANNEL (403) https://modern.ircdocs.horse/#errnosuchchannel-403
+        case 401:
+            print += name + " :No such nick/channel";
+            break;
+        case 403:
+            print += name + " :No such channel";
+            break;
         case 421:
             print += _cmd + " :Unknown command";
             break;
@@ -55,6 +62,10 @@ void Command::Numerics(int num, std::string name, std::string other)
         case 433:
             print += ":Nickname is already in use";
             break;
+        // ERR_NOTONCHANNEL (442) https://modern.ircdocs.horse/#errnotonchannel-442
+        case 442:
+            print += name + " :You're not on that channel";
+            break;
         case 461:
             print += ":Not enough parameters";
             break;
@@ -64,6 +75,9 @@ void Command::Numerics(int num, std::string name, std::string other)
 		case 464:
 			print += ":Password incorrect";
 			break;
+        // ERR_BADCHANNELKEY (475) https://modern.ircdocs.horse/#errbadchannelkey-475
+        case 475:
+            print += name + " :Cannot join channel (+k)";
         case 491:
             print += ":No O-lines for your host";
             break;

@@ -46,7 +46,6 @@ void	Command::joinMessage(std::string name)
 			if (send(tmp.getParticipantsKey(it) , print.c_str(), strlen(print.c_str()), 0) == -1)
        			throw std::runtime_error("send 에러3");
 		}
-		// topic
 		// names reply
 		this->Numerics(353, name, tmp.getParticipantsValue(it));
 		this->Numerics(366, name);
@@ -54,6 +53,7 @@ void	Command::joinMessage(std::string name)
 	}
 	if (tmp.getTopicFlag() == true)
 	{
+		// topic
 		this->Numerics(332, name, tmp.getTopic());
 		this->Numerics(333, name, tmp.getTopicNick());
 	}
@@ -82,7 +82,7 @@ void    Command::Join()
 			this->Numerics(403);
 			continue ;
 		}
-		if (checkChannel(chnlName) == false) // 채널 존재 안 함 새로 만듦
+		if (checkChannel_server(chnlName) == false) // 채널 존재 안 함 새로 만듦
 		{
 			Channel instance(chnlName);
 			instance.setPass(chnlPass);
@@ -105,14 +105,14 @@ void    Command::Join()
 						this->joinMessage(chnlName);
 					}
 					else
-						this->Numerics(475);
+						this->Numerics(475, chnlName);
 				}
 			}
 		}
 	}
 	chnlName = _parsingPara[0].substr(nameStart, namePos - nameStart);
 	chnlPass = _parsingPara[1].substr(passStart ,passPos- passStart);
-	if (!checkChannel(chnlName))
+	if (!checkChannel_server(chnlName))
 	{
 		Channel instance(chnlName);
 		instance.setPass(chnlPass);
@@ -135,7 +135,7 @@ void    Command::Join()
 					this->joinMessage(chnlName);
 				}
 				else
-					this->Numerics(475);
+					this->Numerics(475, chnlName);
 			}
 		}
 	}

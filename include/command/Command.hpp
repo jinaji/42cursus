@@ -61,7 +61,8 @@ class Command
 	void Numerics(int num, std::string name ="", std::string other ="");
 
 	bool checkClient(std::string name); // 찾으면 true, 못찾으면 false
-	bool checkChannel(std::string name);
+	bool checkChannel_server(std::string name);
+	bool checkChannel_caller(std::string name);
 	bool excute_mode(char mode, char c);
 	void joinMessage(std::string name);
 	void privmsgMessage(std::string name, std::string msg, int fd);
