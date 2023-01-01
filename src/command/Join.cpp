@@ -18,32 +18,12 @@
   _para 뒤에 개행 띠고 채널 이름으로 넣어야 list에서 편할듯해염
 */
 
-	// int		checkChannel(std::string name, std::list<Channel> chnl)
-	// {
-	// 	for (std::list<Channel>::iterator it = chnl.begin(); it != chnl.end(); it++)
-	// 	{
-	// 		if (name == (*it).getName())
-	// 			return (0);
-	// 	}
-	// 	return (1);
-	// }
-
-	// :irc.example.com MODE #foobar +o bunny
-	// ; The irc.example.com server gave channel
-	// operator privileges to bunny on #foobar.
-	// std::string print = ":127.0.0.1 MODE " + chnlName + " +o " + _caller.getNick();
-	// print += "\r\n";
-	// if (send(_caller.getSocket(), print.c_str(), strlen(print.c_str()), 0) == -1)
-	// 	throw std::runtime_error("send 에러");
-
-
 void	Command::joinMessage(std::string name)
 {
 	//  :WiZ JOIN #Twilight_zone		; WiZ is joining the channel
 	//  :dan-!d@localhost JOIN #test    ; dan- is joining the channel #test
 
-	std::string print = ":" + _caller.getNick() + "!" + _caller.getUser() + "@127.0.0.1" + " JOIN " + name;
-	print += "\r\n";
+	std::string print = ":" + _caller.getNick() + "!" + _caller.getUser() + "@127.0.0.1" + " JOIN " + name + "\r\n";
 	if (send(_caller.getSocket(), print.c_str(), strlen(print.c_str()), 0) == -1)
         throw std::runtime_error("send 에러1");
 	Channel tmp;
@@ -62,12 +42,13 @@ void	Command::joinMessage(std::string name)
        	// 	throw std::runtime_error("send 에러2");
 		if (tmp.getParticipantsFd().end() != it && tmp.getParticipantsKey(it) != _caller.getSocket())
 		{
-			print = ":" + _caller.getNick() + "!" + _caller.getUser() + "@127.0.0.1" + " JOIN " + name;
-			print += "\r\n";
+			print = ":" + _caller.getNick() + "!" + _caller.getUser() + "@127.0.0.1" + " JOIN " + name + "\r\n";
 			if (send(tmp.getParticipantsKey(it) , print.c_str(), strlen(print.c_str()), 0) == -1)
        			throw std::runtime_error("send 에러3");
 		}
-		// // 332
+		// 332
+		this->Numerics(332, name);
+
 		print = ":127.0.0.1 " + std::to_string(332) + " " + _caller.getNick() + " ";
 		print += _caller.getNick() + " " + name + " :" + "\r\n"; // <client> <channel> :<topic>";
 		if (send(_caller.getSocket(), print.c_str(), strlen(print.c_str()), 0) == -1)
@@ -77,7 +58,8 @@ void	Command::joinMessage(std::string name)
 		print += _caller.getNick() + " " + name + " " + tmp.getParticipantsValue(it) + "\r\n"; // "<client> <channel> <nick> <setat>";
 		if (send(_caller.getSocket(), print.c_str(), strlen(print.c_str()), 0) == -1)
 			throw std::runtime_error("send 에러5");
-		// // 353
+
+		// 353
 		print = ":127.0.0.1 " + std::to_string(353) + " " + _caller.getNick() + " ";
 		print += "@ " + name + " :" + tmp.getParticipantsValue(it) + "\r\n"; // "<client> <symbol> <channel> :[prefix]<nick>{ [prefix]<nick>}";
 		if (send(_caller.getSocket(), print.c_str(), strlen(print.c_str()), 0) == -1)
@@ -89,21 +71,10 @@ void	Command::joinMessage(std::string name)
 			throw std::runtime_error("send 에러7");
 		it++;
 	}
-/*
-
-If a client’s JOIN command to the server is successful, the server MUST send, in this order:
-
-A JOIN message with the client as the message <source> and the channel they have joined as the first parameter of the message.
-The channel’s topic (with RPL_TOPIC (332) and optionally RPL_TOPICWHOTIME (333)), and no message if the channel does not have a topic.
-A list of users currently joined to the channel (with one or more RPL_NAMREPLY (353) numerics followed by a single RPL_ENDOFNAMES (366) numeric). These RPL_NAMREPLY messages sent by the server MUST include the requesting client that has just joined the channel.
-
-*/
-
 }
 
 void    Command::Join()
 {
-	// channel mode 확인하고 초대 ,,, 밴 뭐 어쩌구
 	std::string chnlName = _parsingPara[0];
 	std::string chnlPass = _parsingPara[1];
 	size_t nameStart = 0;
@@ -176,8 +147,6 @@ void    Command::Join()
 				{
 					(*it).setParticipants(1, _caller.getSocket(), _caller.getNick());
 					this->joinMessage(chnlName);
-					// if ((*it).getParticipants() == 1)
-					// 	; // oper
 				}
 				else
 					this->Numerics(475);

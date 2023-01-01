@@ -1,8 +1,10 @@
 #include "../../include/command/Command.hpp"
 
-void Command::Numerics(int num)
+void Command::Numerics(int num, std::string name, std::string other)
 {
 	std::string print = ":127.0.0.1 " + std::to_string(num) + " " + _caller.getNick() + " ";
+
+    (void) other;
 
 	switch (num)
 	{
@@ -23,7 +25,7 @@ void Command::Numerics(int num)
             print += ":are supported by this server";
             break;
         case 332:
-            print += " ";
+            print += _caller.getNick() + " " + name + " :" + "\r\n";
             break;
         case 333:
             print += "<client> <channel> <nick> <setat>";

@@ -62,15 +62,10 @@ void Command::Part() // <channel> [<reason>]
 					this->partMessage(chnlName);
 					(*it).getParticipantsFd().erase(_caller.getSocket());
 					break ;
-					// (*it).sizedown();
-					// _caller.getChannel().erase(it);
 				}
 			}
 			if (it == chnl.end())	
 				this->Numerics(442);
-			// print = ":" + _caller.getNick() + "!" + _caller.getUser() + "@127.0.0.1" + " PART " + _parsingPara[0];
-			// print + "\r\n";
-			// send (_caller.getSocket(), print.c_str(), strlen(print.c_str()), 0);
 		}
 	}
 	chnlName = _parsingPara[0].substr(nameStart, namePos - nameStart);
@@ -84,8 +79,6 @@ void Command::Part() // <channel> [<reason>]
 			this->partMessage(chnlName);
 			(*it).getParticipantsFd().erase(_caller.getSocket());
 			break ;
-			// _caller.getChannel().erase(it);
-			// (*it).sizedown();
 		}
 	}
 	if (it == chnl.end())

@@ -57,7 +57,8 @@ class Command
 	void Privmsg(); // <target> <text to be sent>
 	void Notice(); // <target> <text to be sent>
 	// Numerics
-	void Numerics(int num);
+	// void Numerics(int num);
+	void Numerics(int num, std::string name ="", std::string other ="");
 
 	bool checkClient(std::string name); // 찾으면 true, 못찾으면 false
 	bool checkChannel(std::string name);
