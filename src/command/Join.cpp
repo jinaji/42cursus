@@ -46,7 +46,6 @@ void	Command::joinMessage(std::string name)
 	print += "\r\n";
 	if (send(_caller.getSocket(), print.c_str(), strlen(print.c_str()), 0) == -1)
         throw std::runtime_error("send 에러1");
-
 	Channel tmp;
 	for (std::list<Channel>::iterator it = _server.getChannel().begin(); it != _server.getChannel().end(); it++)
 	{
@@ -59,8 +58,8 @@ void	Command::joinMessage(std::string name)
 	std::map<int, std::string>::iterator it = tmp.getParticipantsFd().begin();
 	for (size_t i = 0; i < tmp.getParticipantsSize(); i++)
 	{
-		if (send(tmp.getParticipantsKey(it) , print.c_str(), strlen(print.c_str()), 0) == -1)
-       		throw std::runtime_error("send 에러2");
+		// if (send(tmp.getParticipantsKey(it) , print.c_str(), strlen(print.c_str()), 0) == -1)
+       	// 	throw std::runtime_error("send 에러2");
 		if (tmp.getParticipantsFd().end() != it && tmp.getParticipantsKey(it) != _caller.getSocket())
 		{
 			print = ":" + _caller.getNick() + "!" + _caller.getUser() + "@127.0.0.1" + " JOIN " + name;

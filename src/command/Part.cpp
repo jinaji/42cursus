@@ -22,8 +22,8 @@ void	Command::partMessage(std::string name)
 	std::map<int, std::string>::iterator it = tmp.getParticipantsFd().begin();
 	for (size_t i = 0; i < tmp.getParticipantsSize(); i++, it++)
 	{
-		if (send(tmp.getParticipantsKey(it) , print.c_str(), strlen(print.c_str()), 0) == -1)
-       		throw std::runtime_error("send 에러");
+		// if (send(tmp.getParticipantsKey(it) , print.c_str(), strlen(print.c_str()), 0) == -1)
+       	// 	throw std::runtime_error("send 에러");
 		if (--tmp.getParticipantsFd().end() != it)
 		{
 			print = ":" + _caller.getNick() + "!" + _caller.getUser() + "@127.0.0.1" + " PART " + name;
