@@ -24,17 +24,21 @@ void Command::Numerics(int num, std::string name, std::string other)
         case 5:
             print += ":are supported by this server";
             break;
+        // RPL_TOPIC (332) https://modern.ircdocs.horse/#rpltopic-332
         case 332:
-            print += _caller.getNick() + " " + name + " :" + "\r\n";
+            // print += _caller.getNick() + " " + name + " :" + other;
             break;
+        // RPL_TOPICWHOTIME (333) https://modern.ircdocs.horse/#rpltopicwhotime-333
         case 333:
-            print += "<client> <channel> <nick> <setat>";
+            print += _caller.getNick() + " " + name + " " + other;
             break;
+        // RPL_NAMREPLY (353) https://modern.ircdocs.horse/#rpltopicwhotime-333
         case 353:
-            print += "<client> <symbol> <channel> :[prefix]<nick>{ [prefix]<nick>}";
+            print += "@ " + name + " :" + other;
             break;
+        // RPL_ENDOFNAMES (366) https://modern.ircdocs.horse/#rplendofnames-366
         case 366:
-            print += "<client> <channel> :End of /NAMES list";
+            print += _caller.getNick() + " " + name + " :End of /Names list";
             break;
         case 381:
             print += ":You are now an IRC operator";

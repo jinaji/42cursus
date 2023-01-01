@@ -46,29 +46,15 @@ void	Command::joinMessage(std::string name)
 			if (send(tmp.getParticipantsKey(it) , print.c_str(), strlen(print.c_str()), 0) == -1)
        			throw std::runtime_error("send 에러3");
 		}
-		// 332
-		this->Numerics(332, name);
-
-		print = ":127.0.0.1 " + std::to_string(332) + " " + _caller.getNick() + " ";
-		print += _caller.getNick() + " " + name + " :" + "\r\n"; // <client> <channel> :<topic>";
-		if (send(_caller.getSocket(), print.c_str(), strlen(print.c_str()), 0) == -1)
-			throw std::runtime_error("send 에러4");
-		// // 333
-		print = ":127.0.0.1 " + std::to_string(333) + " " + _caller.getNick() + " ";
-		print += _caller.getNick() + " " + name + " " + tmp.getParticipantsValue(it) + "\r\n"; // "<client> <channel> <nick> <setat>";
-		if (send(_caller.getSocket(), print.c_str(), strlen(print.c_str()), 0) == -1)
-			throw std::runtime_error("send 에러5");
-
-		// 353
-		print = ":127.0.0.1 " + std::to_string(353) + " " + _caller.getNick() + " ";
-		print += "@ " + name + " :" + tmp.getParticipantsValue(it) + "\r\n"; // "<client> <symbol> <channel> :[prefix]<nick>{ [prefix]<nick>}";
-		if (send(_caller.getSocket(), print.c_str(), strlen(print.c_str()), 0) == -1)
-			throw std::runtime_error("send 에러6");
-		// 366
-		print = ":127.0.0.1 " + std::to_string(366) + " " + _caller.getNick() + " ";
-		print += _caller.getNick() + " " + name + " :End of /Names list" + "\r\n"; //"<client> <channel> :End of /NAMES list";
-		if (send(_caller.getSocket(), print.c_str(), strlen(print.c_str()), 0) == -1)
-			throw std::runtime_error("send 에러7");
+		if (tmp.getTopicFlag() == true)
+		{
+			this->Numerics(332, name, tmp.getTopic());
+			this->Numerics(333, name, tmp.getParticipantsValue(it));
+		}
+		// topic
+		// names reply
+		this->Numerics(353, name, tmp.getParticipantsValue(it));
+		this->Numerics(366, name);
 		it++;
 	}
 }

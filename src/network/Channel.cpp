@@ -1,6 +1,6 @@
 #include "../../include/network/Channel.hpp"
 
-Channel::Channel() : _name(""), _participants(0), _chnlPass("") {}
+Channel::Channel() : _name(""), _participants(0), _chnlPass(""), _topicFlag(false) {}
 
 Channel::Channel(std::string name): _name(name), _participants(0), _chnlPass("") {}
 
@@ -14,9 +14,11 @@ void	Channel::eraseParticipants(std::map<int, std::string>::iterator it)
     _participants -= 1;
 }
 
-void    Channel::sizedown() { _participants -= 1; }
-
 void	Channel::setPass(std::string pass) { _chnlPass = pass; }
+
+void	Channel::setTopic(std::string topic) { _topic = topic; }
+
+void	Channel::setTopicFlag(int flag) { _topicFlag = flag; }
 
 // size_t	Channel::getParticipants() { return _participants; }
 
@@ -25,6 +27,10 @@ void	Channel::setPass(std::string pass) { _chnlPass = pass; }
 std::string Channel::getName() { return _name; }
 
 std::string Channel::getPass() { return _chnlPass; }
+
+std::string Channel::getTopic() { return _topic; }
+
+bool    Channel::getTopicFlag() { return _topicFlag; }
 
 std::map<int, std::string> &Channel::getParticipantsFd() { return _participantsFd; }
 

@@ -24,6 +24,8 @@ void Command::Topic()
 		if ((*it).getName() == chnlName)
 		{
 			this->topciMessage(chnlName, _parsingPara[1]);
+			(*it).setTopicFlag(true);
+			(*it).setTopic(_parsingPara[1]);
             return ;
 		}
 	}
