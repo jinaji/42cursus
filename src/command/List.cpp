@@ -1,34 +1,29 @@
 #include "../../include/command/Command.hpp"
 
-// <channel> [<elistcond>] <- Clients MUST NOT submit an ELIST condition unless the server has explicitly defined support for that condition with the ELIST token.
-// RPL_LIST (322) 
-//   "<client> <channel> <client count> :<topic>"
-
-void	showChannel(std::string name, std::list<Channel> chnl)
+void	Command::showChannel(std::string name, std::list<Channel> chnl)
 {
 	for (std::list<Channel>::iterator it = chnl.begin(); it != chnl.end(); it++)
 	{
-		// std::cout << "name " << name << std::endl;
-		// std::cout << "get name " << (*it).getName() << std::endl;
-
-		// 지금 이거 찍어보면 마지막에 개행 붙은 것 때문에 #1,#12 식으로 들오오면 12만 인식 ,,,
-		// 땜빵칠라고 name += "\r\n" 하니까 마지막 걸 못 읽음 ...
-		// join 에서 좀 손봐야될듯 ... 낮잠자구 ...
-		
 		if (name == (*it).getName())
-			std::cout << name << std::endl;
+		{
+			std::string print = ":127.0.0.1 322 " + _caller.getNick() + " " + (*it).getName() + " " + std::to_string((*it).getParticipantsSize()) + " :" + (*it).getTopic() + "\r\n";
+			if (send(_caller.getSocket(), print.c_str(), strlen(print.c_str()), 0) == -1)
+				std::runtime_error("send error");
+			// this->Numerics(322); 하려다가 인자 너무 많아서 일단 여기서 send ,,, nick / chnlname / participants count
+		}
 	}
-	// LIST #twilight_zone,#42         ; Command to list the channels
-    //   "#twilight_zone" and "#42".
-	// 오징어에선 하나만 받음 
 }
 
 void	Command::List()
 {
-	if (_paraNum == 0)
+	if (_paraNum == 0) // LIST 창 끄면 다시 명령어 입력했을 때 창이 안 뜨고 / 목록에서 update 하면 목록 밑으로 중복돼서 달림 이거뭐임
 	{
 		for (std::list<Channel>::iterator it = _server.getChannel().begin(); it != _server.getChannel().end(); it++)
-			std::cout << (*it).getName() << std::endl; // 근데 이거 어케보냄 클라이언트한테 ??
+		{
+			std::string print = ":127.0.0.1 322 " + _caller.getNick() + " " + (*it).getName() + " " + std::to_string((*it).getParticipantsSize()) + " :" + (*it).getTopic() + "\r\n";
+			if (send(_caller.getSocket(), print.c_str(), strlen(print.c_str()), 0) == -1)
+				std::runtime_error("send error");
+		}
 	}
 	else if (_paraNum == 1)
 	{
@@ -48,5 +43,9 @@ void	Command::List()
 		}
 		chnl = para.substr(i, pos - i);
 		showChannel(chnl, _server.getChannel());
+		
+		std::string print = ":127.0.0.1 323 " + _caller.getNick() + " :End of /LIST\r\n"; // 이거 넣으면 뭔가 될 줄 알았는데 안 됨 ... 없어도 되눈 부분
+		if (send(_caller.getSocket(), print.c_str(), strlen(print.c_str()), 0) == -1)
+			std::runtime_error("send error");
 	}
 }

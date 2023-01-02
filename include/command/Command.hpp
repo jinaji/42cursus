@@ -73,6 +73,7 @@ class Command
 	void namesMessage(std::string name);
 	void noticeMessage(std::string name, std::string msg);
 	void kickMessage(std::string name, std::string user);
+	void showChannel(std::string name, std::list<Channel> chnl);
 };
 
 #endif
