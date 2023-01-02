@@ -24,7 +24,12 @@ void Command::Numerics(int num, std::string name, std::string other)
         case 5:
             print += ":are supported by this server";
             break;
+        // RPL_LISTSTART (321) https://modern.ircdocs.horse/#rplliststart-321
+        case 321:
+            print += "Channel :Users  Name";
+            break;
         // RPL_LIST (322) https://modern.ircdocs.horse/#rpllist-322 
+        // case 322:
             // name chnlname participants topic 
         // RPL_TOPIC (332) https://modern.ircdocs.horse/#rpltopic-332
         case 332:
