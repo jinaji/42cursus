@@ -74,6 +74,7 @@ class Command
 	void noticeMessage(std::string name, std::string msg);
 	void kickMessage(std::string name, std::string user);
 	void showChannel(std::string name, std::list<Channel> chnl);
+	std::string parseComma(std::string origin, size_t &start, size_t &pos);
 };
 
 #endif

@@ -52,14 +52,10 @@ void Command::Kick() // <channel> <user> * [<comment>]
 
 	while (namePos != std::string::npos)
 	{
-		userName = _parsingPara[1].substr(nameStart, namePos - nameStart);
-		nameStart = namePos + 1;
-		namePos = _parsingPara[1].find(',', nameStart);
-
+		userName = parseComma(_parsingPara[1], nameStart, namePos);
         this->kickMessage(_parsingPara[0], userName);
-        
     }
-    userName = _parsingPara[1].substr(nameStart, namePos - nameStart);
+    userName = parseComma(_parsingPara[1], nameStart, namePos);
     this->kickMessage(_parsingPara[0], userName);
 
 }

@@ -14,6 +14,11 @@ void Client::addChannel(Channel chnl)
     _channelList.push_back(chnl);
 }
 
+void Client::removeChannel(std::list<Channel>::iterator it)
+{
+    _channelList.erase(it);
+}
+
 int Client::getSocket() { return _fd; }
 std::string Client::getNick() { return _nick; }
 std::string Client::getUser() { return _user; }

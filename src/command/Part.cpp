@@ -61,16 +61,13 @@ void Command::Part() // <channel> [<reason>]
 			{
 				if ((*it).getName() == chnlName)
 				{
-					if (checkChannel_caller(chnlName) == false)
-					{
-						this->Numerics(442, chnlName); // 1/1 
-						break;
-					}
 					this->partMessage(chnlName);
 					(*it).getParticipantsFd().erase(_caller.getSocket());
+					_caller.removeChannel(it);
+					break;
 				}
 			}
-			if (it == chnl.end())
+			if (it == chnl.end() || checkChannel_caller(chnlName) == false)
 			{
 				this->Numerics(401, chnlName);
 				break;
@@ -87,10 +84,11 @@ void Command::Part() // <channel> [<reason>]
 		{
 			this->partMessage(chnlName);
 			(*it).getParticipantsFd().erase(_caller.getSocket());
+			_caller.removeChannel(it);
 			break ;
 		}
 	}
-	if (it == chnl.end())
+	if (it == chnl.end() || checkChannel_caller(chnlName) == false)
 	{
 		this->Numerics(401, chnlName);
 	}

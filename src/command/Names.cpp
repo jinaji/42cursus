@@ -14,15 +14,14 @@ void	Command::namesMessage(std::string name)
 			break ;
 		}
 	}
-	std::map<int, std::string>::iterator it = tmp.getParticipantsFd().begin();
-	for (size_t i = 0; i < tmp.getParticipantsSize(); i++, it++)
-	{
+	// std::map<int, std::string>::iterator it = tmp.getParticipantsFd().begin();
+	std::string names;
+	// for (size_t i = 0; i < tmp.getParticipantsSize(); i++, it++)
+	// {
+	// 	names += (*it).getParticipantsValue(it) + " ";
+	// }
 		// 353
-		//  "<client> <symbol> <channel> :[prefix]<nick>{ [prefix]<nick>}"
-		print = _caller.getNick() + " " + "= " + name + " :" + tmp.getParticipantsValue(it) + "\r\n";
-		std::cout << print;
-		// print = ":127.0.0.1 " + std::to_string(353) + " " + _caller.getNick() + " ";
-		// print += name + " :" + tmp.getParticipantsValue(it) + "\r\n";
+		print = ":127.0.0.1 353 " + _caller.getNick() + " " + "@ " + name + " :" + names + "\r\n";
 		if (send(_caller.getSocket(), print.c_str(), strlen(print.c_str()), 0) == -1)
 			throw std::runtime_error("send 에러");
 		// 366
@@ -30,7 +29,6 @@ void	Command::namesMessage(std::string name)
 		print += _caller.getNick() + " " + name + " :End of /Names list" + "\r\n"; //"<client> <channel> :End of /NAMES list";
 		if (send(_caller.getSocket(), print.c_str(), strlen(print.c_str()), 0) == -1)
 			throw std::runtime_error("send 에러7");
-	}
 }
 
 void Command::Names()

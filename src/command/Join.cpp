@@ -70,12 +70,8 @@ void    Command::Join()
 
 	while (namePos != std::string::npos)
 	{
-		chnlName = _parsingPara[0].substr(nameStart, namePos - nameStart);
-		nameStart = namePos + 1;
-		namePos = _parsingPara[0].find(',', nameStart);
-		chnlPass = _parsingPara[1].substr(passStart ,passPos- passStart);
-		passStart = passPos + 1;
-		passPos = _parsingPara[1].find(',', passStart);
+		chnlName = parseComma(_parsingPara[0], nameStart, namePos);
+		chnlPass = parseComma(_parsingPara[1], passStart, passPos);
 
 		if (chnlName.find(0x07) != std::string::npos || chnlName.find(',') != std::string::npos) // space 무조건 앞에서 잘려서 확인안함
 		{
@@ -110,8 +106,9 @@ void    Command::Join()
 			}
 		}
 	}
-	chnlName = _parsingPara[0].substr(nameStart, namePos - nameStart);
-	chnlPass = _parsingPara[1].substr(passStart ,passPos- passStart);
+
+	chnlName = parseComma(_parsingPara[0], nameStart, namePos);
+	chnlPass = parseComma(_parsingPara[1], passStart, passPos);
 	if (!checkChannel_server(chnlName))
 	{
 		Channel instance(chnlName);

@@ -29,19 +29,16 @@ void	Command::List()
 	{
 		if (_parsingPara[0].find('#') == std::string::npos)
 			return ;
-		std::string para = _parsingPara[0];
 		std::string chnl;
-		size_t i = 0;
-		size_t pos = para.find(',');
+		size_t start = 0;
+		size_t pos = _parsingPara[0].find(',');
 
 		while (pos != std::string::npos)
 		{
-			chnl = para.substr(i, pos - i);
-			i = pos + 1;
-			pos = para.find(',', i);
+			chnl = parseComma(_parsingPara[0], start, pos);
 			showChannel(chnl, _server.getChannel());
 		}
-		chnl = para.substr(i, pos - i);
+		chnl = parseComma(_parsingPara[0], start, pos);
 		showChannel(chnl, _server.getChannel());
 		
 		std::string print = ":127.0.0.1 323 " + _caller.getNick() + " :End of /LIST\r\n"; // 이거 넣으면 뭔가 될 줄 알았는데 안 됨 ... 없어도 되눈 부분

@@ -152,6 +152,14 @@ bool    Command::checkChannel_caller(std::string name)
     return false;
 }
 
+std::string Command::parseComma(std::string origin, size_t &start, size_t &pos)
+{
+	std::string parsedString = origin.substr(start, pos - start);
+	start = pos + 1;
+	pos = origin.find(',', start);
+	return parsedString;
+}
+
 // Channel Command::getChannelName(std::string name)
 // {
 // 	Channel tmp;

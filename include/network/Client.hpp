@@ -50,7 +50,7 @@ class Client
         bool getservOper();
 
         void addChannel(Channel chnl);
-
+        void removeChannel(std::list<Channel>::iterator it);
         void setpassState(bool state);
         void setnickState(bool state);
         void setuserState(bool state);
