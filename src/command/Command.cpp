@@ -110,6 +110,8 @@ void Command::execute()
 			Privmsg();
 		else if (_cmd == "NOTICE")
 			Notice();
+		else if (_cmd == "PONG")
+			return ;
 		else if (_cmd.empty())
 			return ;
 		else
