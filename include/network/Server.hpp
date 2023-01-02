@@ -40,8 +40,6 @@ class Server
         //Channel
         std::list<Channel> _chnl;
     public:
-        // std::list<Channel>::iterator    _chnl_iter;
-    public:
         Server(const std::string port, const std::string pass);
         ~Server();
         

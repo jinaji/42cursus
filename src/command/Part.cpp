@@ -78,6 +78,11 @@ void Command::Part() // <channel> [<reason>]
 	std::list<Channel> &chnl = _server.getChannel();
 	std::list<Channel>::iterator it = chnl.begin();
 
+	if (checkChannel_caller(chnlName) == false)
+	{
+		this->Numerics(401, chnlName);
+		return ;
+	}
 	for (; it != chnl.end(); it++)
 	{
 		if ((*it).getName() == chnlName)
@@ -87,9 +92,5 @@ void Command::Part() // <channel> [<reason>]
 			_caller.removeChannel(it);
 			break ;
 		}
-	}
-	if (it == chnl.end() || checkChannel_caller(chnlName) == false)
-	{
-		this->Numerics(401, chnlName);
 	}
 }
