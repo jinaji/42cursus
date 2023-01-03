@@ -36,7 +36,8 @@ void	Command::joinMessage(std::string name)
 		}
 	}
 	std::map<int, std::string>::iterator it = tmp.getParticipantsFd().begin();
-	for (size_t i = 0; i < tmp.getParticipantsSize(); i++)
+	// std::cout << "size: " << tmp.getParticipantsSize() << std::endl;
+	for (; it != tmp.getParticipantsFd().end(); it++)
 	{
 		// if (send(tmp.getParticipantsKey(it) , print.c_str(), strlen(print.c_str()), 0) == -1)
        	// 	throw std::runtime_error("send 에러2");
@@ -49,7 +50,6 @@ void	Command::joinMessage(std::string name)
 		// names reply
 		this->Numerics(353, name, tmp.getParticipantsValue(it));
 		this->Numerics(366, name);
-		it++;
 	}
 	if (tmp.getTopicFlag() == true)
 	{

@@ -16,7 +16,15 @@ void Client::addChannel(Channel chnl)
 
 void Client::removeChannel(std::list<Channel>::iterator it)
 {
-    _channelList.erase(it);
+    std::string name = (*it).getName();
+    std::list<Channel>::iterator ite = _channelList.begin();
+
+    for (; ite != _channelList.end(); ite++)
+    {
+        if ((*ite).getName() == name)
+            break;
+    }
+    _channelList.erase(ite);
 }
 
 int Client::getSocket() { return _fd; }
