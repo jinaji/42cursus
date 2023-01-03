@@ -18,13 +18,18 @@ void Client::removeChannel(std::list<Channel>::iterator it)
 {
     std::string name = (*it).getName();
     std::list<Channel>::iterator ite = _channelList.begin();
+    int flag = 0;
 
     for (; ite != _channelList.end(); ite++)
     {
         if ((*ite).getName() == name)
+        {
+            flag = 1;
             break;
+        }
     }
-    _channelList.erase(ite);
+    if (flag == 1)
+        _channelList.erase(ite);
 }
 
 int Client::getSocket() { return _fd; }
