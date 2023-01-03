@@ -109,6 +109,11 @@ void    Command::Join()
 
 	chnlName = parseComma(_parsingPara[0], nameStart, namePos);
 	chnlPass = parseComma(_parsingPara[1], passStart, passPos);
+	if (chnlName.empty())
+	{
+		this->Numerics(403, chnlName);
+		return ;
+	}
 	if (!checkChannel_server(chnlName))
 	{
 		Channel instance(chnlName);
