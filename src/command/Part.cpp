@@ -10,7 +10,7 @@ void	Command::partMessage(std::string name)
         throw std::runtime_error("send 에러");
 
 	Channel tmp;
-	for (std::list<Channel>::iterator it = _server.getChannel().begin(); it != _server.getChannel().end(); it++)
+	for (std::list<Channel>::iterator it = _caller.getChannel().begin(); it != _caller.getChannel().end(); it++)
 	{
 		if (name == (*it).getName())
 		{
@@ -20,8 +20,10 @@ void	Command::partMessage(std::string name)
 	}
 
 	std::map<int, std::string>::iterator it = tmp.getParticipantsFd().begin();
+	std::cout << "size: " << tmp.getParticipantsSize() << std::endl;
 	for (size_t i = 0; i < tmp.getParticipantsSize(); i++, it++)
 	{
+		std::cout << "count: " << i << std::endl;
 		// if (send(tmp.getParticipantsKey(it) , print.c_str(), strlen(print.c_str()), 0) == -1)
        	// 	throw std::runtime_error("send 에러");
 		if (--tmp.getParticipantsFd().end() != it)
@@ -75,15 +77,23 @@ void Command::Part() // <channel> [<reason>]
 		}
 	}
 	chnlName = _parsingPara[0].substr(nameStart, namePos - nameStart);
-	std::list<Channel> &chnl = _server.getChannel();
-	std::list<Channel>::iterator it = chnl.begin();
+	std::list<Channel>::iterator it = _caller.getChannel().begin();
 
-	if (checkChannel_caller(chnlName) == false)
+	std::cout << "fd: " << _caller.getSocket() << std::endl;
+	// std::cout << "size: " << _caller.getChannel().size() << std::endl;
+	if (checkChannel_caller(chnlName) == false && it != _caller.getChannel().end())
 	{
 		this->Numerics(401, chnlName);
 		return ;
 	}
-	for (; it != chnl.end(); it++)
+	if (it == _caller.getChannel().end())
+	{
+		this->partMessage(chnlName);
+		(*it).getParticipantsFd().erase(_caller.getSocket());
+		_caller.removeChannel(it);
+		return ;
+	}
+	for (; it != _caller.getChannel().end(); it++)
 	{
 		if ((*it).getName() == chnlName)
 		{

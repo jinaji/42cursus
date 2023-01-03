@@ -113,9 +113,9 @@ void    Command::Join()
 	{
 		Channel instance(chnlName);
 		instance.setPass(chnlPass);
-		instance.setParticipants(1, _caller.getSocket(), _caller.getNick());
-		_caller.addChannel(instance);
-		_server.getChannel().push_back(instance);
+		instance.setParticipants(1, _caller.getSocket(), _caller.getNick()); // 채널 클래스에 추가
+		_caller.addChannel(instance);	// 클라 클래스에 채널 추가
+		_server.getChannel().push_back(instance);	// 서버 클래스에 채널 추가
 		this->joinMessage(chnlName);
 	}
 	else
@@ -129,6 +129,7 @@ void    Command::Join()
 				if ((*it).getPass() == chnlPass || (*it).getPass().empty())
 				{
 					(*it).setParticipants(1, _caller.getSocket(), _caller.getNick());
+					_caller.addChannel((*it));
 					this->joinMessage(chnlName);
 				}
 				else

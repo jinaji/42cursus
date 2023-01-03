@@ -22,7 +22,7 @@ class Channel
 {
 	private:
 		std::string _name;
-		std::map<int, std::string> _participantsFd; // 참여자들 담아두께여
+		std::map<int, std::string> _participantsFd; // fd, nick
 		size_t	_participants;
 		std::string _chnlPass;
 		std::string _topic;
