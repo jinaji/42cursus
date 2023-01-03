@@ -49,7 +49,7 @@ class Client
         bool getaccessState();
         bool getservOper();
 
-        void addChannel(Channel chnl);
+        void addChannel(Channel &chnl);
         void removeChannel(std::list<Channel>::iterator it);
         void setpassState(bool state);
         void setnickState(bool state);

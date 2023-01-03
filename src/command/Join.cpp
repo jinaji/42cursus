@@ -122,6 +122,7 @@ void    Command::Join()
 		_caller.addChannel(instance);	// 클라 클래스에 채널 추가
 		_server.getChannel().push_back(instance);	// 서버 클래스에 채널 추가
 		this->joinMessage(chnlName);
+		// this->modeMessage(_caller.getNick(), '+');
 	}
 	else
 	{

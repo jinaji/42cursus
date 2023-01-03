@@ -1,5 +1,38 @@
 #include "../../include/command/Command.hpp"
 
+void	Command::modeMessage(std::string name, char flag)
+{
+    std::string print = ":127.0.0.1 MODE " + name + " " + flag + "o " + _parsingPara[2];
+    print += "\r\n";
+    if (send(_caller.getSocket(), print.c_str(), strlen(print.c_str()), 0) == -1)
+        throw std::runtime_error("send 에러");
+
+	Channel tmp;
+	for (std::list<Channel>::iterator it = _server.getChannel().begin(); it != _server.getChannel().end(); it++)
+	{
+		if (name == (*it).getName())
+		{
+			tmp = (*it);
+			break ;
+		}
+	}
+	std::map<int, std::string>::iterator it = tmp.getParticipantsFd().begin();
+	for (; it != tmp.getParticipantsFd().end(); it++)
+	{
+		if (send(tmp.getParticipantsKey(it) , print.c_str(), strlen(print.c_str()), 0) == -1)
+       		throw std::runtime_error("send 에러");
+		if (--tmp.getParticipantsFd().end() != it)
+		{
+			std::string print = ":127.0.0.1 MODE " + name + " " + flag + "o " + _parsingPara[2];
+            print += "\r\n";
+            if (send(_caller.getSocket(), print.c_str(), strlen(print.c_str()), 0) == -1)
+                throw std::runtime_error("send 에러");
+		}
+	}
+
+
+}
+
 void Command::Mode() // <target> [<modestring>] [<mode arguments>...]
 {
     // 커맨드 1개 -> 461
@@ -25,15 +58,12 @@ void Command::Mode() // <target> [<modestring>] [<mode arguments>...]
         this->Numerics(502);
         return ;
     }
-    /*
-        Mode: +ins
-        Created at: Dec 27, 2022 at 2:46 PM
-    */
     // if (_paraNum == 1)
     //     return ;
     if (_parsingPara[1].at(0) == '+' || _parsingPara[1].at(0) == '-')
     {
         std::string modestring;
+        char        flag = _parsingPara[1].at(0);
         size_t mode_num = 0; // +123 -> 3
         std::string::iterator it = _parsingPara[1].begin();
         while (it != _parsingPara[1].end())
@@ -49,7 +79,7 @@ void Command::Mode() // <target> [<modestring>] [<mode arguments>...]
             return ;
         for (size_t i = 0; i < mode_num; i++)
         {
-            if (excute_mode(modestring.at(i), _mode) == false)
+            if (excute_mode(modestring.at(i), _mode, flag) == false)
                 this->Numerics(501);
         }
     }
@@ -63,44 +93,14 @@ void Command::Mode() // <target> [<modestring>] [<mode arguments>...]
     }
 }
 
-bool Command::excute_mode(char mode, char c)
+bool Command::excute_mode(char mode, char c, char flag)
 {
     if (c == 'u')   // user_mode
     {
-        if (mode == 'a')
+        // ignore
+        if (mode == 'o')
         {
-            _caller._userMode[user_a] = true;
-            return true;
-        }
-        else if (mode == 'i')
-        {
-            std::cout << "IIOIOIIIIIIIIIII\n";
-            _caller._userMode[user_i] = true;                
-            return true;
-        }
-        else if (mode == 'w')
-        {
-            _caller._userMode[user_w] = true;                
-            return true;
-        }
-        else if (mode == 'r')
-        {
-            _caller._userMode[user_r] = true;                
-            return true;
-        }
-        else if (mode == 'o')
-        {
-            _caller._userMode[user_o] = true;                
-            return true;
-        }
-        else if (mode == 'O')
-        {
-            _caller._userMode[user_O] = true;                
-            return true;
-        }
-        else if (mode == 's')
-        {
-            _caller._userMode[user_s] = true;                
+            _caller._userMode[user_o] = true;
             return true;
         }
     }
@@ -111,49 +111,25 @@ bool Command::excute_mode(char mode, char c)
         {
             if ((*it).getName() == _parsingPara[0])
             {
-                if (mode == 'o')
+                if (mode == 'o' && flag == '+')
                 {
                     (*it)._channelMode[channel_o] = true;
+                    //:irc.example.com MODE #foobar +o bunny
+                    this->modeMessage((*it).getName(), flag);
+                    // std::string print = ":127.0.0.1 MODE " + (*it).getName() + " +o " + _parsingPara[2];
+                    // print += "\r\n";
+                    // if (send(_caller.getSocket(), print.c_str(), strlen(print.c_str()), 0) == -1)
+                    //     throw std::runtime_error("send 에러");
                     return true;
                 }
-                else if (mode == 'p')
+                else if (flag == '-')
                 {
-                    (*it)._channelMode[channel_p] = true;
-                    return true;
-                }
-                else if (mode == 's')
-                {
-                    (*it)._channelMode[channel_s] = true;
-                    return true;
-                }
-                else if (mode == 't')
-                {
-                    (*it)._channelMode[channel_t] = true;
-                    return true;
-                }
-                else if (mode == 'm')
-                {
-                    (*it)._channelMode[channel_m] = true;
-                    return true;
-                }
-                else if (mode == 'v')
-                {
-                    (*it)._channelMode[channel_v] = true;
-                    return true;
-                }
-                else if (mode == 'l')
-                {
-                    (*it)._channelMode[channel_l] = true;
-                    return true;
-                }
-                else if (mode == 'b')
-                {
-                    (*it)._channelMode[channel_b] = true;
-                    return true;
-                }
-                else if (mode == 'k')
-                {
-                    (*it)._channelMode[channel_k] = true;
+                    (*it)._channelMode[channel_o] = true;
+                    this->modeMessage((*it).getName(), flag);
+                    // std::string print = ":127.0.0.1 MODE " + (*it).getName() + " -o " + _parsingPara[2];
+                    // print += "\r\n";
+                    // if (send(_caller.getSocket(), print.c_str(), strlen(print.c_str()), 0) == -1)
+                    //     throw std::runtime_error("send 에러");
                     return true;
                 }
             }

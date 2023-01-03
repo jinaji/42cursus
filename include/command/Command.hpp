@@ -63,7 +63,7 @@ class Command
 	bool checkClient(std::string name); // 찾으면 true, 못찾으면 false
 	bool checkChannel_server(std::string name);
 	bool checkChannel_caller(std::string name);
-	bool excute_mode(char mode, char c);
+	bool excute_mode(char mode, char c, char flag = 0);
 	void joinMessage(std::string name);
 	void privmsgMessage(std::string name, std::string msg, int fd);
 	void privmsgMessage(std::string name, std::string msg);
@@ -74,6 +74,7 @@ class Command
 	void noticeMessage(std::string name, std::string msg);
 	void kickMessage(std::string name, std::string user);
 	void showChannel(std::string name, std::list<Channel> chnl);
+	void modeMessage(std::string name, char flag);
 	std::string parseComma(std::string origin, size_t &start, size_t &pos);
 };
 

@@ -8,7 +8,7 @@ Client::Client(int fd): _fd(fd), _passState(false), _nickState(false), _userStat
 
 Client::~Client() {}
 
-void Client::addChannel(Channel chnl)
+void Client::addChannel(Channel &chnl)
 {
     chnl.setParticipants(1, _fd, _nick);
     _channelList.push_back(chnl);
