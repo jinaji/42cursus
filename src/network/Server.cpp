@@ -111,11 +111,21 @@ int	Server::disconnectClient(int fd)
 		if ((*it)->getSocket() == fd)
 		{
 			FD_CLR(fd, &_read_fd);
+			for (std::list<Channel>::iterator ite = (*it)->getChannel().begin(); ite != (*it)->getChannel().end(); ite++)
+			{
+				std::string print = ":" + (*it)->getNick() + "!" + (*it)->getUser() + "@127.0.0.1" + " PART " + (*ite).getName() + "\r\n";
+				std::map<int, std::string>::iterator iter = (*ite).getParticipantsFd().begin();
+				for (; iter != (*ite).getParticipantsFd().end(); iter++)
+				{
+					if (send((*ite).getParticipantsKey(iter), print.c_str(), strlen(print.c_str()), 0) == -1)
+						throw std::runtime_error("send error");
+				}
+			}
 			_clnt.erase(it);
 			// delete *it;
 			close(fd);
 			if (_clnt.empty() == true)	// _sock = 3
-				_fd_max = _sock;
+				_fd_max = _sock; 
 			else if (_fd_max == fd)
 				this->chgFdmax();
 			return fd;

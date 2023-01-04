@@ -31,7 +31,7 @@ class Server
         std::string _port;
         std::string _pass;
 
-        //selete
+        //select
         fd_set      _read_fd, _cp_read;
         int         _fd_max;
 
@@ -60,5 +60,6 @@ class Server
         std::string     getPort();
         std::string     getPass();
         int             getFdmax();
+        // Command         getCommand();
 };
 #endif
