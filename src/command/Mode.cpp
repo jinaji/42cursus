@@ -1,9 +1,67 @@
 #include "../../include/command/Command.hpp"
 
-void	Command::modeMessage(std::string name, char flag)
+void	Command::modeMessage1(std::string name, char flag, std::string user)
 {
-    std::string print = ":127.0.0.1 MODE " + name + " " + flag + "o " + _parsingPara[2];
-    print += "\r\n";
+    (void) user;
+    std::string print = ":" + _caller.getNick() + "!" + _caller.getUser() + "@127.0.0.1" + " MODE " + name + " " + flag + "o " + _caller.getNick() + "\r\n";
+    if (send(_caller.getSocket(), print.c_str(), strlen(print.c_str()), 0) == -1)
+        throw std::runtime_error("send 에러");
+
+	Channel tmp;
+	for (std::list<Channel>::iterator it = _server.getChannel().begin(); it != _server.getChannel().end(); it++)
+	{
+		if (name == (*it).getName())
+		{
+			tmp = (*it);
+			break ;
+		}
+	}
+	std::map<int, std::string>::iterator it = tmp.getParticipantsFd().begin();
+	for (; it != tmp.getParticipantsFd().end(); it++)
+	{
+		// if (send(tmp.getParticipantsKey(it) , print.c_str(), strlen(print.c_str()), 0) == -1)
+       	// 	throw std::runtime_error("send 에러");
+		if (--tmp.getParticipantsFd().end() != it)
+		{
+			print = ":" + _caller.getNick() + "!" + _caller.getUser() + "@127.0.0.1" + " MODE " + name + " " + flag + "o " + _caller.getNick() + "\r\n";
+            if (send(_caller.getSocket(), print.c_str(), strlen(print.c_str()), 0) == -1)
+                throw std::runtime_error("send 에러");
+		}
+	}
+}
+
+void	Command::modeMessage2(std::string name, char flag, std::string user)
+{
+    // std::string print = ":" + _caller.getNick() + "!" + _caller.getUser() + "@127.0.0.1" + " MODE " + name + " " + flag + "o " + _caller.getNick() + "\r\n";
+    // if (send(_caller.getSocket(), print.c_str(), strlen(print.c_str()), 0) == -1)
+    //     throw std::runtime_error("send 에러");
+
+	Channel tmp;
+	for (std::list<Channel>::iterator it = _server.getChannel().begin(); it != _server.getChannel().end(); it++)
+	{
+		if (name == (*it).getName())
+		{
+			tmp = (*it);
+			break ;
+		}
+	}
+	std::map<int, std::string>::iterator it = tmp.getParticipantsFd().begin();
+	for (; it != tmp.getParticipantsFd().end(); it++)
+	{
+		// if (send(tmp.getParticipantsKey(it) , print.c_str(), strlen(print.c_str()), 0) == -1)
+       	// 	throw std::runtime_error("send 에러");
+		if (--tmp.getParticipantsFd().end() != it)
+		{
+			std::string print = ":" + user + "!" + _caller.getUser() + "@127.0.0.1" + " MODE " + name + " " + flag + "o " + user + "\r\n";
+            if (send(_caller.getSocket(), print.c_str(), strlen(print.c_str()), 0) == -1)
+                throw std::runtime_error("send 에러");
+		}
+	}
+}
+
+void	Command::modeMessage3(std::string name, char flag, std::string user)
+{
+    std::string print = ":" + user + "!" + _caller.getUser() + "@127.0.0.1" + " MODE " + name + " " + flag + "o " + user + "\r\n";
     if (send(_caller.getSocket(), print.c_str(), strlen(print.c_str()), 0) == -1)
         throw std::runtime_error("send 에러");
 
@@ -21,16 +79,14 @@ void	Command::modeMessage(std::string name, char flag)
 	{
 		if (send(tmp.getParticipantsKey(it) , print.c_str(), strlen(print.c_str()), 0) == -1)
        		throw std::runtime_error("send 에러");
-		if (--tmp.getParticipantsFd().end() != it)
-		{
-			std::string print = ":127.0.0.1 MODE " + name + " " + flag + "o " + _parsingPara[2];
-            print += "\r\n";
-            if (send(_caller.getSocket(), print.c_str(), strlen(print.c_str()), 0) == -1)
-                throw std::runtime_error("send 에러");
-		}
+		// if (--tmp.getParticipantsFd().end() != it)
+		// {
+		// 	std::string print = ":" + user + "!" + _caller.getUser() + "@127.0.0.1" + " MODE " + name + " " + flag + "o " + user + "\r\n";
+        //     if (send(tmp.getParticipantsKey(it), print.c_str(), strlen(print.c_str()), 0) == -1)
+        //         throw std::runtime_error("send 에러");
+        //     std::cout << print;
+		// }
 	}
-
-
 }
 
 void Command::Mode() // <target> [<modestring>] [<mode arguments>...]
@@ -115,7 +171,7 @@ bool Command::excute_mode(char mode, char c, char flag)
                 {
                     (*it)._channelMode[channel_o] = true;
                     //:irc.example.com MODE #foobar +o bunny
-                    this->modeMessage((*it).getName(), flag);
+                    this->modeMessage3((*it).getName(), flag, _parsingPara[2]);
                     // std::string print = ":127.0.0.1 MODE " + (*it).getName() + " +o " + _parsingPara[2];
                     // print += "\r\n";
                     // if (send(_caller.getSocket(), print.c_str(), strlen(print.c_str()), 0) == -1)
@@ -125,7 +181,7 @@ bool Command::excute_mode(char mode, char c, char flag)
                 else if (flag == '-')
                 {
                     (*it)._channelMode[channel_o] = true;
-                    this->modeMessage((*it).getName(), flag);
+                    this->modeMessage3((*it).getName(), flag, _parsingPara[2]);
                     // std::string print = ":127.0.0.1 MODE " + (*it).getName() + " -o " + _parsingPara[2];
                     // print += "\r\n";
                     // if (send(_caller.getSocket(), print.c_str(), strlen(print.c_str()), 0) == -1)

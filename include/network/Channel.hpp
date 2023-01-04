@@ -28,6 +28,7 @@ class Channel
 		std::string _topic;
 		std::string _topicNick;
 		bool	_topicFlag;
+		std::string _operName;
 
 	public:
 		Channel();
@@ -43,7 +44,8 @@ class Channel
 		void	setTopic(std::string topic);
 		void	setTopicNick(std::string nick);
 		void	setTopicFlag(int flag);
-		
+		void    setOper(std::string name);
+
 		// get
 
 		// size_t		getParticipants();
@@ -58,6 +60,7 @@ class Channel
 		int			getParticipantsKey(std::map<int, std::string>::iterator it);
 		std::string	getParticipantsValue(std::map<int, std::string>::iterator it);
 		size_t		getParticipantsSize();
+		std::string getOper();
 };
 
 #endif

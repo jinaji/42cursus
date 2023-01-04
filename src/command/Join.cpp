@@ -119,10 +119,17 @@ void    Command::Join()
 		Channel instance(chnlName);
 		instance.setPass(chnlPass);
 		instance.setParticipants(1, _caller.getSocket(), _caller.getNick()); // 채널 클래스에 추가
+		instance.setOper(_caller.getNick());
 		_caller.addChannel(instance);	// 클라 클래스에 채널 추가
 		_server.getChannel().push_back(instance);	// 서버 클래스에 채널 추가
 		this->joinMessage(chnlName);
-		// this->modeMessage(_caller.getNick(), '+');
+
+		// :aaa!a@121.135.181.35 MODE #123 -o aaa
+		// std::string print = ":" + _caller.getNick() + "!" + _caller.getUser() + "@127.0.0.1" + " MODE " + chnlName + " +o " + _caller.getNick() + "\r\n";
+		// if (send(_caller.getSocket(), print.c_str(), strlen(print.c_str()), 0) == -1)
+        // 	throw std::runtime_error("send 에러100");
+		// std::cout << print;
+		this->modeMessage1(chnlName, '+', _caller.getNick());
 	}
 	else
 	{
@@ -137,6 +144,7 @@ void    Command::Join()
 					(*it).setParticipants(1, _caller.getSocket(), _caller.getNick());
 					_caller.addChannel((*it));
 					this->joinMessage(chnlName);
+					this->modeMessage2(chnlName, '+', (*it).getOper());
 				}
 				else
 					this->Numerics(475, chnlName);

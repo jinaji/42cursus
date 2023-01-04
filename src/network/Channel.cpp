@@ -22,6 +22,8 @@ void	Channel::setTopicNick(std::string nick) { _topicNick = nick; }
 
 void	Channel::setTopicFlag(int flag) { _topicFlag = flag; }
 
+void    Channel::setOper(std::string name) { _operName = name; }
+
 // size_t	Channel::getParticipants() { return _participants; }
 
 // int	Channel::getParticipants(size_t index) { return _participantsFd[index]; }
@@ -42,3 +44,5 @@ int			Channel::getParticipantsKey(std::map<int, std::string>::iterator it) { ret
 std::string	Channel::getParticipantsValue(std::map<int, std::string>::iterator it) { return (*it).second; }
 // size_t		Channel::getParticipantsSize() { return _participants; }
 size_t		Channel::getParticipantsSize() { return _participantsFd.size(); }
+
+std::string Channel::getOper() { return _operName; };
