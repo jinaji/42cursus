@@ -9,7 +9,7 @@ void    Server::makeSock()
 	// socket()
 	if ((_sock = socket(AF_INET, SOCK_STREAM, 0)) == -1)
 		throw std::runtime_error("socket 에러");
-	
+
 	// setsockopt() https://www.joinc.co.kr/w/Site/Network_Programing/AdvancedComm/SocketOption
 	// bool opt = false;
 	int opt = 1;
@@ -119,13 +119,17 @@ int	Server::disconnectClient(int fd)
 				{
 					if (send((*ite).getParticipantsKey(iter), print.c_str(), strlen(print.c_str()), 0) == -1)
 						throw std::runtime_error("send error");
+					//else if ( )
+					//	delete
+					(*ite).getParticipantsFd().erase(fd);
+					(*it)->removeChannel(ite);
 				}
 			}
 			_clnt.erase(it);
 			// delete *it;
 			close(fd);
 			if (_clnt.empty() == true)	// _sock = 3
-				_fd_max = _sock; 
+				_fd_max = _sock;
 			else if (_fd_max == fd)
 				this->chgFdmax();
 			return fd;

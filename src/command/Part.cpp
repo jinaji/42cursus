@@ -99,7 +99,6 @@ void Command::Part() // <channel> [<reason>]
 		{
 			if (checkChannel_caller(chnlName) == true)
 			{
-				std::cout << "fuckcccs" << std::endl;
 				this->partMessage(chnlName);
 				(*it).getParticipantsFd().erase(_caller.getSocket());
 				_caller.removeChannel(it);
@@ -108,7 +107,6 @@ void Command::Part() // <channel> [<reason>]
 			}
 			else
 			{
-				std::cout << "fuck" << std::endl;
 				this->Numerics(401, chnlName);
 				return ;
 			}
