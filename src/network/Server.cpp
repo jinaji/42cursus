@@ -113,16 +113,21 @@ int	Server::disconnectClient(int fd)
 			FD_CLR(fd, &_read_fd);
 			for (std::list<Channel>::iterator ite = (*it)->getChannel().begin(); ite != (*it)->getChannel().end(); ite++)
 			{
+				std::cout << "count!!!" << std::endl;
 				std::string print = ":" + (*it)->getNick() + "!" + (*it)->getUser() + "@127.0.0.1" + " PART " + (*ite).getName() + "\r\n";
 				std::map<int, std::string>::iterator iter = (*ite).getParticipantsFd().begin();
 				for (; iter != (*ite).getParticipantsFd().end(); iter++)
 				{
-					if (send((*ite).getParticipantsKey(iter), print.c_str(), strlen(print.c_str()), 0) == -1)
-						throw std::runtime_error("send error");
+					if ((*ite).getParticipantsKey(iter) != (*it)->getSocket())
+					{
+						std::cout << "send: " << (*ite).getParticipantsKey(iter) << std::endl;
+						if (send((*ite).getParticipantsKey(iter), print.c_str(), strlen(print.c_str()), 0) == -1)
+							throw std::runtime_error("send error");
+						(*ite).getParticipantsFd().erase(fd);
+						// (*it)->removeChannel(ite);
+					}
 					//else if ( )
 					//	delete
-					(*ite).getParticipantsFd().erase(fd);
-					(*it)->removeChannel(ite);
 				}
 			}
 			_clnt.erase(it);
