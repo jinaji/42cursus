@@ -98,6 +98,8 @@ void Command::Part() // <channel> [<reason>]
 				this->partMessage(chnlName);
 				(*it).getParticipantsFd().erase(_caller.getSocket());
 				_caller.removeChannel(it);
+				if (_caller.getNick() == (*it).getOper())
+					(*it).setOper("");
 				// server channel update
 				break ;
 			}
@@ -113,6 +115,8 @@ void Command::Part() // <channel> [<reason>]
 		this->partMessage(chnlName);
 		(*it).getParticipantsFd().erase(_caller.getSocket());
 		_caller.removeChannel(it);
+		if (_caller.getNick() == (*it).getOper())
+			(*it).setOper("");
 		// server channel update
 		return ;
 	}
