@@ -89,35 +89,16 @@ void Command::Part() // <channel> [<reason>]
 		return ;
 	}
 	// if (call)
-	if (checkChannel_caller(chnlName) == true)
+	for (; it != _server.getChannel().end(); it++)
 	{
-		for (; it != _server.getChannel().end(); it++)
+		if (checkChannel_caller(chnlName) == true && chnlName == (*it).getName())
 		{
-			if (checkChannel_caller(chnlName) == true)
-			{
-				this->partMessage(chnlName);
-				(*it).getParticipantsFd().erase(_caller.getSocket());
-				_caller.removeChannel(it);
-				if (_caller.getNick() == (*it).getOper())
-					(*it).setOper("");
-				// server channel update
-				break ;
-			}
-			else
-			{
-				this->Numerics(401, chnlName);
-				return ;
-			}
+			this->partMessage(chnlName);
+			(*it).getParticipantsFd().erase(_caller.getSocket());
+			_caller.removeChannel(it);
+			if (_caller.getNick() == (*it).getOper())
+				(*it).setOper("");
+			break ;
 		}
-	}
-	if (it == _server.getChannel().end())
-	{
-		this->partMessage(chnlName);
-		(*it).getParticipantsFd().erase(_caller.getSocket());
-		_caller.removeChannel(it);
-		if (_caller.getNick() == (*it).getOper())
-			(*it).setOper("");
-		// server channel update
-		return ;
 	}
 }
