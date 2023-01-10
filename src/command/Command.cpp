@@ -76,7 +76,7 @@ void Command::execute()
 		else if (_cmd == "USER")
 		{
 			User();
-			if (_caller.getuserState() == false || _caller.getaccessState() == false)
+			if (_caller.getuserState() == true && _caller.getaccessState() == false)
 			{
 				this->Numerics(1);
 				this->Numerics(2);

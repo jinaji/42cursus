@@ -5,6 +5,8 @@
 
 void Command::User()
 {
+	std::cout << "1" << _parsingPara[1] << std::endl;
+	std::cout << "2" << _parsingPara[2] << std::endl;
 	if (_caller.getnickState() == false)
 		return ;
 	if (_paraNum < 4) // != 4 ... realname 엔 space 있을수도 있음 
@@ -17,7 +19,7 @@ void Command::User()
 		this->Numerics(462);
 		return ;
 	}
-	if (_parsingPara[1] != "0" || _parsingPara[2] != "*" || 1 > _parsingPara[0].length())
+	if ((_parsingPara[1]).compare("0") != 0 || _parsingPara[2].compare("*") != 0 || 1 > _parsingPara[0].length())
 	{
 		this->Numerics(461);
 		return ;
