@@ -4,16 +4,23 @@ void Command::privmsgMessage(std::string name, std::string msg) // channel
 {
 	//for문으로 돌릴거임 참여자들 ~~~ name <- channel name
 	Channel tmp;
+	int flag = 0;
 	for (std::list<Channel>::iterator it = _server.getChannel().begin(); it != _server.getChannel().end(); it++)
 	{
 		if (name == (*it).getName())
 		{
 			tmp = (*it);
+			flag = 1;
 			break ;
 		}
 	}
 	std::map<int, std::string>::iterator it = tmp.getParticipantsFd().begin();
 
+	if (flag == 0)
+	{
+		this->Numerics(401);
+		return ;
+	}
 	for (size_t i = 0; i < tmp.getParticipantsSize(); i++, it++)
 	{
 		std::string print = ":" + _caller.getNick() + " PRIVMSG " + name + " :" + msg;
@@ -23,8 +30,6 @@ void Command::privmsgMessage(std::string name, std::string msg) // channel
 			continue ;
 		if (send(tmp.getParticipantsKey(it), print.c_str(), strlen(print.c_str()), 0) == -1)
 			throw std::runtime_error("send 에러");
-		if (tmp.getParticipantsKey(it) == _server.getFdmax())
-			this->Numerics(401);
 	}
 }
 
@@ -35,8 +40,8 @@ void Command::privmsgMessage(std::string name, std::string msg, int fd) // user
     std::cout << "print[" << print << "]";
     if (send(fd, print.c_str(), strlen(print.c_str()), 0) == -1)
         throw std::runtime_error("send 에러");
-	if (fd == _server.getFdmax())
-		this->Numerics(401);
+	// if (fd == _server.getFdmax())
+	// 	this->Numerics(401);
 }
 
 int	Command::getNickFd(std::string nick, std::list<Client *> clnt)
@@ -57,7 +62,6 @@ void Command::Privmsg() // <target> <text to be sent>
 		return ;
 	if (_parsingPara[0].find('#') == std::string::npos) // 유저
 	{
-		// Client *tmp = new Client();
 		this->privmsgMessage(_parsingPara[0], _parsingPara[1], getNickFd(_parsingPara[0], _server.getClient()));
 	}
 	else
