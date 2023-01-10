@@ -133,8 +133,8 @@ int	Server::disconnectClient(int fd)
 				(*ite).getParticipantsFd().erase(fd);
 				// _chnl.erase(it);
 			}
-			_clnt.erase(it);
-			// delete *it;
+			_clnt.remove(*it);
+			delete *it;
 			close(fd);
 			if (_clnt.empty() == true)	// _sock = 3
 				_fd_max = _sock;

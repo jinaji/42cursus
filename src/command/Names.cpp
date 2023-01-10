@@ -24,6 +24,7 @@ void	Command::namesMessage(std::string name)
 		// 353
 		std::cout << "name " << name << " names " << names << std::endl;
 		print = ":127.0.0.1 353 " + _caller.getNick() + " @ " + name + " :" + names + " \r\n";
+		// print = ": " + _caller.getNick() + "!" + _caller.getUser() + " @127.0.0.1 " + name + " :" + names + " \r\n";
 		if (send(_caller.getSocket(), print.c_str(), strlen(print.c_str()), 0) == -1)
 			throw std::runtime_error("send 에러");
 		// 366
