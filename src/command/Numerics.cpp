@@ -39,6 +39,10 @@ void Command::Numerics(int num, std::string name, std::string other)
         case 333:
             print += name + " " + other;
             break;
+        // RPL_INVITELIST (336) https://modern.ircdocs.horse/#rplinvitelist-336
+        case 336:
+            print += " " + name;
+            break;
         // RPL_NAMREPLY (353) https://modern.ircdocs.horse/#rpltopicwhotime-333
         case 353:
             print += "@ " + name + " :" + other;
