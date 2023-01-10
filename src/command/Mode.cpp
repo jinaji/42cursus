@@ -7,27 +7,27 @@ void	Command::modeMessage1(std::string name, char flag, std::string user)
     if (send(_caller.getSocket(), print.c_str(), strlen(print.c_str()), 0) == -1)
         throw std::runtime_error("send 에러");
 
-	Channel tmp;
-	for (std::list<Channel>::iterator it = _server.getChannel().begin(); it != _server.getChannel().end(); it++)
-	{
-		if (name == (*it).getName())
-		{
-			tmp = (*it);
-			break ;
-		}
-	}
-	std::map<int, std::string>::iterator it = tmp.getParticipantsFd().begin();
-	for (; it != tmp.getParticipantsFd().end(); it++)
-	{
-		// if (send(tmp.getParticipantsKey(it) , print.c_str(), strlen(print.c_str()), 0) == -1)
-       	// 	throw std::runtime_error("send 에러");
-		if (--tmp.getParticipantsFd().end() != it)
-		{
-			print = ":" + _caller.getNick() + "!" + _caller.getUser() + "@127.0.0.1" + " MODE " + name + " " + flag + "o " + _caller.getNick() + "\r\n";
-            if (send(_caller.getSocket(), print.c_str(), strlen(print.c_str()), 0) == -1)
-                throw std::runtime_error("send 에러");
-		}
-	}
+	// Channel tmp;
+	// for (std::list<Channel>::iterator it = _server.getChannel().begin(); it != _server.getChannel().end(); it++)
+	// {
+	// 	if (name == (*it).getName())
+	// 	{
+	// 		tmp = (*it);
+	// 		break ;
+	// 	}
+	// }
+	// std::map<int, std::string>::iterator it = tmp.getParticipantsFd().begin();
+	// for (; it != tmp.getParticipantsFd().end(); it++)
+	// {
+	// 	// if (send(tmp.getParticipantsKey(it) , print.c_str(), strlen(print.c_str()), 0) == -1)
+    //    	// 	throw std::runtime_error("send 에러");
+	// 	if (tmp.getParticipantsFd().end() != it && tmp.getParticipantsKey(it) != _caller.getSocket())
+	// 	{
+	// 		print = ":" + _caller.getNick() + "!" + _caller.getUser() + "@127.0.0.1" + " MODE " + name + " " + flag + "o " + _caller.getNick() + "\r\n";
+    //         if (send(_caller.getSocket(), print.c_str(), strlen(print.c_str()), 0) == -1)
+    //             throw std::runtime_error("send 에러");
+	// 	}
+	// }
 }
 
 void	Command::modeMessage2(std::string name, char flag, std::string user)
@@ -36,27 +36,30 @@ void	Command::modeMessage2(std::string name, char flag, std::string user)
     // if (send(_caller.getSocket(), print.c_str(), strlen(print.c_str()), 0) == -1)
     //     throw std::runtime_error("send 에러");
 
-	Channel tmp;
-	for (std::list<Channel>::iterator it = _server.getChannel().begin(); it != _server.getChannel().end(); it++)
-	{
-		if (name == (*it).getName())
-		{
-			tmp = (*it);
-			break ;
-		}
-	}
-	std::map<int, std::string>::iterator it = tmp.getParticipantsFd().begin();
-	for (; it != tmp.getParticipantsFd().end(); it++)
-	{
-		// if (send(tmp.getParticipantsKey(it) , print.c_str(), strlen(print.c_str()), 0) == -1)
-       	// 	throw std::runtime_error("send 에러");
-		if (--tmp.getParticipantsFd().end() != it)
-		{
+	// Channel tmp;
+	// for (std::list<Channel>::iterator it = _server.getChannel().begin(); it != _server.getChannel().end(); it++)
+	// {
+	// 	if (name == (*it).getName())
+	// 	{
+	// 		tmp = (*it);
+	// 		break ;
+	// 	}
+	// }
+	// std::map<int, std::string>::iterator it = tmp.getParticipantsFd().begin();
+	// for (; it != tmp.getParticipantsFd().end(); it++)
+	// {
+	// 	// if (send(tmp.getParticipantsKey(it) , print.c_str(), strlen(print.c_str()), 0) == -1)
+    //    	// 	throw std::runtime_error("send 에러");
+	// 	if (tmp.getParticipantsFd().end() != it && tmp.getParticipantsKey(it) != _caller.getSocket())
+	// 	{
+	// 		std::string print = ":" + user + "!" + _caller.getUser() + "@127.0.0.1" + " MODE " + name + " " + flag + "o " + user + "\r\n";
+    //         if (send(_caller.getSocket(), print.c_str(), strlen(print.c_str()), 0) == -1)
+    //             throw std::runtime_error("send 에러");
+	// 	}
 			std::string print = ":" + user + "!" + _caller.getUser() + "@127.0.0.1" + " MODE " + name + " " + flag + "o " + user + "\r\n";
             if (send(_caller.getSocket(), print.c_str(), strlen(print.c_str()), 0) == -1)
                 throw std::runtime_error("send 에러");
-		}
-	}
+	// }
 }
 
 void	Command::modeMessage3(std::string name, char flag, std::string user)
