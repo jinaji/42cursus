@@ -106,29 +106,32 @@ void    Server::loop()
 
 int	Server::disconnectClient(int fd)
 {
+	std::cout << "disconnect " << fd << std::endl;
 	for (std::list<Client *>::iterator it = _clnt.begin(); it != _clnt.end(); ++it)
 	{
 		if ((*it)->getSocket() == fd)
 		{
 			FD_CLR(fd, &_read_fd);
-			for (std::list<Channel>::iterator ite = (*it)->getChannel().begin(); ite != (*it)->getChannel().end(); ite++)
+			for (std::list<Channel>::iterator ite = _chnl.begin(); ite != _chnl.end(); ite++)
 			{
-				std::cout << "count!!!" << std::endl;
 				std::string print = ":" + (*it)->getNick() + "!" + (*it)->getUser() + "@127.0.0.1" + " PART " + (*ite).getName() + "\r\n";
 				std::map<int, std::string>::iterator iter = (*ite).getParticipantsFd().begin();
 				for (; iter != (*ite).getParticipantsFd().end(); iter++)
 				{
-					if ((*ite).getParticipantsKey(iter) != (*it)->getSocket())
+					std::cout << "out it " << (*ite).getParticipantsKey(iter) << std::endl;
+					if ((*ite).getParticipantsKey(iter) != fd)
 					{
 						std::cout << "send: " << (*ite).getParticipantsKey(iter) << std::endl;
 						if (send((*ite).getParticipantsKey(iter), print.c_str(), strlen(print.c_str()), 0) == -1)
 							throw std::runtime_error("send error");
-						(*ite).getParticipantsFd().erase(fd);
-						// (*it)->removeChannel(ite);
+						// (*ite).getParticipantsFd().erase(fd);
 					}
-					//else if ( )
-					//	delete
 				}
+			}
+			for (std::list<Channel>::iterator ite =_chnl.begin(); ite !=_chnl.end(); ite++)
+			{
+				(*ite).getParticipantsFd().erase(fd);
+				// _chnl.erase(it);
 			}
 			_clnt.erase(it);
 			// delete *it;
