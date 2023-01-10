@@ -14,14 +14,16 @@ void	Command::namesMessage(std::string name)
 			break ;
 		}
 	}
-	// std::map<int, std::string>::iterator it = tmp.getParticipantsFd().begin();
+	std::map<int, std::string>::iterator it = tmp.getParticipantsFd().begin();
 	std::string names;
-	// for (size_t i = 0; i < tmp.getParticipantsSize(); i++, it++)
-	// {
-	// 	names += (*it).getParticipantsValue(it) + " ";
-	// }
+	for (size_t i = 0; i < tmp.getParticipantsSize(); i++, it++)
+	{
+		names += (*it).second + " ";
+	}
+		name = name.substr(1);
 		// 353
-		print = ":127.0.0.1 353 " + _caller.getNick() + " " + "@ " + name + " :" + names + "\r\n";
+		std::cout << "name " << name << " names " << names << std::endl;
+		print = ":127.0.0.1 353 " + _caller.getNick() + " @ " + name + " :" + names + " \r\n";
 		if (send(_caller.getSocket(), print.c_str(), strlen(print.c_str()), 0) == -1)
 			throw std::runtime_error("send 에러");
 		// 366
@@ -64,7 +66,7 @@ void Command::Names()
 		}
 	}
 	chnlName = _parsingPara[0].substr(nameStart, namePos - nameStart);
-	std::list<Channel> &chnl = _caller.getChannel();
+	std::list<Channel> &chnl = _server.getChannel();
 	std::list<Channel>::iterator it = chnl.begin();
 
 	if (_paraNum == 1)
