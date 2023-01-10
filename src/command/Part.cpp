@@ -23,14 +23,15 @@ void	Command::partMessage(std::string name)
 	// std::cout << "size: " << tmp.getParticipantsSize() << std::endl;
 	for (; it != tmp.getParticipantsFd().end(); it++)
 	{
-		// std::cout << "count: " << i << std::endl;
+		std::cout << "count: " << std::endl;
 		// name == chanel(name) => remove
 		// if (send(tmp.getParticipantsKey(it) , print.c_str(), strlen(print.c_str()), 0) == -1)
        	// 	throw std::runtime_error("send 에러");
-		if (--tmp.getParticipantsFd().end() != it)
+		if (tmp.getParticipantsFd().end() != it && tmp.getParticipantsKey(it) != _caller.getSocket())
 		{
-			print = ":" + _caller.getNick() + "!" + _caller.getUser() + "@127.0.0.1" + " PART " + name;
-			print += "\r\n";
+			std::cout << "caller_sock: " << _caller.getSocket() << std::endl;
+			std::cout << "send: " << tmp.getParticipantsKey(it) << std::endl;
+			print = ":" + _caller.getNick() + "!" + _caller.getUser() + "@127.0.0.1" + " PART " + name + "\r\n";
 			if (send(tmp.getParticipantsKey(it) , print.c_str(), strlen(print.c_str()), 0) == -1)
        			throw std::runtime_error("send 에러");
 		}

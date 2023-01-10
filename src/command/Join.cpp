@@ -35,6 +35,7 @@ void	Command::joinMessage(std::string name)
 			break ;
 		}
 	}
+	
 	std::map<int, std::string>::iterator it = tmp.getParticipantsFd().begin();
 	// std::cout << "size: " << tmp.getParticipantsSize() << std::endl;
 	for (; it != tmp.getParticipantsFd().end(); it++)
