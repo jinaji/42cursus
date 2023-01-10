@@ -85,6 +85,11 @@ void Command::Numerics(int num, std::string name, std::string other)
         // ERR_BADCHANNELKEY (475) https://modern.ircdocs.horse/#errbadchannelkey-475
         case 475:
             print += name + " :Cannot join channel (+k)";
+            break;
+        // ERR_CHANOPRIVSNEEDED (482) https://modern.ircdocs.horse/#errchanoprivsneeded-482
+        case 482:
+            print += name + " :You're not channel operator";
+            break;
         case 491:
             print += ":No O-lines for your host";
             break;

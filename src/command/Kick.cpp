@@ -8,6 +8,10 @@
 
 void Command::kickMessage(std::string name, std::string user)
 {
+	std::string print = ":" + _caller.getNick() + "!" + _caller.getUser() + "@127.0.0.1" + " KICK " + name + " " + user;
+	print += "\r\n";
+	if (send(_caller.getSocket(), print.c_str(), strlen(print.c_str()), 0) == -1)
+        throw std::runtime_error("send 에러1");
 
     Channel tmp;
     std::list<Channel>::iterator its = _server.getChannel().begin();
@@ -20,28 +24,16 @@ void Command::kickMessage(std::string name, std::string user)
 		}
 	}
 	std::map<int, std::string>::iterator it = tmp.getParticipantsFd().begin();
-
-	for (size_t i = 0; i < tmp.getParticipantsSize(); i++, it++)
+	// std::cout << "size: " << tmp.getParticipantsSize() << std::endl;
+	for (; it != tmp.getParticipantsFd().end(); it++)
 	{
-        std::string print = ":" + _caller.getNick() + "!" + _caller.getUser() + "@127.0.0.1" + " KICK " + name + " " + user;
-        // print += tmp.getParticipantsKey(it);
-        print += "\r\n";
-		std::cout << "print[" << print << "]";
-		if (_caller.getSocket() == tmp.getParticipantsKey(it))
-        {
-            (*its).getParticipantsFd().erase(_caller.getSocket());
-			continue ;
-        }
-		if (send(tmp.getParticipantsKey(it), print.c_str(), strlen(print.c_str()), 0) == -1)
-			throw std::runtime_error("send 에러");
-		if (tmp.getParticipantsKey(it) == _server.getFdmax())
-			this->Numerics(401);
-
+		if (tmp.getParticipantsFd().end() != it && tmp.getParticipantsKey(it) != _caller.getSocket())
+		{
+			print = ":" + _caller.getNick() + "!" + _caller.getUser() + "@127.0.0.1" + " KICK " + name + " " + user + "\r\n";
+			if (send(tmp.getParticipantsKey(it) , print.c_str(), strlen(print.c_str()), 0) == -1)
+       			throw std::runtime_error("send 에러2");
+		}
 	}
-
-
-    // if (send(_caller.getSocket(), print.c_str(), strlen(print.c_str()), 0) == -1)
-        // throw std::runtime_error("send 에러1");
 }
 
 void Command::Kick() // <channel> <user> * [<comment>]
@@ -50,13 +42,32 @@ void Command::Kick() // <channel> <user> * [<comment>]
 	size_t nameStart = 0;
 	size_t namePos = userName.find(',');
 
-	while (namePos != std::string::npos)
+	if (this->checkChannel_server(_parsingPara[0]) == false)
 	{
-		userName = parseComma(_parsingPara[1], nameStart, namePos);
-        this->kickMessage(_parsingPara[0], userName);
-    }
-    userName = parseComma(_parsingPara[1], nameStart, namePos);
-    this->kickMessage(_parsingPara[0], userName);
+		this->Numerics(403, _parsingPara[0]);
+		return ;
+	}
+	std::list<Channel>::iterator it = _server.getChannel().begin();
+	for (; it != _server.getChannel().end(); it++)
+	{
+		if (checkChannel_caller(_parsingPara[0]) == true && _caller.getNick() == (*it).getOper())
+		{
+			userName = parseComma(_parsingPara[1], nameStart, namePos);
+			this->kickMessage(_parsingPara[0], userName);			// server channel update
+			break ;
+		}
+		else
+		{
+			this->Numerics(482, _parsingPara[0]);
+			return ;
+		}
+	}
+
+	// while (namePos != std::string::npos)
+	// {
+	// 	userName = parseComma(_parsingPara[1], nameStart, namePos);
+    //     this->kickMessage(_parsingPara[0], userName);
+    // }
 
 }
 
