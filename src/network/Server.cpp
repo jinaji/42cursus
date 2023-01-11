@@ -1,4 +1,5 @@
 #include "../../include/network/Server.hpp"
+#include <termios.h>
 
 Server::Server(const std::string port, const std::string pass): _port(port), _pass(pass) {}
 
@@ -40,14 +41,35 @@ void    Server::makeSock()
 	_fd_max = _sock;
 }
 
+// void set_input_mode(struct termios new_term)
+// {
+// 		tcgetattr(STDIN_FILENO, &new_term); // STDIN으로부터 터미널 속성을 받아온다
+// 			new_term.c_lflag &= ~(ICANON | ECHO);  // ICANON, ECHO 속성을 off
+// 		new_term.c_cc[VMIN] = 1;               // 1 바이트씩 처리
+// 		new_term.c_cc[VTIME] = 0;              // 시간은 설정하지 않음
+// 		tcsetattr(STDIN_FILENO, TCSANOW, &new_term); // 변경된 속성의 터미널을 STDIN에 바로 적용
+// }
+
 void    Server::loop()
 {
 	std::string	input;
 	int clnt_fd;
 	struct sockaddr_in clnt_adr;
+	// struct termios new_term;
 
+	// set_input_mode(new_term);
+	// int ch;
+	// while (read(0, &ch, sizeof(int)) > 0)
+	// {
+	// 		if (ch == 4)
+	// 				break ;
+	// 		else
+	// 				write(0, &ch, sizeof(int));
+	// 		ch = 0;
+	// }
 	while(1)
 	{
+		signal(SIGQUIT, SIG_DFL);
 		_cp_read = _read_fd;
 		// select() https://1d1cblog.tistory.com/356
 		//			https://couplewith.tistory.com/entry/%EC%86%8C%EC%BC%93-multi-thread%EB%A5%BC-%ED%99%9C%EC%9A%A9%ED%95%9C-%EC%86%8C%EC%BC%93-%EC%84%9C%EB%B2%84-%EA%B0%9C%EB%B0%9C
@@ -86,8 +108,11 @@ void    Server::loop()
 							throw std::runtime_error("recv 에러");
 					}
 					received[len] = 0;
-					input.clear();
+					if (input.find("\n") != std::string::npos)
+						input.clear();
 					input.append(received);
+					if (input.find("\n") == std::string::npos)
+						continue;
 					Client *user = this->getclientSock(i);
 					if (user->getSocket() > 0) // Cntl+C , +D 처리
 					{
