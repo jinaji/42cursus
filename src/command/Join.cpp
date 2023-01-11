@@ -1,23 +1,5 @@
 #include "../../include/command/Command.hpp"
 
-/*
-
-  JOIN #foobar                    ; join channel #foobar.
-
-  JOIN &foo fubar                 ; join channel &foo using key "fubar".
-
-  JOIN #foo,&bar fubar            ; join channel #foo using key "fubar"
-								  and &bar using no key.
-
-  JOIN #foo,#bar fubar,foobar     ; join channel #foo using key "fubar".
-								  and channel #bar using key "foobar".
-
-  JOIN #foo,#bar                  ; join channels #foo and #bar.
-
-  ?????
-  _para 뒤에 개행 띠고 채널 이름으로 넣어야 list에서 편할듯해염
-*/
-
 void	Command::joinMessage(std::string name)
 {
 	//  :WiZ JOIN #Twilight_zone		; WiZ is joining the channel
@@ -124,12 +106,6 @@ void    Command::Join()
 		_caller.addChannel(instance);	// 클라 클래스에 채널 추가
 		_server.getChannel().push_back(instance);	// 서버 클래스에 채널 추가
 		this->joinMessage(chnlName);
-
-		// :aaa!a@121.135.181.35 MODE #123 -o aaa
-		// std::string print = ":" + _caller.getNick() + "!" + _caller.getUser() + "@127.0.0.1" + " MODE " + chnlName + " +o " + _caller.getNick() + "\r\n";
-		// if (send(_caller.getSocket(), print.c_str(), strlen(print.c_str()), 0) == -1)
-        // 	throw std::runtime_error("send 에러100");
-		// std::cout << print;
 		this->modeMessage1(chnlName, '+', _caller.getNick());
 	}
 	else
