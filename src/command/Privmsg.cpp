@@ -1,6 +1,6 @@
 #include "../../include/command/Command.hpp"
 
-void Command::privmsgMessage(std::string name, std::string msg) // channel
+void Command::privmsgMessage(std::string name, std::string msg)
 {
 	Channel tmp;
 	int flag = 0;

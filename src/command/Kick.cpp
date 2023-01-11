@@ -25,6 +25,7 @@ void Command::kickMessage(std::string name, std::string user)
 			print = ":" + _caller.getNick() + "!" + _caller.getUser() + "@127.0.0.1" + " KICK " + name + " " + user + "\r\n";
 			if (send(tmp.getParticipantsKey(it) , print.c_str(), strlen(print.c_str()), 0) == -1)
        			throw std::runtime_error("send 에러2");
+			(*its).getParticipantsFd().erase((*it).first);
 		}
 	}
 }

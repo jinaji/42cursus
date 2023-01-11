@@ -25,7 +25,6 @@ class Command
 		Server		&_server;
 
 	public:
-	// Command();
 	Command(std::string input, std::string pass, Client &caller);
 	Command(std::string input, std::string pass, Client &caller, Server &server);
 	~Command();
@@ -55,6 +54,7 @@ class Command
 	bool checkClient(std::string name);
 	bool checkChannel_server(std::string name);
 	bool checkChannel_caller(std::string name);
+	bool checkChannel_nick(std::string target);
 	bool excute_mode(char mode, char c, char flag = 0);
 	void joinMessage(std::string name);
 	void privmsgMessage(std::string name, std::string msg, int fd);

@@ -145,6 +145,20 @@ bool    Command::checkChannel_caller(std::string name)
     return false;
 }
 
+bool	Command::checkChannel_nick(std::string target)
+{
+	std::list<Channel>::iterator it = _caller.getChannel().begin();
+	for (; it != _caller.getChannel().end(); it++)
+	{
+		for (std::map<int, std::string>::iterator ite = (*it).getParticipantsFd().begin(); ite != (*it).getParticipantsFd().end(); ite++)
+		{
+			if ((*ite).second == target)
+				return true;
+		}
+	}
+	return false;
+}
+
 std::string Command::parseComma(std::string origin, size_t &start, size_t &pos)
 {
 	std::string parsedString = origin.substr(start, pos - start);

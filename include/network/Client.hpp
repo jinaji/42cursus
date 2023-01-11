@@ -27,7 +27,6 @@ class Client
 
     std::list<Channel>		_channelList;
     
-    //PASS
     bool _passState;
     bool _nickState;
     bool _userState;
