@@ -8,7 +8,6 @@ void Command::Numerics(int num, std::string name, std::string other)
 
 	switch (num)
 	{
-        // come
 		case 1:
 			print += ":Welcome to the Internet Relay Network";
 			break;

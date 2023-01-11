@@ -41,7 +41,6 @@ bool Client::getnickState() { return _nickState; }
 bool Client::getuserState() { return _userState; }
 bool Client::getaccessState() { return _accessState; }
 bool Client::getservOper() { return _servOper; }
-
 void Client::setpassState(bool state) { _passState = state; }
 void Client::setnickState(bool state) { _nickState = state; }
 void Client::setuserState(bool state) { _userState = state; }

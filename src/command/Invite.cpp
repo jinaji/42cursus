@@ -1,13 +1,5 @@
 #include "../../include/command/Command.hpp"
 
-/*
- :Angel!wings@irc.org INVITE Wiz #Dust
-
-                                   ; Message to WiZ when he has been
-                                   invited by user Angel to channel
-                                   #Dust
-*/
-
 void Command::Invite()
 {
     std::string target = _parsingPara[0];

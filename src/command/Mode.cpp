@@ -92,16 +92,15 @@ void Command::Mode()
 
 bool Command::excute_mode(char mode, char c, char flag)
 {
-    if (c == 'u')   // user_mode
+    if (c == 'u')
     {
-        // ignore
         if (mode == 'o')
         {
             _caller._userMode[user_o] = true;
             return true;
         }
     }
-    else if (c == 'c')  // channel_mode
+    else if (c == 'c')
     {
         std::list<Channel>::iterator it = _server.getChannel().begin();
         for (; it != _server.getChannel().end(); it++)

@@ -2,9 +2,6 @@
 
 void	Command::joinMessage(std::string name)
 {
-	//  :WiZ JOIN #Twilight_zone		; WiZ is joining the channel
-	//  :dan-!d@localhost JOIN #test    ; dan- is joining the channel #test
-
 	std::string print = ":" + _caller.getNick() + "!" + _caller.getUser() + "@127.0.0.1" + " JOIN " + name + "\r\n";
 	if (send(_caller.getSocket(), print.c_str(), strlen(print.c_str()), 0) == -1)
         throw std::runtime_error("send 에러1");
@@ -19,24 +16,19 @@ void	Command::joinMessage(std::string name)
 	}
 	
 	std::map<int, std::string>::iterator it = tmp.getParticipantsFd().begin();
-	// std::cout << "size: " << tmp.getParticipantsSize() << std::endl;
 	for (; it != tmp.getParticipantsFd().end(); it++)
 	{
-		// if (send(tmp.getParticipantsKey(it) , print.c_str(), strlen(print.c_str()), 0) == -1)
-       	// 	throw std::runtime_error("send 에러2");
 		if (tmp.getParticipantsFd().end() != it && tmp.getParticipantsKey(it) != _caller.getSocket())
 		{
 			print = ":" + _caller.getNick() + "!" + _caller.getUser() + "@127.0.0.1" + " JOIN " + name + "\r\n";
 			if (send(tmp.getParticipantsKey(it) , print.c_str(), strlen(print.c_str()), 0) == -1)
        			throw std::runtime_error("send 에러3");
 		}
-		// names reply
 		this->Numerics(353, name, tmp.getParticipantsValue(it));
 		this->Numerics(366, name);
 	}
 	if (tmp.getTopicFlag() == true)
 	{
-		// topic
 		this->Numerics(332, name, tmp.getTopic());
 		this->Numerics(333, name, tmp.getTopicNick());
 	}
@@ -56,21 +48,21 @@ void    Command::Join()
 		chnlName = parseComma(_parsingPara[0], nameStart, namePos);
 		chnlPass = parseComma(_parsingPara[1], passStart, passPos);
 
-		if (chnlName.find(0x07) != std::string::npos || chnlName.find(',') != std::string::npos) // space 무조건 앞에서 잘려서 확인안함
+		if (chnlName.find(0x07) != std::string::npos || chnlName.find(',') != std::string::npos)
 		{
 			this->Numerics(403);
 			continue ;
 		}
-		if (checkChannel_server(chnlName) == false) // 채널 존재 안 함 새로 만듦
+		if (checkChannel_server(chnlName) == false)
 		{
 			Channel instance(chnlName);
 			instance.setPass(chnlPass);
-			instance.setParticipants(1, _caller.getSocket(), _caller.getNick()); // op줘야댐 채널 모드도 줄거면 여기서 해야댐
+			instance.setParticipants(1, _caller.getSocket(), _caller.getNick());
 			_caller.addChannel(instance);
 			_server.getChannel().push_back(instance);
 			this->joinMessage(chnlName);
 		}
-		else // 채널 있어서 거기 들어갈 거임
+		else
 		{
 			std::list<Channel> &chnl = _server.getChannel();
 
@@ -101,10 +93,10 @@ void    Command::Join()
 	{
 		Channel instance(chnlName);
 		instance.setPass(chnlPass);
-		instance.setParticipants(1, _caller.getSocket(), _caller.getNick()); // 채널 클래스에 추가
+		instance.setParticipants(1, _caller.getSocket(), _caller.getNick());
 		instance.setOper(_caller.getNick());
-		_caller.addChannel(instance);	// 클라 클래스에 채널 추가
-		_server.getChannel().push_back(instance);	// 서버 클래스에 채널 추가
+		_caller.addChannel(instance);
+		_server.getChannel().push_back(instance);
 		this->joinMessage(chnlName);
 		this->modeMessage1(chnlName, '+', _caller.getNick());
 	}
