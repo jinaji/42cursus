@@ -1,6 +1,6 @@
 .DEFAULT_GOAL := all
 
-CXXFLAGS = -Wall -Werror -Wextra -std=c++98 -ferror-limit=100 -g -MMD -MP
+CXXFLAGS = -Wall -Werror -Wextra -std=c++98 -ferror-limit=100 -g -MMD -MP -pedantic
 SRCS = main.cpp
 OBJS = $(SRCS:.cpp=.o)
 DEPS = $(SRCS:.cpp=.d)

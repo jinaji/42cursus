@@ -16,6 +16,29 @@
 namespace ft
 {
 
+template <class _InputIterator, class _Size, class _ForwardIterator>
+_ForwardIterator uninitialized_copy_n(_InputIterator __f, _Size __n, _ForwardIterator __r)
+{
+    typedef typename iterator_traits<_ForwardIterator>::value_type value_type;
+    _ForwardIterator __s = __r;
+#ifndef _LIBCPP_NO_EXCEPTIONS
+    try
+    {
+#endif
+        for (; __n > 0; ++__f, ++__r, --__n)
+            ::new (static_cast<void*>(_VSTD::addressof(*__r))) value_type(*__f);
+#ifndef _LIBCPP_NO_EXCEPTIONS
+    }
+    catch (...)
+    {
+        for (; __s != __r; ++__s)
+            __s->~value_type();
+        throw;
+    }
+#endif
+    return __r;
+}
+
 template <class T, class Allocator = std::allocator<T> >
 class VectorBase
 {
@@ -419,9 +442,9 @@ public:
 			resize(capacity() * 2);
 		this->m_end = this->m_begin + _size;
 		_tmp = this->_M_allocate(size() - _pos);
-		std::uninitialized_copy_n(this->m_begin + _pos, size() - _pos, _tmp);
+		ft::uninitialized_copy_n(this->m_begin + _pos, size() - _pos, _tmp);
 		this->m_alloc.construct(this->m_begin + _pos, val);
-		std::uninitialized_copy_n(_tmp, _size - _pos, this->m_begin + _pos + 1);
+		ft::uninitialized_copy_n(_tmp, _size - _pos, this->m_begin + _pos + 1);
 		this->_M_deallocate(_tmp, size() - _pos);
 		return (this->m_begin + _pos); 
 	}
@@ -440,13 +463,13 @@ public:
 		if (_size > capacity())
 			assign(_size, val);
 		_tmp = this->_M_allocate(size() - _pos);
-		std::uninitialized_copy_n(this->m_begin + _pos, size() - _pos, _tmp);
+		ft::uninitialized_copy_n(this->m_begin + _pos, size() - _pos, _tmp);
 		while (_n)
 		{
 			this->m_alloc.construct(this->m_begin + _pos + _n, val);
 			_n--;
 		}
-		std::uninitialized_copy_n(_tmp, _size - _pos, this->m_begin + _pos);
+		ft::uninitialized_copy_n(_tmp, _size - _pos, this->m_begin + _pos);
 		this->_M_deallocate(_tmp, size() - _pos);
 	}
 
@@ -463,7 +486,7 @@ void		insert(iterator position, InputIterator first, InputIterator last, typenam
 		if (_size > capacity())
 			resize(_size);
 		_tmp = this->_M_allocate(_size);
-		std::uninitialized_copy_n(this->m_begin + _pos, size() - _pos, _tmp);
+		ft::uninitialized_copy_n(this->m_begin + _pos, size() - _pos, _tmp);
 		try
 		{
 			for (size_type i = 0; first != last; i++)
@@ -487,7 +510,7 @@ void		insert(iterator position, InputIterator first, InputIterator last, typenam
 			// this->_M_deallocate(first, _n);
 			throw;
 		}
-		std::uninitialized_copy_n(_tmp, _size - _pos, this->m_begin + _pos);
+		ft::uninitialized_copy_n(_tmp, _size - _pos, this->m_begin + _pos);
 		for (size_type i = 0; i < _size; i++)
 				this->m_alloc.destroy(_tmp + i);
 		this->_M_deallocate(_tmp, _size);
@@ -501,9 +524,9 @@ iterator	erase(iterator position)
 	pointer		_tmp;
 
 	_tmp = this->_M_allocate(_size);
-	std::uninitialized_copy_n(this->m_begin + _pos + 1, size() - _pos - 1, _tmp);
+	ft::uninitialized_copy_n(this->m_begin + _pos + 1, size() - _pos - 1, _tmp);
 	this->m_alloc.destroy(this->m_begin + _pos);
-	std::uninitialized_copy_n(_tmp, _size, (this->m_begin + _pos));
+	ft::uninitialized_copy_n(_tmp, _size, (this->m_begin + _pos));
 	this->_M_deallocate(_tmp, _size);
 	this->m_end -= 1;
 	return (this->m_begin + _pos);
@@ -517,11 +540,11 @@ iterator	erase(iterator first, iterator last)
 	pointer		_tmp;
 
 	_tmp = this->_M_allocate(_size);
-	std::uninitialized_copy_n(this->m_begin + _pos + _n, size() - _pos - _n, _tmp);
+	ft::uninitialized_copy_n(this->m_begin + _pos + _n, size() - _pos - _n, _tmp);
 	this->m_end -= _n;
 	while (_n--)
 		this->m_alloc.destroy(this->m_begin + _n + _pos);
-	std::uninitialized_copy_n(_tmp, _size, (this->m_begin + _pos));
+	ft::uninitialized_copy_n(_tmp, _size, (this->m_begin + _pos));
 	this->m_alloc.deallocate(_tmp, _size);
 	return (this->m_begin + _pos);
 }
@@ -533,7 +556,7 @@ void		swap(Vector& x)
 	size_type	_size = size();
 
 	_tmp = this->_M_allocate(_size);
-	std::uninitialized_copy_n(this->m_begin, _size, _tmp);
+	ft::uninitialized_copy_n(this->m_begin, _size, _tmp);
 	this->m_alloc.deallocate(this->m_begin, _cap);
 	this->m_begin = x.m_begin;
 	this->m_end = x.m_end;
