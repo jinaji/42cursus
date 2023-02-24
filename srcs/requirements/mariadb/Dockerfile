@@ -12,7 +12,7 @@ RUN apt-get update && \
     chmod +x setting.sh && \
     rm -f /etc/mysql/mariadb.conf.d/50-server.cnf
 
-COPY ./conf/jinkim2_50-server.cnf /etc/mysql/mariadb.conf.d/
+COPY ./conf/jinkim2_50-server.cnf /etc/mysql/mariadb.conf.d/50-server.cnf
 
 ENTRYPOINT ["/usr/bin/dumb-init", "--"]
 
