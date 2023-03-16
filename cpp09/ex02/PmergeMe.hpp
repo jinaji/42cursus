@@ -25,21 +25,32 @@ public:
 	PmergeMe& operator=(const PmergeMe& obj);
 
 	void parseInput(int ac, char **av);
+	ssize_t getTime();
 
-	void mergeSort(std::vector<int>& input, int left, int mid, int right);
-	void mergeSort(std::deque<int>& input, int left, int mid, int right);
-
-	void insertionSort(std::vector<int>& input, int left, int right);
-	void insertionSort(std::deque<int>& input, int size);
-
-	void mergeInsertionSort(std::vector<int>& input, int left, int right);
-	void mergeInsertionSort(std::vector<int>& input);
-	
-	void mergeInsertionSort(std::deque<int>& input, int left, int right);
-	void mergeInsertionSort(std::deque<int>& input);
-	
 	void displayBeforeAfter();
 	void displayTime();
+
+
+	void mergeSort(std::vector<int>& input, int left, int mid, int right);
+	void insertionSort(std::vector<int>& input, int left, int right);
+	void mergeInsertionSort(std::vector<int>& input, int left, int right);
+	void mergeInsertionSort(std::vector<int>& input);
+
+
+	void mergeSort(std::deque<int>& input, int left, int mid, int right);
+	void insertionSort(std::deque<int>& input);
+	void mergeInsertionSort(std::deque<int>& input, int left, int right);
+	void mergeInsertionSort(std::deque<int>& input);
+
+	public:
+	class argumentError : public std::exception
+	{
+		public:
+		const char* what() const throw()
+		{
+			return ("Error");
+		}
+	};
 };
 
 #endif
