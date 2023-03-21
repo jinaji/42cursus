@@ -37,7 +37,6 @@ void RPN::calculate(char *av)
             _stack.pop();
             int num1 = _stack.top();
             _stack.pop();
-            // std::cout << "num1 " << num1 << " num2 " << num2 << std::endl;
             switch (__oper)
             {
                 case PLUS :

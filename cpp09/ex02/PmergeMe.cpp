@@ -36,7 +36,6 @@ void PmergeMe::parseInput(int ac, char **av)
 
     while (ss >> num)
     {
-        std::cout << num << std::endl;
         if (num < 0)
             throw (argumentError());
         _vector.push_back(num);
@@ -53,7 +52,7 @@ ssize_t	PmergeMe::getTime(void)
 	ssize_t			usec;
 
 	gettimeofday(&time, 0);
-    usec = time.tv_usec;
+    usec = time.tv_sec * 1000 + time.tv_usec ;
 	return (usec);
 }
 
@@ -79,6 +78,8 @@ void PmergeMe::displayTime()
 
 
 /* vector */
+
+
 
 void PmergeMe::mergeSort(std::vector<int>& input, int left, int mid, int right)
 {
@@ -158,8 +159,11 @@ void PmergeMe::mergeInsertionSort(std::vector<int>& input)
     ssize_t startTime = getTime();
     mergeInsertionSort(input, 0, _size - 1);
     ssize_t endTime = getTime();
+    if (endTime < startTime)
+        endTime += 1000000;
     _vectorTime = static_cast<double>(endTime - startTime) / 100000.0;
 }
+
 
 
 /* deque */
@@ -237,5 +241,7 @@ void PmergeMe::mergeInsertionSort(std::deque<int>& input)
     ssize_t startTime = getTime();
     mergeInsertionSort(input, 0, _size - 1);
     ssize_t endTime = getTime();
+    if (endTime < startTime)
+        endTime += 1000000;
     _dequeTime = static_cast<double>(endTime - startTime) / 100000.0;
 }

@@ -1,3 +1,31 @@
 #include "BitcoinExchange.hpp"
+void lk()
+{
+    system("leaks btc | grep leaked");
+}
 
-// csv 이용해서 db 만들고 input 들어오면 그 날짜 찾아서 거래량 * 환율 해서 이득 얼마나 봤는지 표시 
+
+int main(int ac, char **av)
+{
+	atexit(lk);
+	BitcoinExchange exchanger;
+
+	if (ac == 1)
+	{
+		std::cout << "Error: could not open file." << std::endl;
+		exit (1);
+	}
+	try
+	{
+		exchanger.createDb();
+		for (int i = 1; i < ac; i++)
+		{
+			exchanger.createList(av[i]);
+			exchanger.displayList();
+		}
+	}
+	catch(const std::exception& e)
+	{
+		std::cerr << e.what() << '\n';
+	}
+}
