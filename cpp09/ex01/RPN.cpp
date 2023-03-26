@@ -33,6 +33,8 @@ void RPN::calculate(char *av)
             int __oper = isOperator(input[i]);
             if (__oper == 0)
                 throw (incorrectFormError());
+            if (_stack.size() < 2)
+                throw (incorrectFormError());
             int num2 = _stack.top();
             _stack.pop();
             int num1 = _stack.top();
@@ -62,4 +64,6 @@ void RPN::calculate(char *av)
             }
         }
     }
+    if (_stack.size() != 1)
+        throw (incorrectFormError());
 }
