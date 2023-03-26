@@ -14,7 +14,6 @@ class PmergeMe
 public:
 	std::vector<int>	_vector;
 	std::deque<int>		_deque;
-	static const int			_threshold = 10;
 	int	_size;
 	double _vectorTime;
 	double _dequeTime;

@@ -17,6 +17,8 @@ PmergeMe& PmergeMe::operator=(const PmergeMe& obj)
     this->_vector = obj._vector;
     this->_deque = obj._deque;
     this->_size = obj._size;
+    this->_vectorTime = obj._vectorTime;
+    this->_dequeTime = obj._dequeTime;
     return *this;
 }
 
