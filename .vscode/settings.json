@@ -72,6 +72,8 @@
 		"*.tpp": "c",
 		"list": "cpp",
 		"__functional_03": "cpp",
-		"filesystem": "cpp"
+		"filesystem": "cpp",
+		"__tree": "cpp",
+		"map": "cpp"
 	}
 }
