@@ -58,7 +58,7 @@ $(DIR_OBJS)/%.o	:	%.c
 
 #arch -x86_64
 $(NAME)			:	$(AR_MLX) $(OBJS)
-					arch -x86_64 $(CC) $(FLAGS) $(S_FLAGS) $(OBJS) $(AR_MLX) -o $(NAME)
+					$(CC) $(FLAGS) $(S_FLAGS) $(OBJS) $(AR_MLX) -o $(NAME)
 
 $(DIR_OBJS)		:
 					mkdir -p $@
