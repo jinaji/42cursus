@@ -6,7 +6,7 @@
 /*   By: jinkim2 <jinkim2@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 20:14:21 by jinkim2           #+#    #+#             */
-/*   Updated: 2022/07/19 01:18:28 by jinkim2          ###   ########seoul.kr  */
+/*   Updated: 2022/09/05 09:05:52 by jinkim2          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,5 +91,6 @@ int	execute_cmd(t_argv *arg)
 	close_fd(fd, &i);
 	while (i++ < arg->cmd_cnt - 1)
 		wait(&status);
+	while (1);
 	return (status >> 8 & 0x000000ff);
 }

@@ -6,12 +6,12 @@
 #    By: jinkim2 <jinkim2@student.42seoul.kr>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/13 18:18:55 by jinkim2           #+#    #+#              #
-#    Updated: 2022/07/19 12:10:10 by jinkim2          ###   ########seoul.kr   #
+#    Updated: 2022/09/05 09:03:36 by jinkim2          ###   ########seoul.kr   #
 #                                                                              #
 # **************************************************************************** #
 
 CC = cc
-CFLAGS = -Wall -Werror -Wextra
+CFLAGS = -Wall -Werror -Wextra -g3
 
 SRCS = 	command.c	\
 		execute.c	\
