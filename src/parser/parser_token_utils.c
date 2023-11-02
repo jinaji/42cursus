@@ -6,7 +6,7 @@
 /*   By: jinkim2 <jinkim2@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 19:38:08 by gulee             #+#    #+#             */
-/*   Updated: 2022/09/04 18:02:09 by jinkim2          ###   ########seoul.kr  */
+/*   Updated: 2022/09/05 13:42:15 by jinkim2          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,6 @@ void	token_add(t_token_table *token_table, t_token *new_token)
 		new_token->data = ft_strtrim(new_token->data, "\'");
 	else if (new_token->type == DQUOTE_E)
 		new_token->data = ft_strtrim(new_token->data, "\"");
-	else if (new_token->type == CMD_E)
-		table_get()->cmd_cnt++;
 	if (!token_table->head && token_table->token_count == 0)
 		token_table->head = new_token;
 	else

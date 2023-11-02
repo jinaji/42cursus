@@ -6,7 +6,7 @@
 /*   By: jinkim2 <jinkim2@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 02:24:51 by gulee             #+#    #+#             */
-/*   Updated: 2022/09/04 22:12:48 by jinkim2          ###   ########seoul.kr  */
+/*   Updated: 2022/09/05 16:43:26 by jinkim2          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,30 @@ static void	path_get(t_node *node, char **path)
 		*path = ft_strdup(tmp);
 	else
 		*path = cmd_path_get(tmp, 0, 0);
+	if (*path)
+	{
+		node->type = CMD_E;
+		table_get()->cmd_cnt++;
+	}
+}
+
+void	command_not_found(char *str)
+{
+	printf ("command not found\n");
+	ft_putstr_fd("minishell: ", STDERR_E);
+	ft_putstr_fd(str, STDERR_E);
+	ft_putendl_fd(": command not found", STDERR_E);
+	table_get()->exit_num = 127;
+}
+
+void	exec_error(char	*str)
+{
+	printf ("exec error");
+	ft_putstr_fd("minishell: ", STDERR_E);
+	ft_putstr_fd(str, STDERR_E);
+	ft_putstr_fd(": ", STDERR_E);
+	ft_putendl_fd(strerror(errno), STDERR_E);
+	exit(127);
 }
 
 static void	min_execve(t_node *node, char **env)
@@ -76,21 +100,7 @@ static void	min_execve(t_node *node, char **env)
 	path_get(node, &path);
 	echoctl_on();
 	if (execve(path, option, env) < 0)
-	{
-		// ft_putstr_fd("minishell: ", STDERR_E);
-		// ft_putstr_fd(node->data, STDERR_E);
-		// ft_putstr_fd(": ", STDERR_E);
-		// ft_putendl_fd(strerror(errno), STDERR_E);
-		exit(127);
-	}
-}
-
-void	command_not_found(char *str)
-{
-	ft_putstr_fd("minishell: ", STDERR_E);
-	ft_putstr_fd(str, STDERR_E);
-	ft_putendl_fd(": command not found", STDERR_E);
-	table_get()->exit_num = 127;
+		exec_error(node->data);
 }
 
 void	not_minishell(t_node *node, int state) // not-builtin
